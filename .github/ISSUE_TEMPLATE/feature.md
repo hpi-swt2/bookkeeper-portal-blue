@@ -2,7 +2,7 @@
 name: Feature
 about: Create Feature Teamplate
 title: ''
-labels: Project Backlog
+labels: in preparation, Project Backlog
 assignees: ''
 
 ---
