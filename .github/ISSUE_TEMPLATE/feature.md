@@ -8,12 +8,13 @@ assignees: ''
 ---
 
 As a ... I want ... in order to ...
+
 Depends on: 
-[Issues]
+ - #[Issues]
+
 Mockup:
 [UI Mockup]
-Context: 
-[Context as linked issues and description]
+
 Acceptance Criteria:
 - [ ] Todo's
-- [ ]
+- [ ] ...
