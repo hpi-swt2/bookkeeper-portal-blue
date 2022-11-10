@@ -7,14 +7,16 @@ assignees: ''
 
 ---
 
+## User stories
 As a ... I want ... in order to ...
 
+## Dependencies
 Depends on: 
  - #[Issues]
 
-Mockup:
+## UI Mockup
 [UI Mockup]
 
-Acceptance Criteria:
+## Acceptance Criteria
 - [ ] Todo's
 - [ ] ...
