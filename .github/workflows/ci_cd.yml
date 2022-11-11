@@ -1,0 +1,75 @@
+name: CI and CD
+
+on:
+  push:
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  # Name of the job
+  rspec-test:
+    runs-on: ubuntu-latest
+
+    # https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers
+    # Service containers to run with job `test`
+    services:
+      postgres:
+        # Docker Hub image
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: test
+          # should not be empty
+          # https://stackoverflow.com/questions/60618118#answer-60618750
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        # Maps tcp port 5432 on service container to the host
+        ports: ["5432:5432"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby and bundle
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.4 # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+      - name: Run RSpec tests (PostgreSQL)
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+          RAILS_ENV: test
+        # Don't run RSpec with . https://olivierlacan.com/posts/a-tiny-little-dot/
+        # Show rspec errors as GH annotations https://github.com/Drieam/rspec-github#usage
+        # Exclude specs tagged with "local_only"
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundle exec rails db:setup
+          bundle exec rspec --tag ~local_only spec/ --format documentation --format RSpec::Github::Formatter
+
+  # Name of the job
+  deploy:
+    # Deploy the main branch
+    if: github.ref == 'refs/heads/main'
+    # test job must succeed before this job is started
+    needs: rspec-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # https://github.com/marketplace/actions/deploy-to-heroku
+      - name: Deploy main to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "bookkeeper-blue-main" #Must be unique in Heroku
+          heroku_email: "hpi.swt2+heroku@gmail.com"
+          # https://github.com/marketplace/actions/deploy-to-heroku#procfile-passing
+          procfile: |
+            web: bin/rails server -p ${PORT:-5000} -e $RAILS_ENV
+            release: bin/rails db:migrate; bin/rails assets:precompile

@@ -1,0 +1,69 @@
+<div class="row py-5 my-5 text-center">
+    <%# Bootstrap icons: https://icons.getbootstrap.com/ %>
+    <i class="bi bi-journal-bookmark-fill" style="font-size: 5rem;"></i>
+    <h1 class="display-5 fw-bold">Bookkeeper Blue</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">Some text about this application's many features, the use cases as part of the sharing economy that it enables and the business value that users of the application can expect. Could also include a call to action to log in or could contain a rhetorical question. Wouldn't that be nice? </p>
+        <div class="gap-3 d-sm-flex justify-content-sm-center">
+            <%# https://github.com/heartcombo/devise#controller-filters-and-helpers %>
+            <% if user_signed_in? %>
+                <div class="row py-2">
+                    <div class="col">
+                        currently logged in user: <%= current_user.email %> |
+                        <%= link_to edit_user_registration_path, class: "link-primary" do %>
+                            <i class="bi bi-pencil-square"></i> Edit user profile
+                        <% end %> | 
+                        <%= link_to destroy_user_session_path, data: {"turbo-method": :delete}, class: "link-secondary" do %>
+                            <i class="bi bi-door-open-fill"></i> Log out
+                        <% end %>
+                    </div>
+                </div>
+            <% else %>
+                <%= link_to new_user_session_path, {class: "btn btn-primary btn-lg px-4"} do %>
+                    <i class="bi bi-box-arrow-in-right"></i> Log in
+                <% end %>
+                <%= link_to new_user_registration_path, {class: "btn btn-outline-primary btn-lg px-4"} do %>
+                    <i class="bi bi-person-plus-fill"></i> Sign up
+                <% end %>
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="More infos">Read More</button>
+            <% end %>
+        </div>
+    </div>
+</div>
+
+<h2 class="pb-2 border-bottom">Feature List</h2>
+<div class="row py-2 row-cols-1 row-cols-lg-3">
+    <div class="feature col">
+        <div class="feature-icon mb-1">
+            <i class="bi bi-chat-square-dots-fill" style="font-size: 2rem;"></i>
+        </div>
+        <h3 class="fs-3">Feature Number 1</h3>
+        <p>Text explaining the specifics of the feature and how to use it, including details of how this improves the currently employed workflow.</p>
+        <a href="#" class="icon-link d-inline-flex align-items-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="tooltip content">
+            Link with tooltip using Popper.js
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"></use></svg>
+        </a>
+    </div>
+    <div class="feature col">
+        <div class="feature-icon mb-1">
+            <i class="bi bi-chat-square-heart-fill" style="font-size: 2rem;"></i>
+        </div>
+        <h3 class="fs-3">Feature Number 2</h3>
+        <p>Text explaining the specifics of the feature and how to use it, including details of how this improves the currently employed workflow.</p>
+        <a href="#" class="icon-link d-inline-flex align-items-center">
+            Call to action
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"></use></svg>
+        </a>
+    </div>
+    <div class="feature col">
+        <div class="feature-icon mb-1">
+            <i class="bi bi-chat-square-quote-fill" style="font-size: 2rem;"></i>
+        </div>
+        <h3 class="fs-3">Feature Number 3</h3>
+        <p>Text explaining the specifics of the feature and how to use it, including details of how this improves the currently employed workflow.</p>
+        <a href="#" class="icon-link d-inline-flex align-items-center">
+            Call to action
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"></use></svg>
+        </a>
+    </div>
+</div>

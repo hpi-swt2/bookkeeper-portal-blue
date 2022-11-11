@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookkeeper Blue</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %> <%# load Sprockets/Rails asset pipeline %>
+    <%= javascript_importmap_tags %> <%# load JS from importmaps %>
+  </head>
+
+  <body>
+    <%# https://getbootstrap.com/docs/5.0/layout/containers/ %>
+    <%# https://getbootstrap.com/docs/5.0/utilities/spacing/ %>
+    <div class="container mt-2"> <%# mt-2 == margin-top: 2*spacer %>
+      <% if notice %><p class="alert alert-success"><%= notice %></p><% end %>
+      <% if alert %><p class="alert alert-danger"><%= alert %></p><% end %>
+      <%= yield %>
+    </div>
+  </body>
+</html>
