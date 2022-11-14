@@ -59,6 +59,24 @@ Ensure you have access to a Unix-like environment through:
   * `--autocorrect` to fix what can be fixed automatically.
   * RuboCop's behavior can be [controlled](https://docs.rubocop.org/en/latest/configuration) using `.rubocop.yml`
 
+You can put the following script in `.git/hooks/pre-commit` to run RuboCop before each commit (run `chmod +x .git/hooks/pre-commit` to make it executable):
+
+```bash
+#!/bin/bash
+
+# Exit if one of the following commands fails
+set -e
+
+# The branch we want to diff against
+BASE=$(git merge-base origin/dev HEAD)
+
+# Find all changed ruby files
+FILES=$(git diff --name-only --diff-filter=d ${BASE} HEAD '*.rb')
+
+# Execute Linters
+bundle exec rubocop --force-exclusion --parallel $FILES
+```
+
 ### Debugging
 * `debug` anywhere in the code to access an interactive console
 * `save_and_open_page` within a feature test to inspect the state of a webpage in a browser
