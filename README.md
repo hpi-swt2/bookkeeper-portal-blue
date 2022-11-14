@@ -56,7 +56,7 @@ Ensure you have access to a Unix-like environment through:
 
 ### Linting
 * `bundle exec rubocop` Use the static code analyzer [RuboCop](https://github.com/rubocop-hq) to find possible issues (based on the community [Ruby style guide](https://github.com/rubocop-hq/ruby-style-guide)).
-  * `--auto-correct` to fix what can be fixed automatically.
+  * `--autocorrect` to fix what can be fixed automatically.
   * RuboCop's behavior can be [controlled](https://docs.rubocop.org/en/latest/configuration) using `.rubocop.yml`
 
 ### Debugging
