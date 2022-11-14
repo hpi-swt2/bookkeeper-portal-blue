@@ -36,7 +36,8 @@ jobs:
         with:
           ruby-version: 2.7.4 # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
+      - name: Run rubocop
+        run: bundle exec rubocop
       - name: Run RSpec tests (PostgreSQL)
         env:
           POSTGRES_USER: postgres
