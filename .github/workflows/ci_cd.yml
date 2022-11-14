@@ -75,14 +75,14 @@ jobs:
             release: bin/rails db:migrate; bin/rails assets:precompile
 
   deploy-staging:
-    if: github.ref == 'refs/heads/ci/pm-staging-deployment'
+    if: github.ref == 'refs/heads/dev'
     needs: rspec-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Deploy main to Heroku
+      - name: Deploy dev to Heroku
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
