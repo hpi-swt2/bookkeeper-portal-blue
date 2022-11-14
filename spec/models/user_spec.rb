@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe User, type: :model do
-  let(:user) { FactoryBot.build(:user) }
+  let(:user) { build(:user) }
 
   it "can be created using a factory" do
     expect(user).to be_valid
