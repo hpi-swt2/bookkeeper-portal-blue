@@ -73,3 +73,21 @@ jobs:
           procfile: |
             web: bin/rails server -p ${PORT:-5000} -e $RAILS_ENV
             release: bin/rails db:migrate; bin/rails assets:precompile
+
+  deploy-staging:
+    if: github.ref == 'refs/heads/dev'
+    needs: rspec-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy dev to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "bookkeeper-blue-dev"
+          heroku_email: "hpi.swt2+heroku@gmail.com"
+          procfile: |
+            web: bin/rails server -p ${PORT:-5000} -e $RAILS_ENV
+            release: bin/rails db:migrate; bin/rails assets:precompile
