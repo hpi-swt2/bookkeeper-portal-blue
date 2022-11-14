@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "User Edit Page", type: :feature do
   let(:password) { 'password' }
-  let(:user) { FactoryBot.create :user, password: password }
+  let(:user) { FactoryBot.create(:user, password: password) }
 
   it "cannot be reached when not logged in and displays error" do
     visit edit_user_registration_path
