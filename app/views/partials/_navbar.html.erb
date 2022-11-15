@@ -1,0 +1,16 @@
+<div class="bk-nav bk-nav-mobile border-top">
+    <% @nav.each do |nav_item| %>
+        <%= link_to nav_item[:path], class: "bk-nav-element" do %>
+            <i class="<%= nav_item[:icon] %>"></i>
+        <% end %>
+    <% end %>
+</div>
+
+<div class="bk-nav bk-nav-desktop border-bottom">
+    <% @nav.each do |nav_item| %>
+        <%= link_to nav_item[:path], class: "bk-nav-element" do %>
+            <i class="<%= nav_item[:icon] %>"></i>
+            <span class="bk-nav-text"><%= nav_item[:text] %></span>
+        <% end %>
+    <% end %>
+</div>
