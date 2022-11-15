@@ -12,7 +12,7 @@ Created in the [Scalable Software Engineering course](https://hpi.de/plattner/te
 
 ## Branch Naming
 
-Branch names have the following structure: `<type>/<team><issue-number><issue-name>`
+Branch names have the following structure: `<type>/<team>-<issue-number>-<issue-name>`
 
 - `<type>` gets replaced with feature or fix, depending on the type of changes introduced by the branch 
 
