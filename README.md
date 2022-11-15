@@ -10,6 +10,20 @@
 A web application for keeping track of items and loaning them out, written in [Ruby on Rails](https://rubyonrails.org/).
 Created in the [Scalable Software Engineering course](https://hpi.de/plattner/teaching/winter-term-2022-23/scalable-software-engineering.html) at the HPI in Potsdam.
 
+## Branch Naming
+
+Branch names have the following structure: `<type>/<team><issue-number><issue-name>`
+
+- `<type>` gets replaced with feature or fix, depending on the type of changes introduced by the branch 
+
+- `<team>` gets replaced with the abbreviation (e.g. BR) of the team that mostly develops on the branch 
+
+- `<issue-number>` gets replaced with the number of the issue the branch aims to close 
+
+- `<issue-name>` gets replaced with the name of the issue the branch aims to close, or a shortened form of it 
+
+Experimental branches may use the structure `experimental/<anything>`
+
 ## Development Setup
 Ensure you have access to a Unix-like environment through:
 
