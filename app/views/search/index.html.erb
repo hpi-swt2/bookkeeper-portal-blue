@@ -1,2 +1,158 @@
-<h1>Search#index</h1>
-<p>Find me in app/views/search/index.html.erb</p>
+<style>
+    .dropbtn {
+        background-color: #e9e9ed;
+        /*color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;*/
+        border: 1px solid #a2a2ae;
+        cursor: pointer;
+    }
+/*
+    .dropbtn:hover, .dropbtn:focus {
+        background-color: #2980B9;
+    }
+*/
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        /*min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+        z-index: 1;
+    }
+
+/*    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+*/
+    /*.dropdown a:hover {background-color: #ddd;}*/
+
+    .show {display: block;}
+
+    /* Popup container - can be anything you want */
+    .popup {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* The actual popup */
+    .popup .popuptext {
+        visibility: hidden;
+        width: 160px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 8px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -80px;
+    }
+
+    /* Popup arrow */
+    .popup .popuptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+    }
+
+    /* Toggle this class - hide and show the popup */
+    .popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+    }
+
+    /* Add animation (fade in the popup) */
+    @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+    }
+
+    @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+    }
+
+</style>
+
+<script>
+    function dropdown() {
+        document.getElementById("filter-dropdown").classList.toggle("show");
+        console.log("toggle dropdown");
+    }
+    
+    /*// Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            let dropdowns = document.getElementsByClassName("dropdown-content");
+            for (let i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    console.log("removing", openDropdown);
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }*/
+
+    function toggleScanner() {
+        var popup = document.getElementById("scanner-popup");
+        popup.classList.toggle("show");
+    }
+</script>
+
+<h1>Search</h1>
+
+<%= form_tag(search_path, method: :get) do %>
+    <%= label_tag(:search, "Search for:") %>
+    <%= text_field_tag :search, params[:search] %>
+    <div class="dropdown">
+        <p onclick="dropdown()" class="dropbtn">Dropdown</p>
+        <div id="filter-dropdown" class="dropdown-content">
+            <p>
+                <%= select_tag "filter_property", raw("<option>Title</option><option>Author</option><option>Release</option>") %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
+                <%= text_field_tag :filter_value, params[:filter_value] %>
+            </p>
+        </div>
+    </div>
+    <div class="popup" onclick="toggleScanner()">
+        QR-Scanner
+        <span class="popuptext" id="scanner-popup">Your QR-Scanner goes here</span>
+    </div>
+    <%= submit_tag "Search" %>
+<% end %>
+
+<% if @results %>
+<h2>Your search results:</h2>
+<ul>
+    <% @results.each do |result| %>
+        <li><%= result %></li>
+    <% end %>
+</ul>
+<% end %>
+<nav>
+    Your Nav-Bar goes here
+</nav>
