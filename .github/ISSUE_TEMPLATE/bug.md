@@ -1,4 +1,12 @@
-# Bug: descriptive-name
+---
+name: Bug
+about: Bug-Teamplate
+title: ‘’
+labels: Bug
+assignees: ‘’
+---
+
+## Bug: <descriptive-name>
 
 ## Problem Description
 
