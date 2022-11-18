@@ -1,0 +1,47 @@
+<div id="<%= dom_id item %>">
+  <p>
+    <strong>Name:</strong>
+    <%= item.name %>
+  </p>
+
+  <p>
+    <strong>Category:</strong>
+    <%= item.category %>
+  </p>
+
+  <p>
+    <strong>Location:</strong>
+    <%= item.location %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= item.description %>
+  </p>
+
+  <p>
+    <strong>Image:</strong>
+    <%= link_to item.image.filename, item.image if item.image.attached? %>
+  </p>
+
+  <p>
+    <strong>Price ct:</strong>
+    <%= item.price_ct %>
+  </p>
+
+  <p>
+    <strong>Rental duration sec:</strong>
+    <%= item.rental_duration_sec %>
+  </p>
+
+  <p>
+    <strong>Rental start:</strong>
+    <%= item.rental_start %>
+  </p>
+
+  <p>
+    <strong>Return checklist:</strong>
+    <%= item.return_checklist %>
+  </p>
+
+</div>
