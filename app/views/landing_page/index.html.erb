@@ -9,11 +9,24 @@
             <% if user_signed_in? %>
                 <div class="row py-2">
                     <div class="col">
-                        currently logged in user: <%= current_user.email %> |
-                        <%= link_to edit_user_registration_path, class: "link-primary" do %>
+                        <%# https://stimulus.hotwired.dev/reference/controllers %>
+                        <%# Connect span to `app/javascript/controllers/clipboard_controller.js` %>
+                        <span data-controller="clipboard">
+                            <%# Stimulus marks important elements as targets to reference them in the controller through corresponding properties %>
+                            <%# this.sourceTarget in `clipboard_controller.js` %>
+                            Logged in user: <span data-clipboard-target="source"><%= current_user.email %></span>
+                            <%# In Stimulus, controller methods which handle events are called action methods %>
+                            <%# `click->clipboard#copy` connects the button to the `copy` method in clipboard_controller.js %>
+                            <button data-action="click->clipboard#copy" data-clipboard-target="button" class="btn btn-outline-secondary btn-sm" style="width: 8em;">
+                                <i class="bi bi-clipboard-plus-fill"></i> Copy email
+                            </button>
+                        </span>
+                        <%= link_to edit_user_registration_path, class: "btn btn-primary btn-sm" do %>
                             <i class="bi bi-pencil-square"></i> Edit user profile
-                        <% end %> | 
-                        <%= link_to destroy_user_session_path, data: {"turbo-method": :delete}, class: "link-secondary" do %>
+                        <% end %>
+                        <%= link_to destroy_user_session_path,
+                            data: {"turbo-method": :delete, "controller": "tooltip", "bs-placement": "bottom", "bs-title": "DELETE → #{destroy_user_session_path}"},
+                            class: "btn btn-secondary btn-sm" do %>
                             <i class="bi bi-door-open-fill"></i> Log out
                         <% end %>
                     </div>
@@ -39,7 +52,7 @@
         </div>
         <h3 class="fs-3">Feature Number 1</h3>
         <p>Text explaining the specifics of the feature and how to use it, including details of how this improves the currently employed workflow.</p>
-        <a href="#" class="icon-link d-inline-flex align-items-center" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="tooltip content">
+        <a href="#" class="icon-link d-inline-flex align-items-center" data-controller="tooltip" data-bs-placement="right" data-bs-title="tooltip content">
             Link with tooltip using Popper.js
             <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"></use></svg>
         </a>
@@ -50,7 +63,7 @@
         </div>
         <h3 class="fs-3">Feature Number 2</h3>
         <p>Text explaining the specifics of the feature and how to use it, including details of how this improves the currently employed workflow.</p>
-        <a href="#" class="icon-link d-inline-flex align-items-center">
+        <a href="#" class="icon-link d-inline-flex align-items-center" data-controller="tooltip" data-bs-placement="top" data-bs-title="More infos">
             Call to action
             <svg class="bi" width="1em" height="1em"><use xlink:href="#chevron-right"></use></svg>
         </a>
