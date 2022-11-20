@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "items/new", type: :view do
-  before(:each) do
+  before do
     assign(:item, Item.new(
-      name: "MyString",
-      category: "MyString",
-      location: "MyString",
-      description: "MyText",
-      image: nil,
-      price_ct: 1,
-      rental_duration_sec: 1,
-      return_checklist: "MyText"
-    ))
+                    name: "MyString",
+                    category: "MyString",
+                    location: "MyString",
+                    description: "MyText",
+                    image: nil,
+                    price_ct: 1,
+                    rental_duration_sec: 1,
+                    return_checklist: "MyText"
+                  ))
   end
 
   it "renders new item form" do

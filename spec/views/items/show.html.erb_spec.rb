@@ -1,17 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe "items/show", type: :view do
-  before(:each) do
+  before do
     assign(:item, Item.create!(
-      name: "Name",
-      category: "Category",
-      location: "Location",
-      description: "MyText",
-      image: nil,
-      price_ct: 2,
-      rental_duration_sec: 3,
-      return_checklist: "MyText"
-    ))
+                    name: "Name",
+                    category: "Category",
+                    location: "Location",
+                    description: "MyText",
+                    image: nil,
+                    price_ct: 2,
+                    rental_duration_sec: 3,
+                    return_checklist: "MyText"
+                  ))
   end
 
   it "renders attributes in <p>" do

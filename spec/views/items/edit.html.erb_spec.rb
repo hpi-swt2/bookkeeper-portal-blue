@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "items/edit", type: :view do
-  let(:item) {
+  let(:item) do
     Item.create!(
       name: "MyString",
       category: "MyString",
@@ -12,9 +12,9 @@ RSpec.describe "items/edit", type: :view do
       rental_duration_sec: 1,
       return_checklist: "MyText"
     )
-  }
+  end
 
-  before(:each) do
+  before do
     assign(:item, item)
   end
 
