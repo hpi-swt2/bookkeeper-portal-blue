@@ -7,19 +7,16 @@ class Item < ApplicationRecord
   validates :description, presence: true
 
   def price_in_euro
-    if(price_ct != nil)
-      ct = price_ct%100
-      euro = (price_ct-ct)/100
-
+    unless price_ct.nil?
+      ct = price_ct % 100
+      euro = (price_ct - ct) / 100
       return euro, ct
     end
 
-    return 0,0
-
+    [0, 0]
   end
 
   def price_in_euro=(euros)
-    self.price_ct = euros*100
+    self.price_ct = euros * 100
   end
-
 end
