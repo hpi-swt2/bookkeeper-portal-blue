@@ -1,4 +1,8 @@
+# class of a basic item.
 class Item < ApplicationRecord
+  # TODO: add waitlist (pot. by has_many :through class waitlist)
+  # TODO: think of better way to reference related users
+
   has_one_attached :image
 
   validates :name, presence: true
