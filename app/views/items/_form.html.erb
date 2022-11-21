@@ -57,6 +57,11 @@
   </div>
 
   <div>
+    <%= form.label :owner, style: "display: block" %>
+    <%= form.collection_select(:owner, User.all, :id, :email) %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
