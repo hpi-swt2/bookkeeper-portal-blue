@@ -1,4 +1,16 @@
 class ApplicationController < ActionController::Base
+  before_action :set_nav
+
+  def set_nav
+    @nav = [
+      { text: "Home", path: "#", icon: "bi bi-house-door" },
+      { text: "Search", path: "#", icon: "bi bi-search" },
+      { text: "New Item", path: "#", icon: "bi bi-plus-square" },
+      { text: "Notifications", path: "#", icon: "bi bi-bell" },
+      { text: "Profile", path: "#", icon: "bi bi-person" }
+    ]
+  end
+
   around_action :switch_locale
 
   def switch_locale(&action)
