@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_21_204035) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_22_114920) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,8 +50,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_204035) do
     t.text "return_checklist"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "holder"
     t.integer "owner"
+    t.integer "holder"
+    t.index ["holder"], name: "index_items_on_holder"
     t.index ["owner"], name: "index_items_on_owner"
   end
 
@@ -69,5 +70,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_204035) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "items", "users", column: "holder"
   add_foreign_key "items", "users", column: "owner"
 end

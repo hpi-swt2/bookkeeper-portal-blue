@@ -62,6 +62,11 @@
   </div>
 
   <div>
+    <%= form.label :holder, style: "display: block" %>
+    <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true) %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
