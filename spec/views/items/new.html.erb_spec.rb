@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "items/new", type: :view do
   before do
-    assign(:item, create(:item))
+    assign(:item, build(:item))
   end
 
   it "renders new item form" do
