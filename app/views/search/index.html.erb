@@ -38,64 +38,6 @@
     /*.dropdown a:hover {background-color: #ddd;}*/
 
     .show {display: block;}
-
-    /* Popup container - can be anything you want */
-    .popup {
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    /* The actual popup */
-    .popup .popuptext {
-        visibility: hidden;
-        width: 160px;
-        background-color: #555;
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 8px 0;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        margin-left: -80px;
-    }
-
-    /* Popup arrow */
-    .popup .popuptext::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #555 transparent transparent transparent;
-    }
-
-    /* Toggle this class - hide and show the popup */
-    .popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
-    }
-
-    /* Add animation (fade in the popup) */
-    @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-    }
-
-    @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-    }
-
 </style>
 
 <script>
@@ -103,32 +45,33 @@
         document.getElementById("filter-dropdown").classList.toggle("show");
         console.log("toggle dropdown");
     }
-    
-    /*// Close the dropdown if the user clicks outside of it
-    window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-            let dropdowns = document.getElementsByClassName("dropdown-content");
-            for (let i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    console.log("removing", openDropdown);
-                    openDropdown.classList.remove('show');
-                }
-            }
-        }
-    }*/
-
-    function toggleScanner() {
-        var popup = document.getElementById("scanner-popup");
-        popup.classList.toggle("show");
-    }
 </script>
 
 <h1>Search</h1>
 
+<div class="modal fade" id="qrscanner" tabindex="-1" aria-labelledby="qrScannerLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="qrScannerLabel">QR-Scanner</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Your scanner goes here
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <%= form_tag(search_path, method: :get) do %>
     <%= label_tag(:search, "Search for:") %>
-    <%= text_field_tag :search, params[:search] %>
+    <div class="input-group">
+        <%= text_field_tag :search, params[:search] %>
+        <%= button_tag :qr_scanner, type: "button", class: ["btn btn-outline-secondary"], data: { "bs-toggle": "modal", "bs-target": "#qrscanner" } %>
+    </div>
     <div class="dropdown">
         <p onclick="dropdown()" class="dropbtn">Dropdown</p>
         <div id="filter-dropdown" class="dropdown-content">
@@ -138,11 +81,6 @@
             </p>
         </div>
     </div>
-    <div class="popup" onclick="toggleScanner()">
-        QR-Scanner
-        <span class="popuptext" id="scanner-popup">Your QR-Scanner goes here</span>
-    </div>
-    <%= submit_tag "Search" %>
 <% end %>
 
 <% if @results %>
@@ -153,6 +91,3 @@
     <% end %>
 </ul>
 <% end %>
-<nav>
-    Your Nav-Bar goes here
-</nav>
