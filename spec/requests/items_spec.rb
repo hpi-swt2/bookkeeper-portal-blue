@@ -20,7 +20,7 @@ RSpec.describe "/items", type: :request do
   let(:valid_attributes) { { name: "Test", location: "Test", category: "Test", description: "Test" } }
 
   let(:invalid_attributes) do
-    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt"}
+    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt" }
   end
 
   describe "GET /index" do
