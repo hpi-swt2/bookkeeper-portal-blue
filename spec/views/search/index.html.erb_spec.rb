@@ -12,7 +12,7 @@ RSpec.describe "search/index", type: :view do
 
       assert_select "input[type=?][id=?]", "text", "filter_value"
 
-      assert_select "input[type=?]", "submit"
+      assert_select "button[type=?]", "submit"
     end
   end
 end
