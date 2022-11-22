@@ -58,7 +58,7 @@
 
   <div>
     <%= form.label :owner, style: "display: block" %>
-    <%= form.collection_select(:owner, User.all, :id, :email) %>
+    <%= form.collection_select(:owner, User.all, :id, :email, :include_blank => true) %>
   </div>
 
   <div>
