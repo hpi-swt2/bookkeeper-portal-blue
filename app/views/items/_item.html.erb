@@ -21,7 +21,7 @@
 
   <p>
     <strong>Image:</strong>
-    <%= link_to item.image.filename, item.image if item.image.attached? %>
+    <%= image_tag(item.image) if item.image.attached?%>
   </p>
 
   <p>
