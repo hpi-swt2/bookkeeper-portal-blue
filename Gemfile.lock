@@ -326,6 +326,7 @@ DEPENDENCIES
   devise-i18n
   devise-i18n-bootstrap
   factory_bot_rails
+  i18n (~> 1.12)
   importmap-rails
   jbuilder
   net-http

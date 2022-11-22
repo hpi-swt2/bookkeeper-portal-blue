@@ -105,3 +105,5 @@ end
 group :production do
   gem 'pg' # production database runs on PostgreSQL
 end
+
+gem "i18n", "~> 1.12"
