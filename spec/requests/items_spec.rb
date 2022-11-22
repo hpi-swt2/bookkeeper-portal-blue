@@ -17,12 +17,10 @@ RSpec.describe "/items", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) do
-    skip("Add a hash of attributes valid for your model")
-  end
+  let(:valid_attributes) { { name: "Test", location: "Test", category: "Test", description: "Test" } }
 
   let(:invalid_attributes) do
-    skip("Add a hash of attributes invalid for your model")
+    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt"}
   end
 
   describe "GET /index" do
@@ -76,26 +74,21 @@ RSpec.describe "/items", type: :request do
           post items_url, params: { item: invalid_attributes }
         end.not_to change(Item, :count)
       end
-
-      it "renders a response with 422 status (i.e. to display the 'new' template)" do
-        post items_url, params: { item: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-
     end
   end
 
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) do
-        skip("Add a hash of attributes valid for your model")
+        { description: "NewDescription", location: "NewLocation" }
       end
 
       it "updates the requested item" do
         item = Item.create! valid_attributes
         patch item_url(item), params: { item: new_attributes }
         item.reload
-        skip("Add assertions for updated state")
+        expect(item.description).to eq("NewDescription")
+        expect(item.location).to eq("NewLocation")
       end
 
       it "redirects to the item" do
@@ -107,11 +100,16 @@ RSpec.describe "/items", type: :request do
     end
 
     context "with invalid parameters" do
+      let(:new_attributes) do
+        { description: 0, price_ct: "NotAnInteger" }
+      end
 
-      it "renders a response with 422 status (i.e. to display the 'edit' template)" do
+      it "does not update the requested item" do
         item = Item.create! valid_attributes
-        patch item_url(item), params: { item: invalid_attributes }
-        expect(response).to have_http_status(:unprocessable_entity)
+        patch item_url(item), params: { item: new_attributes }
+        item.reload
+        expect(item.description).not_to eq(0)
+        expect(item.price_ct).not_to eq("NotAnInteger")
       end
 
     end
