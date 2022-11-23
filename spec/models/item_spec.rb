@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
 
-  before(:each) do
+  before do
     @user = create(:user)
   end
 
@@ -36,7 +36,7 @@ RSpec.describe Item, type: :model do
   end
 
   it "is not valid without owner" do
-    item = described_class.new(name: "Test", category: "Test",  location: "Test", description: "Test")
+    item = described_class.new(name: "Test", category: "Test", location: "Test", description: "Test")
     expect(item).not_to be_valid
   end
 
