@@ -3,7 +3,8 @@ class NotificationsController < ApplicationController
   def index
     @notifications = Notification.where(user_id: current_user.id)
     @dates = @notifications.group_by do |notification|
-               notification.date.strftime('%d.%B %y')
-             end.sort_by { |date, _| date }.reverse
+      notification.date.strftime('%d. %B %y')
+    end
+    @dates.sort_by { |date, _| date }.reverse
   end
 end

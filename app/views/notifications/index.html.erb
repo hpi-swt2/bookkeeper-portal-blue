@@ -2,13 +2,15 @@
 
 <div id="notifications">
   <% @dates.each do |date| %>
-    <h1>
+    <h2>
         <%= date[0] %>
-    </h1>
-    <%date[1].each do |notification|%>
+    </h2>
+    <div class = "notification-grey-box">
+    <% date[1].each do |notification|%>
         <p>
             <%= link_to notification.notification_snippet, notifications_path %>
         </p>
     <% end %>
+    </div>
   <% end %>
 </div>
