@@ -1,7 +1,5 @@
 # class of a basic item.
 class Item < ApplicationRecord
-  # TODO: add waitlist (pot. by has_many :through class waitlist)
-  # TODO: think of better way to reference related users
 
   has_one_attached :image
 
@@ -9,6 +7,7 @@ class Item < ApplicationRecord
   validates :category, presence: true
   validates :location, presence: true
   validates :description, presence: true
+  validates :owner, presence: true
 
   def price_in_euro
     unless price_ct.nil?

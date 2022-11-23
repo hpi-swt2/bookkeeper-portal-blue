@@ -21,6 +21,7 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 24 * 7 }
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "Close the book. Remove sticky notes." }
+    owner { create(:user).id }
   end
   factory :item_beamer, class: 'Item' do
     name { "Beamer" }
@@ -32,6 +33,7 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 3 }
     rental_start { "2022-11-21 15:32:07" }
     return_checklist { "Turn off the beamer." }
+    owner { create(:user).id }
   end
   factory :item_whiteboard, class: 'Item' do
     name { "Whiteboard" }
@@ -43,5 +45,6 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 5 }
     rental_start { "2022-10-10 3:14:15" }
     return_checklist { "Clean the whiteboard." }
+    owner { create(:user).id }
   end
 end
