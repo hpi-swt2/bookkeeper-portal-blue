@@ -23,11 +23,6 @@ describe "Notifications Page", type: :feature do
     expect(page).to have_current_path(notifications_path)
   end
 
-  it "is scrollable" do
-    pending("find out how to test, maybe just test that bar is always is always there")
-    raise
-  end
-
   it "displays the notifications of the current user with text" do
     visit notifications_path
     @notifications.each do |notification|
@@ -40,7 +35,7 @@ describe "Notifications Page", type: :feature do
     same_day_notifications.each(&:save)
     visit notifications_path
     @notifications.each do |notification|
-      expect(page).to have_text(notification.date.strftime("%d.%B %y"))
+      expect(page).to have_text(notification.date.strftime("%d. %B %y"))
     end
   end
 
