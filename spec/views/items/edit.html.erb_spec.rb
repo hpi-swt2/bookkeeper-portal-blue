@@ -2,17 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "items/edit", type: :view do
   let(:item) do
-    Item.create!(
-      name: "MyString",
-      category: "MyString",
-      location: "MyString",
-      description: "MyText",
-      image: nil,
-      price_ct: 1,
-      rental_duration_sec: 1,
-      return_checklist: "MyText",
-      owner: create(:user).id
-    )
+    create(:item)
   end
 
   before do
