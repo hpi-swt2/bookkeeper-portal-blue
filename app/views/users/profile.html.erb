@@ -1,2 +1,13 @@
-<h1>Profile</h1>
-<p>Find me in app/views/users/profile.html.erb</p>
+<h1 class="display-5 fw-bold">Dein Profil</h1>
+<table>
+  <tr>
+    <td>
+<i class="bi bi-person-bounding-box" style="font-size: 10rem;"></i>
+    </td>
+    <td><h2> <%= @user.name %> </h2></td>
+  </tr>
+</table>
+<p class="lead mb-4">Gruppen: </p>
+<p class="lead mb-4">Email-Adresse: <%= @user.email %> </p>
+<%= link_to edit_user_registration_path, {class: "btn btn-outline-primary btn-lg px-4"} do %>
+    Profil bearbeiten <% end %>
