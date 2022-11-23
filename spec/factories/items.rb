@@ -9,6 +9,7 @@ FactoryBot.define do
     rental_duration_sec { 1 }
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
+    owner { create(:user).id }
   end
   factory :item_book, class: 'Item' do
     name { "Ruby on Rails by Example" }

@@ -10,7 +10,8 @@ RSpec.describe "items/edit", type: :view do
       image: nil,
       price_ct: 1,
       rental_duration_sec: 1,
-      return_checklist: "MyText"
+      return_checklist: "MyText",
+      owner: create(:user).id
     )
   end
 

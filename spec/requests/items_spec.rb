@@ -17,7 +17,7 @@ RSpec.describe "/items", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { name: "Test", location: "Test", category: "Test", description: "Test" } }
+  let(:valid_attributes) { { name: "Test", location: "Test", category: "Test", description: "Test", owner: create(:user).id } }
 
   let(:invalid_attributes) do
     { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt" }
