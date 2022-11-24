@@ -5,5 +5,14 @@ de:
     signup: "Registrieren"
     login: "Anmelden"
     logout: "Abmelden"
+    logged_in_user: "Aktuell angemeldet:"
+    edit_btn_text: "Profil bearbeiten"
   pages:
     dashboard: "Übersicht"
+    notifications: "Benachrichtigungen"
+    search: "Suche"
+    home: "Startseite"
+    new_item: "Neuer Gegenstand"
+    profile: "Profil"
+  common:
+    delete: "Löschen"
