@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+  itemCreated: "Item was successfully created."
+  itemUpdated: "Item was successfully updated."
+  itemDestroyed: "Item was successfully destroyed."

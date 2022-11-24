@@ -1,0 +1,73 @@
+<%= form_with(model: item) do |form| %>
+  <% if item.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :category, style: "display: block" %>
+    <%= form.text_field :category %>
+  </div>
+
+  <div>
+    <%= form.label :location, style: "display: block" %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= image_tag(item.image) if item.image.attached? %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :price_ct, style: "display: block" %>
+    <%= form.number_field :price_ct %>
+  </div>
+
+  <div>
+    <%= form.label :rental_duration_sec, style: "display: block" %>
+    <%= form.number_field :rental_duration_sec %>
+  </div>
+
+  <div>
+    <%= form.label :rental_start, style: "display: block" %>
+    <%= form.datetime_field :rental_start %>
+  </div>
+
+  <div>
+    <%= form.label :return_checklist, style: "display: block" %>
+    <%= form.text_area :return_checklist %>
+  </div>
+
+  <div>
+    <%= form.label :owner, style: "display: block" %>
+    <%= form.collection_select(:owner, User.all, :id, :email, :include_blank => true) %>
+  </div>
+
+  <div>
+    <%= form.label :holder, style: "display: block" %>
+    <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true) %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
