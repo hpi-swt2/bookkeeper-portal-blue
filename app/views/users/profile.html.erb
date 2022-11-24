@@ -3,21 +3,23 @@
       @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
   </style>
 </head>
+<p style="text-align:right">
+  <%= link_to edit_user_registration_path do %>
+    <%= image_tag "edit_square.png", size: "35x35", alt: "Profil bearbeiten"%>
+  <% end %>
+</p>
 
-<%= link_to edit_user_registration_path do %>
-  <img src="edit_square.png" alt="Profil bearbeiten" syle="width:35px;height:35px;"> <% end %>
-
-<img src="/app/assets/images/ProfilePicturePlaceholder.png" alt="Profile Picture" style="width:128px;height:128px;">
-
+<p style="text-align:center">
+  <%= image_tag "profile_picture_placeholder.png", size: "128x105", alt: "Profilbild"%>
+</p>
 
 <h1 style="text-align:center; font-size: 26px; font-family: 'Roboto'; font-weight: 300; color: #394044;"> <%= @user.name %> </h1>
 
 <h2 style="text-align:left; font-size: 18px; font-family: 'Roboto'; font-weight: 700; color: #B1063A;">Rollen</h2>
+<p style="text-align:left; font-size: 18px; font-family: 'Roboto'; font-weight: 400; color: #394044;"> Student</p>
 
 <h2 style="text-align:left; font-size: 18px; font-family: 'Roboto'; font-weight: 700; color: #B1063A;">Email</h2>
 <p style="text-align:left; font-size: 18px; font-family: 'Roboto'; font-weight: 400; color: #394044;"> <%= @user.email %> </p>
 
 <h2 style="text-align:left; font-size: 18px; font-family: 'Roboto'; font-weight: 700; color: #B1063A;">Gruppen</h2>
-
-<%= link_to edit_user_registration_path, {class: "btn btn-outline-primary btn-lg px-4"} do %>
-    Profil bearbeiten <% end %>
+<p style="text-align:left; font-size: 18px; font-family: 'Roboto'; font-weight: 400; color: #394044;"> Fotoclub <br> Clean IT-Club <br> HPI-ist-super-cool-Club </p>
