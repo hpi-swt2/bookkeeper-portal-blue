@@ -15,18 +15,13 @@ class ApplicationController < ActionController::Base
 
   def switch_locale(&action)
     locale = extract_locale_from_header
-    if I18n.locale_available?(locale)
-      I18n.with_locale(locale, &action)
-      logger.debug "* Locale set to '#{locale}'"
-    else
-      I18n.with_locale(I18n.default_locale, &action)
-    end
+    I18n.with_locale(locale, &action)
   end
 
   private
 
   def extract_locale_from_header
-    parsed_locale = request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    parsed_locale = request.headers['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
     if I18n.locale_available?(parsed_locale)
       parsed_locale
     else

@@ -2,7 +2,6 @@ require "rails_helper"
 
 describe "Translations", type: :feature do
 
-
   it "displays correct title on homepage in English by default" do
     visit root_path
     expect(page).to have_text("Bookkeeper Blue")

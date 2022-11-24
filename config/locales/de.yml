@@ -5,3 +5,5 @@ de:
     signup: "Registrieren"
     login: "Anmelden"
     logout: "Abmelden"
+  pages:
+    dashboard: "Übersicht"
