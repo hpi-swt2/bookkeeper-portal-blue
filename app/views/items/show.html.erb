@@ -3,8 +3,8 @@
 <%= render @item %>
 
 <div>
-  <%= link_to "Edit this item", edit_item_path(@item) %> |
+  <%= button_to "Edit this item", edit_item_path(@item), {id: "edit_item_button"} if ((current_user != nil) and @item.owner == current_user.id) %> |
   <%= link_to "Back to items", items_path %>
 
-  <%= button_to "Destroy this item", @item, method: :delete %>
+  <%= button_to "Destroy this item", @item, {method: :delete, id: "delete_item_button"} if ((current_user != nil) and @item.owner == current_user.id)%>
 </div>
