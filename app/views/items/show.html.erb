@@ -1,10 +1,101 @@
 <p style="color: green"><%= notice %></p>
-
-<%= render @item %>
-
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<style>
+  :root {
+      --Grey04: #394044;
+      --Primary06: #B1063A;
+      --Grey10: #C6CACC;
+  }
+  .Title{
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 800;
+      font-size: 20px;
+      line-height: 23px;
+      text-align: center;
+      text-transform: capitalize;
+      color: var(--Grey04);
+      margin: 1em 0px 0px 0px;
+  }
+  .Body1{
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 21px;
+      text-align: center;
+      color: var(--Grey04);
+  }
+  .Key{
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 21px;
+      color: var(--Primary06);
+      margin-bottom: 0px;
+  }
+  .Value{
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 21px;
+      color: var(--Grey04);
+  }
+  .Waitlist{
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      text-align: center;
+      color: var(--Grey04);
+  }
+  .WaitlistButton{
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 14px;
+      text-align: center;
+      color: var(--Grey04);
+      background-color: white;
+      border-radius: 5px;
+      border-color: white;
+  }
+  button{
+      font-family: "Comic Sans MS";
+      color: red;
+  }
+  .CenteredContainer{
+      margin: 0 auto;
+      width: 50%;
+  }
+</style>
 <div>
-  <%= link_to "Edit this item", edit_item_path(@item) %> |
-  <%= link_to "Back to items", items_path %>
+  <div class="row">
+    <div class="col-md-4">
+      <%= image_tag @item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" %>
+    </div>
 
-  <%= button_to "Destroy this item", @item, method: :delete %>
+    <p class="Title"><%=@item.name %></p>
+
+    <p class="Body1"><%= @item.location %></p>
+    <div class="CenteredContainer">
+      <p class="Key">Autor</p>
+        <p class="Value"><%= "Book specific; doesn't exist yes ^_-"%></p>
+      <p class="Key">Kategorie</p>
+        <p class="Value"><%= @item.category %></p>
+      <p class="Key">Besitzer</p>
+        <p class="Value"><%= User.find(@item.owner).email %></p>
+      <p class="Key">Ausleihe bis</p>
+        <p class="Value"><%= (@item.rental_start + @item.rental_duration_sec).strftime('%d.%m.%Y') %></p>
+    </div>
+  </div>
+
+
+  <!-- change to borrow item path when implemented -->
+  <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "WaitlistButton" %>
+
 </div>
