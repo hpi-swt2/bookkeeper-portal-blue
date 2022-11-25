@@ -18,8 +18,4 @@ has_many :notifications, dependent: :destroy
     "#{first_name} #{last_name}"
   end
 end
-<<<<<<< HEAD
-=======
-  
 
->>>>>>> bb2ae613359d4d9ad9d9dc509f1596675ea532ca
