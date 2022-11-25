@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
 
   def set_nav
     @nav = [
-      { text: "pages.home", path: "#", icon: "bi bi-house-door" },
-      { text: "pages.search", path: "#", icon: "bi bi-search" },
-      { text: "pages.new_item", path: "#", icon: "bi bi-plus-square" },
-      { text: "pages.notifications", path: "#", icon: "bi bi-bell" },
-      { text: "pages.profile", path: "#", icon: "bi bi-person" }
+      { text: t("views.home.title"), path: "#", icon: "bi bi-house-door" },
+      { text: t("views.search.title"), path: "#", icon: "bi bi-search" },
+      { text: t("views.new_item.title"), path: "#", icon: "bi bi-plus-square" },
+      { text: t("views.notifications.title"), path: "#", icon: "bi bi-bell" },
+      { text: t("views.profile.title"), path: "#", icon: "bi bi-person" }
     ]
   end
 

@@ -1,18 +1,30 @@
 de:
-  homepage:
-    title: "Bookkeeper Blau"
-    read_more: "Mehr lesen"
-    signup: "Registrieren"
-    login: "Anmelden"
-    logout: "Abmelden"
-    logged_in_user: "Aktuell angemeldet:"
-    edit_btn_text: "Profil bearbeiten"
-  pages:
-    dashboard: "Übersicht"
-    notifications: "Benachrichtigungen"
-    search: "Suche"
-    home: "Startseite"
-    new_item: "Neuer Gegenstand"
-    profile: "Profil"
-  common:
+  defaults:
     delete: "Löschen"
+  views:
+    landing_page:
+      title: "Bookkeeper Blau"
+      read_more: "Mehr lesen"
+      signup: "Registrieren"
+      login: "Anmelden"
+      logout: "Abmelden"
+      logged_in_user: "Aktuell angemeldet: %{email}"
+      edit_btn: "Profil bearbeiten"
+    dashboard:
+      title: "Übersicht"
+    notifications:
+      title: "Benachrichtigungen"
+    search:
+      title: "Suche"
+    home:
+      title: "Startseite"
+    new_item:
+      title: "Neuer Gegenstand"
+    profile:
+      title: "Profil"
+  models:
+    item:
+      item: "Gegenstand"
+      created: "Gegenstand wurde erfolgreich erstellt."
+      updated: "Gegenstand wurde erfolgreich verändert."
+      destroyed: "Gegenstand wurde erfolgreich entfernt."

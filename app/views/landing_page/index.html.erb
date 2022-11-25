@@ -1,7 +1,7 @@
 <div class="row py-5 my-5 text-center">
     <%# Bootstrap icons: https://icons.getbootstrap.com/ %>
     <i class="bi bi-journal-bookmark-fill" style="font-size: 5rem;"></i>
-    <h1 class="display-5 fw-bold"><%= t 'homepage.title' %></h1>
+    <h1 class="display-5 fw-bold"><%= t 'views.landing_page.title' %></h1>
     <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">Some text about this application's many features, the use cases as part of the sharing economy that it enables and the business value that users of the application can expect. Could also include a call to action to log in or could contain a rhetorical question. Wouldn't that be nice? </p>
         <div class="gap-3 d-sm-flex justify-content-sm-center">
@@ -9,23 +9,23 @@
             <% if user_signed_in? %>
                 <div class="row py-2">
                     <div class="col">
-                        <%= t 'homepage.logged_in_user' %> <%= current_user.email %> |
+                        <%= t('views.landing_page.logged_in_user', email: current_user.email) %> |
                         <%= link_to edit_user_registration_path, class: "link-primary" do %>
-                            <i class="bi bi-pencil-square"></i><%= t 'homepage.edit_btn_text' %>
+                            <i class="bi bi-pencil-square"></i><%= t 'views.landing_page.edit_btn' %>
                         <% end %> | 
                         <%= link_to destroy_user_session_path, data: {"turbo-method": :delete}, class: "link-secondary" do %>
-                            <i class="bi bi-door-open-fill"></i> <%= t 'homepage.logout' %>
+                            <i class="bi bi-door-open-fill"></i> <%= t 'views.landing_page.logout' %>
                         <% end %>
                     </div>
                 </div>
             <% else %>
                 <%= link_to new_user_session_path, {class: "btn btn-primary btn-lg px-4"} do %>
-                    <i class="bi bi-box-arrow-in-right"></i> <%= t 'homepage.login' %>
+                    <i class="bi bi-box-arrow-in-right"></i> <%= t 'views.landing_page.login' %>
                 <% end %>
                 <%= link_to new_user_registration_path, {class: "btn btn-outline-primary btn-lg px-4"} do %>
-                    <i class="bi bi-person-plus-fill"></i> <%= t 'homepage.signup' %>
+                    <i class="bi bi-person-plus-fill"></i> <%= t 'views.landing_page.signup' %>
                 <% end %>
-                <button type="button" class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="More infos"><%= t 'homepage.read_more' %></button>
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="More infos"><%= t 'views.landing_page.read_more' %></button>
             <% end %>
         </div>
     </div>
