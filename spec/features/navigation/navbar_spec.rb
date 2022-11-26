@@ -27,6 +27,12 @@ describe "Navigation Bar", type: :feature do
     expect(page).to have_link(href: search_path)
   end
 
+  it "has a link to new item" do
+    sign_in user
+    visit root_path
+    expect(page).to have_link(href: new_item_path)
+  end
+
   it "has a link to notifications" do
     sign_in user
     visit root_path
