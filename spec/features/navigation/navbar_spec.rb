@@ -44,4 +44,17 @@ describe "Navigation Bar", type: :feature do
     visit root_path
     expect(page).to have_link(href: profile_path)
   end
+
+  it "translates the navigation bar to German" do
+    sign_in user
+    page.driver.header 'Accept-language', 'de-DE'
+    visit root_path
+    expect(page).to have_text("Neuer Gegenstand")
+  end
+
+  it "translates the navigation bar to English by default" do
+    sign_in user
+    visit root_path
+    expect(page).to have_text("New Item")
+  end
 end
