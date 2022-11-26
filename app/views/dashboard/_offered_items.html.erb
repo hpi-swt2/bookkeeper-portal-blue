@@ -1,0 +1,11 @@
+<h1>Offered Items</h1>
+
+<% if user_signed_in? %>
+  <div>
+      currently logged in user: <%= current_user.index %> |
+      <% Items.where("owner = ?", params[:current_user.index]).order("title ASC")%>
+      <%current_user.offered_items%>
+  </div>
+<% else %>
+  <p>Du hast keine Artikel im Angebot</p>
+<% end %>
