@@ -9,7 +9,7 @@
   .Title{
       font-family: Roboto;
       font-style: normal;
-      font-weight: 800;
+      font-weight: 700;
       font-size: 20px;
       line-height: 23px;
       text-align: center;
@@ -52,10 +52,10 @@
       text-align: center;
       color: var(--Grey04);
   }
-  .WaitlistButton{
+  .SecondaryButton{
       font-family: Roboto;
       font-style: normal;
-      font-weight: 400;
+      font-weight: 700;
       font-size: 18px;
       line-height: 21px;
       text-align: center;
@@ -92,6 +92,6 @@
 
 
   <!-- change to borrow item path when implemented -->
-  <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "WaitlistButton" %>
+  <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "SecondaryButton" %>
 
 </div>
