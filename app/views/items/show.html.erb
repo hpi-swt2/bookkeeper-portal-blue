@@ -23,10 +23,12 @@
       font-weight: 400;
       font-size: 18px;
       line-height: 21px;
-      text-align: center;
       color: var(--Grey04);
   }
-  .Key{
+  #location{
+      text-align: center;
+  }
+  .Subtitle{
       font-family: Roboto;
       font-style: normal;
       font-weight: 700;
@@ -43,7 +45,7 @@
       line-height: 21px;
       color: var(--Grey04);
   }
-  .Waitlist{
+  .Caption{
       font-family: Roboto;
       font-style: normal;
       font-weight: 400;
@@ -62,36 +64,49 @@
       color: white;
       background-color: var(--Grey10);
       border-radius: 5px;
+      border-color: transparent;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-left: 11px;
+      padding-right: 11px;
   }
  
   .CenteredContainer{
       margin: 0 auto;
       width: 50%;
   }
+  
 </style>
 <div>
   <div class="row">
-    <div class="col-md-4">
-      <%= image_tag @item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" %>
-    </div>
+  <div class="CenteredContainer">
+
+      <div class=image>
+      <%= image_tag @item.image, class: "img img-responsive rounded mx-auto d-block", style: "max-width: 13em" %>
+      </div>
 
     <p class="Title"><%=@item.name %></p>
 
-    <p class="Body1"><%= @item.location %></p>
-    <div class="CenteredContainer">
-      <p class="Key">Autor</p>
-        <p class="Value"><%= "Book specific; doesn't exist yes ^_-"%></p>
-      <p class="Key">Kategorie</p>
-        <p class="Value"><%= @item.category %></p>
-      <p class="Key">Besitzer</p>
-        <p class="Value"><%= User.find(@item.owner).email %></p>
-      <p class="Key">Ausleihe bis</p>
-        <p class="Value"><%= (@item.rental_start + @item.rental_duration_sec).strftime('%d.%m.%Y') %></p>
+    <p class="Body1" id="location"><%= @item.location %></p>
+      <br>
+ 
+      <p class="Subtitle">Autor</p>
+        <p class="Body1"><%= "Book specific; doesn't exist yes ^_-"%></p>
+      <p class="Subtitle">Kategorie</p>
+        <p class="Body1"><%= @item.category %></p>
+      <p class="Subtitle">Besitzer</p>
+        <p class="VaBody1lue"><%= User.find(@item.owner).email %></p>
+      <p class="Subtitle">Ausleihe bis</p>
+        <p class="Body1"><%= (@item.rental_start + @item.rental_duration_sec).strftime('%d.%m.%Y') %></p>
+
+          <div class="d-flex justify-content-center" id="buttonDiv">
+          <!-- change to borrow item path when implemented -->
+          <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "SecondaryButton" %>
+          <!--%= button_to "Ausleihen", new_item_path(@item), method: :post, class: "Primary+Button" %-->
+          </div>
+
+          <br><br><br>
     </div>
   </div>
-
-
-  <!-- change to borrow item path when implemented -->
-  <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "SecondaryButton" %>
 
 </div>
