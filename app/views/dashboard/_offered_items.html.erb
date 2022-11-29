@@ -21,6 +21,8 @@
 
     .rect-img {
         aspect-ratio: 1/1;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
     }
 
@@ -38,7 +40,7 @@
             <% if item.image.attached? %>
               <%= image_tag(item.image, class: "rounded mb-2 img-fluid rect-img") %>
             <% else %>
-              <img class="bi bi-image mb-2" style="font-size: 5rem;"/>
+              <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
             <% end %>
             <p class="body2"><%= item.name %></p>
           </div>
