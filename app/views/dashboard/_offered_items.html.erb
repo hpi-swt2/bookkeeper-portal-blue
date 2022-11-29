@@ -29,7 +29,7 @@
 </style>
 
 <div>
-  <% items = Item.where(owner: current_user).order("name ASC") %>
+  <% items = Item.where(owner: current_user).order("LOWER(name) asc") %>
   <% if items.empty? %>
     <p class="body1">Du bietest bisher nichts an.</p>
   <% else %>
