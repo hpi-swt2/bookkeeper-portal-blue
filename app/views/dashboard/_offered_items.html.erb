@@ -1,32 +1,49 @@
-<% if user_signed_in? %>
-  <div>
-    <% items = Item.where(owner: current_user).order("name ASC") %>
-    <% if items.empty? %>
-      <p class="lead mb-4">Du bietest bisher nichts an. </p>
-    <% else %>
-      <div class="container text-center">
-        <div class="row row-cols-2 row-cols-lg-4 align-items-end justify-content-start">
-          <% items.each do |item| %>
-            <div class="col" ;>
-              <% if item.image.attached? %>
-                <%= image_tag(item.image, class: "rounded img-fluid") %>
-              <% else %>
-                <img class="bi bi-image" style="font-size: 5rem;" />
-              <% end %>
-              <p class="fw-semibold h5" ><%= item.name %></p>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-<% else %>
-  <p class="lead mb-4">Du bist nicht angemeldet. </p>
-  <%= link_to new_user_session_path, { class: "btn btn-primary btn-lg px-4" } do %>
-    <i class="bi bi-box-arrow-in-right"></i> <%= t 'views.landing_page.login' %>
-  <% end %>
-  <%= link_to new_user_registration_path, { class: "btn btn-outline-primary btn-lg px-4" } do %>
-    <i class="bi bi-person-plus-fill"></i> <%= t 'views.landing_page.signup' %>
-  <% end %>
-<% end %>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
+    .body1 {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        color: #394044;
+    }
+
+    .body2 {
+        color: #394044;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+    }
+
+    .rect-img {
+        aspect-ratio: 1/1;
+        object-fit: cover;
+    }
+
+</style>
+
+<div>
+  <% items = Item.where(owner: current_user).order("name ASC") %>
+  <% if items.empty? %>
+    <p class="body1">Du bietest bisher nichts an. </p>
+  <% else %>
+    <div class="container text-center">
+      <div class="row row-cols-2 row-cols-lg-4 align-items-end justify-content-start">
+        <% items.each do |item| %>
+          <div class="col" ;>
+            <% if item.image.attached? %>
+              <%= image_tag(item.image, class: "rounded mb-2 img-fluid rect-img") %>
+            <% else %>
+              <img class="bi bi-image mb-2" style="font-size: 5rem;"/>
+            <% end %>
+            <p class="body2"><%= item.name %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>
