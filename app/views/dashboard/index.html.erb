@@ -27,7 +27,7 @@
 
     .box {
         width: 350px;
-        border: 5px solid black;
+        border: 1px solid black;
         padding: 5px;
         margin: 5px;
         margin-bottom: 15px;
@@ -46,9 +46,8 @@
   </div>
 
   <h3 class="subtitle">ANGEBOTENE ARTIKEL</h3>
-  <div class="feature-icon mb-1">
-    <i class="bi bi-chat-square-quote-fill" style="font-size: 2rem;"></i>
-  </div>
+  <%= render "offered_items"%>
+
   <h3 class=" subtitle place-holder-nav">DEINE WUNSCHLISTE</h3>
   <div class="feature-icon mb-1">
     <i class="bi bi-chat-square-quote-fill" style="font-size: 2rem;"></i>
