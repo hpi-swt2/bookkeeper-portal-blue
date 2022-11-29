@@ -1,11 +1,32 @@
-<h1>Offered Items</h1>
-
 <% if user_signed_in? %>
   <div>
-      currently logged in user: <%= current_user.index %> |
-      <% Items.where("owner = ?", params[:current_user.index]).order("title ASC")%>
-      <%current_user.offered_items%>
-  </div>
+    <% items = Item.where(owner: current_user).order("name ASC") %>
+    <% if items.empty? %>
+      <p class="lead mb-4">Du bietest bisher nichts an. </p>
+    <% else %>
+      <div class="container text-center">
+        <div class="row row-cols-2 row-cols-lg-4 align-items-end justify-content-start">
+          <% items.each do |item| %>
+            <div class="col" ;>
+              <% if item.image.attached? %>
+                <%= image_tag(item.image, class: "rounded img-fluid") %>
+              <% else %>
+                <img class="bi bi-image" style="font-size: 5rem;" />
+              <% end %>
+              <p class="fw-semibold h5" ><%= item.name %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
 <% else %>
-  <p>Du hast keine Artikel im Angebot</p>
+  <p class="lead mb-4">Du bist nicht angemeldet. </p>
+  <%= link_to new_user_session_path, { class: "btn btn-primary btn-lg px-4" } do %>
+    <i class="bi bi-box-arrow-in-right"></i> <%= t 'views.landing_page.login' %>
+  <% end %>
+  <%= link_to new_user_registration_path, { class: "btn btn-outline-primary btn-lg px-4" } do %>
+    <i class="bi bi-person-plus-fill"></i> <%= t 'views.landing_page.signup' %>
+  <% end %>
 <% end %>
+
+</div>
