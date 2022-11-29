@@ -21,6 +21,10 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore edit settings
+.vscode
+.idea
+
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
 !/tmp/pids/
