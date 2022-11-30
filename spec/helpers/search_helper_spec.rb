@@ -23,12 +23,12 @@ RSpec.describe "Search", type: :helper do
 
   it "Seaches correctly for empty string" do
     results = search_for_items("")
-    expect(results.length()).to be(0)
+    expect(results.length).to be(0)
   end
 
   it "Seaches correctly for string only with whitespaces" do
     results = search_for_items("   ")
-    expect(results.length()).to be(0)
+    expect(results.length).to be(0)
   end
 
   it "Seaches correctly for both items with 'to'" do
@@ -37,55 +37,56 @@ RSpec.describe "Search", type: :helper do
     expect(results).to include(@item_beamer)
   end
 
-  it "Searches correctly for partial matching" do 
+  it "Searches correctly for partial matching" do
     results = search_for_items("Exampl")
     expect(results).to include(@item_book)
     expect(results).not_to include(@item_beamer)
   end
 
-  it "Searches correctly for attribute 'category'" do 
-    results = search_for_items(@item_book.name, {"category" => "Books"})
+  it "Searches correctly for attribute 'category'" do
+    results = search_for_items(@item_book.name, { "category" => "Books" })
     expect(results).to include(@item_book)
     expect(results).not_to include(@item_beamer)
   end
 
-  it "Searches correctly for attribute 'category' exluding an item with a matching search term" do 
-    results = search_for_items("o", {"category" => "Equipment"})
+  it "Searches correctly for attribute 'category' exluding an item with a matching search term" do
+    results = search_for_items("o", { "category" => "Equipment" })
     expect(results).not_to include(@item_book)
     expect(results).to include(@item_beamer)
     expect(results).to include(@item_whiteboard)
   end
 
-  it "Searches correctly for attribute 'category' exluding everything" do 
-    results = search_for_items("o", {"category" => "wubciubciubw"})
+  it "Searches correctly for attribute 'category' exluding everything" do
+    results = search_for_items("o", { "category" => "wubciubciubw" })
     expect(results).not_to include(@item_book)
     expect(results).not_to include(@item_beamer)
     expect(results).not_to include(@item_whiteboard)
   end
 
-  it "Searches correctly for numerical attribute 'price_ct' exluding an item with a matching search term" do 
-    results = search_for_items("o", {}, {"price_ct" => {"lower_bound" => 100, "upper_bound" => 500}})
+  it "Searches correctly for numerical attribute 'price_ct' exluding an item with a matching search term" do
+    results = search_for_items("o", {}, { "price_ct" => { "lower_bound" => 100, "upper_bound" => 500 } })
     expect(results).not_to include(@item_book)
     expect(results).to include(@item_beamer)
     expect(results).to include(@item_whiteboard)
   end
 
-  it "Searches correctly for numerical attribute 'price_ct' exluding everything" do 
-    results = search_for_items("o", {}, {"price_ct" => {"lower_bound" => 2, "upper_bound" => 3}})
+  it "Searches correctly for numerical attribute 'price_ct' exluding everything" do
+    results = search_for_items("o", {}, { "price_ct" => { "lower_bound" => 2, "upper_bound" => 3 } })
     expect(results).not_to include(@item_book)
     expect(results).not_to include(@item_beamer)
     expect(results).not_to include(@item_whiteboard)
   end
 
-  it "Searches correctly for numerical attribute 'price_ct' with exact amount" do 
-    results = search_for_items("o", {}, {"price_ct" => {"lower_bound" => 100, "upper_bound" => 100}})
+  it "Searches correctly for numerical attribute 'price_ct' with exact amount" do
+    results = search_for_items("o", {}, { "price_ct" => { "lower_bound" => 100, "upper_bound" => 100 } })
     expect(results).not_to include(@item_book)
     expect(results).to include(@item_beamer)
     expect(results).not_to include(@item_whiteboard)
   end
 
-  it "Searches correctly for numerical attribute and categorical attribute" do 
-    results = search_for_items("o", {"category" => "Equipment"}, {"price_ct" => {"lower_bound" => 500, "upper_bound" => 10_000}})
+  it "Searches correctly for numerical attribute and categorical attribute" do
+    results = search_for_items("o", { "category" => "Equipment" },
+                               { "price_ct" => { "lower_bound" => 500, "upper_bound" => 10_000 } })
     expect(results).not_to include(@item_book)
     expect(results).not_to include(@item_beamer)
     expect(results).to include(@item_whiteboard)
