@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
   def index
-    @results = ["SAP S/4HANA", "Erstifilm", "Coffee"]
+    @results = Item.all
   end
 end
