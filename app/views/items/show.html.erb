@@ -1,76 +1,31 @@
 <p style="color: green"><%= notice %></p>
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
 <style>
-  :root {
-      --Grey04: #394044;
-      --Primary06: #B1063A;
-      --Grey10: #C6CACC;
+:root{
+  --grey04: #394044;
+}
+  .caption{
+    text-align: center;
   }
-  .Title{
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 700;
-      font-size: 20px;
-      line-height: 23px;
-      text-align: center;
-      text-transform: capitalize;
-      color: var(--Grey04);
-      margin: 1em 0px 0px 0px;
+  .subtitle{
+     margin-bottom: 0px;
   }
-  .Body1{
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 21px;
-      color: var(--Grey04);
+  .title{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--grey04);
+    margin: 1em 0px 0px 0px;
   }
   #location{
       text-align: center;
   }
-  .Subtitle{
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 21px;
-      color: var(--Primary06);
-      margin-bottom: 0px;
-  }
-  .Value{
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 21px;
-      color: var(--Grey04);
-  }
-  .Caption{
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 14px;
-      text-align: center;
-      color: var(--Grey04);
-  }
-  .SecondaryButton{
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 21px;
-      text-align: center;
-      color: white;
-      background-color: var(--Grey10);
-      border-radius: 5px;
-      border-color: transparent;
-      padding-top: 5px;
-      padding-bottom: 5px;
-      padding-left: 11px;
-      padding-right: 11px;
-  }
-  .CenteredContainer{
+  .centeredContainer{
       margin: 0 auto;
       width: 65%;
   }
@@ -80,6 +35,8 @@
     padding-bottom:100%;
     max-width: 25em;
     max-height: 25em !important; 
+    padding-left: 0px;
+    padding-right: 0px;  
   }
   .image img{
     position:absolute;
@@ -89,13 +46,41 @@
     max-height: 25em !important;
   }
 
+  #back-button{
+    font-size: 35px;
+  }
+
+  #locationIcon{
+    font-size: 20px;
+    vertical-align: text-top;
+  }
+
+  .material-symbols-outlined{
+    color: var(--grey04);
+  }
+
+  .secondaryButton {
+    width: 100%;
+  }
+
+  #wishlistIcon {
+    font-size: 1.5em;
+    position: absolute;
+    top: 0.225em;
+    right: 0.25em;
+    z-index: 100;
+    color: var(--grey04);
+  }
+
   @media screen and (min-width: 768px) {
     .image{
       position:relative;
       overflow:hidden;
       padding-bottom:20em;
-      width: 400px;
-      height: 400px !important; 
+      width: 25em;
+      height: 25em !important;
+      padding-left: 0px;
+      padding-right: 0px;   
     }
     .image img{
       position: absolute;
@@ -104,40 +89,48 @@
       transform: translateX(-50%) translateY(-50%);
       border-radius: 5px;
     }
-    .CenteredContainer{
+    .centeredContainer{
       margin: 0 auto;
-      width: 30%;
+      width: 25em;
     }
   }
   
 </style>
 <div>
-  <div class="row">
-  <div class="CenteredContainer">
 
+  <span class="material-symbols-outlined" id="back-button">chevron_left
+</span>
+
+  <div class="row">
+  <div class="centeredContainer">
+
+      <div class="text-center"> 
       <div class="image container-fluid rounded">
+      <span class="material-symbols-outlined" id="wishlistIcon">grade</span>
       <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block"%>
+      
       </div>
 
-    <p class="Title"><%=@item.name %></p>
+    <p class="title"><%=@item.name %></p>
 
-    <p class="Body1" id="location"><%= @item.location %></p>
+    <p class="body1" id="location"><span class="material-symbols-outlined" id="locationIcon">
+    location_on</span><%= @item.location %></p>
       <br>
+      </div>
  
-      <p class="Subtitle">Autor</p>
-        <p class="Body1"><%= "Book specific; doesn't exist yes ^_-"%></p>
-      <p class="Subtitle">Kategorie</p>
-        <p class="Body1"><%= @item.category %></p>
-      <p class="Subtitle">Besitzer</p>
-        <p class="VaBody1lue"><%= User.find(@item.owner).email %></p>
-      <p class="Subtitle">Ausleihe bis</p>
-        <p class="Body1"><%= (@item.rental_start + @item.rental_duration_sec).strftime('%d.%m.%Y') %></p>
+      <p class="subtitle">Autor</p>
+        <p class="body1"><%= "Book specific; doesn't exist yes ^_-"%></p>
+      <p class="subtitle">Kategorie</p>
+        <p class="body1"><%= @item.category %></p>
+      <p class="subtitle">Besitzer</p>
+        <p class="body1"><%= User.find(@item.owner).email %></p>
+      <p class="subtitle">Ausleihe bis</p>
+        <p class="body1"><%= (@item.rental_start + @item.rental_duration_sec).strftime('%d.%m.%Y') %></p>
 
-          <div class="d-flex justify-content-center" id="buttonDiv">
           <!-- change to borrow item path when implemented -->
-          <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "SecondaryButton" %>
-          <!--%= button_to "Ausleihen", new_item_path(@item), method: :post, class: "Primary+Button" %-->
-          </div>
+          <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "secondaryButton" %>
+          <!--%= button_to "Ausleihen", new_item_path(@item), method: :post, class: "primaryButton" %-->
+       
 
           <br><br><br>
     </div>
