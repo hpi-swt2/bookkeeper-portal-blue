@@ -70,3 +70,5 @@ yarn-debug.log*
 
 # Used by RuboCop. Remote config files pulled in from inherit_from directive.
 .rubocop-https?--*
+# ignore OS specifics
+.DS_Store
