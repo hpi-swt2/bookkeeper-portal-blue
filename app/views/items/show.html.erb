@@ -116,6 +116,8 @@
       <p class="body1"><%= "Book specific; doesn't exist yes ^_-"%></p>
       <p class="subtitle">Kategorie</p>
       <p class="body1"><%= @item.category %></p>
+      <p class="subtitle">Description</p>
+      <p class="body1"><%= @item.description %></p>
       <p class="subtitle">Besitzer</p>
       <p class="body1"><%= User.find(@item.owner).email %></p>
       <p class="subtitle">Ausleihe bis</p>

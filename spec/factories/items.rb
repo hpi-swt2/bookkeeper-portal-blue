@@ -4,7 +4,7 @@ FactoryBot.define do
     category { "MyCategory" }
     location { "MyLocation" }
     description { "MyDescription" }
-    image { nil }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
     price_ct { 1 }
     rental_duration_sec { 1 }
     rental_start { "2022-11-18 15:32:07" }
