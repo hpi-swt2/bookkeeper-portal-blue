@@ -53,6 +53,12 @@ en:
       title: "New Item"
     profile:
       title: "Profile"
+      roles: "Roles"
+      email: "Email Address"
+      groups: "Groups"
+      edit_profile: "Edit Profile"
+      edit_profile_image: >
+        <%= image_tag "edit_square.png", class: "mt-3 ", size: "35x35", alt: "Edit Profile"%>
   models:
     item:
       item: "Item"

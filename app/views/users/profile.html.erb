@@ -29,21 +29,21 @@
 </head>
 <p style="text-align:right">
   <%= link_to edit_user_registration_path do %>
-    <%= image_tag "edit_square.png", class: "mt-3 ", size: "35x35", alt: "Profil bearbeiten"%>
+    <%= t 'edit_profile_image' %>
   <% end %>
 </p>
 
 <p style="text-align:center">
-  <%= image_tag "profile_picture_placeholder.png", class: "rounded-circle",  size: "128x128", alt: "Profilbild"%>
+  edit_profile_image: <%= image_tag "edit_square.png", class: "mt-3 ", size: "35x35", alt: "Profil bearbeiten"%>
 </p>
 
 <h1> <%= @user.name %> </h1>
 
-<h2>Rollen</h2>
+<h2><%= t 'roles' %></h2>
 <p>Student</p>
 
-<h2>Email</h2>
+<h2><%= t 'email' %></h2>
 <p> <%= @user.email %> </p>
 
-<h2>Gruppen</h2>
+<h2><%= t 'groups' %></h2>
 <p> Fotoclub <br> Clean IT-Club <br> HPI-ist-super-cool-Club </p>
