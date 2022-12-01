@@ -4,6 +4,7 @@
 <style>
 :root{
   --grey04: #394044;
+  --secondary08: #55A6BE;
 }
   .caption{
     text-align: center;
@@ -63,13 +64,25 @@
     width: 100%;
   }
 
-  #wishlistIcon {
+  .wishlistIcon {
     font-size: 1.5em;
     position: absolute;
     top: 0.225em;
     right: 0.25em;
     z-index: 100;
+  }
+
+  #notFilledWishlistIcon {
     color: var(--grey04);
+  }
+
+  #filledWishlistIcon {
+    color: var(--secondary08);
+    font-variation-settings:
+      'FILL' 1,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 48
   }
 
   @media screen and (min-width: 768px) {
@@ -102,7 +115,9 @@
     <div class="centeredContainer">
       <div class="text-center">
         <div class="image container-fluid rounded">
-          <span class="material-symbols-outlined" id="wishlistIcon">grade</span>
+          <!--only show filled icon if icon is on wishlist-->
+          <!--span class="material-symbols-outlined wishlistIcon" id="filledWishlistIcon">grade</span-->
+          <span class="material-symbols-outlined wishlistIcon" id="notFilledWishlistIcon">grade</span>
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image != nil%>
         </div>
         <p class="title"><%=@item.name %></p>
