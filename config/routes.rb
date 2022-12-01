@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get 'profile', to: 'users#profile'
   end
 
+  resources :users
   # Defines the root path route ("/")
   root "landing_page#index"
 end
