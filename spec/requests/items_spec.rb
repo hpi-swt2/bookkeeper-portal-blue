@@ -35,7 +35,7 @@ RSpec.describe "/items", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      item = FactoryBot.create(:item)
+      item = create(:item)
       get item_url(item)
       expect(response).to be_successful
     end
