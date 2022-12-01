@@ -9,29 +9,29 @@ RSpec.describe "Search", type: :helper do
     @item_whiteboard = create(:item_whiteboard)
   end
 
-  it "Seaches correctly for name" do
+  it "Searches correctly for name" do
     results = search_for_items(@item_book.name)
     expect(results).to include(@item_book)
     expect(results).not_to include(@item_beamer)
   end
 
-  it "Seaches correctly for description" do
+  it "Searches correctly for description" do
     results = search_for_items(@item_book.description)
     expect(results).to include(@item_book)
     expect(results).not_to include(@item_beamer)
   end
 
-  it "Seaches correctly for empty string" do
+  it "Searches correctly for empty string" do
     results = search_for_items("")
     expect(results.length).to be(0)
   end
 
-  it "Seaches correctly for string only with whitespaces" do
+  it "Searches correctly for string only with whitespaces" do
     results = search_for_items("   ")
     expect(results.length).to be(0)
   end
 
-  it "Seaches correctly for both items with 'to'" do
+  it "Searches correctly for both items with 'to'" do
     results = search_for_items("to")
     expect(results).to include(@item_book)
     expect(results).to include(@item_beamer)
