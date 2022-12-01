@@ -5,6 +5,7 @@ module SearchHelper
   #
   # filter_category: filter search results with a hash in the form:
   # {"filter_name_a" => "filter_value_a", "filter_name_b" => "filter_value_b"}.
+  #
   # filter_numerical: filter search by numerial range in the form:
   # {"search_name" => {"lower_bound" => 8, "upper_bound" => 10}, ...}
   def search_for_items(search_term, filter_category = {}, filter_numerical = {})
