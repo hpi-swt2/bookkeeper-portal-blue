@@ -127,19 +127,19 @@
           <%= @item.location %></p>
         <br>
       </div>
-      <p class="subtitle">Autor</p>
+      <p class="subtitle"><%= t('views.show_item.author')%></p>
       <p class="body1"><%= "Book specific; doesn't exist yes ^_-"%></p>
-      <p class="subtitle">Kategorie</p>
+      <p class="subtitle"><%= t('views.show_item.category')%></p>
       <p class="body1"><%= @item.category %></p>
-      <p class="subtitle">Description</p>
+      <p class="subtitle"><%= t('views.show_item.description')%></p>
       <p class="body1"><%= @item.description %></p>
-      <p class="subtitle">Besitzer</p>
+      <p class="subtitle"><%= t('views.show_item.owner')%></p>
       <p class="body1"><%= User.find(@item.owner).email %></p>
-      <p class="subtitle">Ausleihe bis</p>
+      <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
       <p class="body1"><%= (@item.rental_start + @item.rental_duration_sec).strftime('%d.%m.%Y') %></p>
       <!-- change to borrow item path when implemented -->
-      <%= button_to "Auf die Warteliste", new_item_path(@item), method: :post, class: "secondaryButton" %>
-      <!--%= button_to "Ausleihen", new_item_path(@item), method: :post, class: "primaryButton" %-->
+      <%= button_to t('views.show_item.enter_waitlist'), new_item_path(@item), method: :post, class: "secondaryButton" %>
+      <!--%= button_to t('views.show_item.lend'), new_item_path(@item), method: :post, class: "primaryButton" %-->
       <br><br><br>
     </div>
   </div>
