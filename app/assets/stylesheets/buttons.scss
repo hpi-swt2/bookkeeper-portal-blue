@@ -1,0 +1,7 @@
+@import 'text';
+@import 'colors';
+
+.btn {
+    @include subtitle($color: false);
+    min-width: 167px;
+}
