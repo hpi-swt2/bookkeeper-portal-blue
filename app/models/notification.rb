@@ -3,6 +3,10 @@ class Notification < ApplicationRecord
 
   belongs_to :user
 
+  def custom_partial
+    specific.class.name.underscore
+  end
+
   # delegate methods from the "subclasses" (which aren't really subclasses)
   # to the specific instances
   def method_missing(method, *args, &block)
