@@ -45,6 +45,9 @@ en:
       title: "Dashboard"
     notifications:
       title: "Notifications"
+      lend_request:
+        title: "Lend Request"
+        description: "%{user} wants to borrow your %{item}."
     search:
       title: "Search"
     home:

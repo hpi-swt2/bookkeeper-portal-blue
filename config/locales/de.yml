@@ -14,6 +14,9 @@ de:
       title: "Übersicht"
     notifications:
       title: "Benachrichtigungen"
+      lend_request:
+        title: "Ausleihanfrage"
+        description: "%{user} möchte %{item} von dir ausleihen."
     search:
       title: "Suche"
     home:
