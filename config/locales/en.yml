@@ -32,6 +32,8 @@
 en:
   defaults:
     delete: "Delete"
+    accept: "Accept"
+    decline: "Decline"
   views:
     landing_page:
       title: "Bookkeeper Blue"

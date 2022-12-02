@@ -1,6 +1,8 @@
 de:
   defaults:
     delete: "Löschen"
+    accept: "Annehmen"
+    decline: "Ablehnen"
   views:
     landing_page:
       title: "Bookkeeper Blau"
