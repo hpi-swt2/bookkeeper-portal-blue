@@ -1,5 +1,4 @@
 @import 'text';
-@import 'colors';
 
 .btn {
     @include subtitle($color: false);
