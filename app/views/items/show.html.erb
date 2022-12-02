@@ -124,8 +124,10 @@
         </div>
         <div>
           <p class="title"><%=@item.name %>
-          <%= link_to edit_item_url(@item) do %>
-            <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
+          <% if ((current_user != nil) && @item.owner == current_user.id) %>
+            <%= link_to edit_item_url(@item) do %>
+              <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
+            <% end %>
           <% end %>
           </p>
         </div>
