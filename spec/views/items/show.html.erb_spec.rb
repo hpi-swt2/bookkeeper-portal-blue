@@ -7,13 +7,13 @@ RSpec.describe "items/show", type: :feature do
 
   it "renders attributes" do
     visit item_path(item)
-    expect(page).to match(/Name/)
-    expect(page).to match(/Category/)
-    expect(page).to match(/Location/)
-    expect(page).to match(/Description/)
-    expect(page).to match(//)
-    expect(page).to match(/Price/) # match(/2/)
-    expect(page).to match(/Rental Duration/) # match(/3/)
+    expect(page).to have_text(item.name)
+    expect(page).to have_text(item.category)
+    expect(page).to have_text(item.location)
+    expect(page).to have_text(item.description)
+    # expect(page).to match(//)
+    # expect(page).to match(/Price/) # match(/2/)
+    # expect(page).to match(/Rental Duration/) # match(/3/)
     # expect(page).to have_text("Rental start")
     # expect(page).to have_text("Return checklist")
   end
@@ -21,7 +21,7 @@ RSpec.describe "items/show", type: :feature do
   it "shows edit button for owner" do
     sign_in user
     visit item_path(item)
-    expect(page).to have_button(id: "notFilledEditItemIcon")
+    expect(page).to have_link(href: edit_item_url(item))
   end
 
   it "does not show edit button for non-owner" do
