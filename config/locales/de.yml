@@ -12,6 +12,12 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
+      greeting: "Hallo, %{name}!"
+      unread_messages: "Du hast ... ungelesene Nachrichten"
+      lent_items: "AUSGELIEHENE ARTIKEL"
+      offered_items: "ANGEBOTENE ARTIKEL"
+      nothing_offered: "Du bietest bisher nichts an."
+      your_wishlist: "DEINE WUNSCHLISTE"
     notifications:
       title: "Benachrichtigungen"
     search:
