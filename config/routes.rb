@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
   get 'search', to: 'search#index'
   get 'notifications', to: 'notifications#index'
+  get 'notifications/:id', to: 'notifications#show'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # https://github.com/heartcombo/devise/blob/main/README.md

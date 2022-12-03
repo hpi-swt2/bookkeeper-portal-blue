@@ -8,7 +8,7 @@
     <div class = "notification-grey-box">
     <% date[1].each do |notification|%>
         <p>
-            <%= link_to notification.notification_snippet, notifications_path %>
+            <%= link_to notification.notification_snippet, "notifications/" + notification.id.to_s %>
         </p>
     <% end %>
     </div>

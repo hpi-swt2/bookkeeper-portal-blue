@@ -7,4 +7,8 @@ class NotificationsController < ApplicationController
     end
     @dates.sort_by { |date, _| date }.reverse
   end
+
+  def show
+    @notification = Notification.find(params[:id])
+  end
 end
