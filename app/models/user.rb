@@ -5,6 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   has_many :notifications, dependent: :destroy
+  has_and_belongs_to_many :items
 
   # Method expects all emails to follow format "firstname.lastname@anything" in order to extract first name out of email
   def first_name

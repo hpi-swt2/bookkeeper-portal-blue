@@ -54,4 +54,13 @@ RSpec.describe "Dashboard", type: :feature do
     visit dashboard_path
     expect(page).to have_content(/Wunschliste/i)
   end
+
+  it "shows wishlist item" do
+    @user = create(:user)
+    item = create(:item, owner: @user.id)
+    @user.items << (item)
+    sign_in @user
+    visit dashboard_path
+    expect(page).to have_content(item.name)
+  end
 end

@@ -1,6 +1,7 @@
 # class of a basic item.
 class Item < ApplicationRecord
   has_one_attached :image
+  has_and_belongs_to_many :users
 
   validates :name, presence: true
   validates :category, presence: true

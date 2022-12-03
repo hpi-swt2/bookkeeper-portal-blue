@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_22_114920) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_03_120957) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -54,6 +54,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_114920) do
     t.integer "holder"
     t.index ["holder"], name: "index_items_on_holder"
     t.index ["owner"], name: "index_items_on_owner"
+  end
+
+  create_table "items_users", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "item_id"
+    t.index ["item_id"], name: "index_items_users_on_item_id"
+    t.index ["user_id"], name: "index_items_users_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
