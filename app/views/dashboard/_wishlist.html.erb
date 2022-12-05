@@ -43,6 +43,17 @@
               <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
             <% end %>
             <p class="body2"><%= item.name %></p>
+
+
+            <% if item.holder.nil? %>
+              <p class="body2">Verfügbar!</p>
+            <% elsif item.holder == current_user.id %>
+              <p class="body2">Von dir ausgeliehen!</p>
+            <% else %>
+              <p class="body2">Nicht verfügbar!</p>
+            <% end %>
+
+
           </div>
         <% end %>
       </div>
