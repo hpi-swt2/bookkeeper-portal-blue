@@ -57,10 +57,20 @@ RSpec.describe "Dashboard", type: :feature do
 
   it "shows wishlist item" do
     @user = create(:user)
-    item = create(:item, owner: @user.id)
-    @user.items << (item)
+    item = create(:item)
+    @user.wishlist << (item)
     sign_in @user
     visit dashboard_path
     expect(page).to have_content(item.name)
+  end
+
+  it "shows message when wishlist is empty" do
+    @user = create(:user)
+    sign_in @user
+    visit dashboard_path
+    expect(page).to have_content("You don't have any items saved at the moment.")
+    page.driver.header 'Accept-language', 'de-DE'
+    visit dashboard_path
+    expect(page).to have_content("Du hast zurzeit keine Artikel gespeichert.")
   end
 end
