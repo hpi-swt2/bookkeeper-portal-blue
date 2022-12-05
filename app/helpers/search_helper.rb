@@ -11,50 +11,83 @@ module SearchHelper
   def search_for_items(search_term, filter_category = {}, filter_numerical = {})
     return [] if search_term.blank?
 
-    sql_where_clause = generate_sql_where_clause(search_term, filter_category, filter_numerical)
-    Item.where(sql_where_clause)
+    partial_matching_clause = create_partial_matching_clause(search_term)
+    categorial_attribute_clause = create_mutiple_categorial_attribute_clause(filter_category)
+    numerical_attribute_clause = create_mutiple_numerical_attribute_clause(filter_numerical)
+
+    Item.where(partial_matching_clause)
+        .where(categorial_attribute_clause)
+        .where(numerical_attribute_clause)
   end
 
   private
 
-  # returns LIKE partial matching search
-  def create_sql_like(search_attribute, search_term)
+  # CREATE CLAUSE FOR PARTIAL MATCHING
+
+  def create_partial_matching_attribute_term(search_attribute, search_term)
     "#{search_attribute} LIKE '%#{Item.sanitize_sql_like(search_term)}%'"
   end
 
-  def create_sql_like_one_search_term(search_term)
-    relevant_search_attributes.map { |attribute| create_sql_like(attribute, search_term) }.join(" OR ")
+  def create_partial_matching_one_search_term(search_term)
+    clauses = relevant_search_attributes.map do |attribute|
+      create_partial_matching_attribute_term(attribute, search_term)
+    end
+    clauses.join(" OR ")
   end
 
-  def create_sql_like_multiple_search_terms(search_terms)
-    like_clause = search_terms.map { |term| create_sql_like_one_search_term(term) }.join(') AND (')
-    "(#{like_clause})"
+  def create_partial_matching_clause(search_term)
+    search_terms = search_term.split
+    clauses = search_terms.map { |term| create_partial_matching_one_search_term(term) }
+    clauses.map { |clause| "(#{clause})" }.join(' AND ')
   end
 
-  # retuns equals expression for filter
-  def create_sql_equal(search_attribute, search_value)
+  # CREATE CLAUSE FOR CATEGORIAL ATTRIBUTE
+
+  def create_single_categorial_attribute_clause(search_attribute, filter_category)
+    return "" unless filter_category.key?(search_attribute)
+
+    search_value = filter_category[search_attribute]
     "#{search_attribute} = '#{search_value}'"
   end
 
-  def create_sql_lower_upper(search_attribute, lower_bound, upper_bound)
+  def create_mutiple_categorial_attribute_clause(filter_category)
+    clauses = relevant_categorial_attribute.map do |attribute|
+      create_single_categorial_attribute_clause(attribute, filter_category)
+    end
+    filtered_clauses = clauses.compact_blank
+    filtered_clauses.map { |clause| "(#{clause})" }.join(' AND ')
+  end
+
+  # CREATE CLAUSE FOR NUMERICAL ATTRIBUTE
+
+  def create_single_numerical_attribute_clause(search_attribute, filter_numerical)
+    return "" unless filter_numerical.key?(search_attribute)
+
+    bounds = filter_numerical[search_attribute]
+    lower_bound = bounds["lower_bound"]
+    upper_bound = bounds["upper_bound"]
     "#{search_attribute} BETWEEN #{lower_bound} AND #{upper_bound}"
   end
 
-  def relevant_search_attributes
-    [:name, :description]
+  def create_mutiple_numerical_attribute_clause(filter_numerical)
+    clauses = relevant_numerical_attribute.map do |attribute|
+      create_single_numerical_attribute_clause(attribute, filter_numerical)
+    end
+    filtered_clauses = clauses.compact_blank
+    filtered_clauses.map { |clause| "(#{clause})" }.join(' AND ')
   end
 
-  def generate_sql_where_clause(search_term, filter_category = {}, filter_numerical = {})
-    # split search term by words into list.
-    search_terms = search_term.split
-    # for each word and attribute create like, equal and between clause. Disjuncts attributes and conjucts search_terms.
-    sql_like_clause = create_sql_like_multiple_search_terms(search_terms)
-    sql_equal_clause = filter_category.map { |key, value| create_sql_equal(key, value) }.join(" AND ")
-    sql_between_clause = filter_numerical.map do |key, bounds|
-      create_sql_lower_upper(key, bounds["lower_bound"], bounds["upper_bound"])
-    end.join(" AND ")
-    [sql_like_clause, sql_equal_clause, sql_between_clause].reject(&:empty?).map do |clause|
-      "(#{clause})"
-    end.join(" AND ")
+  # CONSTANTS
+
+  def relevant_search_attributes
+    %w[name description]
+  end
+
+  def relevant_categorial_attribute
+    %w[category]
+  end
+
+  def relevant_numerical_attribute
+    %w[price_ct]
   end
 end
