@@ -72,9 +72,10 @@
     z-index: 100;
   }
 
-  #notFilledEditIcon {
+  #notFilledEditItemIcon {
     float: right;
-    padding-right:0.25em
+    padding-right: 0.25em;
+    vertical-align: middle;
   }
 
   #filledWishlistIcon {
@@ -111,12 +112,14 @@
   
 </style>
 <div>
+ 
   <%= link_to items_url do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
   <%= link_to edit_item_url(@item) do %>
     <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
   <% end %>
+  
   <div class="row">
     <div class="centeredContainer">
       <div class="text-center">
@@ -150,4 +153,3 @@
     </div>
   </div>
 </div>
-
