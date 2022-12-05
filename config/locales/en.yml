@@ -43,6 +43,7 @@ en:
       edit_btn: "Edit user profile"
     dashboard:
       title: "Dashboard"
+      missingWishlist: "You don't have any items saved at the moment."
     notifications:
       title: "Notifications"
     search:

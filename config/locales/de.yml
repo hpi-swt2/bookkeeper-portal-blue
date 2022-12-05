@@ -12,6 +12,7 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
+      missingWishlist: "Du hast zurzeit keine Artikel gespeichert."
     notifications:
       title: "Benachrichtigungen"
     search:
