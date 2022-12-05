@@ -72,8 +72,9 @@
     z-index: 100;
   }
 
-  #notFilledWishlistIcon {
-    color: var(--grey04);
+  #notFilledEditIcon {
+    float: right;
+    padding-right:0.25em
   }
 
   #filledWishlistIcon {
@@ -113,6 +114,9 @@
   <%= link_to items_url do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
+  <%= link_to edit_item_url(@item) do %>
+    <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
+  <% end %>
   <div class="row">
     <div class="centeredContainer">
       <div class="text-center">
@@ -123,11 +127,7 @@
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image != nil%>
         </div>
         <div>
-          <p class="title"><%=@item.name %>
-          <%= link_to edit_item_url(@item) do %>
-            <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
-          <% end %>
-          </p>
+          <p class="title"><%=@item.name %></p>
         </div>
         <p class="body1" id="location">
           <span class="material-symbols-outlined" id="locationIcon">
