@@ -32,6 +32,8 @@
 en:
   defaults:
     delete: "Delete"
+    accept: "Accept"
+    decline: "Decline"
   views:
     landing_page:
       title: "Bookkeeper Blue"
@@ -45,6 +47,10 @@ en:
       title: "Dashboard"
     notifications:
       title: "Notifications"
+      deletion_history: "History"
+      lend_request:
+        title: "Lend Request"
+        description: "%{user} wants to borrow your %{item}."
     search:
       title: "Search"
     home:
