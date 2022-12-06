@@ -23,8 +23,11 @@
 <section class="row row-cols-1 row-cols-md-4 g-4">
     <% @results.each do |result| %>
         <div class="card ms-2" style="width: 18rem; border: none;">
-            <img src="https://www.apexgolfcarts.com/assets/images/20200702_144153.jpg" class="card-img-top" alt="<%= result %>" style="border-radius: 5px;">
-            <h5 class="card-title mt-1" style="white-space: nowrap; overflow: hidden;"><%= result %></h5>
+            <div class="card-body">
+                <%= image_tag(result.image, class: "card-img-top", style: "border-radius: 5px;") if result.image.attached? %>
+                <h5 class="card-title mt-1" style="white-space: nowrap; overflow: hidden;"><%= result.name %></h5>
+                <a href="<%= item_path(result) %>" class="stretched-link"></a>
+            </div>
         </div>
     <% end %>
 </section>
