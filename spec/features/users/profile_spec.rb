@@ -5,8 +5,8 @@ RSpec.describe "Profile", type: :feature do
   it "shows the user name" do
     sign_in user
     visit profile_path
-    expect(page).to have_text("Max Mustermann")
-    expect(page).to have_text("max.mustermann@student.hpi.uni-potsdam.de")
+    expect(page).to have_text(user.name)
+    expect(page).to have_text(user.email)
   end
 
   it "shows roles" do
@@ -24,7 +24,7 @@ RSpec.describe "Profile", type: :feature do
   it "shows the user email" do
     sign_in user
     visit profile_path
-    expect(page).to have_text("max.mustermann@student.hpi.uni-potsdam.de")
+    expect(page).to have_text(user.email)
   end
 
   it "shows groups" do
