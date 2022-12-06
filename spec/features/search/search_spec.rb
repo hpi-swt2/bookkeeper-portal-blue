@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Seach Bar", type: :feature do
+describe "Seach page", type: :feature do
 
   before do
     @item_book = create(:item_book)
