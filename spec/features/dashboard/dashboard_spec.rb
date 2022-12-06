@@ -68,9 +68,34 @@ RSpec.describe "Dashboard", type: :feature do
     @user = create(:user)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content("You don't have any items saved at the moment.")
-    page.driver.header 'Accept-language', 'de-DE'
+    expect(page).to have_content I18n.t('views.dashboard.wishlist.missing_wishlist')
+  end
+
+  it "shows the correct tag for available wishlist items" do
+    @user = create(:user)
+    item = create(:item)
+    @user.wishlist << (item)
+    sign_in @user
     visit dashboard_path
-    expect(page).to have_content("Du hast zurzeit keine Artikel gespeichert.")
+    expect(page).to have_content I18n.t('views.dashboard.wishlist.available')
+  end
+
+  it "shows the correct tag for unavailable wishlist items" do
+    @user = create(:user)
+    @holder = create(:user)
+    item = create(:item, holder: @holder.id)
+    @user.wishlist << (item)
+    sign_in @user
+    visit dashboard_path
+    expect(page).to have_content I18n.t('views.dashboard.wishlist.not_available')
+  end
+
+  it "shows the correct tag for lend wishlist items" do
+    @user = create(:user)
+    item = create(:item, holder: @user.id)
+    @user.wishlist << (item)
+    sign_in @user
+    visit dashboard_path
+    expect(page).to have_content I18n.t('views.dashboard.wishlist.lend_by_you')
   end
 end
