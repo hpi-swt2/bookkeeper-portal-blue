@@ -147,7 +147,7 @@
       <p class="subtitle"><%= t('views.show_item.owner')%></p>
       <p class="body1"><%= User.find(@item.owner).email %></p>
       <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
-      <p class="body1"><%= (@item.rental_start + @item.rental_duration_sec).strftime('%d.%m.%Y') %></p>
+      <p class="body1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
       <!-- change to borrow item path when implemented -->
       <%= button_to t('views.show_item.enter_waitlist'), new_item_path(@item), method: :post, class: "secondaryButton" %>
       <!--%= button_to t('views.show_item.lend'), new_item_path(@item), method: :post, class: "primaryButton" %-->
