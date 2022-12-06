@@ -44,4 +44,10 @@ RSpec.describe Item, type: :model do
     item = described_class.new(name: "Test", category: "Test", location: "Test", owner: @user.id)
     expect(item).not_to be_valid
   end
+
+  it "is not valid with negative price" do
+    item = described_class.new(name: "Test", category: "Test", location: "Test", description: "Test", owner: @user.id,
+                               price_ct: -1)
+    expect(item).not_to be_valid
+  end
 end
