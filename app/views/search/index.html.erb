@@ -1,20 +1,5 @@
 
-<div class="modal fade" id="qrscanner" tabindex="-1" aria-labelledby="qrScannerLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="qrScannerLabel">QR-Scanner</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Your scanner goes here
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
+<%= render "qr-scanner" %>
 
 <%= form_tag(search_path, method: :get) do %>
     <div class="input-group mb-3 mt-3">
@@ -30,44 +15,19 @@
     <button class="btn btn-secondary" type="button" data-bs-toggle="modal" aria-expanded="false" data-bs-target="#filter-modal">
         FILTER <i class="bi bi-sliders2-vertical"></i>
     </button>
-    
-    <div class="modal-fullscreen modal fade" id="filter-modal" tabindex="-1" aria-labelledby="filter-modal-title" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="filter-modal-title">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group">
-                        <%= select_tag "filter_property", raw("<option>Title</option><option>Author</option><option>Release</option>"), class: "form-select" %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
-                        <%= text_field_tag :filter_value, params[:filter_value], class: "form-control" %>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="filter-list">
-    </div>
+    <%= render "filter-modal" %>
 <% end %>
 
 <% if @results %>
 <h2>Your search results:</h2>
-<div class="row row-cols-1 row-cols-md-4 g-4">
+<section class="row row-cols-1 row-cols-md-4 g-4">
     <% @results.each do |result| %>
-    
         <div class="card ms-2" style="width: 18rem; border: none;">
             <img src="https://www.apexgolfcarts.com/assets/images/20200702_144153.jpg" class="card-img-top" alt="<%= result %>" style="border-radius: 5px;">
             <h5 class="card-title mt-1" style="white-space: nowrap; overflow: hidden;"><%= result %></h5>
         </div>
-    
     <% end %>
-</div>
+</section>
 
 
 
