@@ -19,6 +19,15 @@
         line-height: 19px;
     }
 
+    .caption {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14px;
+        color: #717B80;
+    }
+
     .rect-img {
         aspect-ratio: 1/1;
         width: 100%;
@@ -46,11 +55,11 @@
 
 
             <% if item.holder.nil? %>
-              <p class="body2">Verfügbar!</p>
+              <p class="caption">Verfügbar!</p>
             <% elsif item.holder == current_user.id %>
-              <p class="body2">Von dir ausgeliehen!</p>
+              <p class="caption">Von dir ausgeliehen!</p>
             <% else %>
-              <p class="body2">Nicht verfügbar!</p>
+              <p class="caption">Nicht verfügbar!</p>
             <% end %>
 
 
