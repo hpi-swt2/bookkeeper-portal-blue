@@ -28,6 +28,8 @@ de:
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
       lend: "Ausleihen"
+    edit_item:
+      rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
   models:

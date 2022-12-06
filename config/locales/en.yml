@@ -59,6 +59,8 @@ en:
       lend_until: "Lend Until"
       enter_waitlist: "Enter Waitlist"
       lend: "Lend"
+    edit_item:
+      rental_duration_sec: "Rental Duration (seconds)"
     profile:
       title: "Profile"
   models:
