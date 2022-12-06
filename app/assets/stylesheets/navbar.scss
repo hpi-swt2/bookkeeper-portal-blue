@@ -9,6 +9,8 @@
     background-color: white;
     justify-content: space-around;
     line-height: 2;
+    /* Make sure the navbar always is on the top layer */
+    z-index: 100;
 
 
     .bk-nav-element {
@@ -25,14 +27,13 @@
         }
     }
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 992px) {
         top: 0;
         font-size: large;
         gap: 30px;
         line-height: 4;
         position: initial;
         justify-content: initial;
-
         .bk-nav-element .bk-nav-text {
             display: inline-block;
         }
@@ -40,5 +41,12 @@
 
     @media print {
         display: none;
+    }
+}
+
+main {
+    /* When navbar is shown on the bottom, add padding so that it does not overlap the content*/
+    @media screen and (max-width: 992px) {
+        padding-bottom: 4em;
     }
 }

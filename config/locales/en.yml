@@ -32,6 +32,7 @@
 en:
   defaults:
     delete: "Delete"
+    close: "Close"
   views:
     landing_page:
       title: "Bookkeeper Blue"
@@ -47,10 +48,20 @@ en:
       title: "Notifications"
     search:
       title: "Search"
+      filter_button: "Filter"
+      qr_scanner_title: "QR Scanner"
     home:
       title: "Home"
     new_item:
       title: "New Item"
+    show_item:
+      author: "Author"
+      category: "Category"
+      description: "Description"
+      owner: "Owner"
+      lend_until: "Lend Until"
+      enter_waitlist: "Enter Waitlist"
+      lend: "Lend"
     profile:
       title: "Profile"
   models:
