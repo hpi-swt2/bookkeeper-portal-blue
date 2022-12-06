@@ -12,7 +12,11 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
-      missingWishlist: "Du hast zurzeit keine Artikel gespeichert."
+      wishlist:
+        missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
+        available: "Verfügbar!"
+        not_available: "Nicht verfügbar"
+        lend_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
     search:

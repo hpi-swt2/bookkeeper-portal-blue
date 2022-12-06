@@ -43,7 +43,11 @@ en:
       edit_btn: "Edit user profile"
     dashboard:
       title: "Dashboard"
-      missingWishlist: "You don't have any items saved at the moment."
+      wishlist:
+        missing_wishlist: "You don't have any items saved at the moment."
+        available: "Available!"
+        not_available: "Not available"
+        lend_by_you: "Lend by you"
     notifications:
       title: "Notifications"
     search:
