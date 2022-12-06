@@ -57,6 +57,21 @@ class ItemsController < ApplicationController
     end
   end
 
+  def request_return 
+    @item = Item.find(params[:id])
+    @item.request_return
+    @item.save
+    redirect_to item_url(@item)
+  end
+
+  def stop_lending 
+    @item = Item.find(params[:id])
+    # TODO Send Return Notification to owner
+    @item.stop_lending
+    @item.save
+    redirect_to item_url(@item)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -67,6 +82,6 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :owner, :holder)
+                                 :rental_start, :return_checklist, :owner, :holder, :lend_status)
   end
 end

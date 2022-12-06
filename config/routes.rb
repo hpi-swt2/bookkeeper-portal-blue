@@ -12,6 +12,10 @@ Rails.application.routes.draw do
   end
 
   resources :users
+  post 'request_return/:id', to: 'items#request_return', as: 'request_return'
+  post 'stop_lending/:id', to: 'items#stop_lending', as: 'stop_lending'
   # Defines the root path route ("/")
   root "landing_page#index"
 end
+
+

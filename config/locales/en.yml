@@ -62,6 +62,7 @@ en:
       lend_until: "Lend Until"
       enter_waitlist: "Enter Waitlist"
       lend: "Lend"
+      return: "Return"
     profile:
       title: "Profile"
   models:
