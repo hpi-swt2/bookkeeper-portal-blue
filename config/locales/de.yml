@@ -16,6 +16,7 @@ de:
       title: "Übersicht"
     notifications:
       title: "Benachrichtigungen"
+      deletion_history: "Verlauf"
       lend_request:
         title: "Ausleihanfrage"
         description: "%{user} möchte %{item} von dir ausleihen."

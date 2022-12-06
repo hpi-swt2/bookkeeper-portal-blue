@@ -47,6 +47,7 @@ en:
       title: "Dashboard"
     notifications:
       title: "Notifications"
+      deletion_history: "History"
       lend_request:
         title: "Lend Request"
         description: "%{user} wants to borrow your %{item}."

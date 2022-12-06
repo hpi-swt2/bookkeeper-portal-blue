@@ -1,9 +1,12 @@
 <p style="color: green"><%= notice %></p>
 
+
+<h2><%= t 'views.notifications.title' %></h2>
+
 <div id="notifications">
   <% @active_dates.each do |(date, notifications)| %>
     <h2>
-      <%= date %>
+      <%= notifications.first.date.strftime('%d. %B %y') %>
     </h2>
     <div class="notification-blue-box">
     <% notifications.each do |notification|%>
@@ -19,10 +22,12 @@
     <% end %>
     </div>
   <% end %>
-
+  <h2>
+     <%= t 'views.notifications.deletion_history' %>
+  </h2>
   <% @inactive_dates.each do |(date, notifications)| %>
     <h2>
-      <%= date %>
+      <%= notifications.first.date.strftime('%d. %B %y') %>
     </h2>
     <div class="notification-grey-box">
       <% notifications.each do |notification|%>
@@ -37,5 +42,6 @@
         </div>
       <% end %>
 ˚    </div>
+
   <% end %>
 </div>
