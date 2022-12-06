@@ -1,2 +1,46 @@
-<%= button_to t("defaults.accept"), "/" %>
-<%= button_to t("defaults.decline"), "/" %>
+<style>
+  .button {
+      background-color: #B1063A;
+      color: white;
+      margin-top: 1em;
+      font-family: Roboto, sans-serif;
+      float: bottom;
+  }
+  .button:hover {
+      background-color: #B1063A;
+      color: #efcdd8;
+      border-color: #efcdd8;
+  }
+  .subtitle {
+      font-family: Roboto, sans-serif;
+      font-weight: bold;
+      font-size: 20px;
+      spacing: auto spacing;
+      color: #b8043c;
+      margin-bottom: 7px;
+      margin-top: 0.5em;
+  }
+  .description {
+      font-family: Roboto, sans-serif;
+  }
+</style>
+
+<div class="notification">
+  <h3 class="subtitle">
+    <%= notification.title %>
+  </h3>
+  <p class="description">
+    <%= notification.description %>
+  </p>
+</div>
+
+<div class="col-md-4">
+  <%= image_tag @notification.item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" %>
+</div>
+
+<div class="container-fluid d-flex justify-content-evenly gap-2">
+  <%= button_to t("defaults.accept"), "/", class:"btn button"  %>
+  <%= button_to t("defaults.decline"), "/", class:"btn button" %>
+</div>
+
+

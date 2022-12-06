@@ -7,7 +7,7 @@ describe "Notifications Page", type: :feature do
   before do
     sign_in user
     FactoryBot.reload
-    @notifications = create_list(:notification, 5, user: user)
+    @notifications = create_list(:lend_request_notification, 5, user: user)
     @notifications.each(&:save)
   end
 
@@ -26,22 +26,14 @@ describe "Notifications Page", type: :feature do
   it "displays the notifications of the current user with text" do
     visit notifications_path
     @notifications.each do |notification|
-      expect(page).to have_text(notification.notification_snippet)
-    end
-  end
-
-  it "is grouped by date" do
-    same_day_notifications = create_list(:notification, 2, user: user, date: DateTime.now)
-    same_day_notifications.each(&:save)
-    visit notifications_path
-    @notifications.each do |notification|
-      expect(page).to have_text(notification.date.strftime("%d. %B %y"))
+      expect(page).to have_text(notification.description)
     end
   end
 
   it "is clickable" do
     visit notifications_path
-    expect(page).to have_link @notifications[0].notification_snippet
+    find('.notification', text: @notifications[0].description).click
+    expect(page).to have_text(@notifications[0].description)
   end
 
 end

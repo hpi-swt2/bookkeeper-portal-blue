@@ -1,3 +1,4 @@
+# Super-class to hold information about all Notifications
 class Notification < ApplicationRecord
   actable
 
@@ -15,5 +16,9 @@ class Notification < ApplicationRecord
     else
       super
     end
+  end
+
+  def respond_to_missing?(method, include_private = false)
+    super(method, include_private)
   end
 end
