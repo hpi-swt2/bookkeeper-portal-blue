@@ -11,23 +11,25 @@ describe "Seach page", type: :feature do
 
   it "partial matching works for title" do
     page.fill_in "search", with: "Ruby"
-    find('button[type="submit"]').click
+    click_button("submit")
     expect(page).to have_text(@item_book.name)
+    expect(page).to have_link href: item_path(@item_book)
     expect(page).not_to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
   end
 
   it "partial matching works for description" do
     page.fill_in "search", with: "book"
-    find('button[type="submit"]').click
+    click_button("submit")
     expect(page).to have_text(@item_book.name)
+    expect(page).to have_link href: item_path(@item_book)
     expect(page).not_to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
   end
 
   it "partial matching works for empty string" do
-    page.fill_in "search", with: "Ruby"
-    find('button[type="submit"]').click
+    page.fill_in "search", with: ""
+    click_button("submit")
     expect(page).not_to have_text(@item_book.name)
     expect(page).not_to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
