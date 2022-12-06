@@ -46,8 +46,8 @@
     <% @results.each do |result| %>
         <div class="card">
             <div class="card-body">
+                <%= image_tag(result.image, class: "card-img-top", style: "border-radius: 5px;") if result.image.attached? %>
                 <h5 class="card-title"><%= result.name %></h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <a href="<%= item_path(result) %>" class="stretched-link"></a>
             </div>
         </div>
