@@ -20,14 +20,6 @@ de:
       title: "Startseite"
     new_item:
       title: "Neuer Gegenstand"
-    show_item:
-      author: "Autor"
-      category: "Kategorie"
-      description: "Beschreibung"
-      owner: "Besitzer"
-      lend_until: "Ausleihen bis"
-      enter_waitlist: "Auf die Warteliste"
-      lend: "Ausleihen"
     profile:
       title: "Profil"
   models:

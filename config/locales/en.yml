@@ -51,14 +51,6 @@ en:
       title: "Home"
     new_item:
       title: "New Item"
-    show_item:
-      author: "Author"
-      category: "Category"
-      description: "Description"
-      owner: "Owner"
-      lend_until: "Lend Until"
-      enter_waitlist: "Enter Waitlist"
-      lend: "Lend"
     profile:
       title: "Profile"
   models:
