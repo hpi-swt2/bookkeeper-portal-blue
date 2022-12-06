@@ -12,8 +12,10 @@ module SearchHelper
     return [] if search_term.blank?
 
     partial_matching_clause = create_partial_matching_clause(search_term)
-    categorial_attribute_clause = create_mutiple_categorial_attribute_clause(filter_category)
-    numerical_attribute_clause = create_mutiple_numerical_attribute_clause(filter_numerical)
+    categorial_attribute_clause = create_mutiple_attribute_clause(filter_category, relevant_categorial_attribute,
+                                                                  :generate_equals_clause)
+    numerical_attribute_clause = create_mutiple_attribute_clause(filter_numerical, relevant_numerical_attribute,
+                                                                 :generate_range_clause)
 
     Item.where(partial_matching_clause)
         .where(categorial_attribute_clause)
@@ -41,40 +43,32 @@ module SearchHelper
     clauses.map { |clause| "(#{clause})" }.join(' AND ')
   end
 
-  # CREATE CLAUSE FOR CATEGORIAL ATTRIBUTE
+  # GENERATE CLAUSE FOR ATTRIBUTES
 
-  def create_single_categorial_attribute_clause(search_attribute, filter_category)
-    return "" unless filter_category.key?(search_attribute)
+  def create_mutiple_attribute_clause(filter, relevant_attributes, clause_generator)
+    clauses = relevant_attributes.map do |attribute|
+      create_single_attribute_clause(attribute, filter, clause_generator)
+    end
+    filtered_clauses = clauses.compact_blank
+    filtered_clauses.map { |clause| "(#{clause})" }.join(' AND ')
+  end
 
-    search_value = filter_category[search_attribute]
+  def create_single_attribute_clause(search_attribute, filter, clause_generator)
+    return "" unless filter.key?(search_attribute)
+
+    method(clause_generator).call(search_attribute, filter)
+  end
+
+  def generate_equals_clause(search_attribute, filter)
+    search_value = filter[search_attribute]
     "#{search_attribute} = '#{search_value}'"
   end
 
-  def create_mutiple_categorial_attribute_clause(filter_category)
-    clauses = relevant_categorial_attribute.map do |attribute|
-      create_single_categorial_attribute_clause(attribute, filter_category)
-    end
-    filtered_clauses = clauses.compact_blank
-    filtered_clauses.map { |clause| "(#{clause})" }.join(' AND ')
-  end
-
-  # CREATE CLAUSE FOR NUMERICAL ATTRIBUTE
-
-  def create_single_numerical_attribute_clause(search_attribute, filter_numerical)
-    return "" unless filter_numerical.key?(search_attribute)
-
-    bounds = filter_numerical[search_attribute]
+  def generate_range_clause(search_attribute, filter)
+    bounds = filter[search_attribute]
     lower_bound = bounds["lower_bound"]
     upper_bound = bounds["upper_bound"]
     "#{search_attribute} BETWEEN #{lower_bound} AND #{upper_bound}"
-  end
-
-  def create_mutiple_numerical_attribute_clause(filter_numerical)
-    clauses = relevant_numerical_attribute.map do |attribute|
-      create_single_numerical_attribute_clause(attribute, filter_numerical)
-    end
-    filtered_clauses = clauses.compact_blank
-    filtered_clauses.map { |clause| "(#{clause})" }.join(' AND ')
   end
 
   # CONSTANTS
