@@ -62,6 +62,8 @@ en:
       lend_until: "Lend Until"
       enter_waitlist: "Enter Waitlist"
       lend: "Lend"
+    edit_item:
+      rental_duration_sec: "Rental Duration (seconds)"
     profile:
       title: "Profile"
   models:
@@ -70,3 +72,6 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+  helpers:
+    submit:
+      update: "Update Item"

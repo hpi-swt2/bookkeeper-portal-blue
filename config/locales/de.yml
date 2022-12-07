@@ -31,6 +31,8 @@ de:
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
       lend: "Ausleihen"
+    edit_item:
+      rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
   models:
@@ -39,3 +41,6 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+  helpers:
+    submit:
+      update: "Gegendstand ändern"
