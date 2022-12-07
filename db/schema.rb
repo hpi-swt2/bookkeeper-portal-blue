@@ -63,7 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_160740) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.string "role"
+    t.string "type"
     t.integer "group_id", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
