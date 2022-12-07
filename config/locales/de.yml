@@ -41,3 +41,6 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+  helpers:
+    submit:
+      update: "Gegendstand ändern"
