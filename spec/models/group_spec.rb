@@ -35,7 +35,7 @@ RSpec.describe Group, type: :model do
     user = build(:user)
     @group.members.append(user)
 
-    expect{@group.members.append(user)}.to raise_error(ActiveRecord::RecordNotUnique)
-    expect{@group.owners.append(user)}.to raise_error(ActiveRecord::RecordNotUnique)
+    expect { @group.members.append(user) }.to raise_error(ActiveRecord::RecordNotUnique)
+    expect { @group.owners.append(user) }.to raise_error(ActiveRecord::RecordNotUnique)
   end
 end
