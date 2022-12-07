@@ -1,6 +1,7 @@
 de:
   defaults:
     delete: "Löschen"
+    close: "Schließen"
   views:
     landing_page:
       title: "Bookkeeper Blau"
@@ -16,10 +17,22 @@ de:
       title: "Benachrichtigungen"
     search:
       title: "Suche"
+      filter_button: "Filter"
+      qr_scanner_title: "QR Scanner"
     home:
       title: "Startseite"
     new_item:
       title: "Neuer Gegenstand"
+    show_item:
+      author: "Autor"
+      category: "Kategorie"
+      description: "Beschreibung"
+      owner: "Besitzer"
+      lend_until: "Ausleihen bis"
+      enter_waitlist: "Auf die Warteliste"
+      lend: "Ausleihen"
+    edit_item:
+      rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
   models:
@@ -28,3 +41,6 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+  helpers:
+    submit:
+      update: "Gegendstand ändern"
