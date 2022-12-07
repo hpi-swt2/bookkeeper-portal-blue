@@ -22,4 +22,20 @@ describe User, type: :model do
   it "has a full name" do
     expect(user.name).not_to be_blank
   end
+
+  it "can own a group" do
+    @group = create(:group)
+    @group.owners.append(user)
+
+    expect(user.groups).to include(@group)
+    expect(user.owned_groups).to include(@group)
+  end
+
+  it "can be non-owner member of a group" do
+    @group = create(:group)
+    @group.members.append(user)
+
+    expect(user.groups).to include(@group)
+    expect(user.owned_groups).not_to include(@group)
+  end
 end

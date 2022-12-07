@@ -13,7 +13,6 @@ class Group < ApplicationRecord
   validate :owner?
 
   private
-
   def owner?
     errors.add(:base, "Group has to have an owner") if owners.empty?
   end
