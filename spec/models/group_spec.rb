@@ -23,7 +23,7 @@ RSpec.describe Group, type: :model do
     expect(@group.members).to include(user)
   end
 
-  it "only list members in the list of members" do
+  it "only list owners in the list of owners" do
     user = build(:user)
     @group.members.append(user)
 
