@@ -60,11 +60,22 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @item.request_return
     @item.save
+    @user = current_user
+    # if !ReturnRequestNotification.find_by(item: @item)
+      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.now, item: @item, borrower: @user)
+      @notification.save
+    # else
+       # format.html { redirect_to item_url(@item), notice: t("models.item.return_process") }
+       # format.json { render :show, status: :ok, location: @item }
+    # end
+
     redirect_to item_url(@item)
   end
 
   def stop_lending 
     @item = Item.find(params[:id])
+    @notification = ReturnRequestNotification.find_by(item: @item)
+    @notification.destroy
     # TODO Send Return Notification to owner
     @item.stop_lending
     @item.save

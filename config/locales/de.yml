@@ -20,6 +20,9 @@ de:
       lend_request:
         title: "Ausleihanfrage"
         description: "%{user} möchte %{item} von dir ausleihen."
+      return_request:
+        title: "Gegenstand zurückgeben"
+        description: "%{user} möchte %{item} zurückgeben."
     search:
       title: "Suche"
       filter_button: "Filter"
@@ -45,3 +48,4 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+      return_process: "Der Rückgabevorgang ist in Bearbeitung."

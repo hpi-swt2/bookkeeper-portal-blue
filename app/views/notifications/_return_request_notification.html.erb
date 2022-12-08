@@ -1,0 +1,3 @@
+
+<%= button_to t("defaults.accept"), "/stop_lending/#{notification.item.id}" %>
+<%= button_to t("defaults.decline"), "/items/#{notification.item.id}/", method: :get %>
