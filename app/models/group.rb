@@ -1,8 +1,10 @@
 # Group Model which has a name and many members as well as owners
 class Group < ApplicationRecord
   # if you want to promote or demote a user,
-  # you will have to remove that user from its previous
-  # collection before appending it to the new collection
+  # you will have to use the respective to_owner_of
+  # or to_member_of methods from the user object
+  # or remove that user from its previous collection
+  # before appending it to the new collection
   # else you will get an ActiveRecord::RecordNotUnique error
   has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :user
