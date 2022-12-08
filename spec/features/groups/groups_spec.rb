@@ -4,7 +4,7 @@ RSpec.describe "Groups", type: :feature do
   it "shows the group name" do
     sign_in group.owners.first
     visit group_path(group)
-    expect(page).to have_text("TestGroup")
+    expect(page).to have_text(group.name)
   end
 
   it "shows the owners" do
