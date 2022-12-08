@@ -68,6 +68,9 @@ en:
       title: "Profile"
       groups: "Groups"
       no_groups: "Not member of any group"
+    groups:
+      owners: "Owners"
+      members: "Members"
   models:
     item:
       item: "Item"
