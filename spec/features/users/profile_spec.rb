@@ -27,7 +27,7 @@ RSpec.describe "Profile", type: :feature do
     user.save
     sign_in user
     visit profile_path
-    expect(page).to have_text("TestGroup")
+    expect(page).to have_text(group.name)
   end
 
   it "displays the user's owned groups" do
@@ -35,7 +35,7 @@ RSpec.describe "Profile", type: :feature do
     user.save
     sign_in user
     visit profile_path
-    expect(page).to have_text("TestGroup")
+    expect(page).to have_text(group.name)
   end
 
   it "displays a message when in no groups" do
