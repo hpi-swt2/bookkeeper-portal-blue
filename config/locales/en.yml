@@ -45,7 +45,7 @@ en:
       title: "Dashboard"
       wishlist:
         missing_wishlist: "You don't have any items saved at the moment."
-        available: "Available!"
+        available: "Available"
         not_available: "Not available"
         lend_by_you: "Lend by you"
     notifications:

@@ -14,7 +14,7 @@ de:
       title: "Übersicht"
       wishlist:
         missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
-        available: "Verfügbar!"
+        available: "Verfügbar"
         not_available: "Nicht verfügbar"
         lend_by_you: "Von dir ausgeliehen"
     notifications:
