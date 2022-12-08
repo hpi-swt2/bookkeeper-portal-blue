@@ -20,4 +20,10 @@ RSpec.describe "Profile", type: :feature do
     visit profile_path
     expect(page).to have_link 'Profil bearbeiten', href: edit_user_registration_path
   end
+
+  it "has a create group button" do
+    sign_in user
+    visit profile_path
+    expect(page).to have_link 'Add Group', href: new_group_path
+  end
 end

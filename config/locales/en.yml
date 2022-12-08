@@ -72,6 +72,12 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+    group:
+      add: "Add Group"
+      name: "Group Name"
   helpers:
     submit:
       update: "Update Item"
+  view:
+    profile:
+      add_group: ""
