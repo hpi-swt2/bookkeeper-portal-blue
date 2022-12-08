@@ -1,0 +1,15 @@
+<h1><%= @group.name %></h1>
+
+<h2>Owners</h2>
+<ul id="group-owners">
+<% @group.owners.each do |user| %>
+    <li><%= user.name %></li>
+<% end %>
+  </ul>
+
+<h2>Members</h2>
+<ul id="group-members">
+<% @group.members_without_ownership.each do |user| %>
+    <li><%= user.name %></li>
+<% end %>
+</ul>

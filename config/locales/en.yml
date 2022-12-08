@@ -66,6 +66,8 @@ en:
       rental_duration_sec: "Rental Duration (seconds)"
     profile:
       title: "Profile"
+      groups: "Groups"
+      no_groups: "Not member of any group"
   models:
     item:
       item: "Item"
