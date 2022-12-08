@@ -25,4 +25,20 @@ class User < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+  # Promote this user to an owner of group. Add the user if they are not a member already.
+  # Use `group.owners.append(user)` or `user.owned_groups.append(user)` if you just want to add a new owner.
+  def to_owner_of!(group)
+    memberships.where(group: group).first_or_create!.becomes!(Ownership).save
+    group.reload
+    reload
+  end
+
+  # Demote this user to a non-owner member of group. Add the user if they are not a owner already.
+  # Use `group.members.append(user)` or `user.groups.append(user)` if you just want to add a member.
+  def to_member_of!(group)
+    memberships.where(group: group).first_or_create!.becomes!(Membership).save
+    group.reload
+    reload
+  end
 end
