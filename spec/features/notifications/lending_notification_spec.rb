@@ -9,7 +9,7 @@ describe "Lending Notifications Page", type: :feature do
     FactoryBot.reload
     @notifications = create_list(:lend_request_notification, 5, user: user)
     @notifications.each(&:save)
-    visit (notifications_path + "/" + @notifications[0].id.to_s)
+    visit("#{notifications_path}/#{@notifications[0].id}")
   end
 
   it "displays the description, title and picture of the notification" do
