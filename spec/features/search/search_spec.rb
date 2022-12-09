@@ -35,4 +35,10 @@ describe "Search page", type: :feature do
     expect(page).not_to have_text(@item_whiteboard.name)
   end
 
+  it "shows no item at first if you visit the page" do
+    expect(page).not_to have_text(@item_book.name)
+    expect(page).not_to have_text(@item_beamer.name)
+    expect(page).not_to have_text(@item_whiteboard.name)
+  end
+
 end
