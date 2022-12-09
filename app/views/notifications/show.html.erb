@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
 <div>
-  <%= link_to "", notifications_path, class:"bi bi-chevron-left", style:"color: #556066" %>
+  <%= link_to "", notifications_path, class:"bi bi-chevron-left", style:"color: #556066", id:"back_button" %>
 
   <%= render_if_exists @notification.custom_partial, notification: @notification %>
 

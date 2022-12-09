@@ -32,8 +32,7 @@ describe "Notifications Page", type: :feature do
 
   it "is clickable" do
     visit notifications_path
-    find('.notification', text: @notifications[0].description).click
-    expect(page).to have_text(@notifications[0].description)
+    expect{find('.notification', text: @notifications[0].description).click}.not_to raise_error
   end
 
 end
