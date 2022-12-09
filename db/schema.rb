@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_154449) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_05_160740) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_154449) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "category"
@@ -63,6 +69,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_154449) do
     t.datetime "updated_at", null: false
     t.index ["borrower_id"], name: "index_lend_request_notifications_on_borrower_id"
     t.index ["item_id"], name: "index_lend_request_notifications_on_item_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.string "type"
+    t.integer "group_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "user_id"], name: "index_memberships_on_group_id_and_user_id", unique: true
+    t.index ["group_id"], name: "index_memberships_on_group_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -95,5 +112,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_154449) do
   add_foreign_key "items", "users", column: "owner"
   add_foreign_key "lend_request_notifications", "items"
   add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
+  add_foreign_key "memberships", "groups"
+  add_foreign_key "memberships", "users"
   add_foreign_key "notifications", "users"
 end
