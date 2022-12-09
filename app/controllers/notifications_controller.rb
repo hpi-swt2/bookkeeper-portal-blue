@@ -23,5 +23,6 @@ class NotificationsController < ApplicationController
 
   def show
     @notification = Notification.find(params[:id])
+    @notification.update_attribute(:unread, false)
   end
 end

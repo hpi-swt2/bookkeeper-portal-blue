@@ -12,7 +12,12 @@
       <% notifications.each do |notification| %>
         <div class="notification" onclick="location.href='<%= 'notifications/' + notification.id.to_s %>'">
           <h3>
-            <%= notification.title %>
+            <!-- display title as bold if notification is unread -->
+            <% if notification.unread == true %>
+              <b><%= notification.title %></b>
+            <% else %>
+              <%= notification.title %>
+            <% end %>
           </h3>
           <p>
             <%= notification.description %>
