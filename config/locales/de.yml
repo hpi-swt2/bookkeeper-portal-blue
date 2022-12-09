@@ -18,6 +18,7 @@ de:
       offered_items: "ANGEBOTENE ARTIKEL"
       nothing_offered: "Du bietest bisher nichts an."
       your_wishlist: "DEINE WUNSCHLISTE"
+      not_signed_in: "Du bist nicht angemeldet."
     notifications:
       title: "Benachrichtigungen"
     search:

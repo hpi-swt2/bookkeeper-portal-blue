@@ -54,7 +54,7 @@
   </div>
 
 <% else %>
-  <p class="lead mb-4">Du bist nicht angemeldet. </p>
+  <p class="lead mb-4"><%= t 'views.dashboard.not_signed_in' %></p>
   <%= link_to new_user_session_path, { class: "btn btn-primary btn-lg px-4" } do %>
     <i class="bi bi-box-arrow-in-right"></i> <%= t 'views.landing_page.login' %>
   <% end %>
