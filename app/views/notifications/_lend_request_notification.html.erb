@@ -39,8 +39,8 @@
 </div>
 
 <div class="container-fluid d-flex justify-content-evenly gap-2">
-  <%= button_to t("defaults.accept"), "/", class:"btn button"  %>
-  <%= button_to t("defaults.decline"), "/", class:"btn button" %>
+  <%= button_to t("defaults.accept"),{ action: "destroy", id: notification.id}, method: :delete ,class:"btn button"  %>
+  <%= button_to t("defaults.decline"), { action: "destroy", id: notification.id}, method: :delete, class:"btn button" %>
 </div>
 
 

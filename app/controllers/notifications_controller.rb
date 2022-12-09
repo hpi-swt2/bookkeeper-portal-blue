@@ -25,4 +25,11 @@ class NotificationsController < ApplicationController
     @notification = Notification.find(params[:id])
     @notification.update_attribute(:unread, false)
   end
+
+  def destroy
+    @notification = Notification.find(params[:id])
+    @notification.destroy
+
+    redirect_to notifications_path
+  end
 end
