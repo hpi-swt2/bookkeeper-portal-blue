@@ -7,7 +7,7 @@ FactoryBot.define do
   end
 
   factory :invalid_return_request_notification, class: 'ReturnRequestNotification' do
-    item { FactoryBot.build(:pending, owner: user.id) }
+    item { FactoryBot.build(:pending) }
     borrower { FactoryBot.build(:max) }
   end
 end
