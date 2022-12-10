@@ -36,7 +36,8 @@ describe "Notifications Page", type: :feature do
   end
 
   it "is grouped by date" do
-    same_day_notifications = create_list(:lend_request_notification, 2, user: user, borrower: borrower, item: item, date: DateTime.now)
+    same_day_notifications = create_list(:lend_request_notification, 2, user: user, borrower: borrower, item: item,
+                                                                        date: DateTime.now)
     same_day_notifications.each(&:save)
     visit notifications_path
     @notifications.each do |notification|
