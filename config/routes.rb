@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   resources :users
   post 'request_return/:id', to: 'items#request_return', as: 'request_return'
   post 'stop_lending/:id', to: 'items#stop_lending', as: 'stop_lending'
+  post 'accept_return/:id', to: 'items#accept_return', as: 'accept_return'
+  post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'  
+  post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
   # Defines the root path route ("/")
   root "landing_page#index"
 end
