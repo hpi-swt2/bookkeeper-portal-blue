@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   post 'accept_return/:id', to: 'items#accept_return', as: 'accept_return'
   post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'  
   post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
+  
+  resources :groups
   # Defines the root path route ("/")
   root "landing_page#index"
 end

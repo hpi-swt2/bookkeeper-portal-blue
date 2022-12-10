@@ -1,51 +1,68 @@
 de:
   defaults:
-    delete: "Löschen"
-    close: "Schließen"
-    accept: "Annehmen"
-    decline: "Ablehnen"
+    delete: 'Löschen'
+    close: 'Schließen'
+    accept: 'Annehmen'
+    decline: 'Ablehnen'
   views:
     landing_page:
-      title: "Bookkeeper Blau"
-      read_more: "Mehr lesen"
-      signup: "Registrieren"
-      login: "Anmelden"
-      logout: "Abmelden"
-      logged_in_user: "Aktuell angemeldet: %{email}"
-      edit_btn: "Profil bearbeiten"
+      title: 'Bookkeeper Blau'
+      read_more: 'Mehr lesen'
+      signup: 'Registrieren'
+      login: 'Anmelden'
+      logout: 'Abmelden'
+      logged_in_user: 'Aktuell angemeldet: %{email}'
+      edit_btn: 'Profil bearbeiten'
     dashboard:
-      title: "Übersicht"
+      title: 'Übersicht'
+      greeting: 'Hallo, %{name}!'
+      unread_messages: 'Du hast ... ungelesene Nachrichten'
+      lent_items: 'AUSGELIEHENE ARTIKEL'
+      offered_items: 'ANGEBOTENE ARTIKEL'
+      nothing_offered: 'Du bietest bisher nichts an.'
+      your_wishlist: 'DEINE WUNSCHLISTE'
+      not_signed_in: 'Du bist nicht angemeldet.'
     notifications:
-      title: "Benachrichtigungen"
+      title: 'Benachrichtigungen'
       lend_request:
-        title: "Ausleihanfrage"
-        description: "%{user} möchte %{item} von dir ausleihen."
+        title: 'Ausleihanfrage'
+        description: '%{user} möchte %{item} von dir ausleihen.'
       return_request:
-        title: "Gegenstand zurückgeben"
-        description: "%{user} möchte %{item} zurückgeben."
+        title: 'Gegenstand zurückgeben'
+        description: '%{user} möchte %{item} zurückgeben.'
     search:
-      title: "Suche"
-      filter_button: "Filter"
-      qr_scanner_title: "QR Scanner"
+      title: 'Suche'
+      filter_button: 'Filter'
+      qr_scanner_title: 'QR Scanner'
     home:
-      title: "Startseite"
+      title: 'Startseite'
     new_item:
-      title: "Neuer Gegenstand"
+      title: 'Neuer Gegenstand'
     show_item:
-      author: "Autor"
-      category: "Kategorie"
-      description: "Beschreibung"
-      owner: "Besitzer"
-      lend_until: "Ausleihen bis"
-      enter_waitlist: "Auf die Warteliste"
-      lend: "Ausleihen"
-      return: "Zurückgeben"
+      author: 'Autor'
+      category: 'Kategorie'
+      description: 'Beschreibung'
+      owner: 'Besitzer'
+      lend_until: 'Ausleihen bis'
+      enter_waitlist: 'Auf die Warteliste'
+      lend: 'Ausleihen'
+      return: 'Zurückgeben'
+    edit_item:
+      rental_duration_sec: 'Ausleihdauer (Sekunden)'
     profile:
-      title: "Profil"
+      title: 'Profil'
+      groups: 'Gruppen'
+      no_groups: 'Mitglied in keiner Gruppe'
+    groups:
+      owners: 'Admins'
+      members: 'Mitglieder'
   models:
     item:
-      item: "Gegenstand"
-      created: "Gegenstand wurde erfolgreich erstellt."
-      updated: "Gegenstand wurde erfolgreich verändert."
-      destroyed: "Gegenstand wurde erfolgreich entfernt."
-      return_process: "Der Rückgabevorgang ist in Bearbeitung."
+      item: 'Gegenstand'
+      created: 'Gegenstand wurde erfolgreich erstellt.'
+      updated: 'Gegenstand wurde erfolgreich verändert.'
+      destroyed: 'Gegenstand wurde erfolgreich entfernt.'
+      return_process: 'Der Rückgabevorgang ist in Bearbeitung.'
+  helpers:
+    submit:
+      update: 'Gegendstand ändern'
