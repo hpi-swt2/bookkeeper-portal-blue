@@ -20,9 +20,9 @@ class Item < ApplicationRecord
 
     [0, 0]
   end
- 
+
   def request_return
-    # TODO send request return notification to owner with holder information
+    # TODO: send request return notification to owner with holder information
     self.lend_status = :pending_return
   end
 

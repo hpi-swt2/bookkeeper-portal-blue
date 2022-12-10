@@ -1,3 +1,4 @@
+# class of a basic return request notification.
 class ReturnRequestNotification < ApplicationRecord
   acts_as :notification
 
@@ -6,8 +7,6 @@ class ReturnRequestNotification < ApplicationRecord
 
   validates :user, presence: true
   validates :date, presence: true
-  validates :item, presence: true
-  validates :borrower, presence: true
 
   def title
     I18n.t "views.notifications.return_request.title"

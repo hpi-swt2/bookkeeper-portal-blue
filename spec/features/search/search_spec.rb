@@ -1,6 +1,13 @@
 require "rails_helper"
 
 describe "Search page", type: :feature do
+  before do
+    @item_book = create(:item_book)
+    @item_beamer = create(:item_beamer)
+    @item_whiteboard = create(:item_whiteboard)
+    visit search_path
+  end
+
   it "translates the close button to German" do
     page.driver.header 'Accept-language', 'de-DE'
     visit search_path
@@ -10,13 +17,6 @@ describe "Search page", type: :feature do
   it "translates the close button to English by default" do
     visit search_path
     expect(page).to have_text("Close")
-  end
-
-  before do
-    @item_book = create(:item_book)
-    @item_beamer = create(:item_beamer)
-    @item_whiteboard = create(:item_whiteboard)
-    visit search_path
   end
 
   it "partial matching works for title" do

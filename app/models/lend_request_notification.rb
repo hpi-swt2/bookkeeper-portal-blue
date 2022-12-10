@@ -1,3 +1,4 @@
+# class of a basic lend request notification.
 class LendRequestNotification < ApplicationRecord
   acts_as :notification
 

@@ -1,3 +1,4 @@
+# class of a basic item.
 class Notification < ApplicationRecord
   actable
 

@@ -7,7 +7,7 @@ class ItemsController < ApplicationController
   end
 
   # GET /items/1 or /items/1.json
-  def show    
+  def show
   end
 
   # GET /items/new
@@ -59,24 +59,25 @@ class ItemsController < ApplicationController
   def request_lend
   end
 
-  def request_return 
+  def request_return
     @item = Item.find(params[:id])
     @item.request_return
     @item.save
     @user = current_user
-    if !ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.now, item: @item, borrower: @user)
+    unless ReturnRequestNotification.find_by(item: @item)
+      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.zone.now, item: @item,
+                                                    borrower: @user)
       @notification.save
     end
 
     redirect_to item_url(@item)
   end
 
-  def accept_return 
+  def accept_return
     @item = Item.find(params[:id])
     @notification = ReturnRequestNotification.find_by(item: @item)
     @notification.destroy
-    # TODO Send return accepted notification to borrower
+    # TODO: Send return accepted notification to borrower
     @item.accept_return
     @item.save
     redirect_to item_url(@item)
@@ -86,13 +87,14 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @notification = ReturnRequestNotification.find_by(item: @item)
     @notification.destroy
-    # TODO Send return declined notification to borrower and handle decline return
+    # TODO: Send return declined notification to borrower and handle decline return
     @item.deny_return
     @item.save
     redirect_to item_url(@item)
   end
- 
+
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])

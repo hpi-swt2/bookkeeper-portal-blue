@@ -8,7 +8,7 @@ RSpec.describe ReturnRequestNotification, type: :model do
     expect(notification).to be_valid
   end
 
-  it 'should not be valid when the user and/or date is missing' do
-    expect(invalid_notification).to_not be_valid
+  it 'is not valid when the user and/or date is missing' do
+    expect(invalid_notification).not_to be_valid
   end
 end

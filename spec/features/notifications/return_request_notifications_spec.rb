@@ -5,19 +5,19 @@ describe "Return Request Notifications", type: :feature do
   let(:user) { create(:user, password: password) }
 
   before do
-      sign_in user
-      FactoryBot.reload
-      @notification = FactoryBot.build(:return_request_notification, user: user)
-      @notification.save    
+    sign_in user
+    FactoryBot.reload
+    @notification = build(:return_request_notification, user: user)
+    @notification.save
   end
 
   it "shows an accept and decline button" do
-      visit notifications_path
-      expect(page).to have_button('Accept')
-      expect(page).to have_button('Decline')
+    visit notifications_path
+    expect(page).to have_button('Accept')
+    expect(page).to have_button('Decline')
   end
 
-  it "should complete the lending process and change the item's status to available upon clicking on 'Accept'" do
+  it "completes the lending process and change the item's status to available upon clicking on 'Accept'" do
     visit notifications_path
 
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
@@ -27,14 +27,10 @@ describe "Return Request Notifications", type: :feature do
     expect(ReturnRequestNotification.exists?(@notification.id)).to be false
   end
 
-  it "should delete the notification upon clicking on 'Decline" do
+  it "deletes the notification upon clicking on 'Decline" do
     visit notifications_path
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
     click_button('Decline')
     expect(ReturnRequestNotification.exists?(@notification.id)).to be false
   end
 end
-
-
-
-
