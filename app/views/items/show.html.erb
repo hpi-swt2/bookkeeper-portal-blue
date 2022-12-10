@@ -147,7 +147,7 @@
       <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
       <p class="body1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
       <!-- early implementation of the adaptive lend Button -->
-      <% if @item.holder == current_user.id %>
+      <% if current_user && @item.holder == current_user.id %>
         <%= button_to t('views.show_item.return'), action:"request_return" %>
       <% else %>
         <% if @item.lend_status == "available" %>
