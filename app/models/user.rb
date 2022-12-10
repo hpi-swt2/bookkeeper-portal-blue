@@ -12,18 +12,27 @@ class User < ApplicationRecord
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
 
+  def email_parts
+    email.split("@")[0].split(".")
+  end
+
   # Method expects all emails to follow format "firstname.lastname@anything" in order to extract first name out of email
   def first_name
-    email.split("@")[0].split(".")[0].capitalize
+    email_parts[0].capitalize
   end
 
   # Method expects all emails to follow format "firstname.lastname@anything" in order to extract last name out of email
+  # If no last name is found, an empty string is returned
   def last_name
-    email.split("@")[0].split(".")[1].capitalize
+    if email_parts.length <= 1
+      ""
+    else
+      email_parts[1].capitalize
+    end
   end
 
   def name
-    "#{first_name} #{last_name}"
+    "#{first_name} #{last_name}".strip
   end
 
   # Promote this user to an owner of group. Add the user if they are not a member already.

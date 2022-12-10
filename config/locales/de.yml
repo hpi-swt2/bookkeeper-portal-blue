@@ -42,6 +42,11 @@ de:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
+      groups: "Gruppen"
+      no_groups: "Mitglied in keiner Gruppe"
+    groups:
+      owners: "Admins"
+      members: "Mitglieder"
   models:
     item:
       item: "Gegenstand"
