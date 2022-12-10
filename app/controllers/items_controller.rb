@@ -72,12 +72,22 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
-  def stop_lending 
+  def accept_return 
     @item = Item.find(params[:id])
     @notification = ReturnRequestNotification.find_by(item: @item)
     @notification.destroy
-    # TODO Send Return Notification to owner
-    @item.stop_lending
+    # TODO Send return accepted notification to borrower
+    @item.accept_return
+    @item.save
+    redirect_to item_url(@item)
+  end
+
+  def deny_return
+    @item = Item.find(params[:id])
+    @notification = ReturnRequestNotification.find_by(item: @item)
+    @notification.destroy
+    # TODO Send return declined notification to borrower and handle decline return
+    @item.deny_return
     @item.save
     redirect_to item_url(@item)
   end

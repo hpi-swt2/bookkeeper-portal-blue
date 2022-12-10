@@ -26,11 +26,15 @@ class Item < ApplicationRecord
     self.lend_status = :pending_return
   end
 
-  def stop_lending
+  def accept_return
     self.rental_start = nil
     self.rental_duration_sec = nil
     self.holder = nil
     self.lend_status = :available
+  end
+
+  def deny_return
+    # TODO
   end
 
   def price_in_euro=(euros)
