@@ -26,14 +26,25 @@
         object-fit: cover;
     }
 
+  #location{
+    text-align: center;
+  }
+
+  #locationIcon{
+    font-size: 20px;
+    vertical-align: text-top;
+  }
+
 </style>
 
 <div>
 <%# TODO: 
-    - still shows offered itmes, needs to change to lent items
     - sorting must be adjusted
     - translation must be implemented%>
-  <% items = Item.where(owner: current_user).order("name ASC") %>
+
+
+  <%#<% items = Item.where(holder: current_user).order((rental_duration_sec-(Time.now.utc + 3600 - rental_start))) %>
+  <% items = Item.where(holder: current_user).order("rental_duration_sec ASC") %>
   <% if items.empty? %>
     <p class="body1">Du leihst aktuell nichts aus.</p>
   <% else %>
@@ -47,6 +58,12 @@
               <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
             <% end %>
             <p class="body2"><%= item.name %></p>
+            <p class="body1" id="location">
+            <span class="material-symbols-outlined">
+            schedule
+            </span>
+              <%= Time.at(item.rental_duration_sec-(Time.now.utc + 3600 - item.rental_start)).utc.strftime("%H:%M:%S") %></p>
+            <br>
           </div>
         <% end %>
       </div>
