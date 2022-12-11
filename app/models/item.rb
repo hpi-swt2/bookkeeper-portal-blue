@@ -24,10 +24,10 @@ class Item < ApplicationRecord
   end
 
   def rental_end
-    self.rental_start + self.rental_duration_sec
+    rental_start + rental_duration_sec
   end
 
   def remaining_rental_duration
-    Time.at(self.rental_duration_sec-(Time.now.utc + 3600 - self.rental_start)).utc.strftime("%H:%M:%S")
+    Time.at(rental_duration_sec - (Time.now.utc + 3600 - rental_start)).utc.strftime("%H:%M:%S")
   end
 end
