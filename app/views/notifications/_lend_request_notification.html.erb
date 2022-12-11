@@ -24,7 +24,13 @@
       font-family: Roboto, sans-serif;
   }
 </style>
-
+<%if notification.active == false %>
+  <%if notification.accepted == true %>
+    <h2> Accepted Placeholder</h2>
+  <%else %>
+    <h2> Declined Placeholder</h2>
+  <%end %>
+<%end%>
 <div class="notification">
   <h3 class="subtitle">
     <%= notification.title %>
@@ -38,9 +44,10 @@
   <%= image_tag @notification.item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" %>
 </div>
 
-<div class="container-fluid d-flex justify-content-evenly gap-2">
-  <%= button_to t("defaults.accept"),{ action: "destroy", id: notification.id}, method: :delete ,class:"btn button"  %>
-  <%= button_to t("defaults.decline"), { action: "destroy", id: notification.id}, method: :delete, class:"btn button" %>
-</div>
-
+<%if notification.active == true%>
+  <div class="container-fluid d-flex justify-content-evenly gap-2">
+    <%= button_to t("defaults.accept"),{ action: "accept", id: notification.id}, method: :post ,class:"btn button"  %>
+    <%= button_to t("defaults.decline"), { action: "destroy", id: notification.id}, method: :post, class:"btn button" %>
+  </div>
+<%end%>
 
