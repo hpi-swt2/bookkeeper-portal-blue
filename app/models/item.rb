@@ -22,4 +22,12 @@ class Item < ApplicationRecord
   def price_in_euro=(euros)
     self.price_ct = euros * 100
   end
+
+  def rental_end
+    self.rental_start + self.rental_duration_sec
+  end
+
+  def remaining_rental_duration
+    Time.at(self.rental_duration_sec-(Time.now.utc + 3600 - self.rental_start)).utc.strftime("%H:%M:%S")
+  end
 end

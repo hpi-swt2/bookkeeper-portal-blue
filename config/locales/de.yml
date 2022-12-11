@@ -13,6 +13,7 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
+      no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
     notifications:
       title: "Benachrichtigungen"
     search:
