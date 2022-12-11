@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_08_191955) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_10_103345) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_191955) do
     t.index ["borrower_id"], name: "index_lend_request_notifications_on_borrower_id"
     t.index ["item_id"], name: "index_lend_request_notifications_on_item_id"
   end
-  
+
   create_table "memberships", force: :cascade do |t|
     t.string "type"
     t.integer "group_id", null: false
@@ -115,6 +115,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_191955) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "waitlists", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.integer "borrower_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["borrower_id"], name: "index_waitlists_on_borrower_id"
+    t.index ["item_id"], name: "index_waitlists_on_item_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "items", "users", column: "holder"
@@ -126,4 +135,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_08_191955) do
   add_foreign_key "notifications", "users"
   add_foreign_key "return_request_notifications", "items"
   add_foreign_key "return_request_notifications", "users", column: "borrower_id"
+  add_foreign_key "waitlists", "items"
+  add_foreign_key "waitlists", "users", column: "borrower_id"
 end
