@@ -14,6 +14,13 @@ de:
     dashboard:
       title: "Übersicht"
       no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
+      greeting: "Hallo, %{name}!"
+      unread_messages: "Du hast ... ungelesene Nachrichten"
+      lent_items: "AUSGELIEHENE ARTIKEL"
+      offered_items: "ANGEBOTENE ARTIKEL"
+      nothing_offered: "Du bietest bisher nichts an."
+      your_wishlist: "DEINE WUNSCHLISTE"
+      not_signed_in: "Du bist nicht angemeldet."
     notifications:
       title: "Benachrichtigungen"
     search:
@@ -32,11 +39,21 @@ de:
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
       lend: "Ausleihen"
+    edit_item:
+      rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
+      groups: "Gruppen"
+      no_groups: "Mitglied in keiner Gruppe"
+    groups:
+      owners: "Admins"
+      members: "Mitglieder"
   models:
     item:
       item: "Gegenstand"
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+  helpers:
+    submit:
+      update: "Gegendstand ändern"
