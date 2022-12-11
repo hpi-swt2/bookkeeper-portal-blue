@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :users
+  post 'add_to_waitlist/:id', to: 'items#add_to_waitlist', as: 'add_to_waitlist'
   # Defines the root path route ("/")
   root "landing_page#index"
 end

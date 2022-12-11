@@ -22,6 +22,7 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     @item = Item.new(item_params)
+    @item.waitlist = Waitlist.new
 
     respond_to do |format|
       if @item.save
@@ -57,6 +58,14 @@ class ItemsController < ApplicationController
     end
   end
 
+  def add_to_waitlist
+    @item = Item.find(params[:id])
+    @user = current_user
+    @item.add_to_waitlist(@user)
+    @item.save
+    redirect_to item_url(@item)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -67,6 +76,6 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :owner, :holder)
+                                 :rental_start, :return_checklist, :owner, :holder, :waitlist_id)
   end
 end

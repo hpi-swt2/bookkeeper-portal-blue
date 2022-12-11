@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
 
+  has_and_belongs_to_many :waitlists
+
   # Method expects all emails to follow format "firstname.lastname@anything" in order to extract first name out of email
   def first_name
     email.split("@")[0].split(".")[0].capitalize

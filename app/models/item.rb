@@ -1,6 +1,7 @@
 # class of a basic item.
 class Item < ApplicationRecord
   has_one_attached :image
+  has_one :waitlist
 
   validates :name, presence: true
   validates :category, presence: true
@@ -21,5 +22,12 @@ class Item < ApplicationRecord
 
   def price_in_euro=(euros)
     self.price_ct = euros * 100
+  end
+
+  def add_to_waitlist (user)
+    #check if not owner and not allready in waitlist, should later on also check if not available
+    if (!self.waitlist.users.exists?(user.id) && self.owner != user.id)
+      self.waitlist.users << user
+    end
   end
 end
