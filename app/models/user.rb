@@ -12,6 +12,10 @@ class User < ApplicationRecord
 
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
+  after_create :send_welcome_email
+  def send_welcome_email
+    BookkeeperMailer.notification.deliver_now
+  end
 
   def email_parts
     email.split("@")[0].split(".")

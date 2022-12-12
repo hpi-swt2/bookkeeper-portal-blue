@@ -135,6 +135,10 @@ GEM
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
     json (2.6.2)
+    launchy (2.5.0)
+      addressable (~> 2.7)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -250,6 +254,7 @@ GEM
     rubocop-rspec (2.15.0)
       rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
+    ruby_http_client (3.5.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -264,6 +269,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    sendgrid-ruby (6.6.2)
+      ruby_http_client (~> 3.4)
     shoulda-matchers (5.2.0)
       activesupport (>= 5.2.0)
     simplecov (0.21.2)
@@ -328,6 +335,7 @@ DEPENDENCIES
   factory_bot_rails
   importmap-rails
   jbuilder
+  letter_opener
   net-http
   pg
   puma (~> 5.0)
@@ -340,6 +348,7 @@ DEPENDENCIES
   rubocop-rspec
   sassc-rails
   selenium-webdriver
+  sendgrid-ruby
   shoulda-matchers (~> 5.0)
   simplecov
   sprockets-rails
