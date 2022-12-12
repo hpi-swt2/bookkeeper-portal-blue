@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   resources :users
+  resources :groups
   # Defines the root path route ("/")
   root "landing_page#index"
 end
