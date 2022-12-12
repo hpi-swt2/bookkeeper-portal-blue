@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe BookkeeperMailer, type: :mailer do
   describe "notification" do
-    let(:mail) { BookkeeperMailer.notification }
+    let(:mail) { described_class.notification }
 
     it "renders the headers" do
       expect(mail.subject).to eq("Notification")
