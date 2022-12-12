@@ -35,6 +35,7 @@ en:
     close: 'Close'
     accept: 'Accept'
     decline: 'Decline'
+    check: 'Check'
   views:
     landing_page:
       title: 'Bookkeeper Blue'

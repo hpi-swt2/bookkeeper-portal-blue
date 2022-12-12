@@ -13,8 +13,9 @@ describe "Return Request Notifications", type: :feature do
 
   it "shows an accept and decline button" do
     visit notifications_path
-    expect(page).to have_button('Accept')
-    expect(page).to have_button('Decline')
+    click_button("Check")
+    expect(page).to have_button( "Accept")
+    expect(page).to have_button( "Decline")
   end
 
   it "completes the lending process and change the item's status to available upon clicking on 'Accept'" do

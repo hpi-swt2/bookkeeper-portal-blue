@@ -17,4 +17,6 @@ class Notification < ApplicationRecord
       super
     end
   end
+
+
 end
