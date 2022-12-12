@@ -4,26 +4,27 @@ RSpec.describe LendRequestNotification, type: :model do
 
   let(:notification) { create(:lend_request_notification) }
 
-  it "should be creatable via a factory" do
+  it "is creatable via a factory" do
     expect(notification).to be_valid
   end
 
-  it "should belong to a user, a date, an item and a borrower" do
+  it "belongs to a user, a date, an item and a borrower" do
     expect(notification.user).not_to be_blank
     expect(notification.item).not_to be_blank
     expect(notification.borrower).not_to be_blank
     expect(notification.date).not_to be_blank
   end
 
-  it "should have differently translated title and description" do
-    I18n.locale = :en
-    en_title = notification.title
-    en_description = notification.description
-    I18n.locale = :de
-    de_title = notification.title
-    de_description = notification.description
-    expect(en_title).not_to eq de_title
-    expect(en_description).not_to eq de_description
+  it "has differently translated title and description" do
+    title, description = ""
+    I18n.with_locale(:en) do
+      title = notification.title
+      description = notification.description
+    end
+    I18n.with_locale(:de) do
+      expect(notification.title).not_to eq title
+      expect(notification.description).not_to eq description
+    end
   end
 
 end

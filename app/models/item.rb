@@ -1,6 +1,7 @@
 # class of a basic item.
 class Item < ApplicationRecord
   has_one_attached :image
+  has_many :lend_request_notifications, dependent: :destroy
 
   validates :name, presence: true
   validates :category, presence: true
