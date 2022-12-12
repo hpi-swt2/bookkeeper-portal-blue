@@ -1,6 +1,7 @@
 RSpec.describe "Profile", type: :feature do
 
   let(:user) { build(:max) }
+  let(:group) { build(:group) }
 
   it "shows the user name" do
     sign_in user
@@ -25,5 +26,26 @@ RSpec.describe "Profile", type: :feature do
     sign_in user
     visit profile_path
     expect(page).to have_link 'Add Group', href: new_group_path
+
+  it "displays the user's groups when member" do
+    user.groups.append(group)
+    user.save
+    sign_in user
+    visit profile_path
+    expect(page).to have_text(group.name)
+  end
+
+  it "displays the user's owned groups" do
+    user.owned_groups.append(group)
+    user.save
+    sign_in user
+    visit profile_path
+    expect(page).to have_text(group.name)
+  end
+
+  it "displays a message when in no groups" do
+    sign_in user
+    visit profile_path
+    expect(page).to have_text("Not member of any group")
   end
 end

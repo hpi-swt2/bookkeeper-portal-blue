@@ -45,6 +45,13 @@
 <h2>Email</h2>
 <p> <%= @user.email %> </p>
 
-<h2>Gruppen <a class="badge rounded-pill text-bg-primary" href="<%= new_group_path %>"><i class="bi bi-plus"></i><%= t 'models.group.add' %></a></h2>
-
-<p> Fotoclub <br> Clean IT-Club <br> HPI-ist-super-cool-Club </p>
+<h2><%= t 'views.profile.groups' %> <a class="badge rounded-pill text-bg-primary" href="<%= new_group_path %>"><i class="bi bi-plus"></i><%= t 'models.group.add' %></a></h2>
+<% if @user.groups.empty? %>
+  <p> <%= t 'views.profile.no_groups' %></p>
+<% else %>
+<ul>
+<% @user.groups.each do |group| %>
+  <li><%= link_to group.name, group %></li>
+<% end %>
+</ul>
+<% end %>
