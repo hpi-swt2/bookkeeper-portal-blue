@@ -47,7 +47,7 @@
 <%if notification.active == true%>
   <div class="container-fluid d-flex justify-content-evenly gap-2">
     <%= button_to t("defaults.accept"),{ action: "accept", id: notification.id}, method: :post ,class:"btn button"  %>
-    <%= button_to t("defaults.decline"), { action: "destroy", id: notification.id}, method: :post, class:"btn button" %>
+    <%= button_to t("defaults.decline"), { action: "decline", id: notification.id}, method: :post, class:"btn button" %>
   </div>
 <%end%>
 
