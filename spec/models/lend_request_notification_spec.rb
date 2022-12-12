@@ -18,8 +18,8 @@ RSpec.describe LendRequestNotification, type: :model do
     expect(notification_list.length).to eq(2)
     expect(notification_list[0].user).to eq(notification_list[1].user)
     expect(notification_list[0]).not_to eq(notification_list[1])
-    expect(notification_list[0].unread).to eq(true)
-    expect(notification_list[0].accepted).to eq(false)
+    expect(notification_list[0].unread).to be(true)
+    expect(notification_list[0].accepted).to be(false)
     expect(notification_list[0].date).not_to be_blank
   end
 
