@@ -44,7 +44,8 @@ class NotificationsController < ApplicationController
   def decline
     @notification = Notification.find(params[:id])
     @notification.update(active: false)
-
+    @lendrequest = LendRequestNotification.find(@notification.actable_id)
+    @lendrequest.update(accepted: false)
     redirect_to notifications_path
   end
 end

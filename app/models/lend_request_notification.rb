@@ -10,6 +10,12 @@ class LendRequestNotification < ApplicationRecord
   end
 
   def description
-    I18n.t "views.notifications.lend_request.description", user: borrower.name, item: item.name
+    if active
+      I18n.t "views.notifications.lend_request.description", user: borrower.name, item: item.name
+    elsif accepted
+      "You have lent #{item.name} to #{borrower.name}"
+    else
+      "You have declined to lent #{item.name} to #{borrower.name}"
+    end
   end
 end
