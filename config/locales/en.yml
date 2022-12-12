@@ -45,14 +45,21 @@ en:
       logged_in_user: 'currently logged in user: %{email}'
       edit_btn: 'Edit user profile'
     dashboard:
-      title: 'Dashboard'
-      greeting: 'Hello, %{name}!'
-      unread_messages: 'You have ... unread messages'
-      lent_items: 'LENT ITEMS'
-      offered_items: 'OFFERED ITEMS'
-      nothing_offered: 'You do not offer any items at the moment.'
-      your_wishlist: 'YOUR WISHLIST'
-      not_signed_in: 'You are not signed in.'
+      title: "Dashboard"
+      greeting: "Hello, %{name}!"
+      not_signed_in: "You are not signed in."
+      unread_messages: "You have ... unread messages"
+      lent_items:
+        title: "LENT ITEMS"
+      offered_items:
+        title: "OFFERED ITEMS"
+        nothing_offered: "You do not offer any items at the moment."
+      wishlist:
+        title: "YOUR WISHLIST"
+        missing_wishlist: "You don't have any items saved at the moment."
+        available: "Available"
+        not_available: "Not available"
+        lend_by_you: "Lend by you"
     notifications:
       title: 'Notifications'
       lend_request:
@@ -81,19 +88,24 @@ en:
     edit_item:
       rental_duration_sec: 'Rental Duration (seconds)'
     profile:
-      title: 'Profile'
-      groups: 'Groups'
-      no_groups: 'Not member of any group'
+      title: "Profile"
+      roles: "Roles"
+      email: "Email"
+      edit_profile: "Edit Profile"
+      groups: "Groups"
+      no_groups: "Not member of any group"
     groups:
       owners: 'Owners'
       members: 'Members'
   models:
     item:
-      item: 'Item'
-      created: 'Item was successfully created.'
-      updated: 'Item was successfully updated.'
-      destroyed: 'Item was successfully destroyed.'
-      return_process: 'Return is pending.'
+      item: "Item"
+      created: "Item was successfully created."
+      updated: "Item was successfully updated."
+      destroyed: "Item was successfully destroyed."
+    group:
+      add: "Add Group"
+      name: "Group Name"
   helpers:
     submit:
       update: 'Update Item'
