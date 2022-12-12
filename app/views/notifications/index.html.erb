@@ -1,3 +1,8 @@
+<style>
+.notification-unread-box{
+  color: #b1063a;
+}
+</style>
 <p style="color: green"><%= notice %></p>
 
 
@@ -5,9 +10,13 @@
 
 <div id="notifications">
   <% @active_dates.each do |(date, notifications)| %>
-    <div class="notification-blue-box">
-      <% notifications.each do |notification| %>
-        <div class="notification" onclick="location.href='<%= 'notifications/' + notification.id.to_s %>'">
+    <% notifications.each do |notification| %>
+    <%if notification.unread == true%>
+      <div class="notification-unread-box">
+    <% else %>
+      <div class="notification-read-box">
+    <%end %>
+    <div class="notification" onclick="location.href='<%= 'notifications/' + notification.id.to_s %>'">
             <h3>
               <%= notification.title %> 
             </h3>
@@ -22,9 +31,13 @@
     <%= t 'views.notifications.deletion_history' %>
   </h2>
   <% @inactive_dates.each do |(date, notifications)| %>
-    <div class="notification-grey-box">
       <% notifications.each do |notification| %>
-        <div class="notification" onclick="location.href='<%= 'notifications/' + notification.id.to_s %>'">
+    <%if notification.unread == true %>
+      <div class="notification-unread-box">
+    <% else %>
+      <div class="notification-read-box">
+    <%end %>
+    <div class="notification" onclick="location.href='<%= 'notifications/' + notification.id.to_s %>'">
           <h3>
             <%= notification.title %>
           </h3>
