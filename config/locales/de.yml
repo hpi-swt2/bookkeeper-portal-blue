@@ -49,6 +49,11 @@ de:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
+      roles: "Rollen"
+      email: "Email"
+      edit_profile: "Profil bearbeiten"
+      edit_profile_image: >
+        <%= image_tag "edit_square.png", class: "mt-3 ", size: "35x35", alt: "Profil bearbeiten"%>
       groups: "Gruppen"
       no_groups: "Mitglied in keiner Gruppe"
     groups:

@@ -80,6 +80,9 @@ en:
       rental_duration_sec: "Rental Duration (seconds)"
     profile:
       title: "Profile"
+      roles: "Roles"
+      email: "Email"
+      edit_profile: "Edit Profile"
       groups: "Groups"
       no_groups: "Not member of any group"
     groups:
