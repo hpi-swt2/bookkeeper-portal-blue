@@ -19,6 +19,11 @@ de:
       offered_items: "ANGEBOTENE ARTIKEL"
       nothing_offered: "Du bietest bisher nichts an."
       your_wishlist: "DEINE WUNSCHLISTE"
+      wishlist:
+        missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
+        available: "Verfügbar"
+        not_available: "Nicht verfügbar"
+        lend_by_you: "Von dir ausgeliehen"
       not_signed_in: "Du bist nicht angemeldet."
     notifications:
       title: "Benachrichtigungen"
