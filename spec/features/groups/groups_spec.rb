@@ -5,7 +5,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in create(:user)
     visit new_group_path
     fill_in "group_name", with: "Test Group"
-    click_button "Create Group"
+    click_button "Add Group"
     expect(page).to have_text("Test Group")
     # Expected to fail since view page is part of another PR
   end
