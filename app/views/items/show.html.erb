@@ -129,7 +129,7 @@
           <!--only show filled icon if icon is on wishlist-->
           <!--span class="material-symbols-outlined wishlistIcon" id="filledWishlistIcon">grade</span-->
           <span class="material-symbols-outlined wishlistIcon" id="notFilledWishlistIcon">grade</span>
-          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image != nil%>
+          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
         </div>
         <div>
           <p class="title"><%=@item.name %></p>
