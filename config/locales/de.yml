@@ -60,6 +60,10 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+    group:
+      add: "Gruppe erstellen"
+      name: "Gruppenname"
   helpers:
     submit:
       update: "Gegendstand ändern"
+
