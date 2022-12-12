@@ -7,7 +7,6 @@ RSpec.describe "Groups", type: :feature do
     fill_in "group_name", with: "Test Group"
     click_button "Add Group"
     expect(page).to have_text("Test Group")
-    # Expected to fail since view page is part of another PR
   end
 
   it "shows the group name" do

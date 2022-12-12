@@ -59,6 +59,4 @@ de:
   helpers:
     submit:
       update: "Gegendstand ändern"
-  view:
-    profile:
-      add_group: ""
+
