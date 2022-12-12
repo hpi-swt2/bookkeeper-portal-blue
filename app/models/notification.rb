@@ -17,6 +17,7 @@ class Notification < ApplicationRecord
       super
     end
   end
-
-
+  def respond_to_missing?(method, include_private = false)
+    specific.self_respond_to?(method) || super
+  end
 end

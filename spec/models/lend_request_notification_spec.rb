@@ -16,10 +16,10 @@ RSpec.describe LendRequestNotification, type: :model do
   end
 
   it "has differently translated title and description" do
-    I18n.locale = :en
+    I18n.with_locale = :en
     en_title = notification.title
     en_description = notification.description
-    I18n.locale = :de
+    I18n.with_locale = :de
     de_title = notification.title
     de_description = notification.description
     expect(en_title).not_to eq de_title
