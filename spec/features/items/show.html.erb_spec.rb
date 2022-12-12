@@ -1,5 +1,5 @@
 require 'rails_helper'
-
+require 'pp'
 RSpec.describe "items/show", type: :feature do
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
@@ -45,47 +45,47 @@ RSpec.describe "items/show", type: :feature do
   # - creates added / move up notifications
 
   it "has enter waitlist button when not on list" do
-    sign_in user
+    sign_in user2
     visit item_path(item)
     expect(page).to have_text("Enter Waitlist")
   end
 
   it "has leave waitlist button when on list" do
-    sign_in user
-    item.waitlist.add_user(user)
+    sign_in user2
+    item.waitlist.add_user(user2)
     visit item_path(item)
     expect(page).to have_text("Leave Waitlist")
   end
 
   it "adds user to waitlist when clicking add to waitlist button" do
-    sign_in user
+    sign_in user2
     visit item_path(item)
     find(:button, "Enter Waitlist").click
-    expect(item.waitlist.users).to include(user)
+    expect(Item.find(item.id).waitlist.users).to include(user2)
   end
 
   it "removes user from waitlist when clicking remove from waitlist button" do
-    sign_in user
-    item.waitlist.add_user(user)
+    sign_in user2
+    item.waitlist.add_user(user2)
     visit item_path(item)
     find(:button, "Leave Waitlist").click
-    expect(item.waitlist.users).to_not include(user)
+    expect(Item.find(item.id).waitlist.users).to_not include(user2)
   end
 
   it "creates added to waitlist notification when adding user to waitlist" do
-    sign_in user
+    sign_in user2
     visit item_path(item)
     find(:button, "Enter Waitlist").click
-    notification = AddedToWaitlistNotification.find_by(user: user, item: item)
+    notification = AddedToWaitlistNotification.find_by(user: user2, item: item)
     expect(notification).to_not be_nil
   end
 
   it "creates move up on waitlist notification when removing user from waitlist" do
-    sign_in user
-    item.waitlist.add_user(user)
+    sign_in item.waitlist.users[0]
+    item.waitlist.add_user(user2)
     visit item_path(item)
     find(:button, "Leave Waitlist").click
-    notification = MoveUpOnWaitlistNotification.find_by(user: item.waitlist.users[0], item: item)
+    notification = MoveUpOnWaitlistNotification.find_by(user: Item.find(item.id).waitlist.users[0], item: item)
     expect(notification).to_not be_nil
   end
 
