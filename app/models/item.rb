@@ -8,6 +8,7 @@ class Item < ApplicationRecord
   validates :location, presence: true
   validates :description, presence: true
   validates :owner, presence: true
+  validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
 
   def price_in_euro
     unless price_ct.nil?

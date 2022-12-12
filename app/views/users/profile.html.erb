@@ -45,5 +45,13 @@
 <h2>Email</h2>
 <p> <%= @user.email %> </p>
 
-<h2>Gruppen</h2>
-<p> Fotoclub <br> Clean IT-Club <br> HPI-ist-super-cool-Club </p>
+<h2><%= t 'views.profile.groups' %></h2>
+<% if @user.groups.empty? %>
+  <p> <%= t 'views.profile.no_groups' %></p>
+<% else %>
+<ul>
+<% @user.groups.each do |group| %>
+  <li><%= link_to group.name, group %></li>
+<% end %>
+</ul>
+<% end %>
