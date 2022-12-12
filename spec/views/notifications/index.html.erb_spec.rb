@@ -1,7 +1,5 @@
 require 'rails_helper'
 
 RSpec.describe "notifications/index", type: :view do
-  before do
-    assign(:notifications, create_list(:lend_request_notification, 2))
-  end
+  pending "add some examples to (or delete) #{__FILE__}"
 end
