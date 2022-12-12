@@ -58,6 +58,12 @@ en:
       lend_request:
         title: "Lend Request"
         description: "%{user} wants to borrow your %{item}."
+      added_to_waitlist:
+        title: "Added to Waitlist"
+        description: "You have been added to Waitlist of %{item} at Position %{position}."
+      move_up_on_waitlist:
+        title: "Moved up on Waitlist"
+        description: "You have been moved up to Position %{position} on Waitlist for %{item}."
     search:
       title: "Search"
       filter_button: "Filter"
@@ -73,6 +79,10 @@ en:
       owner: "Owner"
       lend_until: "Lend Until"
       enter_waitlist: "Enter Waitlist"
+      leave_waitlist: "Leave Waitlist"
+      waitlist: "Waitlist"
+      users_waiting: "%{amount} Users are waiting for this Object."
+      waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
@@ -84,6 +94,9 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+    waitlist:
+      added_to_waitlist: "Added to Waitlist at Position %{position}."
+      failed_adding_to_waitlist: "Not added to Waitlist."
   helpers:
     submit:
       update: "Update Item"

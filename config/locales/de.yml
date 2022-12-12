@@ -27,6 +27,12 @@ de:
       lend_request:
         title: "Ausleihanfrage"
         description: "%{user} möchte %{item} von dir ausleihen."
+      added_to_waitlist:
+        title: "Zur Warteliste hinzugefügt"
+        description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."
+      move_up_on_waitlist:
+        title: "Auf Warteliste aufgerückt"
+        description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
     search:
       title: "Suche"
       filter_button: "Filter"
@@ -42,6 +48,10 @@ de:
       owner: "Besitzer"
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
+      leave_waitlist: "Warteliste verlassen"
+      waitlist: "Warteliste"
+      users_waiting: "%{amount} Nutzer warten auf dieses Objekt."
+      waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
@@ -53,6 +63,9 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+    waitlist:
+      added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
+      failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
   helpers:
     submit:
       update: "Gegendstand ändern"

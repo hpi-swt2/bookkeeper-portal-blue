@@ -25,9 +25,10 @@ class Item < ApplicationRecord
   end
 
   def add_to_waitlist (user)
-    #check if not owner and not allready in waitlist, should later on also check if not available
-    if (!self.waitlist.users.exists?(user.id) && self.owner != user.id)
-      self.waitlist.users << user
-    end
+    self.waitlist.add_user(user)
+  end
+
+  def remove_from_waitlist (user)
+    self.waitlist.remove_user(user)
   end
 end

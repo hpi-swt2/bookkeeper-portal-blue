@@ -148,8 +148,20 @@
       <p class="body1"><%= User.find(@item.owner).email %></p>
       <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
       <p class="body1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
+      <p class="subtitle"><%= t('views.show_item.waitlist')%></p>
+      <p class="body1">
+        <% if !@item.waitlist.users.exists?(current_user.id) %>
+          <%= t('views.show_item.users_waiting', amount: @item.waitlist.users.size) %>
+        <% else %>
+          <%= t('views.show_item.waitlist_position', position: @item.waitlist.users.find_index(current_user) + 1) %>      
+        <% end %>
+      </p>
       <!-- change to borrow item path when implemented -->
-      <%= button_to t('views.show_item.enter_waitlist'), { action: "add_to_waitlist" }, class: "primaryButton" %>
+      <% if !@item.waitlist.users.exists?(current_user.id) %>
+        <%= button_to t('views.show_item.enter_waitlist'), { action: "add_to_waitlist" }, class: "primaryButton" %>
+      <% else %>
+        <%= button_to t('views.show_item.leave_waitlist'), { action: "leave_waitlist" }, class: "primaryButton" %>
+      <% end %>
       <br><br><br>
     </div>
   </div>
