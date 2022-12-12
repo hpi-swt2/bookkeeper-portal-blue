@@ -90,6 +90,3 @@ en:
   helpers:
     submit:
       update: "Update Item"
-  view:
-    profile:
-      add_group: ""
