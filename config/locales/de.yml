@@ -13,6 +13,20 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
+      greeting: "Hallo, %{name}!"
+      not_signed_in: "Du bist nicht angemeldet."
+      unread_messages: "Du hast ... ungelesene Nachrichten"
+      lent_items:
+        title: "AUSGELIEHENE ARTIKEL"
+      offered_items:
+        title: "ANGEBOTENE ARTIKEL"
+        nothing_offered: "Du bietest bisher nichts an."
+      wishlist:
+        title: "DEINE WUNSCHLISTE"
+        missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
+        available: "Verfügbar"
+        not_available: "Nicht verfügbar"
+        lend_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
     search:
@@ -37,16 +51,24 @@ de:
       title: "Profil"
       roles: "Rollen"
       email: "Email"
-      groups: "Gruppen"
       edit_profile: "Profil bearbeiten"
       edit_profile_image: >
         <%= image_tag "edit_square.png", class: "mt-3 ", size: "35x35", alt: "Profil bearbeiten"%>
+      groups: "Gruppen"
+      no_groups: "Mitglied in keiner Gruppe"
+    groups:
+      owners: "Admins"
+      members: "Mitglieder"
   models:
     item:
       item: "Gegenstand"
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+    group:
+      add: "Gruppe erstellen"
+      name: "Gruppenname"
   helpers:
     submit:
       update: "Gegendstand ändern"
+

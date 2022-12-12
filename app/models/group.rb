@@ -14,6 +14,10 @@ class Group < ApplicationRecord
 
   validate :owner?
 
+  def members_without_ownership
+    members - owners
+  end
+
   private
 
   def owner?
