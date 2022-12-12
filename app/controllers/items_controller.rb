@@ -62,7 +62,6 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
     @item.add_to_waitlist(@user)
-
     
     respond_to do |format|
       if @item.save

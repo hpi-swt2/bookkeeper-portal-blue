@@ -1,10 +1,10 @@
 require 'rails_helper'
-require 'pp'
+
 RSpec.describe "items/show", type: :feature do
+  let(:owner) { create(:user) }
   let(:user) { create(:user) }
-  let(:user2) { create(:user) }
   let(:item) do
-    item = create(:item, owner: user.id) 
+    item = create(:item, owner: owner.id) 
     item.waitlist = create(:waitlist_with_item)
     item.waitlist.item = item
     item
@@ -18,13 +18,13 @@ RSpec.describe "items/show", type: :feature do
   end
 
   it "shows edit button for owner" do
-    sign_in user
+    sign_in owner
     visit item_path(item)
     expect(page).to have_link(href: edit_item_url(item))
   end
 
   it "does not show edit button for non-owner" do
-    sign_in user2
+    sign_in user
     visit item_path(item)
     expect(page).not_to have_link(href: edit_item_url(item))
   end
@@ -45,44 +45,43 @@ RSpec.describe "items/show", type: :feature do
   # - creates added / move up notifications
 
   it "has enter waitlist button when not on list" do
-    sign_in user2
+    sign_in user
     visit item_path(item)
     expect(page).to have_text("Enter Waitlist")
   end
 
   it "has leave waitlist button when on list" do
-    sign_in user2
-    item.waitlist.add_user(user2)
+    sign_in user
+    item.waitlist.add_user(user)
     visit item_path(item)
     expect(page).to have_text("Leave Waitlist")
   end
 
   it "adds user to waitlist when clicking add to waitlist button" do
-    sign_in user2
+    sign_in user
     visit item_path(item)
     find(:button, "Enter Waitlist").click
-    expect(Item.find(item.id).waitlist.users).to include(user2)
+    expect(Item.find(item.id).waitlist.users).to include(user)
   end
 
   it "removes user from waitlist when clicking remove from waitlist button" do
-    sign_in user2
-    item.waitlist.add_user(user2)
+    sign_in user
+    item.waitlist.add_user(user)
     visit item_path(item)
     find(:button, "Leave Waitlist").click
-    expect(Item.find(item.id).waitlist.users).to_not include(user2)
+    expect(Item.find(item.id).waitlist.users).to_not include(user)
   end
 
   it "creates added to waitlist notification when adding user to waitlist" do
-    sign_in user2
+    sign_in user
     visit item_path(item)
     find(:button, "Enter Waitlist").click
-    notification = AddedToWaitlistNotification.find_by(user: user2, item: item)
+    notification = AddedToWaitlistNotification.find_by(user: user, item: item)
     expect(notification).to_not be_nil
   end
 
   it "creates move up on waitlist notification when removing user from waitlist" do
     sign_in item.waitlist.users[0]
-    item.waitlist.add_user(user2)
     visit item_path(item)
     find(:button, "Leave Waitlist").click
     notification = MoveUpOnWaitlistNotification.find_by(user: Item.find(item.id).waitlist.users[0], item: item)
