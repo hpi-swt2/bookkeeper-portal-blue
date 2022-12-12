@@ -50,4 +50,3 @@ RSpec.describe "Profile", type: :feature do
     expect(page).to have_text("Not member of any group")
   end
 end
-
