@@ -14,17 +14,19 @@ de:
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
+      not_signed_in: "Du bist nicht angemeldet."
       unread_messages: "Du hast ... ungelesene Nachrichten"
-      lent_items: "AUSGELIEHENE ARTIKEL"
-      offered_items: "ANGEBOTENE ARTIKEL"
-      nothing_offered: "Du bietest bisher nichts an."
-      your_wishlist: "DEINE WUNSCHLISTE"
+      lent_items:
+        title: "AUSGELIEHENE ARTIKEL"
+      offered_items:
+        title: "ANGEBOTENE ARTIKEL"
+        nothing_offered: "Du bietest bisher nichts an."
       wishlist:
+        title: "DEINE WUNSCHLISTE"
         missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
         lend_by_you: "Von dir ausgeliehen"
-      not_signed_in: "Du bist nicht angemeldet."
     notifications:
       title: "Benachrichtigungen"
     search:

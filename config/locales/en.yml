@@ -45,17 +45,19 @@ en:
     dashboard:
       title: "Dashboard"
       greeting: "Hello, %{name}!"
+      not_signed_in: "You are not signed in."
       unread_messages: "You have ... unread messages"
-      lent_items: "LENT ITEMS"
-      offered_items: "OFFERED ITEMS"
-      nothing_offered: "You do not offer any items at the moment."
-      your_wishlist: "YOUR WISHLIST"
+      lent_items:
+        title: "LENT ITEMS"
+      offered_items:
+        title: "OFFERED ITEMS"
+        nothing_offered: "You do not offer any items at the moment."
       wishlist:
+        title: "YOUR WISHLIST"
         missing_wishlist: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
         lend_by_you: "Lend by you"
-      not_signed_in: "You are not signed in."
     notifications:
       title: "Notifications"
     search:
