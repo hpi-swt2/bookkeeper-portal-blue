@@ -4,7 +4,7 @@ FactoryBot.define do
     category { "MyCategory" }
     location { "MyLocation" }
     description { "MyDescription" }
-    image { nil }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
     price_ct { 1 }
     rental_duration_sec { 1 }
     rental_start { "2022-11-18 15:32:07" }
@@ -44,6 +44,19 @@ FactoryBot.define do
     price_ct { 500 }
     rental_duration_sec { 60 * 60 * 5 }
     rental_start { "2022-10-10 3:14:15" }
+    return_checklist { "Clean the whiteboard." }
+    owner { create(:user).id }
+  end
+
+  factory :item_without_time, class: 'Item' do
+    name { "Whiteboard" }
+    category { "Equipment" }
+    location { "D-Space" }
+    description { "Standard Whiteboard with lots of space for innovative ideas." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { nil }
+    rental_start { nil }
     return_checklist { "Clean the whiteboard." }
     owner { create(:user).id }
   end

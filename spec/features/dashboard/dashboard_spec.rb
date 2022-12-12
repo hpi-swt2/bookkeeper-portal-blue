@@ -6,7 +6,7 @@ RSpec.describe "Dashboard", type: :feature do
 
   it "renders without user signed in" do
     visit dashboard_path
-    expect(page).to have_content("Du bist nicht angemeldet.")
+    expect(page).to have_content I18n.t('views.dashboard.not_signed_in')
   end
 
   it "shows the user name" do
@@ -19,26 +19,26 @@ RSpec.describe "Dashboard", type: :feature do
   it "shows unread messages" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content(/ungelesene Nachrichten/i)
+    expect(page).to have_content I18n.t('views.dashboard.unread_messages')
   end
 
-  it "shows borrowed items" do
+  it "shows lent items" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content(/ausgeliehen/i)
+    expect(page).to have_content I18n.t('views.dashboard.lent_items')
   end
 
-  it "shows offered messages" do
+  it "shows offered items" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content(/angebotene Artikel/i)
+    expect(page).to have_content I18n.t('views.dashboard.offered_items')
   end
 
   it "shows message when nothing is offered" do
     @user = create(:user)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content("Du bietest bisher nichts an.")
+    expect(page).to have_content I18n.t('views.dashboard.nothing_offered')
   end
 
   it "shows offered item" do
@@ -52,7 +52,7 @@ RSpec.describe "Dashboard", type: :feature do
   it "shows wishlist" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content(/Wunschliste/i)
+    expect(page).to have_content I18n.t('views.dashboard.your_wishlist')
   end
 
   it "shows wishlist item" do
