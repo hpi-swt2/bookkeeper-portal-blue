@@ -20,7 +20,7 @@ class Notification < ApplicationRecord
     end
   end
 
-  def respond_to_missing?(method, include_private = false)
+  def respond_to_missing?(_method, _include_private = false)
     false
   end
 end
