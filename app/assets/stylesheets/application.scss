@@ -93,3 +93,15 @@ $grey10: #C6CACC;
     padding-left: 11px;
     padding-right: 11px;
 }
+
+.outline-missing-left {
+    border-left: 0;
+}
+
+.outline-missing-right {
+    border-right: 0;
+}
+
+.btn-outline-secondary {
+    border-color: $grey10;
+}
