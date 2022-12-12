@@ -11,11 +11,12 @@
             <i class="bi bi-qr-code-scan"></i>
         </button>
     </div>
-    
-    <button class="btn btn-secondary" type="button" data-bs-toggle="modal" aria-expanded="false" data-bs-target="#filter-modal">
-        FILTER <i class="bi bi-sliders2-vertical"></i>
-    </button>
-    <%= render "filter-modal" %>
+    <div class="btn-group mb-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= t 'views.search.filter_button' %>
+        </button>
+        <%= render "filter-modal" %>
+    </div>
 <% end %>
 
 <% if @results %>
