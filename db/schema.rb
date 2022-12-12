@@ -115,6 +115,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_103345) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "waitlists", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.integer "borrower_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["borrower_id"], name: "index_waitlists_on_borrower_id"
+    t.index ["item_id"], name: "index_waitlists_on_item_id"
+  end
+
   create_table "wishlist", id: false, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "item_id", null: false
