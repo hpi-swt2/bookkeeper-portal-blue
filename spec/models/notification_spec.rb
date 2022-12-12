@@ -19,4 +19,5 @@ RSpec.describe Notification, type: :model do
     expect(notification_list[0].user).to eq(notification_list[1].user)
     expect(notification_list[0]).not_to eq(notification_list[1])
   end
+
 end

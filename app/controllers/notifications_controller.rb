@@ -23,7 +23,7 @@ class NotificationsController < ApplicationController
 
   def show
     @notification = Notification.find(params[:id])
-    @notification.update(:unread => false)
+    @notification.update(unread: false)
   end
 
   def destroy
@@ -35,15 +35,15 @@ class NotificationsController < ApplicationController
 
   def accept
     @notification = Notification.find(params[:id])
-    @notification.update(:active => false)
+    @notification.update(active: false)
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
-    @lendrequest.update(:accepted => true)
+    @lendrequest.update(accepted: true)
     redirect_to notifications_path
   end
 
   def decline
     @notification = Notification.find(params[:id])
-    @notification.update(:active => false)
+    @notification.update(active: false)
 
     redirect_to notifications_path
   end
