@@ -3,11 +3,13 @@ require "rails_helper"
 describe "Return Request Notifications", type: :feature do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
+  let(:borrower) { create(:max, password: password) }
+  let(:item) { create(:pending, owner: user.id) }
 
   before do
     sign_in user
     FactoryBot.reload
-    @notification = build(:return_request_notification, user: user)
+    @notification = build(:return_request_notification, user: user, item: item, borrower: borrower)
     @notification.save
   end
 
