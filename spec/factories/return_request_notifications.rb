@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :return_request_notification do
     active { true }
-    user { FactoryBot.build(:user) }
+    user { FactoryBot.create(:user) }
     date { Time.zone.now }
-    item { FactoryBot.build(:pending, owner: user.id) }
-    borrower { FactoryBot.build(:max) }
+    item { FactoryBot.create(:pending, owner: user.id) }
+    borrower { FactoryBot.create(:max) }
   end
 
   factory :invalid_return_request_notification, class: 'ReturnRequestNotification' do
