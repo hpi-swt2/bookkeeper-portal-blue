@@ -25,8 +25,15 @@ RSpec.describe Waitlist, type: :model do
   it "adds a user to the waitlist" do
     waitlist = create(:waitlist_with_item)
     user = create(:peter)
-    waitlist.add_user(user)
+    expect(waitlist.add_user(user)).to be(true)
     expect(waitlist.users).to include(user)
+  end
+
+  it "does not add item owner to waitlist" do
+    waitlist = create(:waitlist_with_item)
+    owner = Item.find_by(owner: waitlist.item.owner)
+    expect(waitlist.add_user(owner)).to be(false)
+    expect(waitlist.users).not_to include(owner)
   end
 
   it "removes a user from the waitlist" do
@@ -41,7 +48,7 @@ RSpec.describe Waitlist, type: :model do
     user = create(:peter)
     waitlist.add_user(user)
     notification = AddedToWaitlistNotification.find_by(user: user, item: waitlist.item)
-    expect(notification).to_not be_nil
+    expect(notification).not_to be_nil
   end
 
   it "creates a moved up notification for users after when a user is removed from the waitlist" do
@@ -49,6 +56,6 @@ RSpec.describe Waitlist, type: :model do
     user = waitlist.users[0]
     waitlist.remove_user(user)
     notification = MoveUpOnWaitlistNotification.find_by(user: waitlist.users[0], item: waitlist.item)
-    expect(notification).to_not be_nil
+    expect(notification).not_to be_nil
   end
 end

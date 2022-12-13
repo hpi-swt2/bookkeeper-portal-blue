@@ -4,7 +4,7 @@ RSpec.describe "items/show", type: :feature do
   let(:owner) { create(:user) }
   let(:user) { create(:user) }
   let(:item) do
-    item = create(:item, owner: owner.id) 
+    item = create(:item, owner: owner.id)
     item.waitlist = create(:waitlist_with_item)
     item.waitlist.item = item
     item
@@ -38,16 +38,17 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text(item.description)
   end
 
-  # tests:
-  # - has add to waitlist button when not on list
-  # - has remove from waitlist button when on list
-  # - buttons perform actions correctly
-  # - creates added / move up notifications
-
   it "has enter waitlist button when not on list" do
     sign_in user
     visit item_path(item)
     expect(page).to have_text("Enter Waitlist")
+  end
+
+  it "does not have enter/leave waitlist button when owner of item" do
+    sign_in owner
+    visit item_path(item)
+    expect(page).not_to have_text("Enter Waitlist")
+    expect(page).not_to have_text("Leave Waitlist")
   end
 
   it "has leave waitlist button when on list" do
@@ -69,7 +70,7 @@ RSpec.describe "items/show", type: :feature do
     item.waitlist.add_user(user)
     visit item_path(item)
     find(:button, "Leave Waitlist").click
-    expect(Item.find(item.id).waitlist.users).to_not include(user)
+    expect(Item.find(item.id).waitlist.users).not_to include(user)
   end
 
   it "creates added to waitlist notification when adding user to waitlist" do
@@ -77,7 +78,7 @@ RSpec.describe "items/show", type: :feature do
     visit item_path(item)
     find(:button, "Enter Waitlist").click
     notification = AddedToWaitlistNotification.find_by(user: user, item: item)
-    expect(notification).to_not be_nil
+    expect(notification).not_to be_nil
   end
 
   it "creates move up on waitlist notification when removing user from waitlist" do
@@ -85,7 +86,7 @@ RSpec.describe "items/show", type: :feature do
     visit item_path(item)
     find(:button, "Leave Waitlist").click
     notification = MoveUpOnWaitlistNotification.find_by(user: Item.find(item.id).waitlist.users[0], item: item)
-    expect(notification).to_not be_nil
+    expect(notification).not_to be_nil
   end
 
 end

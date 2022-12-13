@@ -2,65 +2,65 @@ class Waitlist < ApplicationRecord
   belongs_to :item
   has_and_belongs_to_many :users
 
-  def position (user)
-    self.users.find_index(user)
+  def position(user)
+    users.find_index(user)
   end
 
   def first_user
-    self.users.first
+    users.first
   end
 
-  def add_user (user)
-    unless self.users.exists?(user.id) || user.id == self.item.owner
-      self.users << user
-      self.add_added_to_waitlist_notification(user)
+  def add_user(user)
+    unless users.exists?(user.id) || user.id == item.owner
+      users << user
+      add_added_to_waitlist_notification(user)
       return true
     end
-    return false
+    false
   end
 
-  def remove_user (user)
-    user_index = self.users.find_index(user) 
-    self.users.delete(user)
+  def remove_user(user)
+    user_index = users.find_index(user)
+    users.delete(user)
 
-    self.delete_waitlist_notifications(user)
+    delete_waitlist_notifications(user)
 
-    unless user_index.nil? || user_index >= self.users.size
-      self.users[user_index..-1].each do |temp_user|
-        self.delete_waitlist_notifications(temp_user)
-        self.add_move_up_on_waitlist_notification(temp_user)
-      end
+    return if user_index.nil? || user_index >= users.size
+
+    users[user_index..].each do |temp_user|
+      delete_waitlist_notifications(temp_user)
+      add_move_up_on_waitlist_notification(temp_user)
     end
   end
 
   private
 
-  def delete_waitlist_notifications (user)
-    self.delete_added_to_waitlist_notification(user)
-    self.delete_moved_up_on_waitlist_notification(user)
+  def delete_waitlist_notifications(user)
+    delete_added_to_waitlist_notification(user)
+    delete_moved_up_on_waitlist_notification(user)
   end
 
-  def add_added_to_waitlist_notification (user)
-    @notification = AddedToWaitlistNotification.new(user: user, date: Time.now, item: item)
+  def add_added_to_waitlist_notification(user)
+    @notification = AddedToWaitlistNotification.new(user: user, date: Time.zone.now, item: item)
     @notification.save
   end
 
-  def add_move_up_on_waitlist_notification (user)
-    @notification = MoveUpOnWaitlistNotification.new(user: user, date: Time.now, item: item)
+  def add_move_up_on_waitlist_notification(user)
+    @notification = MoveUpOnWaitlistNotification.new(user: user, date: Time.zone.now, item: item)
     @notification.save
   end
 
-  def delete_added_to_waitlist_notification (user)
+  def delete_added_to_waitlist_notification(user)
     @notification = AddedToWaitlistNotification.find_by(item: item, user: user)
-    unless @notification.nil?
-      @notification.destroy
-    end
+    return if @notification.nil?
+
+    @notification.destroy
   end
 
-  def delete_moved_up_on_waitlist_notification (user)
+  def delete_moved_up_on_waitlist_notification(user)
     @notification = MoveUpOnWaitlistNotification.find_by(item: item, user: user)
-    unless @notification.nil?
-      @notification.destroy
-    end
+    return if @notification.nil?
+
+    @notification.destroy
   end
 end

@@ -157,10 +157,12 @@
         <% end %>
       </p>
       <!-- change to borrow item path when implemented -->
-      <% if !@item.waitlist.users.exists?(current_user.id) %>
-        <%= button_to t('views.show_item.enter_waitlist'), { action: "add_to_waitlist" }, class: "primaryButton" %>
-      <% else %>
-        <%= button_to t('views.show_item.leave_waitlist'), { action: "leave_waitlist" }, class: "primaryButton" %>
+      <% if current_user.id != @item.owner %>
+        <% if !@item.waitlist.users.exists?(current_user.id) %>
+          <%= button_to t('views.show_item.enter_waitlist'), { action: "add_to_waitlist" }, class: "primaryButton" %>
+        <% else %>
+          <%= button_to t('views.show_item.leave_waitlist'), { action: "leave_waitlist" }, class: "primaryButton" %>
+        <% end %>
       <% end %>
       <br><br><br>
     </div>

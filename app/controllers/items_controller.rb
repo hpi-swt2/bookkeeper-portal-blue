@@ -61,14 +61,15 @@ class ItemsController < ApplicationController
   def add_to_waitlist
     @item = Item.find(params[:id])
     @user = current_user
-    
+
     respond_to do |format|
       if @item.add_to_waitlist(@user) && @item.save
-        format.html { redirect_to item_url(@item), notice: t("models.waitlist.added_to_waitlist", position: @item.waitlist.position(@user) + 1) }
-        #format.json { render :show, status: :ok, location: @item }
+        format.html do
+          redirect_to item_url(@item),
+                      notice: t("models.waitlist.added_to_waitlist", position: @item.waitlist.position(@user) + 1)
+        end
       else
         format.html { redirect_to item_url(@item), alert: t("models.waitlist.failed_adding_to_waitlist") }
-        #format.json { render :show, status: :unprocessable_entity, location: @item }
       end
     end
   end
