@@ -26,9 +26,9 @@
 </style>
 <%if notification.active == false %>
   <%if notification.accepted == true %>
-    <h2> Accepted Placeholder</h2>
+    <h2> <%= t 'views.notifications.lend_request.accepted' %></h2>
   <%else %>
-    <h2> Declined Placeholder</h2>
+    <h2> <%= t 'views.notifications.lend_request.declined' %></h2>
   <%end %>
 <%end%>
 <div class="notification">
