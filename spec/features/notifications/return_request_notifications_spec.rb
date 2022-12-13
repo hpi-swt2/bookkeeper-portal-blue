@@ -13,7 +13,6 @@ describe "Return Request Notifications", type: :feature do
   end
 
   it "shows an accept and decline button" do
-    print(Notification.all)
     visit notification_path(id: @notification.id)
     click_button("Check")
     expect(page).to have_button("Accept")

@@ -3,7 +3,7 @@ FactoryBot.define do
     active { true }
     unread { true }
     user { FactoryBot.build(:user) }
-    date { Time.zone.now }
+    date { Time.strptime("2022-11-01 13:47:20", "%Y-%m-%d %H:%M:%S") }
     item { FactoryBot.build(:pending, owner: user.id) }
     borrower { FactoryBot.build(:max) }
   end
