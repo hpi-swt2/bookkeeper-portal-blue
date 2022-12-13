@@ -2,6 +2,7 @@
 class Item < ApplicationRecord
   has_one_attached :image
   has_many :lend_request_notifications, dependent: :destroy
+  has_and_belongs_to_many :users, join_table: "wishlist"
 
   validates :name, presence: true
   validates :category, presence: true
