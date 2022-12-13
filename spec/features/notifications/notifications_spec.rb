@@ -41,4 +41,10 @@ describe "Notifications Page", type: :feature do
     expect(page).to have_text(@notifications[0].description)
   end
 
+  it "is unread until page is viewed, then it is read" do
+    expect(@notifications[1].unread).to eq true
+    visit notification_path(@notifications[1].id)
+    @notifications[1].reload
+    expect(@notifications[1].unread).to eq false
+  end
 end
