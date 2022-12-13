@@ -1,3 +1,4 @@
+# class of a notification send to user, when position in a waitlist changes.
 class MoveUpOnWaitlistNotification < ApplicationRecord
   acts_as :notification
 

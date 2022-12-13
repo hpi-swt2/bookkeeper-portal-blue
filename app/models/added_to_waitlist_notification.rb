@@ -1,3 +1,4 @@
+# class of a notification send to user, when he/her has been added to a waitlist.
 class AddedToWaitlistNotification < ApplicationRecord
   acts_as :notification
 

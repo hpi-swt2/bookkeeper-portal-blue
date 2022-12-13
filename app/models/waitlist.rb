@@ -1,3 +1,4 @@
+# Waitlist model for handling adding and removing of users from items waitlist and corresponding side effects.
 class Waitlist < ApplicationRecord
   belongs_to :item
   has_and_belongs_to_many :users
