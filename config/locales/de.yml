@@ -4,6 +4,7 @@ de:
     close: "Schließen"
     accept: "Annehmen"
     decline: "Ablehnen"
+    submit: "Anbieten"
   views:
     landing_page:
       title: "Bookkeeper Blau"
