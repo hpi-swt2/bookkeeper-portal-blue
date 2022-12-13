@@ -31,7 +31,7 @@ RSpec.describe Waitlist, type: :model do
 
   it "does not add item owner to waitlist" do
     waitlist = create(:waitlist_with_item)
-    owner = Item.find_by(owner: waitlist.item.owner)
+    owner = User.find(waitlist.item.owner)
     expect(waitlist.add_user(owner)).to be(false)
     expect(waitlist.users).not_to include(owner)
   end
