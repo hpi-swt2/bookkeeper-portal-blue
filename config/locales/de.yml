@@ -1,18 +1,19 @@
 de:
   defaults:
-    delete: "Löschen"
-    close: "Schließen"
-    accept: "Annehmen"
-    decline: "Ablehnen"
+    delete: 'Löschen'
+    close: 'Schließen'
+    accept: 'Annehmen'
+    decline: 'Ablehnen'
+    check: 'Prüfen'
   views:
     landing_page:
-      title: "Bookkeeper Blau"
-      read_more: "Mehr lesen"
-      signup: "Registrieren"
-      login: "Anmelden"
-      logout: "Abmelden"
-      logged_in_user: "Aktuell angemeldet: %{email}"
-      edit_btn: "Profil bearbeiten"
+      title: 'Bookkeeper Blau'
+      read_more: 'Mehr lesen'
+      signup: 'Registrieren'
+      login: 'Anmelden'
+      logout: 'Abmelden'
+      logged_in_user: 'Aktuell angemeldet: %{email}'
+      edit_btn: 'Profil bearbeiten'
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
@@ -30,28 +31,32 @@ de:
         not_available: "Nicht verfügbar"
         lend_by_you: "Von dir ausgeliehen"
     notifications:
-      title: "Benachrichtigungen"
+      title: 'Benachrichtigungen'
       lend_request:
-        title: "Ausleihanfrage"
-        description: "%{user} möchte %{item} von dir ausleihen."
+        title: 'Ausleihanfrage'
+        description: '%{user} möchte %{item} von dir ausleihen.'
+      return_request:
+        title: 'Gegenstand zurückgeben'
+        description: '%{user} möchte %{item} zurückgeben.'
     search:
-      title: "Suche"
-      filter_button: "Filter"
-      qr_scanner_title: "QR Scanner"
+      title: 'Suche'
+      filter_button: 'Filter'
+      qr_scanner_title: 'QR Scanner'
     home:
-      title: "Startseite"
+      title: 'Startseite'
     new_item:
-      title: "Neuer Gegenstand"
+      title: 'Neuer Gegenstand'
     show_item:
-      author: "Autor"
-      category: "Kategorie"
-      description: "Beschreibung"
-      owner: "Besitzer"
-      lend_until: "Ausleihen bis"
-      enter_waitlist: "Auf die Warteliste"
-      lend: "Ausleihen"
+      author: 'Autor'
+      category: 'Kategorie'
+      description: 'Beschreibung'
+      owner: 'Besitzer'
+      lend_until: 'Ausleihen bis'
+      enter_waitlist: 'Auf die Warteliste'
+      lend: 'Ausleihen'
+      return: 'Zurückgeben'
     edit_item:
-      rental_duration_sec: "Ausleihdauer (Sekunden)"
+      rental_duration_sec: 'Ausleihdauer (Sekunden)'
     profile:
       title: "Profil"
       roles: "Rollen"
@@ -62,8 +67,8 @@ de:
       groups: "Gruppen"
       no_groups: "Mitglied in keiner Gruppe"
     groups:
-      owners: "Admins"
-      members: "Mitglieder"
+      owners: 'Admins'
+      members: 'Mitglieder'
   models:
     item:
       item: "Gegenstand"
@@ -76,4 +81,5 @@ de:
   helpers:
     submit:
       update: "Gegendstand ändern"
+
 
