@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_05_160740) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_08_191955) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_160740) do
     t.datetime "updated_at", null: false
     t.integer "owner"
     t.integer "holder"
+    t.integer "lend_status", default: 0
     t.index ["holder"], name: "index_items_on_holder"
     t.index ["owner"], name: "index_items_on_owner"
   end
@@ -94,6 +95,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_160740) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "return_request_notifications", force: :cascade do |t|
+    t.integer "borrower_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["borrower_id"], name: "index_return_request_notifications_on_borrower_id"
+    t.index ["item_id"], name: "index_return_request_notifications_on_item_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -106,6 +116,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_160740) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wishlist", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "item_id", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "items", "users", column: "holder"
@@ -115,4 +130,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_05_160740) do
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "return_request_notifications", "items"
+  add_foreign_key "return_request_notifications", "users", column: "borrower_id"
 end
