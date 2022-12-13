@@ -8,6 +8,7 @@ class AddedToWaitlistNotification < ApplicationRecord
   end
 
   def description
-    I18n.t("views.notifications.added_to_waitlist.description", position: item.waitlist.position(user) + 1, item: item.name)
+    I18n.t("views.notifications.added_to_waitlist.description", position: item.waitlist.position(user) + 1,
+                                                                item: item.name)
   end
 end

@@ -41,7 +41,7 @@ RSpec.describe Waitlist, type: :model do
     user = create(:peter)
     waitlist.add_user(user)
     notification = AddedToWaitlistNotification.find_by(user: user, item: waitlist.item)
-    expect(notification).to_not be_nil
+    expect(notification).not_to be_nil
   end
 
   it "creates a moved up notification for users after when a user is removed from the waitlist" do
@@ -49,6 +49,6 @@ RSpec.describe Waitlist, type: :model do
     user = waitlist.users[0]
     waitlist.remove_user(user)
     notification = MoveUpOnWaitlistNotification.find_by(user: waitlist.users[0], item: waitlist.item)
-    expect(notification).to_not be_nil
+    expect(notification).not_to be_nil
   end
 end

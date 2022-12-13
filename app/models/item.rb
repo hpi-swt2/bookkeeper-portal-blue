@@ -24,11 +24,11 @@ class Item < ApplicationRecord
     self.price_ct = euros * 100
   end
 
-  def add_to_waitlist (user)
-    self.waitlist.add_user(user)
+  def add_to_waitlist(user)
+    waitlist.add_user(user)
   end
 
-  def remove_from_waitlist (user)
-    self.waitlist.remove_user(user)
+  def remove_from_waitlist(user)
+    waitlist.remove_user(user)
   end
 end
