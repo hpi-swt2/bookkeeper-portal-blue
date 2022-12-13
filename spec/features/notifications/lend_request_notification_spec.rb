@@ -17,20 +17,20 @@ describe "Notifications Page", type: :feature do
     expect(page).to have_button("Accept")
     expect(page).to have_button("Decline")
   end
-  
-  it "changes accepted to true when Accept is clicked" do 
+
+  it "changes accepted to true when Accept is clicked" do
     visit notification_path(@notification.id)
     click_button('Accept')
     @notification.reload
-    expect(@notification.active).to eq false
-    expect(@notification.accepted).to eq true
+    expect(@notification.active).to be false
+    expect(@notification.accepted).to be true
   end
 
-  it "changes accepted to false when Decline is clicked" do 
+  it "changes accepted to false when Decline is clicked" do
     visit notification_path(@notification.id)
     click_button('Decline')
     @notification.reload
-    expect(@notification.active).to eq false
-    expect(@notification.accepted).to eq false
+    expect(@notification.active).to be false
+    expect(@notification.accepted).to be false
   end
 end

@@ -1,20 +1,6 @@
 # This class defines the specific lend request notification, a notification
 # that additionally belongs to a borrower and an item. The custom partial
 # HTML defines an accept and a decline button
-class LendRequestNotification < ApplicationRecord
-  acts_as :notification
-
-  belongs_to :borrower, class_name: "User"
-  belongs_to :item
-
-  def title
-    I18n.t "views.notifications.lend_request.title"
-  end
-
-  def description
-    I18n.t "views.notifications.lend_request.description", user: borrower.name, item: item.name
-  end
-end
 # Class specifically for lending request notifications
 class LendRequestNotification < ApplicationRecord
   acts_as :notification
@@ -27,12 +13,14 @@ class LendRequestNotification < ApplicationRecord
   end
 
   def description
+    user_name = borrower.name
+    item_name = item.name
     if active
-      I18n.t "views.notifications.lend_request.description", user: borrower.name, item: item.name
+      I18n.t "views.notifications.lend_request.description", user: user_name, item: item_name
     elsif accepted
-      I18n.t "views.notifications.lend_request.description_accepted", user: borrower.name, item: item.name
+      I18n.t "views.notifications.lend_request.description_accepted", user: user_name, item: item_name
     else
-      I18n.t "views.notifications.lend_request.description_declined", user: borrower.name, item: item.name
+      I18n.t "views.notifications.lend_request.description_declined", user: user_name, item: item_name
     end
   end
 end
