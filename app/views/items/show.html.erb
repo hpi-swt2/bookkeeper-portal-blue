@@ -113,7 +113,7 @@
 </style>
 <div>
  
-  <%= link_to items_url do %>
+  <%= link_to :back do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
   <% if (!current_user.nil? && @item.owner == current_user.id) %>
