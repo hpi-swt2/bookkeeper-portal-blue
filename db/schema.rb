@@ -14,8 +14,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
     t.datetime "updated_at", null: false
     t.integer "owner"
     t.integer "holder"
+    t.integer "lend_status", default: 0
     t.index ["holder"], name: "index_items_on_holder"
     t.index ["owner"], name: "index_items_on_owner"
   end
@@ -107,6 +108,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "return_request_notifications", force: :cascade do |t|
+    t.integer "borrower_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["borrower_id"], name: "index_return_request_notifications_on_borrower_id"
+    t.index ["item_id"], name: "index_return_request_notifications_on_item_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -131,6 +141,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
     t.index ["item_id"], name: "index_waitlists_on_item_id"
   end
 
+  create_table "wishlist", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "item_id", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "added_to_waitlist_notifications", "items"
@@ -142,5 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
   add_foreign_key "memberships", "users"
   add_foreign_key "move_up_on_waitlist_notifications", "items"
   add_foreign_key "notifications", "users"
+  add_foreign_key "return_request_notifications", "items"
+  add_foreign_key "return_request_notifications", "users", column: "borrower_id"
   add_foreign_key "waitlists", "items"
 end

@@ -82,6 +82,43 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
+  def request_lend
+  end
+
+  def request_return
+    @item = Item.find(params[:id])
+    @item.request_return
+    @item.save
+    @user = current_user
+    unless ReturnRequestNotification.find_by(item: @item)
+      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.zone.now, item: @item,
+                                                    borrower: @user)
+      @notification.save
+    end
+
+    redirect_to item_url(@item)
+  end
+
+  def accept_return
+    @item = Item.find(params[:id])
+    @notification = ReturnRequestNotification.find_by(item: @item)
+    @notification.destroy
+    # TODO: Send return accepted notification to borrower
+    @item.accept_return
+    @item.save
+    redirect_to item_url(@item)
+  end
+
+  def deny_return
+    @item = Item.find(params[:id])
+    @notification = ReturnRequestNotification.find_by(item: @item)
+    @notification.destroy
+    # TODO: Send return declined notification to borrower and handle decline return
+    @item.deny_return
+    @item.save
+    redirect_to item_url(@item)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -92,6 +129,6 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :owner, :holder, :waitlist_id)
+                                 :rental_start, :return_checklist, :owner, :holder, :waitlist_id, :lend_status)
   end
 end

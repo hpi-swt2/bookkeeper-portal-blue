@@ -14,6 +14,12 @@ Rails.application.routes.draw do
   resources :users
   post 'add_to_waitlist/:id', to: 'items#add_to_waitlist', as: 'add_to_waitlist'
   post 'leave_waitlist/:id', to: 'items#leave_waitlist', as: 'leave_waitlist'
+  post 'request_return/:id', to: 'items#request_return', as: 'request_return'
+  post 'accept_return/:id', to: 'items#accept_return', as: 'accept_return'
+  post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'
+  post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
+
+  resources :groups
   # Defines the root path route ("/")
   root "landing_page#index"
 end

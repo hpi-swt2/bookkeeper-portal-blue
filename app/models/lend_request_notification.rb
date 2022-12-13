@@ -1,3 +1,6 @@
+# This class defines the specific lend request notification, a notification
+# that additionally belongs to a borrower and an item. The custom partial
+# HTML defines an accept and a decline button
 class LendRequestNotification < ApplicationRecord
   acts_as :notification
 

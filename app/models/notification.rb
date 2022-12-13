@@ -1,3 +1,6 @@
+# This actable (i.e. abstract) class is designed to be the superclass of all
+# specific types of notifications. It is responsible for some very basic functionality
+# and delegating missing methods to the specific notification subclass.
 class Notification < ApplicationRecord
   actable
 
@@ -15,5 +18,9 @@ class Notification < ApplicationRecord
     else
       super
     end
+  end
+
+  def respond_to_missing?(_method, _include_private = false)
+    false
   end
 end

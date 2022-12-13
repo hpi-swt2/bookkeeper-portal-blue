@@ -4,6 +4,7 @@ de:
     close: "Schließen"
     accept: "Annehmen"
     decline: "Ablehnen"
+    check: "Prüfen"
   views:
     landing_page:
       title: "Bookkeeper Blau"
@@ -16,17 +17,27 @@ de:
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
-      unread_messages: "Du hast ... ungelesene Nachrichten"
-      lent_items: "AUSGELIEHENE ARTIKEL"
-      offered_items: "ANGEBOTENE ARTIKEL"
-      nothing_offered: "Du bietest bisher nichts an."
-      your_wishlist: "DEINE WUNSCHLISTE"
       not_signed_in: "Du bist nicht angemeldet."
+      unread_messages: "Du hast ... ungelesene Nachrichten"
+      lent_items:
+        title: "AUSGELIEHENE ARTIKEL"
+      offered_items:
+        title: "ANGEBOTENE ARTIKEL"
+        nothing_offered: "Du bietest bisher nichts an."
+      wishlist:
+        title: "DEINE WUNSCHLISTE"
+        missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
+        available: "Verfügbar"
+        not_available: "Nicht verfügbar"
+        lend_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
       lend_request:
         title: "Ausleihanfrage"
         description: "%{user} möchte %{item} von dir ausleihen."
+      return_request:
+        title: "Gegenstand zurückgeben"
+        description: "%{user} möchte %{item} zurückgeben."
       added_to_waitlist:
         title: "Zur Warteliste hinzugefügt"
         description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."
@@ -53,10 +64,21 @@ de:
       users_waiting: "%{amount} Nutzer warten auf dieses Objekt."
       waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
+      return: "Zurückgeben"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
+      roles: "Rollen"
+      email: "Email"
+      edit_profile: "Profil bearbeiten"
+      edit_profile_image: >
+        <%= image_tag "edit_square.png", class: "mt-3 ", size: "35x35", alt: "Profil bearbeiten"%>
+      groups: "Gruppen"
+      no_groups: "Mitglied in keiner Gruppe"
+    groups:
+      owners: "Admins"
+      members: "Mitglieder"
   models:
     item:
       item: "Gegenstand"
@@ -66,6 +88,9 @@ de:
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
+    group:
+      add: "Gruppe erstellen"
+      name: "Gruppenname"
   helpers:
     submit:
       update: "Gegendstand ändern"
