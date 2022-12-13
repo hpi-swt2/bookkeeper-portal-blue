@@ -31,64 +31,82 @@
 
 en:
   defaults:
-    delete: "Delete"
-    close: "Close"
+    delete: 'Delete'
+    close: 'Close'
+    accept: 'Accept'
+    decline: 'Decline'
+    check: 'Check'
   views:
     landing_page:
-      title: "Bookkeeper Blue"
-      read_more: "Read More"
-      signup: "Sign up"
-      login: "Log in"
-      logout: "Log out"
-      logged_in_user: "currently logged in user: %{email}"
-      edit_btn: "Edit user profile"
+      title: 'Bookkeeper Blue'
+      read_more: 'Read More'
+      signup: 'Sign up'
+      login: 'Log in'
+      logout: 'Log out'
+      logged_in_user: 'currently logged in user: %{email}'
+      edit_btn: 'Edit user profile'
     dashboard:
       title: "Dashboard"
       greeting: "Hello, %{name}!"
+      not_signed_in: "You are not signed in."
       unread_messages: "You have ... unread messages"
-      lent_items: "LENT ITEMS"
-      offered_items: "OFFERED ITEMS"
-      nothing_offered: "You do not offer any items at the moment."
-      your_wishlist: "YOUR WISHLIST"
+      lent_items:
+        title: "LENT ITEMS"
+      offered_items:
+        title: "OFFERED ITEMS"
+        nothing_offered: "You do not offer any items at the moment."
       wishlist:
+        title: "YOUR WISHLIST"
         missing_wishlist: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
         lend_by_you: "Lend by you"
-      not_signed_in: "You are not signed in."
     notifications:
-      title: "Notifications"
+      title: 'Notifications'
+      lend_request:
+        title: 'Lend Request'
+        description: '%{user} wants to borrow your %{item}.'
+      return_request:
+        title: 'Return Item'
+        description: '%{user} wants to return your %{item}.'
     search:
-      title: "Search"
-      filter_button: "Filter"
-      qr_scanner_title: "QR Scanner"
+      title: 'Search'
+      filter_button: 'Filter'
+      qr_scanner_title: 'QR Scanner'
     home:
-      title: "Home"
+      title: 'Home'
     new_item:
-      title: "New Item"
+      title: 'New Item'
     show_item:
-      author: "Author"
-      category: "Category"
-      description: "Description"
-      owner: "Owner"
-      lend_until: "Lend Until"
-      enter_waitlist: "Enter Waitlist"
-      lend: "Lend"
+      author: 'Author'
+      category: 'Category'
+      description: 'Description'
+      owner: 'Owner'
+      lend_until: 'Lend Until'
+      enter_waitlist: 'Enter Waitlist'
+      lend: 'Lend'
+      return: 'Return'
     edit_item:
-      rental_duration_sec: "Rental Duration (seconds)"
+      rental_duration_sec: 'Rental Duration (seconds)'
     profile:
       title: "Profile"
+      roles: "Roles"
+      email: "Email"
+      edit_profile: "Edit Profile"
       groups: "Groups"
       no_groups: "Not member of any group"
     groups:
-      owners: "Owners"
-      members: "Members"
+      owners: 'Owners'
+      members: 'Members'
   models:
     item:
       item: "Item"
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+    group:
+      add: "Add Group"
+      name: "Group Name"
   helpers:
     submit:
-      update: "Update Item"
+      update: 'Update Item'

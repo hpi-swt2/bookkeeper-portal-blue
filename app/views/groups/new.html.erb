@@ -1,0 +1,23 @@
+<h2><%= t 'models.group.add' %></h2>
+
+<%= form_with(model: @group) do |form| %>
+  <% if @group.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, t('models.group.name'), style: "display: block", class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-control' %>
+  </div>
+  <div class="mb-3">
+    <%= form.submit t('models.group.add'), class: 'btn btn-primary mb-3' %>
+  </div>
+<% end %>

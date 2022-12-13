@@ -29,14 +29,14 @@
 </style>
 
 <div>
-  <% items = Item.where(owner: current_user).order("name ASC") %>
+  <% items = Item.where(owner: current_user).order("LOWER(name) asc") %>
   <% if items.empty? %>
-    <p class="body1"><%= t 'views.dashboard.nothing_offered' %></p>
+    <p class="body1"><%= t 'views.dashboard.offered_items.nothing_offered' %></p>
   <% else %>
     <div class="container text-center">
       <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 align-items-end justify-content-start">
         <% items.each do |item| %>
-          <div class="col" ;>
+          <div class="col">
             <% if item.image.attached? %>
               <%= image_tag(item.image, class: "rounded mb-2 img-fluid rect-img") %>
             <% else %>

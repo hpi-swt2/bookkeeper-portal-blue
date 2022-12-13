@@ -40,15 +40,15 @@
 
   <h3 class="subtitle box"><%= t 'views.dashboard.unread_messages' %></h3>
 
-  <h3 class="subtitle"><%= t 'views.dashboard.lent_items' %></h3>
+  <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
   <div class="feature-icon mb-1">
     <i class="bi bi-chat-square-quote-fill" style="font-size: 2rem;"></i>
   </div>
 
-  <h3 class="subtitle"><%= t 'views.dashboard.offered_items' %></h3>
+  <h3 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h3>
   <%= render "offered_items"%>
 
-  <h3 class=" subtitle place-holder-nav"><%= t 'views.dashboard.your_wishlist' %></h3>
+  <h3 class=" subtitle place-holder-nav"><%= t 'views.dashboard.wishlist.title' %></h3>
   <%= render "wishlist"%>
 
 <% else %>

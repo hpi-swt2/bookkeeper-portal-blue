@@ -13,7 +13,7 @@ RSpec.describe "Dashboard", type: :feature do
     @user = create(:user)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content("User1")
+    expect(page).to have_content(@user.first_name)
   end
 
   it "shows unread messages" do
@@ -25,20 +25,20 @@ RSpec.describe "Dashboard", type: :feature do
   it "shows lent items" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.lent_items')
+    expect(page).to have_content I18n.t('views.dashboard.lent_items.title')
   end
 
   it "shows offered items" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.offered_items')
+    expect(page).to have_content I18n.t('views.dashboard.offered_items.title')
   end
 
   it "shows message when nothing is offered" do
     @user = create(:user)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.nothing_offered')
+    expect(page).to have_content I18n.t('views.dashboard.offered_items.nothing_offered')
   end
 
   it "shows offered item" do
@@ -52,7 +52,7 @@ RSpec.describe "Dashboard", type: :feature do
   it "shows wishlist" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.your_wishlist')
+    expect(page).to have_content I18n.t('views.dashboard.wishlist.title')
   end
 
   it "shows wishlist item" do
