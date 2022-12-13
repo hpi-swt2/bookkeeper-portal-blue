@@ -22,7 +22,6 @@ class ItemsController < ApplicationController
   # POST /items or /items.json
   def create
     @item = Item.new(item_params)
-
     respond_to do |format|
       if @item.save
         format.html { redirect_to item_url(@item), notice: t("models.item.created") }
@@ -57,6 +56,43 @@ class ItemsController < ApplicationController
     end
   end
 
+  def request_lend
+  end
+
+  def request_return
+    @item = Item.find(params[:id])
+    @item.request_return
+    @item.save
+    @user = current_user
+    unless ReturnRequestNotification.find_by(item: @item)
+      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.zone.now, item: @item,
+                                                    borrower: @user)
+      @notification.save
+    end
+
+    redirect_to item_url(@item)
+  end
+
+  def accept_return
+    @item = Item.find(params[:id])
+    @notification = ReturnRequestNotification.find_by(item: @item)
+    @notification.destroy
+    # TODO: Send return accepted notification to borrower
+    @item.accept_return
+    @item.save
+    redirect_to item_url(@item)
+  end
+
+  def deny_return
+    @item = Item.find(params[:id])
+    @notification = ReturnRequestNotification.find_by(item: @item)
+    @notification.destroy
+    # TODO: Send return declined notification to borrower and handle decline return
+    @item.deny_return
+    @item.save
+    redirect_to item_url(@item)
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -67,6 +103,6 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :owner)
+                                 :rental_start, :return_checklist, :owner, :holder, :lend_status)
   end
 end

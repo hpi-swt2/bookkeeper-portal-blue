@@ -1,26 +1,30 @@
 require 'rails_helper'
 
 RSpec.describe LendRequestNotification, type: :model do
-  let(:notification) { build(:lend_request_notification) }
 
-  it "can be created using a factory" do
+  let(:notification) { create(:lend_request_notification) }
+
+  it "is creatable via a factory" do
     expect(notification).to be_valid
   end
 
-  it "has a date and user" do
-    expect(notification.date).not_to be_blank
+  it "belongs to a user, a date, an item and a borrower" do
     expect(notification.user).not_to be_blank
+    expect(notification.item).not_to be_blank
+    expect(notification.borrower).not_to be_blank
+    expect(notification.date).not_to be_blank
   end
 
-  it "has a factory that returns a list of different notifications" do
-    user = build(:user)
-    notification_list = build_list(:lend_request_notification, 2, user: user)
-    expect(notification_list.length).to eq(2)
-    expect(notification_list[0].user).to eq(notification_list[1].user)
-    expect(notification_list[0]).not_to eq(notification_list[1])
-    expect(notification_list[0].unread).to be(true)
-    expect(notification_list[0].accepted).to be(false)
-    expect(notification_list[0].date).not_to be_blank
+  it "has differently translated title and description" do
+    title, description = ""
+    I18n.with_locale(:en) do
+      title = notification.title
+      description = notification.description
+    end
+    I18n.with_locale(:de) do
+      expect(notification.title).not_to eq title
+      expect(notification.description).not_to eq description
+    end
   end
 
 end
