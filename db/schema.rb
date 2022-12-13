@@ -83,6 +83,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_103345) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
+  create_table "lend_request_notifications", force: :cascade do |t|
+    t.integer "borrower_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["borrower_id"], name: "index_lend_request_notifications_on_borrower_id"
+    t.index ["item_id"], name: "index_lend_request_notifications_on_item_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.datetime "date"
     t.integer "user_id", null: false
@@ -137,6 +146,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_10_103345) do
   add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
+  add_foreign_key "lend_request_notifications", "items"
+  add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
   add_foreign_key "notifications", "users"
   add_foreign_key "return_request_notifications", "items"
   add_foreign_key "return_request_notifications", "users", column: "borrower_id"

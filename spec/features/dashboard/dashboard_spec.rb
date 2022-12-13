@@ -13,7 +13,7 @@ RSpec.describe "Dashboard", type: :feature do
     @user = create(:user)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content("User")
+    expect(page).to have_content(@user.first_name)
   end
 
   it "shows unread messages" do
