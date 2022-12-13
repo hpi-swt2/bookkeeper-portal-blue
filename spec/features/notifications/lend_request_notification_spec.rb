@@ -13,13 +13,13 @@ describe "Notifications Page", type: :feature do
   end
 
   it "has accept and decline buttons" do
-    visit notification_path(@notification.id)
+    visit notification_path(id: @notification.id)
     expect(page).to have_button("Accept")
     expect(page).to have_button("Decline")
   end
 
   it "changes accepted to true when Accept is clicked" do
-    visit notification_path(@notification.id)
+    visit notification_path(id: @notification.id)
     click_button('Accept')
     @notification.reload
     expect(@notification.active).to be false
@@ -27,7 +27,7 @@ describe "Notifications Page", type: :feature do
   end
 
   it "changes accepted to false when Decline is clicked" do
-    visit notification_path(@notification.id)
+    visit notification_path(id: @notification.id)
     click_button('Decline')
     @notification.reload
     expect(@notification.active).to be false
