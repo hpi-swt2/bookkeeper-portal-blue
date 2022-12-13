@@ -2,6 +2,8 @@ de:
   defaults:
     delete: "Löschen"
     close: "Schließen"
+    accept: "Annehmen"
+    decline: "Ablehnen"
   views:
     landing_page:
       title: "Bookkeeper Blau"
@@ -29,6 +31,9 @@ de:
         lend_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
+      lend_request:
+        title: "Ausleihanfrage"
+        description: "%{user} möchte %{item} von dir ausleihen."
     search:
       title: "Suche"
       filter_button: "Filter"
