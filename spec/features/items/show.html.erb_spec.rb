@@ -91,7 +91,8 @@ RSpec.describe "items/show", type: :feature do
     sign_in item_lent.waitlist.users[0]
     visit item_path(item_lent)
     find(:button, "Leave Waitlist").click
-    notification = MoveUpOnWaitlistNotification.find_by(user: Item.find(item_lent.id).waitlist.users[0], item: item_lent)
+    notification = MoveUpOnWaitlistNotification.find_by(user: Item.find(item_lent.id).waitlist.users[0],
+                                                        item: item_lent)
     expect(notification).not_to be_nil
   end
 
