@@ -30,4 +30,3 @@ module ApplicationHelper
     # do nothing
   end
 end
-
