@@ -4,7 +4,7 @@ describe "Return Request Notifications", type: :feature do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
   let(:borrower) { create(:max, password: password) }
-  let(:item) { create(:pending, owner: user.id) }
+  let(:item) { create(:item, owner: user.id) }
 
   before do
     sign_in user
