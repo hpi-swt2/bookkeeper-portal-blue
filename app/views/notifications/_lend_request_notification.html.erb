@@ -45,9 +45,29 @@
 </div>
 
 <%if notification.active == true%>
-  <div class="container-fluid d-flex justify-content-evenly gap-2">
-    <%= button_to t("defaults.accept"),{ action: "accept", id: notification.id}, method: :post ,class:"btn button"  %>
-    <%= button_to t("defaults.decline"), { action: "decline", id: notification.id}, method: :post, class:"btn button" %>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <%=t('defaults.check')%>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><%= notification.title %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">       
+        <p>
+            <%= notification.description %>
+        </p>
+      </div>
+      <div class="modal-footer">        
+        <%= button_to t("defaults.decline"), { action: "accept", id: notification.id}, method: :post, class:"btn btn-danger" %>
+        <%= button_to t("defaults.accept"), { action: "decline", id: notification.id}, method: :post , class:"btn btn-success" %>
+      </div>
+    </div>
   </div>
+</div>
 <%end%>
 
