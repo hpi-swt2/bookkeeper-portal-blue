@@ -40,6 +40,10 @@ class Item < ApplicationRecord
     # TODO
   end
 
+  def set_status_lent
+    self.lend_status = :lent
+  end
+
   def price_in_euro=(euros)
     self.price_ct = euros * 100
   end

@@ -24,6 +24,7 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.waitlist = Waitlist.new
+    @item.set_status_lent unless @item.holder.nil?
 
     create_create_response
   end
