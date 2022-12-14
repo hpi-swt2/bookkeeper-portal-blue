@@ -10,4 +10,10 @@ FactoryBot.define do
     password { 'password' }
     password_confirmation { 'password' }
   end
+
+  factory :peter, class: 'User' do
+    email { "peter.lustig@hpi.de" }
+    password { 'password' }
+    password_confirmation { 'password' }
+  end
 end

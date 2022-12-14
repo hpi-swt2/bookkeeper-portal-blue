@@ -36,6 +36,7 @@ RSpec.describe "/items", type: :request do
   describe "GET /show" do
     it "renders a successful response" do
       item = create(:item)
+      item.waitlist = create(:waitlist_with_item)
       get item_url(item)
       expect(response).to be_successful
     end

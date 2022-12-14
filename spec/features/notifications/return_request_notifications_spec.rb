@@ -8,6 +8,7 @@ describe "Return Request Notifications", type: :feature do
     sign_in user
     FactoryBot.reload
     @notification = build(:return_request_notification, user: user)
+    @notification.item.waitlist = Waitlist.new
     @notification.save
   end
 
