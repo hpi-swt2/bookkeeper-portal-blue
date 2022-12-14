@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Notifications Page", type: :feature do
+describe "Lend Request Notifications", type: :feature do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
   let(:borrower) { create(:max, password: password) }
