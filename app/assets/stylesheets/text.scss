@@ -16,6 +16,7 @@
 
 @mixin subtitle($color: true) {
     font: 700 18px Roboto;
+    line-height: 21px;
     @if $color {
         color: $Primary06;
     }
@@ -23,6 +24,7 @@
 
 @mixin body-1 ($color: true){
     font: 400 18px Roboto;
+    line-height: 21px;
     @if $color {
         color: $Grey04;
     }
@@ -37,6 +39,7 @@
 
 @mixin caption($color: true) {
     font: 400 12px Roboto;
+    line-height: 14px;
     @if $color {
         color: $Grey07;
     }
