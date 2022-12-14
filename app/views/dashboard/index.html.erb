@@ -4,20 +4,8 @@
     }
 
     .title {
-        font-family: Roboto, sans-serif;
-        font-weight: light;
-        font-size: 26px;
-        color: #586464;
         margin-bottom: 7px;
         margin-top: 15px;
-    }
-
-    .subtitle {
-        font-family: Roboto, sans-serif;
-        font-weight: bold;
-        font-size: 20px;
-        color: #b8043c;
-        margin-bottom: 7px;
     }
 
     .box {
@@ -30,20 +18,20 @@
 </style>
 
 <% if user_signed_in? %>
-  <p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
+  <h1 class="headline-1 title"><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
 
 
-  <h3 class="subtitle box"><%= t 'views.dashboard.unread_messages' %></h3>
+  <h2 class="subtitle box"><%= t 'views.dashboard.unread_messages' %></h2>
 
-  <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
+  <h2 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h2>
   <div class="feature-icon mb-1">
     <i class="bi bi-chat-square-quote-fill" style="font-size: 2rem;"></i>
   </div>
 
-  <h3 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h3>
+  <h2 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h2>
   <%= render "offered_items"%>
 
-  <h3 class=" subtitle place-holder-nav"><%= t 'views.dashboard.wishlist.title' %></h3>
+  <h2 class=" subtitle place-holder-nav"><%= t 'views.dashboard.wishlist.title' %></h2>
   <%= render "wishlist"%>
 
 <% else %>
