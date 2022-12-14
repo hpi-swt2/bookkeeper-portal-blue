@@ -4,6 +4,7 @@ FactoryBot.define do
     date { Time.zone.now }
     item { FactoryBot.build(:pending, owner: user.id) }
     borrower { FactoryBot.build(:max) }
+    active { true }
   end
 
   factory :invalid_return_request_notification, class: 'ReturnRequestNotification' do
