@@ -38,9 +38,8 @@
 </style>
 
 <div>
-<%# TODO: 
-    - sorting must be adjusted %>
-  <% items = Item.where(holder: current_user).order("rental_end ASC") %>
+  <% items = Item.where(holder: current_user) %>
+  <% items.sort_by{|item| item.rental_end} %>
   <% if items.empty? %>
     <p class="body1"><%=t 'views.dashboard.no_lent_items' %></p>
   <% else %>

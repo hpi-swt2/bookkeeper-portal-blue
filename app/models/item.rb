@@ -29,6 +29,21 @@ class Item < ApplicationRecord
   end
 
   def remaining_rental_duration
-    Time.at(rental_duration_sec - (Time.now.utc + 3600 - rental_start)).utc.strftime("%H:%M:%S")
+    humanize(rental_end - Time.now(in: "UTC"))
+  end
+
+  def humanize(secs)
+    if secs > 0
+      humanizeHElP(secs)
+    else
+      humanizeHElP(secs * -1).prepend("-")
+    end
+  end
+
+  def humanizeHElP(secs)
+      [[60, :s], [60, :m], [24, :h], [Float::INFINITY, :d]].map{ |count, name|
+        secs, n = secs.divmod(count)
+        "#{n.to_i} #{name}" unless n.to_i==0
+      }.compact.reverse.join(' ')
   end
 end
