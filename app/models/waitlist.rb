@@ -42,12 +42,12 @@ class Waitlist < ApplicationRecord
   end
 
   def add_added_to_waitlist_notification(user)
-    @notification = AddedToWaitlistNotification.new(user: user, date: Time.zone.now, item: item)
+    @notification = AddedToWaitlistNotification.new(user: user, date: Time.zone.now, item: item, active: true)
     @notification.save
   end
 
   def add_move_up_on_waitlist_notification(user)
-    @notification = MoveUpOnWaitlistNotification.new(user: user, date: Time.zone.now, item: item)
+    @notification = MoveUpOnWaitlistNotification.new(user: user, date: Time.zone.now, item: item, active: true)
     @notification.save
   end
 
