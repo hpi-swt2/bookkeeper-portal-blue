@@ -63,8 +63,8 @@
         </p>
       </div>
       <div class="modal-footer">        
-        <%= button_to t("defaults.decline"), { action: "accept", id: notification.id}, method: :post, class:"btn btn-danger" %>
-        <%= button_to t("defaults.accept"), { action: "decline", id: notification.id}, method: :post , class:"btn btn-success" %>
+        <%= button_to t("defaults.decline"), { action: "decline", id: notification.id}, method: :post, class:"btn btn-danger" %>
+        <%= button_to t("defaults.accept"), { action: "accept", id: notification.id}, method: :post , class:"btn btn-success" %>
       </div>
     </div>
   </div>
