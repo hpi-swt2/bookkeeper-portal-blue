@@ -19,6 +19,11 @@
 
 // https://github.com/twbs/bootstrap-rubygem#a-ruby-on-rails
 // Custom bootstrap variables must be set or imported *before* bootstrap.
+@import 'colors';
+
+$primary: $Primary06;
+$secondary: $Grey10;
+
 $primary: #B1063A;
 
 $primary06: #B1063A;
@@ -32,7 +37,14 @@ $grey10: #C6CACC;
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
+@import 'fonts';
+
 @import 'navbar';
+
+@import 'headings';
+
+@import 'buttons';
+
 
 
 .body1{
