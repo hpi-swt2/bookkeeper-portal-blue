@@ -68,6 +68,13 @@ class ItemsController < ApplicationController
   end
 
   def request_lend
+    @item = Item.find(params[:id])
+    @user = current_user
+    @item.holder = @user.id
+    @item.set_status_lent
+    @item.save
+
+    redirect_to item_url(@item)
   end
 
   def request_return
@@ -80,8 +87,15 @@ class ItemsController < ApplicationController
                                                     borrower: @user)
       @notification.save
     end
-
     redirect_to item_url(@item)
+  end
+
+  def accept_lend
+    @item = Item.find(params[:id])
+    @notification = LendRequestNotification.find_by(item: @item)
+    @item.set_status_lent
+    @item.holder = @notification.borrower.id
+    @item.save
   end
 
   def accept_return
