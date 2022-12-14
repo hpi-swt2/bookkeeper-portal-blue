@@ -32,6 +32,7 @@
 
 @mixin body-2($color: true) {
     font: 500 16px Roboto;
+    line-height: 19px;
     @if $color {
         color: $Grey04;
     }
