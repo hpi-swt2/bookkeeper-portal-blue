@@ -10,10 +10,10 @@ class ItemsController < ApplicationController
   # GET /items/1 or /items/1.json
   def show
     @item = Item.find(params[:id])
-    if @item.waitlist.nil?
-      @item.waitlist = Waitlist.new
-      @item.save
-    end
+    return unless @item.waitlist.nil?
+
+    @item.waitlist = Waitlist.new
+    @item.save
   end
 
   # GET /items/new
