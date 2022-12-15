@@ -1,55 +1,33 @@
-<style>
-.notification-unread-box{
-  color: #b1063a;
-}
-</style>
 <p style="color: green"><%= notice %></p>
-
 
 <h2><%= t 'views.notifications.title' %></h2>
 
 <div id="notifications">
   <% @active_dates.each do |(date, notifications)| %>
     <% notifications.each do |notification| %>
-    <%if notification.unread == true%>
-      <div class="notification-unread-box">
-    <% else %>
-      <div class="notification-read-box">
-    <%end %>
-    <div class="notification" onclick="location.href='<%= 'notifications/' + notification.id.to_s %>'">
-            <h3>
-              <%= notification.title %> 
-            </h3>
-            <p>
-              <%= notification.description %>
-            </p>
+      <div class="container notification">
+        <div class="row row-cols-2 ">          
+          <div class="col-sm-1 align-self-center">
+            <%= render_if_exists notification.custom_partial, notification: notification %>
+          </div>
         </div>
-      <% end %>
-    </div>
-  <% end %>
+      </div>
+    <%end%>
+  <%end%>
   <h2>
     <%= t 'views.notifications.deletion_history' %>
   </h2>
   <% @inactive_dates.each do |(date, notifications)| %>
-      <% notifications.each do |notification| %>
-    <%if notification.unread == true %>
-      <div class="notification-unread-box">
-    <% else %>
-      <div class="notification-read-box">
-    <%end %>
-    <div class="notification" onclick="location.href='<%= 'notifications/' + notification.id.to_s %>'">
-          <h3>
-            <%= notification.title %>
-          </h3>
-          <p>
-            <%= notification.description %>
-          </p>
+    <% notifications.each do |notification| %>
+      <div class="container notification">
+        <div class="row row-cols-2 ">          
+          <div class="col-sm-1 align-self-center">
+            <%= render_if_exists notification.custom_partial, notification: notification %>
+          </div>
         </div>
-      <% end %>
-      ˚
-    </div>
-
-  <% end %>
+      </div>
+    <%end%>
+  <%end%>
 </div>
 
 
