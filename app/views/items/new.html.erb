@@ -190,14 +190,28 @@
   </div>
     <p class="subtitle"><%= t('views.show_item.category')%></p>
     <%= form.text_field :category, class: "borderedInput body1" %>
+
     <p class="subtitle"><%= t('views.show_item.description')%></p>
     <%= form.text_area :description, class: "borderedInput body1" %>
+
     <p class="subtitle"><%= t('views.show_item.owner')%></p>
     <div class="notBorderedInput">
-    <%= form.collection_select(:owner, User.all, :id, :email, :include_blank => true)%>
+      <%= form.collection_select(:owner, User.all, :id, :email, :include_blank => true)%>
     </div>
+
+    <p class="subtitle"><%= t('views.show_item.holder')%></p>
+    <div class="notBorderedInput">
+      <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true)%>
+    </div>
+
+    <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
+    <%= form.number_field :price_ct, class: "borderedInput body1" %>
+
     <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%></p>
-    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>    
+    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
+
+    <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
+    <%= form.text_area :return_checklist, class: "borderedInput body1" %> 
 
     <div class="" id="buttonDiv">
       <%= form.submit t('defaults.submit'), class: "primaryButton"%>
