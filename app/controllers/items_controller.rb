@@ -88,7 +88,22 @@ class ItemsController < ApplicationController
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
     @item.holder = @notification.borrower.id
+    @notification.destroy
     @item.save
+    redirect_to item_url(@item)
+  end
+
+  def request_return
+    @item = Item.find(params[:id])
+    @item.set_status_pending_return
+    @item.save
+    @user = current_user
+    unless ReturnRequestNotification.find_by(item: @item)
+      @notification = ReturnRequestNotification.new(user: User.find(@item.owner),
+                                                    date: Time.zone.now, item: @item, borrower: @user)
+      @notification.save
+    end
+    redirect_to item_url(@item)
   end
 
   def request_return
