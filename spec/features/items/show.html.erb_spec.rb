@@ -50,11 +50,15 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text("Enter Waitlist")
   end
 
-  it "does not have enter/leave waitlist button when owner of item" do
+  it "does not have an adaptive lend button when owner of item" do
     sign_in owner
     visit item_path(item)
-    expect(page).not_to have_text("Enter Waitlist")
-    expect(page).not_to have_text("Leave Waitlist")
+    expect(page).not_to have_button("Lend")
+    expect(page).not_to have_button("Waiting for lend approval")
+    expect(page).not_to have_button("Return")
+    expect(page).not_to have_button("Waiting for return approval")
+    expect(page).not_to have_button("Enter Waitlist")
+    expect(page).not_to have_button("Leave Waitlist")
   end
 
   it "has leave waitlist button when on list" do
