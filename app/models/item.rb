@@ -61,21 +61,25 @@ class Item < ApplicationRecord
   end
 
   def remaining_rental_duration
-    humanize(rental_end - Time.now(in: "UTC"))
+    rental_end - Time.now.utc
   end
 
-  def humanize(secs)
-    if secs > 0
-      humanizeHElP(secs)
+  def print_remaining_rental_duration
+    print_time_from_seconds(remaining_rental_duration)
+  end
+
+  def print_time_from_seconds(seconds)
+    if seconds.positive?
+      humanize(seconds)
     else
-      humanizeHElP(secs * -1).prepend("-")
+      humanize(seconds * -1).prepend("-")
     end
   end
 
-  def humanizeHElP(secs)
-      [[60, :s], [60, :m], [24, :h], [Float::INFINITY, :d]].map{ |count, name|
-        secs, n = secs.divmod(count)
-        "#{n.to_i} #{name}" unless n.to_i==0
-      }.compact.reverse.join(' ')
+  def humanize(seconds)
+    [[60, :s], [60, :m], [24, :h], [Float::INFINITY, :d]].filter_map do |count, name|
+      seconds, n = seconds.divmod(count)
+      "#{n.to_i} #{name}" unless n.to_i.zero?
+    end.reverse.join(' ')
   end
 end
