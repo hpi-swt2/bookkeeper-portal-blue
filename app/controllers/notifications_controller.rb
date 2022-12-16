@@ -5,6 +5,6 @@ class NotificationsController < ApplicationController
     @dates = @notifications.group_by do |notification|
       notification.date.strftime('%d. %B %y')
     end
-    @dates.sort_by { |date, _| date }.reverse
+    @dates = @dates.sort_by { |date, _| date }.reverse
   end
 end

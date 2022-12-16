@@ -129,7 +129,7 @@
           <!--only show filled icon if icon is on wishlist-->
           <!--span class="material-symbols-outlined wishlistIcon" id="filledWishlistIcon">grade</span-->
           <span class="material-symbols-outlined wishlistIcon" id="notFilledWishlistIcon">grade</span>
-          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image != nil%>
+          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
         </div>
         <div>
           <p class="title"><%=@item.name %></p>
@@ -148,9 +148,31 @@
       <p class="body1"><%= User.find(@item.owner).email %></p>
       <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
       <p class="body1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
-      <!-- change to borrow item path when implemented -->
-      <%= button_to t('views.show_item.enter_waitlist'), new_item_path(@item), method: :post, class: "secondaryButton" %>
-      <!--%= button_to t('views.show_item.lend'), new_item_path(@item), method: :post, class: "primaryButton" %-->
+      <p class="subtitle"><%= t('views.show_item.waitlist')%></p>
+      <p class="body1">
+        <% if !current_user.nil? %>
+          <% if !@item.waitlist.users.exists?(current_user.id) %>
+            <%= t('views.show_item.users_waiting', amount: @item.waitlist.users.size) %>
+          <% else %>
+            <%= t('views.show_item.waitlist_position', position: @item.waitlist.users.find_index(current_user) + 1) %>      
+          <% end %>
+        <% end %>
+      </p>
+      <% if !current_user.nil? && current_user.id != @item.owner %>
+        <% if @item.holder == current_user.id %>
+          <%= button_to t('views.show_item.return'), { action: "request_return" }, class: "primaryButton" %>
+        <% else %>
+          <% if @item.lend_status == "available" %>
+            <%= button_to t('views.show_item.lend'), { action: "request_lend" }, class: "primaryButton" %>
+          <% else %>
+            <% if !@item.waitlist.users.exists?(current_user.id) %>
+              <%= button_to t('views.show_item.enter_waitlist'), { action: "add_to_waitlist" }, class: "primaryButton" %>
+            <% else %>
+              <%= button_to t('views.show_item.leave_waitlist'), { action: "leave_waitlist" }, class: "primaryButton" %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
       <br><br><br>
     </div>
   </div>
