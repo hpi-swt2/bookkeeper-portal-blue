@@ -3,11 +3,11 @@ require "rails_helper"
 describe "Return Request Notifications", type: :feature do
 
   it "user gets notified someone wants to lend his/her item" do
-    owner = FactoryBot.create(:max)
-    borrower = FactoryBot.create(:peter)
-    item = FactoryBot.create(:item, owner: owner.id)
-    sign_in borrower   
-    visit item_path(item)   
+    owner = create(:max)
+    borrower = create(:peter)
+    item = create(:item, owner: owner.id)
+    sign_in borrower
+    visit item_path(item)
     click_button('Lend')
     sign_in owner
     visit notifications_path
