@@ -39,7 +39,7 @@
 
 <div>
   <% items = Item.where(holder: current_user) %>
-  <% items.sort_by{|item| item.rental_end} %>
+  <% items = items.sort_by{|item| item.rental_end} %>
   <% if items.empty? %>
     <p class="body1"><%=t 'views.dashboard.no_lent_items' %></p>
   <% else %>
