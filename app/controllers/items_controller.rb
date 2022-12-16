@@ -88,7 +88,9 @@ class ItemsController < ApplicationController
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
     @item.holder = @notification.borrower.id
+    @notification.destroy
     @item.save
+    redirect_to item_url(@item)
   end
 
   def request_return
