@@ -93,3 +93,16 @@ $grey10: #C6CACC;
     padding-left: 11px;
     padding-right: 11px;
 }
+
+.itemcard{
+    border: none;
+}
+
+.itemcard .card-body img{
+    border-radius: 5px;
+}
+
+.itemcard .card-body .card-title{
+    white-space: nowrap;
+    overflow: hidden;
+}
