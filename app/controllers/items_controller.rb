@@ -106,19 +106,6 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
-  def request_return
-    @item = Item.find(params[:id])
-    @item.set_status_pending_return
-    @item.save
-    @user = current_user
-    unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(user: User.find(@item.owner),
-                                                    date: Time.zone.now, item: @item, borrower: @user)
-      @notification.save
-    end
-    redirect_to item_url(@item)
-  end
-
   def accept_return
     @item = Item.find(params[:id])
     @notification = ReturnRequestNotification.find_by(item: @item)
