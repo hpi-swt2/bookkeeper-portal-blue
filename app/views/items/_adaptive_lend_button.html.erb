@@ -1,0 +1,12 @@
+
+<% if !current_user.nil? && current_user.id != item.owner %>
+    <% if item.holder == current_user.id %>
+        <%= button_to t('views.show_item.return'), { action: "request_return" }, class: "primaryButton" %>
+    <% elsif item.lend_status == "available" %>
+        <%= button_to t('views.show_item.lend'), { action: "request_lend" }, class: "primaryButton" %>
+    <% elsif !item.waitlist.users.exists?(current_user.id) %>
+        <%= button_to t('views.show_item.enter_waitlist'), { action: "add_to_waitlist" }, class: "primaryButton" %>
+    <% else %>
+        <%= button_to t('views.show_item.leave_waitlist'), { action: "leave_waitlist" }, class: "primaryButton" %>
+    <% end %>
+<% end %>
