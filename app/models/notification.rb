@@ -12,7 +12,7 @@ class Notification < ApplicationRecord
   end
 
   def mark_as_read
-    self.update(unread: false)
+    update(unread: false)
   end
 
   # delegate methods from the "subclasses" (which aren't really subclasses)
