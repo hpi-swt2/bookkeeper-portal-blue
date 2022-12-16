@@ -47,7 +47,7 @@ RSpec.describe "items/show", type: :feature do
   it "has enter waitlist button when not on list and item not available" do
     sign_in user
     visit item_path(item_lent)
-    expect(page).to have_text("Enter Waitlist")
+    expect(page).to have_button("Enter Waitlist")
   end
 
   it "does not have an adaptive lend button when owner of item" do
@@ -65,7 +65,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit item_path(item_lent)
-    expect(page).to have_text("Leave Waitlist")
+    expect(page).to have_button("Leave Waitlist")
   end
 
   it "adds user to waitlist when clicking add to waitlist button" do
