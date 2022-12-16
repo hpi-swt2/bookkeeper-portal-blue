@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "items/show", type: :feature do
   let(:owner) { create(:user) }
   let(:user) { create(:user) }
+  let(:borrower) { create(:user) }
   let(:item) do
     item = create(:item, owner: owner.id)
     item.waitlist = create(:waitlist_with_item)
@@ -10,7 +11,7 @@ RSpec.describe "items/show", type: :feature do
     item
   end
   let(:item_lent) do
-    item_lent = create(:lent, owner: owner.id)
+    item_lent = create(:lent, owner: owner.id, holder: borrower.id)
     item_lent.waitlist = create(:waitlist_with_item)
     item_lent.waitlist.item = item_lent
     item_lent
@@ -42,6 +43,32 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text(item.category)
     expect(page).to have_text(item.location)
     expect(page).to have_text(item.description)
+  end
+
+  it "has lend button when item is available and not owner of item" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_button("Lend")
+  end
+
+  it "has pending lend request button when item is lent but not approved" do
+    sign_in user
+    visit item_path(item)
+    find(:button, "Lend").click
+    expect(page).to have_button("Waiting for lend approval", disabled: true)
+  end
+
+  it "has return button when item is lent by borrower" do
+    sign_in borrower
+    visit item_path(item_lent)
+    expect(page).to have_button("Return")
+  end
+
+  it "has pending return request button when item is returned but not approved" do
+    sign_in borrower
+    visit item_path(item_lent)
+    find(:button, "Return").click
+    expect(page).to have_button("Waiting for return approval", disabled: true)
   end
 
   it "has enter waitlist button when not on list and item not available" do
