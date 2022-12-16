@@ -86,9 +86,26 @@ class ItemsController < ApplicationController
   def accept_lend
     @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
-    @item.set_status_lent
+    @item.set_status_pending_pickup
     @item.holder = @notification.borrower.id
     @notification.destroy
+    @item.save
+    redirect_to item_url(@item)
+  end
+
+  def start_lend
+    @item = Item.find(params[:id])
+    @holder = current_user.id
+    @item.set_status_lent
+    @item.holder = @holder
+    @item.save
+    redirect_to item_url(@item)
+  end
+
+  def abort_lend
+    @item = Item.find(params[:id])
+    @item.set_status_available
+    @item.holder = nil
     @item.save
     redirect_to item_url(@item)
   end
