@@ -55,7 +55,7 @@
             <% if item.holder.nil? %>
               <p class="caption"><%= t 'views.dashboard.wishlist.available' %></p>
             <% elsif item.holder == current_user.id %>
-              <p class="caption"><%= t 'views.dashboard.wishlist.lend_by_you' %></p>
+              <p class="caption"><%= t 'views.dashboard.wishlist.lent_by_you' %></p>
             <% else %>
               <p class="caption"><%= t 'views.dashboard.wishlist.not_available' %></p>
             <% end %>

@@ -55,4 +55,33 @@ class Item < ApplicationRecord
   def remove_from_waitlist(user)
     waitlist.remove_user(user)
   end
+
+  def rental_end
+    return Time.now.utc if rental_start.nil? || rental_duration_sec.nil?
+
+    rental_start + rental_duration_sec
+  end
+
+  def remaining_rental_duration
+    rental_end - Time.now.utc
+  end
+
+  def print_remaining_rental_duration
+    print_time_from_seconds(remaining_rental_duration)
+  end
+
+  def print_time_from_seconds(seconds)
+    if seconds.positive?
+      humanize(seconds)
+    else
+      humanize(seconds * -1).prepend("-")
+    end
+  end
+
+  def humanize(seconds)
+    [[60, :s], [60, :m], [24, :h], [Float::INFINITY, :d]].filter_map do |count, name|
+      seconds, n = seconds.divmod(count)
+      "#{n.to_i} #{name}" unless n.to_i.zero?
+    end.reverse.join(' ')
+  end
 end
