@@ -23,6 +23,16 @@
   .description {
       font-family: Roboto, sans-serif;
   }
+  .btn-primary{
+    <% if notification.unread == true%>
+      background-color: #cce4ec !important;
+      border:  #cce4ec !important;
+    <% else %>
+      background-color: #dddfe0 !important;
+      border:  #dddfe0 !important;
+    <% end %>
+    color: black !important;
+  }
 </style>
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>"> 
@@ -69,3 +79,8 @@
     </div>
   </div>
 </div>
+<script>
+$('<%="notificationModal#{notification.id}" %>').on('shown.bs.modal', function (e) {
+  "<% notification.mark_as_read%>";
+})
+</script>

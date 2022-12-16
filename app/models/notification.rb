@@ -11,6 +11,10 @@ class Notification < ApplicationRecord
     specific.class.name.underscore
   end
 
+  def mark_as_read
+    self.update(unread: false)
+  end
+
   # delegate methods from the "subclasses" (which aren't really subclasses)
   # to the specific instances
   def method_missing(method, *args, &block)
