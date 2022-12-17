@@ -91,8 +91,8 @@ class ItemsController < ApplicationController
     @notification.destroy
     @item.save
     @owner = User.find(@item.owner)
-    @notification = LendingAcceptedNotification.new(item: @item, user: @owner, date: Time.zone.now)
-    @notification.save
+    notification = LendingAcceptedNotification.new(item: @item, user: @owner, date: Time.zone.now)
+    notification.save
     redirect_to item_url(@item)
   end
 
