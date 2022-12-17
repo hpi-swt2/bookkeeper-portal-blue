@@ -32,6 +32,9 @@ de:
         lend_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
+      lending_accepted:
+        title: "Ausleihanfrage angenommen"
+        description: "%{owner} hat deine Anfrage zu %{item} angenommen. Du kannst es jetzt abholen"
       lend_request:
         title: "Ausleihanfrage"
         description: "%{user} möchte %{item} von dir ausleihen."

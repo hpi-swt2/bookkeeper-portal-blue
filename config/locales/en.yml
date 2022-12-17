@@ -63,6 +63,9 @@ en:
         lend_by_you: "Lend by you"
     notifications:
       title: "Notifications"
+      lending_accepted:
+        title: "Lending Accepted"
+        description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
       lend_request:
         title: "Lend Request"
         description: "%{user} wants to borrow your %{item}."

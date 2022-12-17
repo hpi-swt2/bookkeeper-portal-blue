@@ -3,14 +3,13 @@
 class LendingAcceptedNotification < ApplicationRecord
   acts_as :notification
 
-  belongs_to :borrower, class_name: "User"
   belongs_to :item
 
   def title
-    I18n.t "views.notifications.LendingAccepted.title"
+    I18n.t "views.notifications.lending_accepted.title"
   end
 
   def description
-    I18n.t "views.notifications.LendingAccepted.description"
+    I18n.t "views.notifications.lending_accepted.description", owner: user.name, item: item.name
   end
 end
