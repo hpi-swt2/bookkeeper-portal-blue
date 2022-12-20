@@ -16,10 +16,10 @@ RSpec.describe "Dashboard", type: :feature do
     expect(page).to have_content(@user.first_name)
   end
 
-  it "shows unread messages" do
+  it "shows unread messages and links to notifications" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.unread_messages')
+    expect(page).to have_selector("a[href='/notifications']")
   end
 
   it "shows lent items" do

@@ -25,20 +25,37 @@
         margin-bottom: 7px;
     }
 
-    .box {
-        width: 350px;
-        border: 1px solid black;
-        padding: 5px;
-        margin: 5px;
-        margin-bottom: 15px;
+    .button {
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        spacing: auto spacing;
+        margin-bottom: 12px;
+        <% if @unread_notifications_num > 0 %>
+            background-color: #2596be;
+        <% else %>
+            background-color: #7cc0d8;
+        <% end %>
     }
+
+    .button:hover {
+        color: white;
+    }
+
 </style>
 
 <% if user_signed_in? %>
   <p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
 
-
-  <h3 class="subtitle box"><%= t 'views.dashboard.unread_messages' %></h3>
+  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @unread_notifications_num) %></a>
 
   <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
   <div class="feature-icon mb-1">
@@ -60,3 +77,6 @@
     <i class="bi bi-person-plus-fill"></i> <%= t 'views.landing_page.signup' %>
   <% end %>
 <% end %>
+
+
+

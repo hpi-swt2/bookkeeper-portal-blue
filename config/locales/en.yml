@@ -49,7 +49,7 @@ en:
       title: "Dashboard"
       greeting: "Hello, %{name}!"
       not_signed_in: "You are not signed in."
-      unread_messages: "You have ... unread messages"
+      unread_messages: "You have %{num} unread messages"
       lent_items:
         title: "LENT ITEMS"
       offered_items:
