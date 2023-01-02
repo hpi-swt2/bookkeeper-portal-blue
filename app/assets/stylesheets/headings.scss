@@ -7,3 +7,19 @@ h1 {
 h2 {
     @include headline-2;
 }
+
+.body-1 {
+    @include body-1;
+}
+
+.body-2 {
+    @include body-2;
+}
+
+.caption {
+    @include caption;
+}
+
+.subtitle {
+    @include subtitle;
+}
