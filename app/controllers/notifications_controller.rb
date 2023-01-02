@@ -1,7 +1,7 @@
 class NotificationsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @notifications = Notification.where(user_id: current_user.id)
+    @notifications = Notification.where(receiver_id: current_user.id)
     @dates = @notifications.group_by do |notification|
       notification.date.strftime('%d. %B %y')
     end

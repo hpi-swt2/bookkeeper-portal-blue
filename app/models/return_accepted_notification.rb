@@ -2,10 +2,10 @@
 class ReturnAcceptedNotification < ApplicationRecord
     acts_as :notification
   
-    belongs_to :borrower, class_name: "User"
+    belongs_to :owner, class_name: "User"
     belongs_to :item
   
-    validates :user, presence: true
+    validates :receiver, presence: true
     validates :date, presence: true
   
     def title
@@ -13,7 +13,7 @@ class ReturnAcceptedNotification < ApplicationRecord
     end
   
     def description
-      I18n.t "views.notifications.return_accepted.description", user: borrower.name, item: item.name
+      I18n.t "views.notifications.return_accepted.description", receiver: owner.name, item: item.name
     end
   end
   

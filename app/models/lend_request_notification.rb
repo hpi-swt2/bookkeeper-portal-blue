@@ -12,6 +12,6 @@ class LendRequestNotification < ApplicationRecord
   end
 
   def description
-    I18n.t "views.notifications.lend_request.description", user: borrower.name, item: item.name
+    I18n.t "views.notifications.lend_request.description", receiver: borrower.name, item: item.name
   end
 end

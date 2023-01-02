@@ -9,14 +9,14 @@ RSpec.describe ReturnDeclinedNotification, type: :model do
     expect(notification).to be_valid
   end
 
-  it 'is not valid when the user and/or date is missing' do
+  it 'is not valid when the receiver and/or date is missing' do
     expect(invalid_notification).not_to be_valid
   end
 
-  it "belongs to a user, a date, an item and a borrower" do
-    expect(notification.user).not_to be_blank
+  it "belongs to a receiver, a date, an item and a owner" do
+    expect(notification.receiver).not_to be_blank
     expect(notification.item).not_to be_blank
-    expect(notification.borrower).not_to be_blank
+    expect(notification.owner).not_to be_blank
     expect(notification.date).not_to be_blank
   end
 

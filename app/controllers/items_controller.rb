@@ -76,7 +76,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
     @owner = User.find(@item.owner)
-    @notification = LendRequestNotification.new(item: @item, borrower: @user, user: @owner, date: Time.zone.now)
+    @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now)
     @notification.save
     @item.set_status_pending_lend_request
     @item.save
@@ -99,7 +99,7 @@ class ItemsController < ApplicationController
     @item.save
     @user = current_user
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(user: User.find(@item.owner),
+      @notification = ReturnRequestNotification.new(receiver: User.find(@item.owner),
                                                     date: Time.zone.now, item: @item, borrower: @user)
       @notification.save
     end
@@ -108,9 +108,11 @@ class ItemsController < ApplicationController
 
   def accept_return
     @item = Item.find(params[:id])
-    @notification = ReturnRequestNotification.find_by(item: @item)
-    @notification.destroy
+    @requestNotification = ReturnRequestNotification.find_by(item: @item)
+    @requestNotification.destroy
     # TODO: Send return accepted notification to borrower
+    @acceptedNotification = ReturnAcceptedNotification.new(item: @item, owner: @user, receiver: User.find(@item.holder), date: Time.zone.now)
+    @acceptedNotification.save
     @item.rental_start = nil
     @item.rental_duration_sec = nil
     @item.holder = nil
@@ -121,12 +123,12 @@ class ItemsController < ApplicationController
 
   def deny_return
     @item = Item.find(params[:id])
-    @notification = ReturnRequestNotification.find_by(item: @item)
-    @notification.destroy
+    @requestNotification = ReturnRequestNotification.find_by(item: @item)
+    @requestNotification.destroy
     # TODO: Send return declined notification to borrower and handle decline return
+    @declinedNotification = ReturnDeclinedNotification.new(item: @item, owner: @user, receiver: User.find(@item.holder), date: Time.zone.now)
+    @declinedNotification.save
     @item.deny_return
-    @item.save
-    redirect_to item_url(@item)
   end
 
   private

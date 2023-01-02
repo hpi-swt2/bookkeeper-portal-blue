@@ -4,7 +4,7 @@
 class Notification < ApplicationRecord
   actable
 
-  belongs_to :user
+  belongs_to :receiver, class_name: "User"
 
   def custom_partial
     specific.class.name.underscore

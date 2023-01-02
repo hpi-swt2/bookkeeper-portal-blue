@@ -49,7 +49,7 @@ class Item < ApplicationRecord
   end
 
   def deny_return
-    self.lend_status = :unavailable
+    self.destroy
   end
 
   def price_in_euro=(euros)

@@ -53,7 +53,8 @@ RSpec.describe Item, type: :model do
 
   it "removes the item from the system upon return declined" do
     item = create(:item)
+    expect(Item.exists?(item.id)).to be true
     item.deny_return
-    expect(Item.find(item.id)).to be_nil
+    expect(Item.exists?(item.id)).to be false
   end
 end

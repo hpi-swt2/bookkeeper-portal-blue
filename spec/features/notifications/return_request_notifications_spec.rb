@@ -7,7 +7,7 @@ describe "Return Request Notifications", type: :feature do
   before do
     sign_in user
     FactoryBot.reload
-    @notification = build(:return_request_notification, user: user)
+    @notification = build(:return_request_notification, receiver: user)
     @notification.item.waitlist = Waitlist.new
     @notification.save
   end
@@ -41,7 +41,7 @@ describe "Return Request Notifications", type: :feature do
     visit notifications_path
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
     click_button('Accept')
-    expect(ReturnAcceptedNotification.exists?(item: @notification.item, borrower: @notification.item.holder)).to be true
+    expect(ReturnAcceptedNotification.exists?(item: @notification.item, receiver: @notification.item.holder)).to be true
   end
 
   it "sends a return denied notification upon clicking on 'Decline" do
@@ -49,6 +49,6 @@ describe "Return Request Notifications", type: :feature do
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
     click_button('Check')
     click_button('Decline')
-    expect(ReturnDeclinedNotification.exists?(item: @notification.item, borrower: @notification.item.holder)).to be true
+    expect(ReturnDeclinedNotification.exists?(item: @notification.item, receiver: @notification.item.holder)).to be true
   end
 end
