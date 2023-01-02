@@ -5,13 +5,13 @@ RSpec.describe "items/show", type: :feature do
   let(:user) { create(:user) }
   let(:borrower) { create(:user) }
   let(:item) do
-    item = create(:item, owner: owner.id)
+    item = create(:item, owning_user: owner)
     item.waitlist = create(:waitlist_with_item)
     item.waitlist.item = item
     item
   end
   let(:item_lent) do
-    item_lent = create(:lent, owner: owner.id, holder: borrower.id)
+    item_lent = create(:lent, owning_user: owner, holder: borrower.id)
     item_lent.waitlist = create(:waitlist_with_item)
     item_lent.waitlist.item = item_lent
     item_lent

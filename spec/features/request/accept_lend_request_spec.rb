@@ -5,7 +5,7 @@ describe "Requests handling", type: :feature do
   it "owner can start lending by accepting the request" do
     owner = create(:max)
     borrower = create(:peter)
-    item = create(:item, owner: owner.id)
+    item = create(:item, owning_user: owner)
     sign_in borrower
     visit item_path(item)
     click_button('Lend')

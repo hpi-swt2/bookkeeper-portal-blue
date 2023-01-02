@@ -10,7 +10,7 @@ FactoryBot.define do
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
     lend_status { :available }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
   factory :pending, class: 'Item' do
     name { "MyName2" }
@@ -23,7 +23,7 @@ FactoryBot.define do
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
     lend_status { :pending_return }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
   factory :lent, class: 'Item' do
     name { "MyName3" }
@@ -37,7 +37,7 @@ FactoryBot.define do
     return_checklist { "MyChecklist" }
     lend_status { :lent }
     holder { create(:user).id }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
   factory :item_book, class: 'Item' do
     name { "Ruby on Rails by Example" }
@@ -50,7 +50,7 @@ FactoryBot.define do
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "Close the book. Remove sticky notes." }
     lend_status { :lent }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
   factory :item_beamer, class: 'Item' do
     name { "Beamer" }
@@ -63,7 +63,7 @@ FactoryBot.define do
     rental_start { "2022-11-21 15:32:07" }
     return_checklist { "Turn off the beamer." }
     lend_status { :pending_return }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
   factory :item_whiteboard, class: 'Item' do
     name { "Whiteboard" }
@@ -75,7 +75,7 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 5 }
     rental_start { "2022-10-10 3:14:15" }
     return_checklist { "Clean the whiteboard." }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
 
   factory :item_without_time, class: 'Item' do
@@ -88,6 +88,6 @@ FactoryBot.define do
     rental_duration_sec { nil }
     rental_start { nil }
     return_checklist { "Clean the whiteboard." }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
 end

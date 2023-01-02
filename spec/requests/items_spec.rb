@@ -18,7 +18,7 @@ RSpec.describe "/items", type: :request do
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    { name: "Test", location: "Test", category: "Test", description: "Test", owner: create(:user).id }
+    { name: "Test", location: "Test", category: "Test", description: "Test", owning_user: create(:user) }
   end
 
   let(:invalid_attributes) do

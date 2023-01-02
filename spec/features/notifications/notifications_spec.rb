@@ -4,7 +4,7 @@ describe "Notifications Page", type: :feature do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
   let(:borrower) { create(:max, password: password) }
-  let(:item) { create(:item, owner: user.id) }
+  let(:item) { create(:item, owning_user: user) }
 
   before do
     sign_in user

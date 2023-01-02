@@ -4,6 +4,7 @@ RSpec.describe Item, type: :model do
 
   before do
     @user = create(:user)
+    @group = create(:group)
   end
 
   it "handles item price setting/getting correctly" do
@@ -16,22 +17,23 @@ RSpec.describe Item, type: :model do
   end
 
   it "is valid with all required attributes" do
-    item = described_class.new(name: "Test", category: "Test", location: "Test", description: "Test", owner: @user.id)
+    item = described_class.new(name: "Test", category: "Test", location: "Test", description: "Test",
+                               owning_user: @user)
     expect(item).to be_valid
   end
 
   it "is not valid without name" do
-    item = described_class.new(category: "Test", location: "Test", description: "Test", owner: @user.id)
+    item = described_class.new(category: "Test", location: "Test", description: "Test", owning_user: @user)
     expect(item).not_to be_valid
   end
 
   it "is not valid without category" do
-    item = described_class.new(name: "Test", location: "Test", description: "Test", owner: @user.id)
+    item = described_class.new(name: "Test", location: "Test", description: "Test", owning_user: @user)
     expect(item).not_to be_valid
   end
 
   it "is not valid without location" do
-    item = described_class.new(name: "Test", category: "Test", description: "Test", owner: @user.id)
+    item = described_class.new(name: "Test", category: "Test", description: "Test", owning_user: @user)
     expect(item).not_to be_valid
   end
 
@@ -41,13 +43,13 @@ RSpec.describe Item, type: :model do
   end
 
   it "is not valid without description" do
-    item = described_class.new(name: "Test", category: "Test", location: "Test", owner: @user.id)
+    item = described_class.new(name: "Test", category: "Test", location: "Test", owning_user: @user)
     expect(item).not_to be_valid
   end
 
   it "is not valid with negative price" do
-    item = described_class.new(name: "Test", category: "Test", location: "Test", description: "Test", owner: @user.id,
-                               price_ct: -1)
+    item = described_class.new(name: "Test", category: "Test", location: "Test", description: "Test",
+                               owning_user: @user, price_ct: -1)
     expect(item).not_to be_valid
   end
 end
