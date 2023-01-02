@@ -33,6 +33,7 @@ $grey10: #C6CACC;
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
 @import 'navbar';
+@import 'itemcard';
 
 
 .body1{
@@ -92,17 +93,4 @@ $grey10: #C6CACC;
     padding-bottom: 5px;
     padding-left: 11px;
     padding-right: 11px;
-}
-
-.itemcard{
-    border: none;
-}
-
-.itemcard .card-body img{
-    border-radius: 5px;
-}
-
-.itemcard .card-body .card-title{
-    white-space: nowrap;
-    overflow: hidden;
 }
