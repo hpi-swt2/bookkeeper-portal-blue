@@ -50,4 +50,10 @@ RSpec.describe Item, type: :model do
                                price_ct: -1)
     expect(item).not_to be_valid
   end
+
+  it "removes the item from the system upon return declined" do
+    item = create(:item)
+    item.deny_return
+    expect(Item.find(item.id)).to be_nil
+  end
 end

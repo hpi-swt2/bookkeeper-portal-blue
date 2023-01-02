@@ -38,6 +38,9 @@ de:
       return_request:
         title: "Gegenstand zurückgeben"
         description: "%{user} möchte %{item} zurückgeben."
+      return_declined:
+        title: "Rückgabe abgelehnt"
+        description: "%{user} hat die Rückgabe des Items abgelehnt. Dies könnte verschiedene Ursachen haben"
       added_to_waitlist:
         title: "Zur Warteliste hinzugefügt"
         description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."
