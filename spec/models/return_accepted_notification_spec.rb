@@ -2,10 +2,15 @@ require 'rails_helper'
 
 RSpec.describe ReturnAcceptedNotification, type: :model do
 
-  let(:notification) { create(:return_accepted_notification) }
+  let(:notification) { build(:return_accepted_notification) }
+  let(:invalid_notification) { build(:invalid_return_accepted_notification) }
 
   it "is creatable via a factory" do
     expect(notification).to be_valid
+  end
+
+  it 'is not valid when the user and/or date is missing' do
+    expect(invalid_notification).not_to be_valid
   end
 
   it "belongs to a user, a date, an item and a borrower" do
