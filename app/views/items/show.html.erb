@@ -134,22 +134,22 @@
         <div>
           <p class="title"><%=@item.name %></p>
         </div>
-        <p class="body1" id="location">
+        <p class="body-1" id="location">
           <span class="material-symbols-outlined" id="locationIcon">
             location_on</span>
           <%= @item.location %></p>
         <br>
       </div>
       <p class="subtitle"><%= t('views.show_item.category')%></p>
-      <p class="body1"><%= @item.category %></p>
+      <p class="body-1"><%= @item.category %></p>
       <p class="subtitle"><%= t('views.show_item.description')%></p>
-      <p class="body1"><%= @item.description %></p>
+      <p class="body-1"><%= @item.description %></p>
       <p class="subtitle"><%= t('views.show_item.owner')%></p>
-      <p class="body1"><%= User.find(@item.owner).email %></p>
+      <p class="body-1"><%= User.find(@item.owner).email %></p>
       <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
-      <p class="body1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
+      <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
       <p class="subtitle"><%= t('views.show_item.waitlist')%></p>
-      <p class="body1">
+      <p class="body-1">
         <% if !current_user.nil? %>
           <% if !@item.waitlist.users.exists?(current_user.id) %>
             <%= t('views.show_item.users_waiting', amount: @item.waitlist.users.size) %>
