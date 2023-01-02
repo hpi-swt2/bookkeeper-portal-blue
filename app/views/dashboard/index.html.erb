@@ -55,7 +55,7 @@
 <% if user_signed_in? %>
   <p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
 
-  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @unread_notifications_num) %></a>
+  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @user.notifications.size) %></a>
 
   <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
   <div class="feature-icon mb-1">
