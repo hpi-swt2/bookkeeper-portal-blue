@@ -1,0 +1,47 @@
+@import 'colors';
+
+@mixin headline-1($color: true) {
+    font: 300 26px Roboto;
+    @if $color {
+        color: $Grey04;
+    }
+}
+
+@mixin headline-2($color: true) {
+    font: 900 20px Roboto;
+    @if $color {
+        color: $Primary06;
+    }
+}
+
+@mixin subtitle($color: true) {
+    font: 700 18px Roboto;
+    line-height: 21px;
+    @if $color {
+        color: $Primary06;
+    }
+}
+
+@mixin body-1 ($color: true){
+    font: 400 18px Roboto;
+    line-height: 21px;
+    @if $color {
+        color: $Grey04;
+    }
+}
+
+@mixin body-2($color: true) {
+    font: 500 16px Roboto;
+    line-height: 19px;
+    @if $color {
+        color: $Grey04;
+    }
+}
+
+@mixin caption($color: true) {
+    font: 400 12px Roboto;
+    line-height: 14px;
+    @if $color {
+        color: $Grey07;
+    }
+}

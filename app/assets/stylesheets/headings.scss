@@ -1,0 +1,9 @@
+@import 'text';
+
+h1 {
+    @include headline-1;
+}
+
+h2 {
+    @include headline-2;
+}

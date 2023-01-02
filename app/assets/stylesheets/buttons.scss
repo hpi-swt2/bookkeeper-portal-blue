@@ -1,0 +1,42 @@
+@import 'text';
+
+.btn {
+    @include subtitle($color: false);
+    /* min-width: 167px; */
+}
+
+.primaryButton{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: white;
+    background-color: $Primary06;
+    border-radius: 5px;
+    border-color: transparent;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+.secondaryButton{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: center;
+    color: white;
+    background-color: $Grey10;
+    border-radius: 5px;
+    border-color: transparent;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 11px;
+    padding-right: 11px;
+}
