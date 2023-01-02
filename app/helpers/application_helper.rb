@@ -23,7 +23,7 @@ module ApplicationHelper
     new_hash[:class] += " #{class_name}"
     new_hash
   end
-  
+
   def render_if_exists(path_to_partial, *args, &block)
     render path_to_partial, *args, &block
   rescue ActionView::MissingTemplate
