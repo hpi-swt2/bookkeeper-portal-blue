@@ -1,3 +1,5 @@
+require "rqrcode"
+
 # rubocop:disable Metrics/ClassLength
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
@@ -121,6 +123,12 @@ class ItemsController < ApplicationController
     @item.deny_return
     @item.save
     redirect_to item_url(@item)
+  end
+
+  def generate_qrcode
+    @item = Item.find(params[:id])
+    qr = RQRCode::QRCode.new("item:%d" % @item.id)
+    send_data qr.as_png(size: 400).to_blob, disposition: "attachment", type: "image/png"
   end
 
   private

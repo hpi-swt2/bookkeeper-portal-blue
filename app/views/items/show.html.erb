@@ -173,6 +173,11 @@
           <% end %>
         <% end %>
       <% end %>
+
+      <% if !current_user.nil? && current_user.id == @item.owner %>
+        <%= link_to "QR", { action: "generate_qrcode"}, class: "primaryButton" %>
+      <% end %>
+      
       <br><br><br>
     </div>
   </div>
