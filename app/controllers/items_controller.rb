@@ -76,7 +76,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
     @owner = User.find(@item.owner)
-    @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now)
+    @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
+                                                unread: true, active: true)
     @notification.save
     @item.set_status_pending_lend_request
     @item.save
@@ -88,7 +89,9 @@ class ItemsController < ApplicationController
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
     @item.holder = @notification.borrower.id
-    @notification.destroy
+    @notification.update(active: false)
+    @lendrequest = LendRequestNotification.find(@notification.actable_id)
+    @lendrequest.update(accepted: true)
     @item.save
     redirect_to item_url(@item)
   end
@@ -99,8 +102,8 @@ class ItemsController < ApplicationController
     @item.save
     @user = current_user
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(receiver: User.find(@item.owner),
-                                                    date: Time.zone.now, item: @item, borrower: @user)
+      @notification = ReturnRequestNotification.new(receiver: User.find(@item.owner), date: Time.zone.now,
+                                                    item: @item, borrower: @user, active: true, unread: true)
       @notification.save
     end
     redirect_to item_url(@item)
@@ -111,9 +114,9 @@ class ItemsController < ApplicationController
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
-    @accepted_notification = ReturnAcceptedNotification.new(item: @item, owner: @user,
-                                                            receiver: User.find(@item.holder), date: Time.zone.now)
-    @accepted_notification.save
+    @accepted_notif = ReturnAcceptedNotification.new(active: true, unread: true, date: Time.zone.now,
+                                                     item: @item, receiver: User.find(@item.holder), owner: @user)
+    @accepted_notif.save
     @item.reset_status
     @item.save
     redirect_to item_url(@item)
@@ -125,8 +128,10 @@ class ItemsController < ApplicationController
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
     @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
-                                                            receiver: User.find(@item.holder), date: Time.zone.now)
+                                                            receiver: User.find(@item.holder),
+                                                            date: Time.zone.now, active: true, unread: true)
     @declined_notification.save
+    @item.destroy
     redirect_to notifications_path
   end
 

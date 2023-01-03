@@ -35,14 +35,17 @@ describe "Notifications Page", type: :feature do
     end
   end
 
-  it "is grouped by date" do
-    same_day_notifications = create_list(:lend_request_notification, 2, receiver: user, borrower: borrower, item: item,
-                                                                        date: DateTime.now)
-    same_day_notifications.each(&:save)
+  it "is clickable" do
     visit notifications_path
-    @notifications.each do |notification|
-      expect(page).to have_text(notification.date.strftime("%d. %B %y"))
-    end
+    all('.notification', text: @notifications[0].description)[0].click
+    expect(page).to have_text(@notifications[0].description)
   end
 
+  it "is unread until page is viewed, then it is read" do
+    expect(@notifications[1].unread).to be true
+    visit notifications_path
+    all('.notification', text: @notifications[1].description)[1].click
+    @notifications[1].reload
+    expect(@notifications[1].unread).to be false
+  end
 end

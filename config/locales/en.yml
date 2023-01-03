@@ -63,9 +63,14 @@ en:
         lend_by_you: "Lend by you"
     notifications:
       title: "Notifications"
+      deletion_history: "History"
       lend_request:
         title: "Lend Request"
         description: "%{receiver} wants to borrow your %{item}."
+        description_accepted: "You have lent %{item} to %{receiver}"
+        description_declined: "You have declined to lent %{item} to %{receiver}"
+        accepted: "Accepted"
+        declined: "Declined"
       return_request:
         title: "Return Item"
         description: "%{receiver} wants to return your %{item}. Please note that the item will be removed from the system upon declining the return request."
