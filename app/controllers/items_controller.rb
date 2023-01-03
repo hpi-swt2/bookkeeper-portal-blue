@@ -76,7 +76,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
     @owner = User.find(@item.owner)
-    @notification = LendRequestNotification.new(item: @item, borrower: @user, user: @owner, date: Time.zone.now)
+    @notification = LendRequestNotification.new(item: @item, borrower: @user, user: @owner, date: Time.zone.now, unread: true, active: true)
     @notification.save
     @item.set_status_pending_lend_request
     @item.save
@@ -88,7 +88,9 @@ class ItemsController < ApplicationController
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
     @item.holder = @notification.borrower.id
-    @notification.destroy
+    @notification.update(active: false)
+    @lendrequest = LendRequestNotification.find(@notification.actable_id)
+    @lendrequest.update(accepted: true)
     @item.save
     redirect_to item_url(@item)
   end
@@ -100,7 +102,7 @@ class ItemsController < ApplicationController
     @user = current_user
     unless ReturnRequestNotification.find_by(item: @item)
       @notification = ReturnRequestNotification.new(user: User.find(@item.owner),
-                                                    date: Time.zone.now, item: @item, borrower: @user)
+                                                    date: Time.zone.now, item: @item, borrower: @user, active: true, unread: true)
       @notification.save
     end
     redirect_to item_url(@item)

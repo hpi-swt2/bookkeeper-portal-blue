@@ -6,7 +6,8 @@
 </button>
 
 <!-- Modal-->
-<div class="modal fade" id="<%="notificationModal#{notification.id}"%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important"
+id="<%="notificationModal#{notification.id}"%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

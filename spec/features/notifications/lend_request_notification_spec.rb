@@ -3,7 +3,8 @@ require "rails_helper"
 describe "Lend Request Notifications", type: :feature do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
-  let(:borrower) { create(:max, password: password) }
+  let(:owner) { create(:max) }
+  let(:borrower) {create(:peter)}
   let(:item) { create(:item, owner: user.id) }
 
   before do
@@ -32,11 +33,9 @@ describe "Lend Request Notifications", type: :feature do
     @notification.reload
     expect(@notification.active).to be false
     expect(@notification.accepted).to be false
-describe "Return Request Notifications", type: :feature do
+  end
 
   it "user gets notified someone wants to lend his/her item" do
-    owner = create(:max)
-    borrower = create(:peter)
     item = create(:item, owner: owner.id)
     sign_in borrower
     visit item_path(item)

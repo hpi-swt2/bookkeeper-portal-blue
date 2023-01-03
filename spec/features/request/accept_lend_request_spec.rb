@@ -12,7 +12,7 @@ describe "Requests handling", type: :feature do
     expect(item.reload.lend_status).to eq('pending_lend_request')
     sign_in owner
     visit notifications_path
-    click_button('Check')
+    click_on('Lend Request')
     click_button('Accept')
     expect(item.reload.lend_status).to eq('lent')
   end
