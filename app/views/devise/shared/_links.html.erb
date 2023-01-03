@@ -1,3 +1,14 @@
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%= button_to(omniauth_authorize_path(resource_name, provider),
+                  class: 'btn btn-primary', id: "#{provider}-signin" ,
+                  method: :post,
+                  data: {disable_with: "<i class='fa fa-spinner fa-spin'></i> Logging in...", turbo: "false"}) do %>
+      <%= t('.sign_in_with_provider', provider: OmniAuth::Utils.camelize(provider)) %>
+    <% end %>
+  <% end %>
+<% end %>
+
 <%- if controller_name != 'sessions' %>
   <%= link_to t(".sign_in"), new_session_path(resource_name) %><br />
 <% end %>
@@ -18,8 +29,3 @@
   <%= link_to t('.didn_t_receive_unlock_instructions'), new_unlock_path(resource_name) %><br />
 <% end %>
 
-<%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to t('.sign_in_with_provider', provider: OmniAuth::Utils.camelize(provider)), omniauth_authorize_path(resource_name, provider), method: :post %><br />
-  <% end %>
-<% end %>

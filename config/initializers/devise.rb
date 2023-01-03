@@ -272,7 +272,24 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :openid_connect,
+                  name: :openid_connect,
+                  scope: %i[openid email profile],
+                  response_type: :code,
+                  client_options: {
+                    port: 443,
+                    scheme: "https",
+                    host: "oidc.hpi.de",
+                    # Instead of env vars, could also use Rails credentials store
+                    # env vars are set on deployed Heroku instance, default to HPI OpenID client setup for local dev
+                    # Requires server to be running on port 3000, as that is also set on the remote OIDC config (and is checked)
+                    identifier: ENV["OIDC_CLIENT_ID"],
+                    secret: ENV["OIDC_CLIENT_SECRET"],
+                    redirect_uri: "#{ENV["APP_BASE_URL"] || "http://localhost:3000" }/users/auth/openid_connect/callback",
+                    authorization_endpoint: "/auth"
+                  },
+                  client_auth_method: :other,
+                  discovery: true
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
