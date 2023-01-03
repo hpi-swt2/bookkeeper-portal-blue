@@ -68,7 +68,13 @@ en:
         description: "%{receiver} wants to borrow your %{item}."
       return_request:
         title: "Return Item"
-        description: "%{receiver} wants to return your %{item}."
+        description: "%{receiver} wants to return your %{item}. Please note that the item will be removed from the system upon declining the return request."
+      return_declined:
+        title: "Return Declined"
+        description: "%{owner} has declined the return of %{item}. The item might be damaged, please contact the owner of the item for more information."
+      return_accepted:
+        title: "Return Accepted"
+        description: "%{owner} has accepted the return of %{item}. You successfully returned the item."
       added_to_waitlist:
         title: "Added to Waitlist"
         description: "You have been added to Waitlist of %{item} at Position %{position}."

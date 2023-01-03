@@ -3,6 +3,8 @@ class Item < ApplicationRecord
   has_one_attached :image
   has_one :waitlist, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
+  has_many :return_request_notifications, dependent: :destroy
+  has_many :return_accepted_notifications, dependent: :destroy
   has_and_belongs_to_many :users, join_table: "wishlist"
 
   validates :name, presence: true
@@ -46,10 +48,6 @@ class Item < ApplicationRecord
 
   def set_status_unavailable
     self.lend_status = :unavailable
-  end
-
-  def deny_return
-    self.destroy
   end
 
   def price_in_euro=(euros)

@@ -108,9 +108,9 @@ class ItemsController < ApplicationController
 
   def accept_return
     @item = Item.find(params[:id])
+    @user = current_user
     @requestNotification = ReturnRequestNotification.find_by(item: @item)
     @requestNotification.destroy
-    # TODO: Send return accepted notification to borrower
     @acceptedNotification = ReturnAcceptedNotification.new(item: @item, owner: @user, receiver: User.find(@item.holder), date: Time.zone.now)
     @acceptedNotification.save
     @item.rental_start = nil
@@ -123,12 +123,12 @@ class ItemsController < ApplicationController
 
   def deny_return
     @item = Item.find(params[:id])
+    @user = current_user
     @requestNotification = ReturnRequestNotification.find_by(item: @item)
     @requestNotification.destroy
-    # TODO: Send return declined notification to borrower and handle decline return
-    @declinedNotification = ReturnDeclinedNotification.new(item: @item, owner: @user, receiver: User.find(@item.holder), date: Time.zone.now)
+    @declinedNotification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user, receiver: User.find(@item.holder), date: Time.zone.now)
     @declinedNotification.save
-    @item.deny_return
+    redirect_to notifications_path
   end
 
   private

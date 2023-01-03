@@ -37,10 +37,13 @@ de:
         description: "%{receiver} möchte %{item} von dir ausleihen."
       return_request:
         title: "Gegenstand zurückgeben"
-        description: "%{receiver} möchte %{item} zurückgeben."
+        description: "%{receiver} möchte %{item} zurückgeben. Bitte beachte, dass der Gegenstand aus dem System entfernt wird, wenn du die Rückgabe ablehnst."
       return_declined:
         title: "Rückgabe abgelehnt"
-        description: "%{receiver} hat die Rückgabe des Items abgelehnt. Dies könnte verschiedene Ursachen haben"
+        description: "%{owner} hat die Rückgabe von %{item} abgelehnt. Dies könnte verschiedene Ursachen haben, z.B. Beschädigungen am Gegenstand. Setze dich am besten nochmal mit den Eigentümer des Gegenstandes in Kontakt."
+      return_accepted:
+        title: "Rückgabe akzeptiert"
+        description: "%{owner} hat die Rückgabe von %{item} akzeptiert. Du hast den Gegenstand also erfolgreich zurückgegeben."
       added_to_waitlist:
         title: "Zur Warteliste hinzugefügt"
         description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."

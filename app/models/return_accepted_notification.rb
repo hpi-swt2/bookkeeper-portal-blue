@@ -13,7 +13,7 @@ class ReturnAcceptedNotification < ApplicationRecord
     end
   
     def description
-      I18n.t "views.notifications.return_accepted.description", receiver: owner.name, item: item.name
+      I18n.t "views.notifications.return_accepted.description", owner: owner.name, item: item.name
     end
   end
   
