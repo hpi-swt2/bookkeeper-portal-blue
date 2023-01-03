@@ -24,18 +24,15 @@
       font-family: Roboto, sans-serif;
   }
   .btn-primary{
-    <% if notification.unread == true%>
-      background-color: #cce4ec !important;
-      border:  #cce4ec !important;
-    <% else %>
-      background-color: #dddfe0 !important;
-      border:  #dddfe0 !important;
-    <% end %>
+    background-color: #dddfe0 !important;
+    border:  #dddfe0 !important;
     color: black !important;
+    margin: 5px;
   }
 </style>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>"> 
+<button type="button" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important" 
+        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>"> 
   <div class="notification">
     <h2 class="subtitle">
       <%= notification.title %>
