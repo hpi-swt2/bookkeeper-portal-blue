@@ -135,7 +135,7 @@
     width: 90%;
   }
   .primaryButton {
-    
+    margin-bottom: 8px;
     width: 48%;
     display: inline-block;
   }
@@ -151,6 +151,29 @@
     width: 100%;
   }
 </style>
+<script>
+(function() {
+  // Load the script
+  const script = document.createElement("script");
+  script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js';
+  script.type = 'text/javascript';
+  document.head.appendChild(script);
+})();
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader();
+
+      reader.addEventListener("load", (e) => {
+        $('#img_prev').attr('src', e.target.result);
+        // remove the background color since hide() doesnt work
+        $('#imagePlaceholder').css("background-color", "transparent");
+        $('#imageIcon').hide();
+        });
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
 <div>
 <%= form_with(model: @item, :html => {:multipart => true}) do |form| %>
   <div class="row">
@@ -170,14 +193,15 @@
   <% end %>
 
   <div class="image container-fluid rounded">
-    <!--%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %-->
+    <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
     <div class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" id=imagePlaceholder>
       <span class="material-symbols-outlined" id="imageIcon">image</span>
-    </div>
+    </div> 
   </div>
-        
-  <%= form.file_field :image, class: "notBorderedInput" %>
- 
+
+  <%= form.file_field :image, multiple: false, direct_upload: true, :onchange => "readURL(this)"%>  
+
+
   <div>
   <p class="title">
     <%= form.text_field :name, class: "borderedInput" %>
