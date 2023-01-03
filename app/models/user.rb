@@ -57,9 +57,10 @@ class User < ApplicationRecord
     group.reload
     reload
   end
+
   def self.from_omniauth(auth)
     # Create user in database if it does not exist yet when logging in via OIDC
-    where(email:auth.info.email).first_or_create! do |user|
+    where(email: auth.info.email).first_or_create! do |user|
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
     end
