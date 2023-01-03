@@ -1,19 +1,19 @@
 de:
   defaults:
-    delete: 'Löschen'
-    close: 'Schließen'
-    accept: 'Annehmen'
-    decline: 'Ablehnen'
-    check: 'Prüfen'
+    delete: "Löschen"
+    close: "Schließen"
+    accept: "Annehmen"
+    decline: "Ablehnen"
+    check: "Prüfen"
   views:
     landing_page:
-      title: 'Bookkeeper Blau'
-      read_more: 'Mehr lesen'
-      signup: 'Registrieren'
-      login: 'Anmelden'
-      logout: 'Abmelden'
-      logged_in_user: 'Aktuell angemeldet: %{email}'
-      edit_btn: 'Profil bearbeiten'
+      title: "Bookkeeper Blau"
+      read_more: "Mehr lesen"
+      signup: "Registrieren"
+      login: "Anmelden"
+      logout: "Abmelden"
+      logged_in_user: "Aktuell angemeldet: %{email}"
+      edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
@@ -41,27 +41,39 @@ de:
         accepted: 'Akzeptiert'
         declined: 'Abgelehnt'
       return_request:
-        title: 'Gegenstand zurückgeben'
-        description: '%{user} möchte %{item} zurückgeben.'
+        title: "Gegenstand zurückgeben"
+        description: "%{user} möchte %{item} zurückgeben."
+      added_to_waitlist:
+        title: "Zur Warteliste hinzugefügt"
+        description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."
+      move_up_on_waitlist:
+        title: "Auf Warteliste aufgerückt"
+        description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
     search:
-      title: 'Suche'
-      filter_button: 'Filter'
-      qr_scanner_title: 'QR Scanner'
+      title: "Suche"
+      filter_button: "Filter"
+      qr_scanner_title: "QR Scanner"
     home:
-      title: 'Startseite'
+      title: "Startseite"
     new_item:
-      title: 'Neuer Gegenstand'
+      title: "Neuer Gegenstand"
     show_item:
-      author: 'Autor'
-      category: 'Kategorie'
-      description: 'Beschreibung'
-      owner: 'Besitzer'
-      lend_until: 'Ausleihen bis'
-      enter_waitlist: 'Auf die Warteliste'
-      lend: 'Ausleihen'
-      return: 'Zurückgeben'
+      author: "Autor"
+      category: "Kategorie"
+      description: "Beschreibung"
+      owner: "Besitzer"
+      lend_until: "Ausleihen bis"
+      enter_waitlist: "Auf die Warteliste"
+      leave_waitlist: "Warteliste verlassen"
+      waitlist: "Warteliste"
+      users_waiting: "%{amount} Nutzer warten auf dieses Objekt."
+      waitlist_position: "Sie stehen an Position %{position} der Warteliste."
+      lend: "Ausleihen"
+      return: "Zurückgeben"
+      pending_lend_request: "Warten auf Ausleihbestätigung"
+      pending_return_request: "Warten auf Rückgabebestätigung"
     edit_item:
-      rental_duration_sec: 'Ausleihdauer (Sekunden)'
+      rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
       title: "Profil"
       roles: "Rollen"
@@ -72,19 +84,20 @@ de:
       groups: "Gruppen"
       no_groups: "Mitglied in keiner Gruppe"
     groups:
-      owners: 'Admins'
-      members: 'Mitglieder'
+      owners: "Admins"
+      members: "Mitglieder"
   models:
     item:
       item: "Gegenstand"
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+    waitlist:
+      added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
+      failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
     group:
       add: "Gruppe erstellen"
       name: "Gruppenname"
   helpers:
     submit:
       update: "Gegendstand ändern"
-
-

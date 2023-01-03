@@ -39,6 +39,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_175427) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "added_to_waitlist_notifications", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_added_to_waitlist_notifications_on_item_id"
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -84,6 +91,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_175427) do
     t.index ["user_id"], name: "index_memberships_on_user_id"
   end
 
+  create_table "move_up_on_waitlist_notifications", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_move_up_on_waitlist_notifications_on_item_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.datetime "date"
     t.integer "user_id", null: false
@@ -118,6 +132,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_175427) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "users_waitlists", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "waitlist_id", null: false
+  end
+
+  create_table "waitlists", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_waitlists_on_item_id"
+  end
+
   create_table "wishlist", id: false, force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "item_id", null: false
@@ -125,13 +151,16 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_175427) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "added_to_waitlist_notifications", "items"
   add_foreign_key "items", "users", column: "holder"
   add_foreign_key "items", "users", column: "owner"
   add_foreign_key "lend_request_notifications", "items"
   add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
+  add_foreign_key "move_up_on_waitlist_notifications", "items"
   add_foreign_key "notifications", "users"
   add_foreign_key "return_request_notifications", "items"
   add_foreign_key "return_request_notifications", "users", column: "borrower_id"
+  add_foreign_key "waitlists", "items"
 end

@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
 
+  has_and_belongs_to_many :waitlists
+
   def email_parts
     email.split("@")[0].split(".")
   end

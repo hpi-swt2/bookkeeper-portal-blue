@@ -8,7 +8,9 @@ describe "Return Request Notifications", type: :feature do
 
   before do
     sign_in user
+    FactoryBot.reload
     @notification = build(:return_request_notification, user: user, item: item, borrower: borrower, active: true)
+    @notification.item.waitlist = Waitlist.new
     @notification.save
   end
 
@@ -32,6 +34,7 @@ describe "Return Request Notifications", type: :feature do
   it "deletes the notification upon clicking on 'Decline" do
     visit notifications_path(id: @notification.id)
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
+    click_button('Check')
     click_button('Decline')
     expect(ReturnRequestNotification.exists?(@notification.id)).to be false
   end
