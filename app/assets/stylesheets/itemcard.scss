@@ -4,6 +4,9 @@
 
 .itemcard .card-body img{
     border-radius: 5px;
+    object-fit: cover;
+    width: 300px;
+    height: 300px;
 }
 
 .itemcard .card-body .card-title{
