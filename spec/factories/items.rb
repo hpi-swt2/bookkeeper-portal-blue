@@ -9,6 +9,34 @@ FactoryBot.define do
     rental_duration_sec { 1 }
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
+    lend_status { :available }
+    owner { create(:user).id }
+  end
+  factory :pending, class: 'Item' do
+    name { "MyName2" }
+    category { "MyCategory" }
+    location { "MyLocation" }
+    description { "MyDescription" }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 1 }
+    rental_duration_sec { 1 }
+    rental_start { "2022-11-18 15:32:07" }
+    return_checklist { "MyChecklist" }
+    lend_status { :pending_return }
+    owner { create(:user).id }
+  end
+  factory :lent, class: 'Item' do
+    name { "MyName3" }
+    category { "MyCategory" }
+    location { "MyLocation" }
+    description { "MyDescription" }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 1 }
+    rental_duration_sec { 1 }
+    rental_start { "2022-11-18 15:32:07" }
+    return_checklist { "MyChecklist" }
+    lend_status { :lent }
+    holder { create(:user).id }
     owner { create(:user).id }
   end
   factory :item_book, class: 'Item' do
@@ -21,6 +49,7 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 24 * 7 }
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "Close the book. Remove sticky notes." }
+    lend_status { :lent }
     owner { create(:user).id }
   end
   factory :item_beamer, class: 'Item' do
@@ -33,6 +62,7 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 3 }
     rental_start { "2022-11-21 15:32:07" }
     return_checklist { "Turn off the beamer." }
+    lend_status { :pending_return }
     owner { create(:user).id }
   end
   factory :item_whiteboard, class: 'Item' do

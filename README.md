@@ -44,7 +44,7 @@ Ensure you have access to a Unix-like environment through:
 ## Developer Guide
 
 ### Employed Frameworks
-* [Stimulus JS](https://stimulus.hotwired.dev) as the default JavaScript framework, augmenting HTML
+* [Stimulus JS](https://stimulus.hotwired.dev) as the default JavaScript framework, augmenting HTML (see [the handbook](https://stimulus.hotwired.dev/handbook/origin) and [this detailed post](https://thoughtbot.com/blog/taking-the-most-out-of-stimulus) for an introduction or have a look at [#66](https://github.com/hpi-swt2/bookkeeper-portal-blue/pull/66))
 * [Bootstrap](https://getbootstrap.com/docs/5.2) for layout, styling and [icons](https://icons.getbootstrap.com/)
 * [Devise](https://github.com/heartcombo/devise) library for authentication
 * [FactoryBot](https://github.com/thoughtbot/factory_bot/blob/master/GETTING_STARTED.md#defining-factories) to generate test data

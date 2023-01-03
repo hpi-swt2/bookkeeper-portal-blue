@@ -58,6 +58,10 @@ GEM
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    active_record-acts_as (5.0.3)
+      activerecord (>= 6.0)
+      activesupport (>= 6.0)
+      ruby2_keywords
     activejob (7.0.4)
       activesupport (= 7.0.4)
       globalid (>= 0.3.6)
@@ -250,6 +254,7 @@ GEM
     rubocop-rspec (2.15.0)
       rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -317,6 +322,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_record-acts_as
   bootsnap
   bootstrap (~> 5.2.2)
   capybara
@@ -354,4 +360,4 @@ RUBY VERSION
    ruby 2.7.4p191
 
 BUNDLED WITH
-   2.1.4
+   2.3.26
