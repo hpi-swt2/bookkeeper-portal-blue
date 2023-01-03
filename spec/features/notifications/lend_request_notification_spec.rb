@@ -14,13 +14,15 @@ describe "Lend Request Notifications", type: :feature do
   end
 
   it "has accept and decline buttons" do
-    visit notification_path(id: @notification.id)
+    visit notifications_path
+    click_on('Lend Request')
     expect(page).to have_button("Accept")
     expect(page).to have_button("Decline")
   end
 
   it "changes accepted to true when Accept is clicked" do
-    visit notification_path(id: @notification.id)
+    visit notifications_path
+    click_on('Lend Request')
     click_button('Accept')
     @notification.reload
     expect(@notification.active).to be false
@@ -28,7 +30,8 @@ describe "Lend Request Notifications", type: :feature do
   end
 
   it "changes accepted to false when Decline is clicked" do
-    visit notification_path(id: @notification.id)
+    visit notifications_path
+    click_on('Lend Request')
     click_button('Decline')
     @notification.reload
     expect(@notification.active).to be false
