@@ -134,7 +134,7 @@ class ItemsController < ApplicationController
   end
 
   def generate_qrcode
-    qr = RQRCode::QRCode.new("item:%d" % params[:id])
+    qr = RQRCode::QRCode.new("item:#{params[:id]}")
     png = qr.as_png(size: 500)
     dummy_png_file = StringIO.new png.to_blob
     pdf = Prawn::Document.new(page_size: "A4")
