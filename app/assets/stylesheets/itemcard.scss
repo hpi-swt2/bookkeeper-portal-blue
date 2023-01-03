@@ -1,15 +1,19 @@
 .itemcard{
-    border: none;
+    padding: 0;
+}
+
+.itemcard .card-body{
+    padding: 0;
 }
 
 .itemcard .card-body img{
     border-radius: 5px;
     object-fit: cover;
-    width: 300px;
     height: 300px;
 }
 
 .itemcard .card-body .card-title{
     white-space: nowrap;
     overflow: hidden;
+    padding: 0 var(--bs-card-spacer-x);
 }
