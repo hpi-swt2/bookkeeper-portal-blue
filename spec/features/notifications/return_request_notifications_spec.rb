@@ -32,6 +32,7 @@ describe "Return Request Notifications", type: :feature do
   it "deletes the notification upon clicking on 'Decline" do
     visit notifications_path
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
+    click_button('Check')
     click_button('Decline')
     expect(ReturnRequestNotification.exists?(@notification.id)).to be false
   end
