@@ -11,4 +11,3 @@ FactoryBot.define do
     owner { FactoryBot.build(:max) }
   end
 end
- 

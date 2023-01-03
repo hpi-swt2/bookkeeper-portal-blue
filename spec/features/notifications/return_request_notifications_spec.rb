@@ -41,9 +41,11 @@ describe "Return Request Notifications", type: :feature do
     visit notifications_path
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
     click_button('Accept')
-    @acceptedNotification = Notification.find_by(receiver: @notification.item.holder, actable_type: "ReturnAcceptedNotification")
-    expect(@acceptedNotification.nil?).to be false
-    expect(ReturnAcceptedNotification.exists?(id: @acceptedNotification.actable_id, item: @notification.item)).to be true
+    @accepted_notification = Notification.find_by(receiver: @notification.item.holder,
+                                                  actable_type: "ReturnAcceptedNotification")
+    expect(@accepted_notification.nil?).to be false
+    expect(ReturnAcceptedNotification.exists?(id: @accepted_notification.actable_id,
+                                              item: @notification.item)).to be true
   end
 
   it "sends a return denied notification upon clicking on 'Decline" do
@@ -51,8 +53,10 @@ describe "Return Request Notifications", type: :feature do
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
     click_button('Check')
     click_button('Decline')
-    @declinedNotification = Notification.find_by(receiver: @notification.item.holder, actable_type: "ReturnDeclinedNotification")
-    expect(@declinedNotification.nil?).to be false
-    expect(ReturnDeclinedNotification.exists?(id: @declinedNotification.actable_id, item_name: @notification.item.name)).to be true
+    @declined_notification = Notification.find_by(receiver: @notification.item.holder,
+                                                  actable_type: "ReturnDeclinedNotification")
+    expect(@declined_notification.nil?).to be false
+    expect(ReturnDeclinedNotification.exists?(id: @declined_notification.actable_id,
+                                              item_name: @notification.item.name)).to be true
   end
 end

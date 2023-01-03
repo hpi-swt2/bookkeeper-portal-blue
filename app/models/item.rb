@@ -54,6 +54,13 @@ class Item < ApplicationRecord
     self.price_ct = euros * 100
   end
 
+  def reset_status
+    self.rental_start = nil
+    self.rental_duration_sec = nil
+    self.holder = nil
+    set_status_available
+  end
+
   def add_to_waitlist(user)
     waitlist.add_user(user)
   end

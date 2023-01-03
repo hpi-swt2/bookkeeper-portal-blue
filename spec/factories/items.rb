@@ -39,7 +39,7 @@ FactoryBot.define do
     holder { create(:user).id }
     owner { holder }
   end
-    factory :pending_return, class: 'Item' do
+  factory :pending_return, class: 'Item' do
     name { "MyName3" }
     category { "MyCategory" }
     location { "MyLocation" }
