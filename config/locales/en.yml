@@ -96,6 +96,7 @@ en:
       waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
       return: "Return"
+      qr_button: "Download QR-Code"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
     profile:

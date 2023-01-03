@@ -60,6 +60,10 @@
     color: var(--grey04);
   }
 
+  .primaryButton {
+    text-decoration: none;
+  }
+
   .secondaryButton {
     width: 100%;
   }
@@ -173,11 +177,11 @@
           <% end %>
         <% end %>
       <% end %>
-
-      <% if !current_user.nil? && current_user.id == @item.owner %>
-        <%= link_to "QR", { action: "generate_qrcode"}, class: "primaryButton" %>
-      <% end %>
-      
+      <div class="text-center">
+        <% if !current_user.nil? && current_user.id == @item.owner %>
+          <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode"}, class: "primaryButton" %>
+        <% end %>
+      </div>
       <br><br><br>
     </div>
   </div>

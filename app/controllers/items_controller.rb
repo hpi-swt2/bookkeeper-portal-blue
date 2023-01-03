@@ -1,4 +1,6 @@
 require "rqrcode"
+require "prawn"
+require "stringio"
 
 # rubocop:disable Metrics/ClassLength
 class ItemsController < ApplicationController
@@ -126,9 +128,12 @@ class ItemsController < ApplicationController
   end
 
   def generate_qrcode
-    @item = Item.find(params[:id])
-    qr = RQRCode::QRCode.new("item:%d" % @item.id)
-    send_data qr.as_png(size: 400).to_blob, disposition: "attachment", type: "image/png"
+    qr = RQRCode::QRCode.new("item:%d" % params[:id])
+    png = qr.as_png(size: 500)
+    dummy_png_file = StringIO.new png.to_blob
+    pdf = Prawn::Document.new(page_size: "A4")
+    pdf.image dummy_png_file, position: :center
+    send_data pdf.render, disposition: "attachment", type: "application/pdf"
   end
 
   private

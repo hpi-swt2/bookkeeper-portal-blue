@@ -65,6 +65,7 @@ de:
       waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
+      qr_button: "QR-Code Herunterladen"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
