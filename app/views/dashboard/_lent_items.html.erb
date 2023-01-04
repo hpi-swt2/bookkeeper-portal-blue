@@ -25,25 +25,12 @@
               <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
             <% end %>
             <p class="body-2"><%= item.name %></p>
-            <% if item.remaining_rental_duration < 172_800 %>
-              <p class="caption-secondary" id="hourglass_empty">
-              <span class="material-symbols-outlined" id="hourglass_emptyIcon">
-                hourglass_empty
-              </span>
+              <p
+                <% if item.remaining_rental_duration < 172_800 %> class="caption-secondary"
+                <% elsif item.remaining_rental_duration < 604_800 %> class="caption-primary"
+                <% else %>  class="caption" <%end%> id="hourglass_empty">
+              <span class="material-symbols-outlined" id="hourglass_emptyIcon"> hourglass_empty </span>
               <%= item.print_remaining_rental_duration%></p>
-            <% elsif item.remaining_rental_duration < 604_800 %>
-              <p class="caption-primary" id="hourglass_empty">
-                <span class="material-symbols-outlined" id="hourglass_emptyIcon">
-                  hourglass_empty
-                </span>
-                <%= item.print_remaining_rental_duration%></p>
-            <% else %>
-              <p class="caption" id="hourglass_empty">
-                <span class="material-symbols-outlined" id="hourglass_emptyIcon">
-                  hourglass_empty
-                </span>
-                <%= item.print_remaining_rental_duration%></p>
-            <%end%>             
           </div>
         <% end %>
       </div>
