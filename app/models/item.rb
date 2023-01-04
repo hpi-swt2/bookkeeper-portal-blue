@@ -77,17 +77,19 @@ class Item < ApplicationRecord
   end
 
   def print_time_from_seconds(seconds)
-    if seconds.positive?
-      humanize(seconds)
+    if seconds.negative?
+      rental_end.strftime("abgelaufen am %d.%m.%Y")
+    elsif seconds < 86400
+      "heute"
+    elsif seconds < 2*86400
+      "noch 1 Tag"
+    elsif seconds < 7*86400
+      "noch " + (seconds/86400).to_i.to_s + " Tage"
+    elsif seconds < 14*86400
+      "noch 1 Woche"
     else
-      humanize(seconds * -1).prepend("-")
+      "noch " + (seconds/(7*86400)).to_i.to_s + " Wochen"
     end
   end
-
-  def humanize(seconds)
-    [[60, :s], [60, :m], [24, :h], [Float::INFINITY, :d]].filter_map do |count, name|
-      seconds, n = seconds.divmod(count)
-      "#{n.to_i} #{name}" unless n.to_i.zero?
-    end.reverse.join(' ')
-  end
+  
 end
