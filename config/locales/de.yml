@@ -17,7 +17,6 @@ de:
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
-      not_signed_in: "Du bist nicht angemeldet."
       unread_messages: "Du hast ... ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"
@@ -76,6 +75,7 @@ de:
       waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
+      qr_button: "QR-Code Herunterladen"
       pending_lend_request: "Warten auf Ausleihbestätigung"
       pending_return_request: "Warten auf Rückgabebestätigung"
     edit_item:
