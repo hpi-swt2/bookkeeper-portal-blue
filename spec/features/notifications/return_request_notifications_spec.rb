@@ -29,11 +29,25 @@ describe "Return Request Notifications", type: :feature do
     expect(ReturnRequestNotification.exists?(@notification.id)).to be false
   end
 
+  it "creates an audit when completing the lending process by clicking on 'Accept'" do
+    visit notifications_path
+
+    click_button('Accept')
+    expect(AuditEvent.where(item: @notification.item.id, event_type: "accept_return").count).to be(1)
+  end
+
   it "deletes the notification upon clicking on 'Decline" do
     visit notifications_path
     expect(ReturnRequestNotification.exists?(@notification.id)).to be true
     click_button('Check')
     click_button('Decline')
     expect(ReturnRequestNotification.exists?(@notification.id)).to be false
+  end
+
+  it "creates an audit when deleting the notification upon clicking on 'Decline'" do
+    visit notifications_path
+    click_button('Check')
+    click_button('Decline')
+    expect(AuditEvent.where(item: @notification.item.id, event_type: "deny_return").count).to be(1)
   end
 end
