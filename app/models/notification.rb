@@ -22,9 +22,8 @@ class Notification < ApplicationRecord
       time.strftime('%H:%M')
     elsif time.yesterday?
       I18n.t 'views.notifications.timestamp_yesterday'
-    elsif Date.today - 6.days <= time
-      day = time.strftime('%A')
-      I18n.t "views.notifications.timestamp_#{day}"
+    elsif Time.zone.today - 6.days <= time
+      I18n.t "views.notifications.timestamp_#{time.strftime('%A')}"
     else
       time.strftime('%d/%m/%Y')
     end
