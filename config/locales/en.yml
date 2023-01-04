@@ -36,6 +36,7 @@ en:
     accept: "Accept"
     decline: "Decline"
     submit: "Submit"
+    check: "Check"
   views:
     landing_page:
       title: "Bookkeeper Blue"
@@ -63,9 +64,23 @@ en:
         lend_by_you: "Lend by you"
     notifications:
       title: "Notifications"
+      deletion_history: "History"
       lend_request:
         title: "Lend Request"
         description: "%{user} wants to borrow your %{item}."
+        description_accepted: "You have lent %{item} to %{user}"
+        description_declined: "You have declined to lent %{item} to %{user}"
+        accepted: "Accepted"
+        declined: "Declined"
+      return_request:
+        title: "Return Item"
+        description: "%{user} wants to return your %{item}."
+      added_to_waitlist:
+        title: "Added to Waitlist"
+        description: "You have been added to Waitlist of %{item} at Position %{position}."
+      move_up_on_waitlist:
+        title: "Moved up on Waitlist"
+        description: "You have been moved up to Position %{position} on Waitlist for %{item}."
     search:
       title: "Search"
       filter_button: "Filter"
@@ -81,7 +96,14 @@ en:
       owner: "Owner"
       lend_until: "Lend Until"
       enter_waitlist: "Enter Waitlist"
+      leave_waitlist: "Leave Waitlist"
+      waitlist: "Waitlist"
+      users_waiting: "%{amount} Users are waiting for this Object."
+      waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
+      return: "Return"
+      pending_lend_request: "Waiting for lend approval"
+      pending_return_request: "Waiting for return approval"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
     profile:
@@ -100,6 +122,9 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+    waitlist:
+      added_to_waitlist: "Added to Waitlist at Position %{position}."
+      failed_adding_to_waitlist: "Not added to Waitlist."
     group:
       add: "Add Group"
       name: "Group Name"

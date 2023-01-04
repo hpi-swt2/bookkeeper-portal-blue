@@ -5,6 +5,7 @@ de:
     accept: "Annehmen"
     decline: "Ablehnen"
     submit: "Anbieten"
+    check: "Prüfen"
   views:
     landing_page:
       title: "Bookkeeper Blau"
@@ -32,9 +33,23 @@ de:
         lend_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
+      deletion_history: "Verlauf"
       lend_request:
         title: "Ausleihanfrage"
         description: "%{user} möchte %{item} von dir ausleihen."
+        description_accepted: "%{user} hat %{item} von dir ausgeliehen."
+        description_declined: "Du hast abgelehnt %{item} an %{user} auszuleihen"
+        accepted: "Akzeptiert"
+        declined: "Abgelehnt"
+      return_request:
+        title: "Gegenstand zurückgeben"
+        description: "%{user} möchte %{item} zurückgeben."
+      added_to_waitlist:
+        title: "Zur Warteliste hinzugefügt"
+        description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."
+      move_up_on_waitlist:
+        title: "Auf Warteliste aufgerückt"
+        description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
     search:
       title: "Suche"
       filter_button: "Filter"
@@ -50,7 +65,14 @@ de:
       owner: "Besitzer"
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
+      leave_waitlist: "Warteliste verlassen"
+      waitlist: "Warteliste"
+      users_waiting: "%{amount} Nutzer warten auf dieses Objekt."
+      waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
+      return: "Zurückgeben"
+      pending_lend_request: "Warten auf Ausleihbestätigung"
+      pending_return_request: "Warten auf Rückgabebestätigung"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:
@@ -71,10 +93,12 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+    waitlist:
+      added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
+      failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
     group:
       add: "Gruppe erstellen"
       name: "Gruppenname"
   helpers:
     submit:
       update: "Gegendstand ändern"
-
