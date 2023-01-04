@@ -78,18 +78,13 @@ class Item < ApplicationRecord
 
   def print_time_from_seconds(seconds)
     if seconds.negative?
-      rental_end.strftime("abgelaufen am %d.%m.%Y")
-    elsif seconds < 86400
-      "heute"
-    elsif seconds < 2*86400
-      "noch 1 Tag"
-    elsif seconds < 7*86400
-      "noch " + (seconds/86400).to_i.to_s + " Tage"
-    elsif seconds < 14*86400
-      "noch 1 Woche"
+      I18n.t("views.dashboard.lent_items.expired", date: rental_end.strftime("%d.%m.%Y"))
+    elsif seconds < 86_400
+      I18n.t "views.dashboard.lent_items.today"
+    elsif seconds < 7 * 86_400
+      I18n.t("views.dashboard.lent_items.days", count: (seconds / 86_400).to_i)
     else
-      "noch " + (seconds/(7*86400)).to_i.to_s + " Wochen"
+      I18n.t("views.dashboard.lent_items.weeks", count: (seconds / (7 * 86_400)).to_i)
     end
   end
-  
 end
