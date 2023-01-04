@@ -32,9 +32,14 @@ de:
         lend_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
+      deletion_history: "Verlauf"
       lend_request:
         title: "Ausleihanfrage"
         description: "%{user} möchte %{item} von dir ausleihen."
+        description_accepted: "%{user} hat %{item} von dir ausgeliehen."
+        description_declined: "Du hast abgelehnt %{item} an %{user} auszuleihen"
+        accepted: "Akzeptiert"
+        declined: "Abgelehnt"
       return_request:
         title: "Gegenstand zurückgeben"
         description: "%{user} möchte %{item} zurückgeben."

@@ -13,7 +13,7 @@ describe "Requests handling", type: :feature do
     expect(AuditEvent.where(item: item, event_type: "request_lend").count).to be(1)
     sign_in owner
     visit notifications_path
-    click_button('Check')
+    click_on('Lend Request')
     click_button('Accept')
     expect(item.reload.lend_status).to eq('lent')
     expect(AuditEvent.where(item: item, event_type: "accept_lend").count).to be(1)
