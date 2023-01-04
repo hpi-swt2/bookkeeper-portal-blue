@@ -62,9 +62,14 @@ en:
         lend_by_you: "Lend by you"
     notifications:
       title: "Notifications"
+      deletion_history: "History"
       lend_request:
         title: "Lend Request"
         description: "%{user} wants to borrow your %{item}."
+        description_accepted: "You have lent %{item} to %{user}"
+        description_declined: "You have declined to lent %{item} to %{user}"
+        accepted: "Accepted"
+        declined: "Declined"
       return_request:
         title: "Return Item"
         description: "%{user} wants to return your %{item}."
@@ -95,6 +100,8 @@ en:
       waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
       return: "Return"
+      pending_lend_request: "Waiting for lend approval"
+      pending_return_request: "Waiting for return approval"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
     profile:

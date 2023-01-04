@@ -26,5 +26,4 @@ RSpec.describe LendRequestNotification, type: :model do
       expect(notification.description).not_to eq description
     end
   end
-
 end
