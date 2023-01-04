@@ -63,12 +63,17 @@ en:
         lend_by_you: "Lend by you"
     notifications:
       title: "Notifications"
+      deletion_history: "History"
       lending_accepted:
         title: "Lending Accepted"
         description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
       lend_request:
         title: "Lend Request"
         description: "%{user} wants to borrow your %{item}."
+        description_accepted: "You have lent %{item} to %{user}"
+        description_declined: "You have declined to lent %{item} to %{user}"
+        accepted: "Accepted"
+        declined: "Declined"
       return_request:
         title: "Return Item"
         description: "%{user} wants to return your %{item}."

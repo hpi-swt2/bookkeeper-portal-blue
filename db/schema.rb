@@ -14,8 +14,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_135654) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_135654) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -75,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_135654) do
     t.integer "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "accepted"
     t.index ["borrower_id"], name: "index_lend_request_notifications_on_borrower_id"
     t.index ["item_id"], name: "index_lend_request_notifications_on_item_id"
   end
@@ -111,6 +112,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_17_135654) do
     t.datetime "updated_at", null: false
     t.string "actable_type"
     t.integer "actable_id"
+    t.boolean "active", null: false
+    t.boolean "unread"
     t.index ["actable_type", "actable_id"], name: "index_notifications_on_actable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
