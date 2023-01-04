@@ -1,25 +1,84 @@
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  <%=t('defaults.check')%>
+<style>
+  .button {
+      background-color: grey;
+      color: black;
+      margin-top: 1em;
+      font-family: Roboto, sans-serif;
+      float: bottom;
+  }
+  .button:hover {
+      background-color: #B1063A;
+      color: #efcdd8;
+      border-color: #efcdd8;
+  }
+  .subtitle {
+      font-family: Roboto, sans-serif;
+      font-weight: bold;
+      font-size: 20px;
+      spacing: auto spacing;
+      color: #b8043c;
+      margin-bottom: 7px;
+      margin-top: 0.5em;
+  }
+  .description {
+      font-family: Roboto, sans-serif;
+  }
+  .btn-primary{
+    background-color: #dddfe0 !important;
+    border:  #dddfe0 !important;
+    color: black !important;
+    margin: 5px;
+  }
+</style>
+
+<button type="button" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important" 
+        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>"> 
+  <div class="notification">
+    <h2 class="subtitle">
+      <%= notification.title %>
+    </h2>
+    <p class="description">
+      <%= notification.description %>
+    </p>
+  </div>
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="<%="notificationModal#{notification.id}"%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><%= notification.title %></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">       
+      <div class="modal-body">
+        <%if notification.active == false %>
+          <%if notification.accepted == true%>
+            <h2> <%= t 'views.notifications.lend_request.accepted' %></h2>
+          <%else %>
+            <h2> <%= t 'views.notifications.lend_request.declined' %></h2>
+          <%end %>
+        <%end%>
         <p>
-            <%= notification.description %>
+          <%= notification.description %>
+          <div class="col-md-4">
+              <%= image_tag notification.item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" %>
+          </div>
         </p>
       </div>
-      <div class="modal-footer">        
-        <%= button_to t("defaults.decline"), "/", class:"btn btn-danger" %>
-        <%= button_to t("defaults.accept"), accept_lend_path(id: notification.item.id) , class:"btn btn-success" %>
+      
+      <div class="modal-footer">    
+        <%if notification.active == true %>    
+          <%= button_to t("defaults.decline"), { action: "decline", id: notification.id}, method: :post, class:"btn btn-danger" %>
+          <%= button_to t("defaults.accept"), accept_lend_path(id: notification.item.id) , class:"btn btn-success" %>
+        <%end%>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $('<%="notificationModal#{notification.id}" %>').on('shown.bs.modal', function (e) {
+    "<% notification.mark_as_read%>";
+  })
+</script>
