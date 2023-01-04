@@ -31,6 +31,8 @@ class ItemsController < ApplicationController
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
 
+    helpers.audit_create_item(@item)
+
     create_create_response
   end
 
@@ -61,6 +63,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
 
+    helpers.audit_add_to_waitlist(@item)
+
     create_add_to_waitlist_response
   end
 
@@ -69,6 +73,9 @@ class ItemsController < ApplicationController
     @user = current_user
     @item.remove_from_waitlist(@user)
     @item.save
+
+    helpers.audit_leave_waitlist(@item)
+
     redirect_to item_url(@item)
   end
 
@@ -80,6 +87,9 @@ class ItemsController < ApplicationController
     @notification.save
     @item.set_status_pending_lend_request
     @item.save
+
+    helpers.audit_request_lend(@item)
+
     redirect_to item_url(@item)
   end
 
@@ -90,21 +100,28 @@ class ItemsController < ApplicationController
     @item.holder = @notification.borrower.id
     @notification.destroy
     @item.save
+
+    helpers.audit_accept_lend(@item)
+
     redirect_to item_url(@item)
   end
 
+  # rubocop:disable Metrics/AbcSize (reduce complexity in future)
   def request_return
     @item = Item.find(params[:id])
     @item.set_status_pending_return
     @item.save
-    @user = current_user
+
+    helpers.audit_request_return(@item)
+
     unless ReturnRequestNotification.find_by(item: @item)
       @notification = ReturnRequestNotification.new(user: User.find(@item.owner),
-                                                    date: Time.zone.now, item: @item, borrower: @user)
+                                                    date: Time.zone.now, item: @item, borrower: current_user)
       @notification.save
     end
     redirect_to item_url(@item)
   end
+  # rubocop:enable Metrics/AbcSize
 
   def accept_return
     @item = Item.find(params[:id])
@@ -116,6 +133,9 @@ class ItemsController < ApplicationController
     @item.holder = nil
     @item.set_status_available
     @item.save
+
+    helpers.audit_accept_return(@item)
+
     redirect_to item_url(@item)
   end
 
@@ -126,6 +146,9 @@ class ItemsController < ApplicationController
     # TODO: Send return declined notification to borrower and handle decline return
     @item.deny_return
     @item.save
+
+    helpers.audit_deny_return(@item)
+
     redirect_to item_url(@item)
   end
 
