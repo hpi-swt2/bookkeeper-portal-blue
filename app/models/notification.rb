@@ -15,6 +15,21 @@ class Notification < ApplicationRecord
     update(unread: false)
   end
 
+  # parse the time scheme for the notification
+  def parse_time
+    time = date
+    if time.today?
+      time = time.strftime('%H:%M')
+    elsif time.yesterday?
+      time = I18n.translate 'views.notifications.timestamp_yesterday'
+    elsif Date.today - 6.days <= time
+      day = time.strftime('%A')
+      time  = I18n.translate 'views.notifications.timestamp_' + day
+    else
+      time = time.strftime('%d/%m/%Y')
+    end
+  end
+
   # delegate methods from the "subclasses" (which aren't really subclasses)
   # to the specific instances
   def method_missing(method, *args, &block)

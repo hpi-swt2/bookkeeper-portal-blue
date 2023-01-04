@@ -64,6 +64,14 @@ en:
     notifications:
       title: "Notifications"
       deletion_history: "History"
+      timestamp_yesterday: "Yesterday"
+      timestamp_Monday: "Monday"
+      timestamp_Tuesday: "Tuesday"
+      timestamp_Wednesday: "Wednesday"
+      timestamp_Thursday: "Thursday"
+      timestamp_Friday: "Friday"
+      timestamp_Saturday: "Saturday"
+      timestamp_Sunday: "Sunday"
       lend_request:
         title: "Lend Request"
         description: "%{user} wants to borrow your %{item}."

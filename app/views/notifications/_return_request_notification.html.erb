@@ -3,6 +3,9 @@
   <h2><% notification.title%></h2>
   <p> <%= notification.description %> </p>
   <%=t('defaults.check')%>
+  <p class="timestamp">
+    <%= notification.parse_time %>
+  </p>
 </button>
 
 <!-- Modal-->
