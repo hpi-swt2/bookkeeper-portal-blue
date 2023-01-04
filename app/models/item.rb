@@ -72,6 +72,15 @@ class Item < ApplicationRecord
     rental_end - Time.now.utc
   end
 
+  def progress_lent_time
+    lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
+    if lent_time_progress.negative?
+      0
+    else
+      lent_time_progress
+    end
+  end
+
   def print_remaining_rental_duration
     print_time_from_seconds(remaining_rental_duration)
   end

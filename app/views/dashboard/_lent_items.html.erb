@@ -53,10 +53,9 @@
               <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
             <% end %>
             <p class="body2"><%= item.name %></p>
-            <div class="progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow= "<%=item.rental_duration_sec - item.remaining_rental_duration%>" aria-valuemin="0" aria-valuemax="<%=item.rental_duration_sec%>"</div>
-          </div>
-          <br>
+            <div class="progress" style="margin-bottom: 8px">
+              <div class="progress-bar" role="progressbar" style="width:<%= item.progress_lent_time %>%"></div>
+            </div>
             <p class="caption" id="hourglass_empty">
             <span class="material-symbols-outlined" id="hourglass_emptyIcon">
             hourglass_empty
