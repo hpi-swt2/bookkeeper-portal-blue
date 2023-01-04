@@ -94,6 +94,7 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
+  # rubocop:disable Metrics/AbcSize (reduce complexity in future)
   def accept_lend
     @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
@@ -109,7 +110,6 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
-  # rubocop:disable Metrics/AbcSize (reduce complexity in future)
   def request_return
     @item = Item.find(params[:id])
     @item.set_status_pending_return
