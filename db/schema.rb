@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_03_101636) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -44,6 +44,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_added_to_waitlist_notifications_on_item_id"
+  end
+
+  create_table "audit_events", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.integer "owner_id", null: false
+    t.integer "holder_id"
+    t.integer "triggering_user_id", null: false
+    t.integer "event_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["holder_id"], name: "index_audit_events_on_holder_id"
+    t.index ["item_id"], name: "index_audit_events_on_item_id"
+    t.index ["owner_id"], name: "index_audit_events_on_owner_id"
+    t.index ["triggering_user_id"], name: "index_audit_events_on_triggering_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -149,6 +163,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "added_to_waitlist_notifications", "items"
+  add_foreign_key "audit_events", "items"
+  add_foreign_key "audit_events", "users", column: "holder_id"
+  add_foreign_key "audit_events", "users", column: "owner_id"
+  add_foreign_key "audit_events", "users", column: "triggering_user_id"
   add_foreign_key "items", "users", column: "holder"
   add_foreign_key "items", "users", column: "owner"
   add_foreign_key "lend_request_notifications", "items"
