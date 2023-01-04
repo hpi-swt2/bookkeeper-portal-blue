@@ -80,7 +80,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
     @owner = User.find(@item.owner)
-    @notification = LendRequestNotification.new(item: @item, borrower: @user, user: @owner, date: Time.zone.now,
+    @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
                                                 unread: true, active: true)
     @notification.save
     @item.set_status_pending_lend_request
@@ -106,8 +106,8 @@ class ItemsController < ApplicationController
     @item.save
     @user = current_user
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.zone.now, item: @item,
-                                                    borrower: @user, active: true, unread: true)
+      @notification = ReturnRequestNotification.new(receiver: User.find(@item.owner), date: Time.zone.now,
+                                                    item: @item, borrower: @user, active: true, unread: true)
       @notification.save
     end
     redirect_to item_url(@item)
@@ -115,25 +115,28 @@ class ItemsController < ApplicationController
 
   def accept_return
     @item = Item.find(params[:id])
-    @notification = ReturnRequestNotification.find_by(item: @item)
-    @notification.destroy
-    # TODO: Send return accepted notification to borrower
-    @item.rental_start = nil
-    @item.rental_duration_sec = nil
-    @item.holder = nil
-    @item.set_status_available
+    @user = current_user
+    @request_notification = ReturnRequestNotification.find_by(item: @item)
+    @request_notification.destroy
+    @accepted_notif = ReturnAcceptedNotification.new(active: true, unread: true, date: Time.zone.now,
+                                                     item: @item, receiver: User.find(@item.holder), owner: @user)
+    @accepted_notif.save
+    @item.reset_status
     @item.save
     redirect_to item_url(@item)
   end
 
   def deny_return
     @item = Item.find(params[:id])
-    @notification = ReturnRequestNotification.find_by(item: @item)
-    @notification.destroy
-    # TODO: Send return declined notification to borrower and handle decline return
-    @item.deny_return
-    @item.save
-    redirect_to item_url(@item)
+    @user = current_user
+    @request_notification = ReturnRequestNotification.find_by(item: @item)
+    @request_notification.destroy
+    @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
+                                                            receiver: User.find(@item.holder),
+                                                            date: Time.zone.now, active: true, unread: true)
+    @declined_notification.save
+    @item.destroy
+    redirect_to notifications_path
   end
 
   def generate_qrcode
