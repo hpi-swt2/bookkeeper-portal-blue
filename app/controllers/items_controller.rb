@@ -1,3 +1,7 @@
+require "rqrcode"
+require "prawn"
+require "stringio"
+
 # rubocop:disable Metrics/ClassLength
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
@@ -130,6 +134,15 @@ class ItemsController < ApplicationController
     @item.deny_return
     @item.save
     redirect_to item_url(@item)
+  end
+
+  def generate_qrcode
+    qr = RQRCode::QRCode.new("item:#{params[:id]}")
+    png = qr.as_png(size: 500)
+    dummy_png_file = StringIO.new png.to_blob
+    pdf = Prawn::Document.new(page_size: "A4")
+    pdf.image dummy_png_file, position: :center
+    send_data pdf.render, disposition: "attachment", type: "application/pdf"
   end
 
   private
