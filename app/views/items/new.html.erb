@@ -1,13 +1,14 @@
 <p style="color: green"><%= notice %></p>
 <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
+
 <style>
 :root{
   --grey04: #394044;
   --grey09: #AAB0B3;
   --grey11: #DDDFE0;
   --secondary08: #55A6BE;
-}
+  }
   .caption{
     text-align: center;
   }
@@ -49,10 +50,6 @@
     max-height: 25em !important;
   }
 
-  #back-button{
-    font-size: 35px;
-  }
-
   #locationIcon{
     font-size: 20px;
     vertical-align: text-top;
@@ -60,23 +57,6 @@
 
   .material-symbols-outlined{
     color: var(--grey04);
-  }
-
-  .wishlistIcon {
-    font-size: 1.5em;
-    position: absolute;
-    top: 0.225em;
-    right: 0.25em;
-    z-index: 100;
-  }
-
-  #filledWishlistIcon {
-    color: var(--secondary08);
-    font-variation-settings:
-      'FILL' 1,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 48
   }
 
   #imagePlaceholder {
@@ -134,12 +114,12 @@
   .locationInput {
     width: 90%;
   }
-  .primaryButton {
+  .btn-primary {
     margin-bottom: 8px;
     width: 48%;
     display: inline-block;
   }
-  .secondaryButton {
+  .btn-secondary {
     width: 48%;
     display: inline-block;
   }
@@ -240,9 +220,9 @@ function readURL(input) {
     <%= form.text_area :return_checklist, class: "borderedInput body1" %> 
 
     <div class="" id="buttonDiv">
-      <%= form.submit t('defaults.submit'), class: "primaryButton"%>
+      <%= form.submit t('defaults.submit'), class: "btn-primary"%>
       <%= link_to @item_new do %>
-        <button class="secondaryButton"><%= t('defaults.delete')%></button>
+        <button class="btn-secondary"><%= t('defaults.delete')%></button>
       <% end %>
     </div>
   </div>
