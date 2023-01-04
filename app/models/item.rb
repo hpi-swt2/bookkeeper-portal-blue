@@ -5,6 +5,8 @@ class Item < ApplicationRecord
   has_many :lend_request_notifications, dependent: :destroy
   has_many :return_request_notifications, dependent: :destroy
   has_many :return_accepted_notifications, dependent: :destroy
+  has_many :move_up_on_waitlist_notification, dependent: :destroy
+  has_many :added_to_waitlist_notification, dependent: :destroy
   has_and_belongs_to_many :users, join_table: "wishlist"
 
   validates :name, presence: true
