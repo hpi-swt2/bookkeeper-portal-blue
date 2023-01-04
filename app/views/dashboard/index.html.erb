@@ -26,6 +26,7 @@
     }
 
     .button {
+        width: 100%;
         border: none;
         color: white;
         padding: 10px 20px;
@@ -36,10 +37,10 @@
         cursor: pointer;
         font-family: Roboto, sans-serif;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 16px;
         spacing: auto spacing;
-        margin-bottom: 12px;
-        <% if @unread_notifications_num > 0 %>
+        margin-bottom: 18px;
+        <% if user_signed_in? && @user.notifications.where(unread: true).size > 0 %>
             background-color: #2596be;
         <% else %>
             background-color: #7cc0d8;
@@ -51,12 +52,11 @@
     }
 
 </style>
-<p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
 
 <% if user_signed_in? %>
   <p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
 
-  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @user.notifications.size) %></a>
+  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @user.notifications.where(unread: true).size) %></a>
 
   <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
 
@@ -69,3 +69,4 @@
 
 <h3 class=" subtitle place-holder-nav"><%= t 'views.dashboard.wishlist.title' %></h3>
   <%= render "wishlist"%>
+<% end %>
