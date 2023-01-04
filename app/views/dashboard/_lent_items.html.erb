@@ -1,31 +1,4 @@
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-
-    .caption {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 14px;
-        color: #717B80;
-    }
-
-    .body2 {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 19px;
-        color: #394044;
-    }
-
-    .rect-img {
-        aspect-ratio: 1/1;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
   #hourglass_empty{
     text-align: center;
   }
@@ -34,7 +7,6 @@
     font-size: 12px;
     vertical-align: text-top;
   }
-
 </style>
 
 <div>
@@ -52,13 +24,28 @@
             <% else %>
               <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
             <% end %>
-            <p class="body2"><%= item.name %></p>
-            <p class="caption" id="hourglass_empty">
-            <span class="material-symbols-outlined" id="hourglass_emptyIcon">
-            hourglass_empty
-            </span>
+            <p class="body-2"><%= item.name %></p>
+            <% if item.remaining_rental_duration < 172_800 %>
+              <p class="caption-secondary" id="hourglass_empty">
+              <span class="material-symbols-outlined" id="hourglass_emptyIcon">
+                hourglass_empty
+              </span>
               <%= item.print_remaining_rental_duration%></p>
-            <br>
+            <% elsif item.remaining_rental_duration < 604_800 %>
+              <p class="caption-primary" id="hourglass_empty">
+                <span class="material-symbols-outlined" id="hourglass_emptyIcon">
+                  hourglass_empty
+                </span>
+                <%= item.print_remaining_rental_duration%></p>
+            <% else %>
+              <p class="caption" id="hourglass_empty">
+                <span class="material-symbols-outlined" id="hourglass_emptyIcon">
+                  hourglass_empty
+                </span>
+                <%= item.print_remaining_rental_duration%></p>
+            <%end%> 
+
+            
           </div>
         <% end %>
       </div>
