@@ -184,13 +184,13 @@ function readURL(input) {
 
   <div>
   <p class="title">
-    <%= form.text_field :name, class: "borderedInput", placeholder: 'Item Name' %>
+    <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name') %>
   </p>
   </div>
   <div class="row">
     <p class="body1" id="location">
       <span class="material-symbols-outlined" id="locationIcon">location_on</span>
-      <%= form.text_field :location, class: "locationInput borderedInput", placeholder: 'Location' %>
+      <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location') %>
     </p>
   </div>
   </div>

@@ -89,6 +89,8 @@ en:
       title: "Home"
     new_item:
       title: "New Item"
+      item_name: "Item Name"
+      location: "Location"
     show_item:
       author: "Author"
       category: "Category"

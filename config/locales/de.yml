@@ -58,6 +58,8 @@ de:
       title: "Startseite"
     new_item:
       title: "Neuer Gegenstand"
+      item_name: "Name des Gegenstands"
+      location: "Standort"
     show_item:
       author: "Autor"
       category: "Kategorie"
