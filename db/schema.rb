@@ -75,6 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
     t.integer "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "accepted"
     t.index ["borrower_id"], name: "index_lend_request_notifications_on_borrower_id"
     t.index ["item_id"], name: "index_lend_request_notifications_on_item_id"
   end
@@ -104,6 +105,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
     t.datetime "updated_at", null: false
     t.string "actable_type"
     t.integer "actable_id"
+    t.boolean "active", null: false
+    t.boolean "unread"
     t.index ["actable_type", "actable_id"], name: "index_notifications_on_actable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
