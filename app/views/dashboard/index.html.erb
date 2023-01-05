@@ -1,6 +1,6 @@
 <h1 class = "mt-2"><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
 
-<button href="/notifications" class="btn <% if @notifications_size > 0 %> btn-primary <% else %> btn-outline-primary <% end %>  mb-3" style="width: 100%" id="notifications-button"><%= I18n.t("views.dashboard.unread_messages", count: @notifications_size) %></button>
+<a href="/notifications" class="btn <% if @notifications_size > 0 %> btn-primary <% else %> btn-outline-primary <% end %>  mb-3" style="width: 100%" id="notifications-button"><%= I18n.t("views.dashboard.unread_messages", count: @notifications_size) %></a>
 
 <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
     <%= render "lent_items"%>
