@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
   get 'search', to: 'search#index'
   get 'notifications', to: 'notifications#index'
+  get 'notifications/:id', to: 'notifications#show'
+  post 'notifications/:id/accept', to: 'notifications#accept'
+  post 'notifications/:id/decline', to: 'notifications#decline'
+  resources :notifications
+  get 'profile', to: 'profile#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # https://github.com/heartcombo/devise/blob/main/README.md
@@ -19,6 +24,7 @@ Rails.application.routes.draw do
   post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'
   post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
   post 'accept_lend/:id', to: 'items#accept_lend', as: 'accept_lend'
+  get 'generate_qrcode/:id', to: 'items#generate_qrcode', as: 'generate_qrcode'
 
   resources :groups
   # Defines the root path route ("/")
