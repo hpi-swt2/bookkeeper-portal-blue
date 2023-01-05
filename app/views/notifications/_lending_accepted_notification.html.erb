@@ -1,32 +1,10 @@
-<style>
-  .description {
-      font-family: Roboto, sans-serif;
-  }
-  .btn-primary{
-    background-color: #dddfe0 !important;
-    border:  #dddfe0 !important;
-    color: black !important;
-    margin: 5px;
-  }
-
-  .timestamp {
-      font: 400 12px Roboto;
-      margin-top: 0.5em;
-      position: relative;
-      text-align: right;
-      line-height: 0;
-      color: #717B80;
-  }
-</style>
-
-
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="btn btn-notification" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important" data-bs-toggle="modal" data-bs-target="#exampleModal">
   <div class="notification">
     <h2 class="subtitle">
       <%= notification.title %>
     </h2>
-    <p class="description">
+    <p class="body-1">
       <%= notification.description %>
     </p>
     <p class="timestamp">
