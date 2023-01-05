@@ -71,7 +71,6 @@ class Item < ApplicationRecord
     waitlist.remove_user(user)
   end
 
-
   def status_pending_pickup?
     lend_status == "pending_pickup"
   end
@@ -83,7 +82,7 @@ class Item < ApplicationRecord
     self.holder = nil
     save
   end
-  
+
   def rental_end
     rental_start + rental_duration_sec
   end
