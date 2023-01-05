@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Notification, type: :model do
   before do
-    @notification = build(:notification)
+    @notification = build(:lend_request_notification)
   end
 
   it "can NOT be created without using some subclass" do
