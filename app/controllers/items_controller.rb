@@ -5,7 +5,6 @@ require "stringio"
 # rubocop:disable Metrics/ClassLength
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy request_return accept_return request_lend accept_lend]
-  before_action :set_owner, only: %i[ accept_lend]
 
   # GET /items or /items.json
   def index
@@ -177,10 +176,6 @@ class ItemsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])
-  end
-
-  def set_owner
-    @owner = User.find(@item.owner)
   end
 
   # Only allow a list of trusted parameters through.
