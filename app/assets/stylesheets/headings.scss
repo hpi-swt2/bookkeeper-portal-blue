@@ -27,6 +27,7 @@ h2 {
 .caption-secondary {
      @include caption("red");
  }
+
 .subtitle {
     @include subtitle;
 }
