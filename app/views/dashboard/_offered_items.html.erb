@@ -13,9 +13,9 @@
             <% elsif item.holder == current_user.id %>
               <p class="caption"><%= t 'views.dashboard.offered_items.lent_by_you' %></p>
             <% else %>
-              <p class="caption mb-0"><%= t 'views.dashboard.offered_items.lent' %></p>
+              <p class="caption"><%= t 'views.dashboard.offered_items.lent' %></p>
               <% if item.remaining_rental_duration <= 0 %>
-                <p class="caption" style="color: red"><%= t 'views.dashboard.offered_items.overdue' %></p>
+                <p class="caption-secondary"><%= t 'views.dashboard.offered_items.overdue' %></p>
               <% end %>
             <% end %>
           </div>
