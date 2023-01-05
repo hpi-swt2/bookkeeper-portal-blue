@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_04_113538) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_05_202913) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,7 +66,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_04_113538) do
     t.integer "owner"
     t.integer "holder"
     t.integer "lend_status", default: 0
-    t.datetime "lend_approve_date", precision: nil
     t.index ["holder"], name: "index_items_on_holder"
     t.index ["owner"], name: "index_items_on_owner"
   end

@@ -87,7 +87,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_pending_pickup
-    @item.lend_approve_date = DateTime.now()
+    ReminderNotificationJob.set(wait: 4.days).perform_later(@item)
     @item.holder = @notification.borrower.id
     @notification.destroy
     @item.save
