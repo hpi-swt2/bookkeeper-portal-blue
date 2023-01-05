@@ -57,5 +57,6 @@ describe "Lend Request Notifications", type: :feature do
     visit notifications_path
     expect(page).to have_text(user.name)
     expect(page).to have_text(item.name)
+    expect(page).to have_text('Lending Accepted')
   end
 end
