@@ -24,7 +24,7 @@ RSpec.describe "Dashboard", type: :feature do
     visit dashboard_path
     expect(page).to have_link(href: '/notifications')
     expect(page).to have_content I18n.t('views.dashboard.unread_messages', num: 0)
-    @notifications = create_list(:lend_request_notification, 2, user: user, item: item, borrower: borrower)
+    @notifications = create_list(:lend_request_notification, 2, receiver: user, item: item, borrower: borrower)
     @notifications.each(&:save)
     page.refresh
     expect(page).to have_content I18n.t('views.dashboard.unread_messages', num: 2)

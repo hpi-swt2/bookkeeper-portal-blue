@@ -99,14 +99,6 @@ class Item < ApplicationRecord
     end
   end
 
-  def rental_end
-    rental_start + rental_duration_sec
-  end
-
-  def remaining_rental_duration
-    rental_end - Time.now.utc
-  end
-
   def progress_lent_time
     lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
     if lent_time_progress.negative?
@@ -115,22 +107,6 @@ class Item < ApplicationRecord
       100
     else
       lent_time_progress
-    end
-  end
-
-  def print_remaining_rental_duration
-    print_time_from_seconds(remaining_rental_duration)
-  end
-
-  def print_time_from_seconds(seconds)
-    if seconds.negative?
-      I18n.t("views.dashboard.lent_items.expired", date: rental_end.strftime("%d.%m.%Y"))
-    elsif seconds < 86_400
-      I18n.t "views.dashboard.lent_items.today"
-    elsif seconds < 7 * 86_400
-      I18n.t("views.dashboard.lent_items.days", count: (seconds / 86_400).to_i)
-    else
-      I18n.t("views.dashboard.lent_items.weeks", count: (seconds / (7 * 86_400)).to_i)
     end
   end
 end

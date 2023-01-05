@@ -1,34 +1,4 @@
-<link rel="preconnect" href="https://fonts.googleapis.com%22%3E">
-<link rel="preconnect" href="https://fonts.gstatic.com%22" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap%22" rel="stylesheet">
 <style>
-    .title {
-        font-family: Roboto, sans-serif;
-        font-weight: light;
-        font-size: 26px;
-        spacing: auto spacing;
-        color: #586464;
-        margin-bottom: 7px;
-        margin-top: 15px;
-    }
-
-    .box {
-        width: 100%;
-        border: 1px solid black;
-        padding: 5px;
-        margin: 5px;
-        margin-bottom: 15px;
-        text-align: center;
-    }
-
-    .subtitle {
-        font-family: Roboto, sans-serif;
-        font-weight: bold;
-        font-size: 20px;
-        spacing: auto spacing;
-        color: #b8043c;
-        margin-bottom: 7px;
-    }
 
     .button {
         width: 100%;
@@ -45,7 +15,7 @@
         font-size: 16px;
         spacing: auto spacing;
         margin-bottom: 18px;
-        <% if user_signed_in? && @user.notifications.where(unread: true).size > 0 %>
+        <% if @notifications_size > 0 %>
             background-color: #2596be;
         <% else %>
             background-color: #7cc0d8;
@@ -57,9 +27,9 @@
     }
 
 </style>
-<p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
 
-  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @user.notifications.where(unread: true).size) %></a>
+<h1><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
+  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @notifications_size) %></a>
 
 <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
     <%= render "lent_items"%>
@@ -67,5 +37,5 @@
 <h3 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h3>
     <%= render "offered_items"%>
 
-<h3 class=" subtitle place-holder-nav"><%= t 'views.dashboard.wishlist.title' %></h3>
+<h3 class=" subtitle"><%= t 'views.dashboard.wishlist.title' %></h3>
     <%= render "wishlist"%>

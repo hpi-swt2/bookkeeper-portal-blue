@@ -4,20 +4,20 @@
     <p class="body-1"><%= t 'views.dashboard.wishlist.missing_wishlist' %></p>
   <% else %>
     <div class="container text-center">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-      <% wishlist.each do |item| %>
-        <div>
-          <%= render :partial => "partials/itemcard", :locals => { :item => item} %>
-          <% if item.holder.nil? %>
-            <p class="caption-primary"><%= t 'views.dashboard.wishlist.available' %></p>
-          <% elsif item.holder == current_user.id %>
-            <p class="caption"><%= t 'views.dashboard.wishlist.lend_by_you' %></p>
-          <% else %>
-            <p class="caption-secondary"><%= t 'views.dashboard.wishlist.not_available' %></p>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        <% wishlist.each do |item| %>
+          <div>
+            <%= render :partial => "partials/itemcard", :locals => { :item => item} %>
+            <% if item.holder.nil? %>
+              <p class="caption-primary"><%= t 'views.dashboard.wishlist.available' %></p>
+            <% elsif item.holder == current_user.id %>
+              <p class="caption"><%= t 'views.dashboard.wishlist.lend_by_you' %></p>
+            <% else %>
+              <p class="caption-secondary"><%= t 'views.dashboard.wishlist.not_available' %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>
