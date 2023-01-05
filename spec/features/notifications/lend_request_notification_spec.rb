@@ -53,7 +53,6 @@ describe "Lend Request Notifications", type: :feature do
     visit notifications_path
     click_on('Lend Request')
     click_button('Accept')
-    sign_out user
     sign_in borrower
     visit notifications_path
     expect(page).to have_text(user.name)

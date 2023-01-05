@@ -10,6 +10,7 @@ class LendingAcceptedNotification < ApplicationRecord
   end
 
   def description
-    I18n.t "views.notifications.lending_accepted.description", owner: user.name, item: item.name
+    owner = User.find(item.owner)
+    I18n.t "views.notifications.lending_accepted.description", owner: owner.name, item: item.name
   end
 end
