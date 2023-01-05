@@ -88,7 +88,6 @@ class Item < ApplicationRecord
     else
       lent_time_progress
     end
-
   end
 
   def print_remaining_rental_duration
