@@ -5,7 +5,7 @@ class ReturnRequestNotification < ApplicationRecord
   belongs_to :borrower, class_name: "User"
   belongs_to :item
 
-  validates :user, presence: true
+  validates :receiver, presence: true
   validates :date, presence: true
 
   def title
@@ -13,6 +13,6 @@ class ReturnRequestNotification < ApplicationRecord
   end
 
   def description
-    I18n.t "views.notifications.return_request.description", user: borrower.name, item: item.name
+    I18n.t "views.notifications.return_request.description", receiver: borrower.name, item: item.name
   end
 end
