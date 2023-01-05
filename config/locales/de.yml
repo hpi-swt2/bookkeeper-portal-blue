@@ -4,6 +4,7 @@ de:
     close: "Schließen"
     accept: "Annehmen"
     decline: "Ablehnen"
+    submit: "Anbieten"
     check: "Prüfen"
   views:
     landing_page:
@@ -62,6 +63,8 @@ de:
       title: "Startseite"
     new_item:
       title: "Neuer Gegenstand"
+      item_name: "Name des Gegenstands"
+      location: "Standort"
     show_item:
       author: "Autor"
       category: "Kategorie"
