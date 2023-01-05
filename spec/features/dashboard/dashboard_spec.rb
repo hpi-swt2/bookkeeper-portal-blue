@@ -23,11 +23,11 @@ RSpec.describe "Dashboard", type: :feature do
     sign_in user
     visit dashboard_path
     expect(page).to have_link(href: '/notifications')
-    expect(page).to have_content I18n.t('views.dashboard.unread_messages', num: 0)
+    expect(page).to have_content I18n.t('views.dashboard.unread_messages', count: 0)
     @notifications = create_list(:lend_request_notification, 2, receiver: user, item: item, borrower: borrower)
     @notifications.each(&:save)
     page.refresh
-    expect(page).to have_content I18n.t('views.dashboard.unread_messages', num: 2)
+    expect(page).to have_content I18n.t('views.dashboard.unread_messages', count: 2)
   end
 
   it "shows lent items" do
