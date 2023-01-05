@@ -28,7 +28,7 @@
               <p
                 <% if item.remaining_rental_duration < 172_800 %> class="caption-secondary"
                 <% elsif item.remaining_rental_duration < 604_800 %> class="caption-primary"
-                <% else %>  class="caption" <%end%> id="hourglass_empty">
+                <% else %>  class="caption" <% end %> id="hourglass_empty">
                 <span class="material-symbols-outlined" id="hourglass_emptyIcon"> hourglass_empty </span>
                 <%= item.print_remaining_rental_duration%>
               </p>

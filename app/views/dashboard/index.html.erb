@@ -1,35 +1,6 @@
-<style>
+<h1 class = "mt-2"><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
 
-    .button {
-        width: 100%;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        margin: 4px 2px;
-        cursor: pointer;
-        font-family: Roboto, sans-serif;
-        font-weight: bold;
-        font-size: 16px;
-        spacing: auto spacing;
-        margin-bottom: 18px;
-        <% if @notifications_size > 0 %>
-            background-color: #2596be;
-        <% else %>
-            background-color: #7cc0d8;
-        <% end %>
-    }
-
-    .button:hover {
-        color: white;
-    }
-
-</style>
-
-<h1><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
-  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @notifications_size) %></a>
+<button href="/notifications" class="btn <% if @notifications_size > 0 %> btn-primary <% else %> btn-outline-primary <% end %>  mb-3" style="width: 100%" id="notifications-button"><%= I18n.t("views.dashboard.unread_messages", count: @notifications_size) %></button>
 
 <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
     <%= render "lent_items"%>
@@ -37,5 +8,5 @@
 <h3 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h3>
     <%= render "offered_items"%>
 
-<h3 class=" subtitle"><%= t 'views.dashboard.wishlist.title' %></h3>
+<h3 class="subtitle"><%= t 'views.dashboard.wishlist.title' %></h3>
     <%= render "wishlist"%>

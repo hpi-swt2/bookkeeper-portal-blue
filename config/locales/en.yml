@@ -51,7 +51,8 @@ en:
       greeting: "Hello, %{name}!"
       not_signed_in: "You are not signed in."
       unread_messages:
-        one: "You have %{count} unread message"
+        zero: "You have no unread messages"
+        one: "You have an unread message"
         other: "You have %{count} unread messages"
       lent_items:
         title: "LENT ITEMS"
