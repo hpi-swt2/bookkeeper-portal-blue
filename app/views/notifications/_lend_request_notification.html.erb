@@ -79,7 +79,7 @@
           <%= notification.description %>
           <% if notification.item.image.attached? %>
           <div class="col-md-4">
-            <%= image_tag notification.item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" %>
+              <%= image_tag notification.item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" if notification.item.image.attached? %>
           </div>
         <% end %>
         </p>

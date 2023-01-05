@@ -4,9 +4,9 @@ RSpec.describe "Dashboard", type: :feature do
 
   let(:user) { build(:user) }
 
-  it "renders without user signed in" do
+  it "redirects to login without user signed in" do
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.not_signed_in')
+    expect(page).to have_current_path(new_user_session_path)
   end
 
   it "shows the user name" do

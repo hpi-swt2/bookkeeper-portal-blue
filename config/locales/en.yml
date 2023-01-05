@@ -35,6 +35,7 @@ en:
     close: "Close"
     accept: "Accept"
     decline: "Decline"
+    submit: "Submit"
     check: "Check"
   views:
     landing_page:
@@ -48,7 +49,6 @@ en:
     dashboard:
       title: "Dashboard"
       greeting: "Hello, %{name}!"
-      not_signed_in: "You are not signed in."
       unread_messages: "You have ... unread messages"
       lent_items:
         title: "LENT ITEMS"
@@ -74,14 +74,20 @@ en:
       timestamp_Sunday: "Sunday"
       lend_request:
         title: "Lend Request"
-        description: "%{user} wants to borrow your %{item}."
-        description_accepted: "You have lent %{item} to %{user}"
-        description_declined: "You have declined to lent %{item} to %{user}"
+        description: "%{receiver} wants to borrow your %{item}."
+        description_accepted: "You have lent %{item} to %{receiver}"
+        description_declined: "You have declined to lent %{item} to %{receiver}"
         accepted: "Accepted"
         declined: "Declined"
       return_request:
         title: "Return Item"
-        description: "%{user} wants to return your %{item}."
+        description: "%{receiver} wants to return your %{item}. Please note that the item will be removed from the system upon declining the return request."
+      return_declined:
+        title: "Return Declined"
+        description: "%{owner} has declined the return of %{item}. The item might be damaged, please contact the owner of the item for more information."
+      return_accepted:
+        title: "Return Accepted"
+        description: "%{owner} has accepted the return of %{item}. You successfully returned the item."
       added_to_waitlist:
         title: "Added to Waitlist"
         description: "You have been added to Waitlist of %{item} at Position %{position}."
@@ -96,6 +102,8 @@ en:
       title: "Home"
     new_item:
       title: "New Item"
+      item_name: "Item Name"
+      location: "Location"
     show_item:
       author: "Author"
       category: "Category"
@@ -109,6 +117,7 @@ en:
       waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
       return: "Return"
+      qr_button: "Download QR-Code"
       pending_lend_request: "Waiting for lend approval"
       pending_return_request: "Waiting for return approval"
     edit_item:
