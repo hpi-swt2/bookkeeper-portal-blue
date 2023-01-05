@@ -13,11 +13,6 @@ describe "Lend Request Notifications", type: :feature do
     @notification.save
   end
 
-  it "has a timestamp" do
-    visit notifications_path
-    expect(page).to have_content(@notification.parse_time)
-  end
-
   it "has accept and decline buttons" do
     visit notifications_path
     click_on('Lend Request')

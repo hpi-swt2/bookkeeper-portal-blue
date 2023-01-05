@@ -35,6 +35,11 @@ describe "Notifications Page", type: :feature do
     end
   end
 
+  it "has a timestamp" do
+    visit notifications_path
+    expect(page).to have_content(@notifications[0].parse_time)
+  end
+
   it "is clickable" do
     visit notifications_path
     all('.notification', text: @notifications[0].description)[0].click
