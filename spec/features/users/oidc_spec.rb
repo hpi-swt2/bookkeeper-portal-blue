@@ -37,11 +37,6 @@ describe "OpenId Connect Login", type: :feature do
       find_by_id('openid_connect-signin').click
     end
 
-    after(:all) do
-      # Restore the original logger
-      OmniAuth.config.logger = @omniauth_logger
-    end
-
     it "redirects to login path" do
       expect(page).to have_current_path(new_user_session_path)
     end
