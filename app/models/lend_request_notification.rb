@@ -16,11 +16,11 @@ class LendRequestNotification < ApplicationRecord
     user_name = borrower.name
     item_name = item.name
     if active
-      I18n.t "views.notifications.lend_request.description", user: user_name, item: item_name
+      I18n.t "views.notifications.lend_request.description", receiver: user_name, item: item_name
     elsif accepted
-      I18n.t "views.notifications.lend_request.description_accepted", user: user_name, item: item_name
+      I18n.t "views.notifications.lend_request.description_accepted", receiver: user_name, item: item_name
     else
-      I18n.t "views.notifications.lend_request.description_declined", user: user_name, item: item_name
+      I18n.t "views.notifications.lend_request.description_declined", receiver: user_name, item: item_name
     end
   end
 end

@@ -1,17 +1,22 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe LendRequestNotification, type: :model do
+RSpec.describe ReturnAcceptedNotification, type: :model do
 
-  let(:notification) { create(:lend_request_notification) }
+  let(:notification) { build(:return_accepted_notification) }
+  let(:invalid_notification) { build(:invalid_return_accepted_notification) }
 
   it "is creatable via a factory" do
     expect(notification).to be_valid
   end
 
-  it "belongs to a user, a date, an item and a borrower" do
+  it 'is not valid when the receiver and/or date is missing' do
+    expect(invalid_notification).not_to be_valid
+  end
+
+  it "belongs to a receiver, a date, an item and a owner" do
     expect(notification.receiver).not_to be_blank
     expect(notification.item).not_to be_blank
-    expect(notification.borrower).not_to be_blank
+    expect(notification.owner).not_to be_blank
     expect(notification.date).not_to be_blank
   end
 
