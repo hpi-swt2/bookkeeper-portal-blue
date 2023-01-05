@@ -17,7 +17,6 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
-      no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
       greeting: "Hallo, %{name}!"
       not_signed_in: "Du bist nicht angemeldet."
       unread_messages:
@@ -25,6 +24,7 @@ de:
         other: "Du hast %{count} ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"
+        no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
         expired: "abgelaufen am %{date}"
         today: "heute"
         days: 
