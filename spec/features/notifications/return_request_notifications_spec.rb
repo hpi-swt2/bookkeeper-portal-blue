@@ -14,6 +14,11 @@ describe "Return Request Notifications", type: :feature do
     @notification.save
   end
 
+  it "has a timestamp" do
+    visit notifications_path
+    expect(page).to have_content(@notification.parse_time)
+  end
+
   it "shows an accept and decline button" do
     visit notifications_path(id: @notification.id)
     click_button("Check")
