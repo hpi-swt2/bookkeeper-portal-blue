@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_02_165603) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -100,7 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
 
   create_table "notifications", force: :cascade do |t|
     t.datetime "date"
-    t.integer "user_id", null: false
+    t.integer "receiver_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "actable_type"
@@ -108,7 +108,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
     t.boolean "active", default: false, null: false
     t.boolean "unread"
     t.index ["actable_type", "actable_id"], name: "index_notifications_on_actable"
-    t.index ["user_id"], name: "index_notifications_on_user_id"
+    t.index ["receiver_id"], name: "index_notifications_on_receiver_id"
+  end
+
+  create_table "return_accepted_notifications", force: :cascade do |t|
+    t.integer "owner_id", null: false
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_return_accepted_notifications_on_item_id"
+    t.index ["owner_id"], name: "index_return_accepted_notifications_on_owner_id"
+  end
+
+  create_table "return_declined_notifications", force: :cascade do |t|
+    t.integer "owner_id", null: false
+    t.string "item_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_return_declined_notifications_on_owner_id"
   end
 
   create_table "return_request_notifications", force: :cascade do |t|
@@ -159,7 +176,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "move_up_on_waitlist_notifications", "items"
-  add_foreign_key "notifications", "users"
+  add_foreign_key "notifications", "users", column: "receiver_id"
+  add_foreign_key "return_accepted_notifications", "items"
+  add_foreign_key "return_accepted_notifications", "users", column: "owner_id"
+  add_foreign_key "return_declined_notifications", "users", column: "owner_id"
   add_foreign_key "return_request_notifications", "items"
   add_foreign_key "return_request_notifications", "users", column: "borrower_id"
   add_foreign_key "waitlists", "items"
