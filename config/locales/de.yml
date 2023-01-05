@@ -21,7 +21,8 @@ de:
       greeting: "Hallo, %{name}!"
       not_signed_in: "Du bist nicht angemeldet."
       unread_messages:
-        one: "Du hast %{count} ungelesene Nachricht"
+        zero: "Du hast keine ungelesene Nachricht"
+        one: "Du hast eine ungelesene Nachricht"
         other: "Du hast %{count} ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"
