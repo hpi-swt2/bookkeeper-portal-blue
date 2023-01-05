@@ -3,6 +3,7 @@ require "prawn"
 require "stringio"
 
 # rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/AbcSize
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
 
@@ -206,3 +207,4 @@ class ItemsController < ApplicationController
 end
 
 # rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/AbcSize
