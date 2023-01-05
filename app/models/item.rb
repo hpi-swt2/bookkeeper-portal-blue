@@ -60,6 +60,10 @@ class Item < ApplicationRecord
     waitlist.add_user(user)
   end
 
+  def get_remaining_time_from_lend_approval
+    (self.lend_approve_date + 4.days - DateTime.now()).to_i/86400
+  end
+
   def remove_from_waitlist(user)
     waitlist.remove_user(user)
   end

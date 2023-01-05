@@ -3,6 +3,7 @@
 
     <% if item.lend_status == "pending_pickup" %>
         <%= button_to t('views.show_item.confirm_pickup'), { action: "start_lend" }, class: "primaryButton" %>
+        <p> remaining Days for pickup <%= item.get_remaining_time_from_lend_approval %> </p> 
     <% elsif item.holder == current_user.id %>
         <% if item.lend_status == "pending_return" %>
             <%= button_to t('views.show_item.pending_return_request'), { }, class: "secondaryButton", disabled: true %>
