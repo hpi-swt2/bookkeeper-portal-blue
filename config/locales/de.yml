@@ -34,12 +34,16 @@ de:
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
         nothing_offered: "Du bietest bisher nichts an."
+        lent_by_you: "Von dir ausgeliehen"
+        lent: "Ausgeliehen"
+        not_lent: "Nicht ausgeliehen"
+        overdue: "Überfällig"
       wishlist:
         title: "DEINE WUNSCHLISTE"
         missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
-        lend_by_you: "Von dir ausgeliehen"
+        lent_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
       deletion_history: "Verlauf"

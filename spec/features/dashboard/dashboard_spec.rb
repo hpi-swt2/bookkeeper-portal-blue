@@ -104,7 +104,7 @@ RSpec.describe "Dashboard", type: :feature do
     @user.wishlist << (item)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.wishlist.lend_by_you')
+    expect(page).to have_content I18n.t('views.dashboard.wishlist.lent_by_you')
   end
 
   it "displays the progess as 0 if the rental start is in the future" do

@@ -7,6 +7,28 @@
       <div class="row row-cols-1 row-cols-md-4 g-4">
         <% items.each do |result| %>
           <%= render :partial => "partials/itemcard", :locals => { :item => result } %>
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 align-items-start justify-content-start">
+        <% items.each do |item| %>
+          <div class="col">
+            <% if item.image.attached? %>
+              <%= image_tag(item.image, class: "rounded mb-2 img-fluid rect-img") %>
+            <% else %>
+              <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
+            <% end %>
+
+            <p class="body2 mb-0"><%= item.name %></p>
+
+            <% if item.holder.nil? %>
+              <p class="caption"><%= t 'views.dashboard.offered_items.not_lent' %></p>
+            <% elsif item.holder == current_user.id %>
+              <p class="caption"><%= t 'views.dashboard.offered_items.lent_by_you' %></p>
+            <% else %>
+              <p class="caption mb-0"><%= t 'views.dashboard.offered_items.lent' %></p>
+              <% if item.remaining_rental_duration <= 0 %>
+                <p class="caption" style="color: red"><%= t 'views.dashboard.offered_items.overdue' %></p>
+              <% end %>
+            <% end %>
+          </div>
         <% end %>
       </div>
     </div>

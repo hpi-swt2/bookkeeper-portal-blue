@@ -65,12 +65,16 @@ en:
       offered_items:
         title: "OFFERED ITEMS"
         nothing_offered: "You do not offer any items at the moment."
+        lent_by_you: "Lend by you"
+        lent: "Lent"
+        not_lent: "Not lent"
+        overdue: "Overdue"
       wishlist:
         title: "YOUR WISHLIST"
         missing_wishlist: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
-        lend_by_you: "Lend by you"
+        lent_by_you: "Lent by you"
     notifications:
       title: "Notifications"
       deletion_history: "History"
