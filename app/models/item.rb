@@ -76,9 +76,12 @@ class Item < ApplicationRecord
     lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
     if lent_time_progress.negative?
       0
+    elsif lent_time_progress > 100
+      100
     else
       lent_time_progress
     end
+
   end
 
   def print_remaining_rental_duration
