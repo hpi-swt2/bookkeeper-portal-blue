@@ -38,6 +38,7 @@ class Item < ApplicationRecord
 
   def set_status_lent
     self.lend_status = :lent
+    self.rental_start = Time.now.utc
   end
 
   def set_status_pending_return
