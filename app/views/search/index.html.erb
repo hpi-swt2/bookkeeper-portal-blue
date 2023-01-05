@@ -1,51 +1,53 @@
 <h1><%= t('views.search.title') %></h1>
-
-<div class="modal fade" id="qrscanner" tabindex="-1" aria-labelledby="qrScannerLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="qrScannerLabel"><%= t 'views.search.qr_scanner_title' %></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Your scanner goes here
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t 'defaults.close' %></button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<%= form_tag(search_path, method: :get) do %>
-    <div class="input-group mb-3">
-        <%= text_field_tag :search, params[:search], class: "form-control" %>
-        <button type="submit" id="submit" class="btn btn-outline-secondary">
-            <i class="bi bi-search"></i>
-        </button>
-        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#qrscanner">
-            <i class="bi bi-qr-code-scan"></i>
-        </button>
-    </div>
-    <div class="btn-group mb-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= t 'views.search.filter_button' %>
-        </button>
-        <div class="dropdown-menu">
-            <div class="input-group">
-                <%= select_tag "filter_property", raw("<option>Title</option><option>Author</option><option>Release</option>"), class: "form-select" %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
-                <%= text_field_tag :filter_value, params[:filter_value], class: "form-control" %>
+<div data-controller="qrscanner">
+    <div class="modal fade" id="qrscanner" tabindex="-1" aria-labelledby="qrScannerLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="qrScannerLabel"><%= t 'views.search.qr_scanner_title' %></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-action="click->qrscanner#close"></button>
+                </div>
+                <div class="modal-body">
+                    <video id="qrvideo"></video>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-action="click->qrscanner#toggleFlash"><i class="bi bi-lightning"></i></button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-action="click->qrscanner#close"><%= t 'defaults.close' %></button>
+                </div>
             </div>
         </div>
     </div>
-    <%= text_field_tag :lastsearch, params[:lastsearch], class: "form-control invisible", value: @lastsearch %>
-<% end %>
 
-<% if @results %>
-<h2>Your search results:</h2>
-<div class="row row-cols-1 row-cols-md-4 g-3">
-    <% @results.each do |result| %>
-        <%= render :partial => "partials/itemcard", :locals => { :item => result } %>
+    <%= form_tag(search_path, method: :get) do %>
+        <div class="input-group mb-3">
+            <%= text_field_tag :search, params[:search], class: "form-control" %>
+            <button type="submit" id="submit" class="btn btn-outline-secondary">
+                <i class="bi bi-search"></i>
+            </button>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#qrscanner" data-action="click->qrscanner#open">
+                <i class="bi bi-qr-code-scan"></i>
+            </button>
+        </div>
+        <div class="btn-group mb-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= t 'views.search.filter_button' %>
+            </button>
+            <div class="dropdown-menu">
+                <div class="input-group">
+                    <%= select_tag "filter_property", raw("<option>Title</option><option>Author</option><option>Release</option>"), class: "form-select" %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
+                    <%= text_field_tag :filter_value, params[:filter_value], class: "form-control" %>
+                </div>
+            </div>
+        </div>
+        <%= text_field_tag :lastsearch, params[:lastsearch], class: "form-control invisible", value: @lastsearch %>
     <% end %>
+
+    <% if @results %>
+    <h2>Your search results:</h2>
+    <div class="row row-cols-1 row-cols-md-4 g-3">
+        <% @results.each do |result| %>
+            <%= render :partial => "partials/itemcard", :locals => { :item => result } %>
+        <% end %>
+    </div>
 </div>
 <% end %>
