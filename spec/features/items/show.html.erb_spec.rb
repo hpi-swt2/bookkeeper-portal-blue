@@ -36,6 +36,18 @@ RSpec.describe "items/show", type: :feature do
     expect(page).not_to have_link(href: edit_item_url(item))
   end
 
+  it "shows qr button for owner" do
+    sign_in owner
+    visit item_path(item)
+    expect(page).to have_link(text: /QR/)
+  end
+
+  it "does not show qr button for non-owner" do
+    sign_in user
+    visit item_path(item)
+    expect(page).not_to have_link(text: /QR/)
+  end
+
   it "renders attributes" do
     sign_in user
     visit item_path(item)
@@ -114,7 +126,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     visit item_path(item_lent)
     find(:button, "Enter Waitlist").click
-    notification = AddedToWaitlistNotification.find_by(user: user, item: item_lent)
+    notification = AddedToWaitlistNotification.find_by(receiver: user, item: item_lent)
     expect(notification).not_to be_nil
   end
 
@@ -122,7 +134,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in item_lent.waitlist.users[0]
     visit item_path(item_lent)
     find(:button, "Leave Waitlist").click
-    notification = MoveUpOnWaitlistNotification.find_by(user: Item.find(item_lent.id).waitlist.users[0],
+    notification = MoveUpOnWaitlistNotification.find_by(receiver: Item.find(item_lent.id).waitlist.users[0],
                                                         item: item_lent)
     expect(notification).not_to be_nil
   end

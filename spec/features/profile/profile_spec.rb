@@ -3,6 +3,11 @@ RSpec.describe "Profile", type: :feature do
   let(:user) { build(:max) }
   let(:group) { build(:group) }
 
+  it "redirects to login without user signed in" do
+    visit profile_path
+    expect(page).to have_current_path(new_user_session_path)
+  end
+
   it "shows the user name" do
     sign_in user
     visit profile_path
