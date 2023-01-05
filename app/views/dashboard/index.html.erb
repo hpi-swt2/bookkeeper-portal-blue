@@ -18,12 +18,48 @@
         padding: 5px;
         margin: 5px;
         margin-bottom: 15px;
-        text-align:center;
+        text-align: center;
     }
+
+    .subtitle {
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        spacing: auto spacing;
+        color: #b8043c;
+        margin-bottom: 7px;
+    }
+
+    .button {
+        width: 100%;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        font-size: 16px;
+        spacing: auto spacing;
+        margin-bottom: 18px;
+        <% if user_signed_in? && @user.notifications.where(unread: true).size > 0 %>
+            background-color: #2596be;
+        <% else %>
+            background-color: #7cc0d8;
+        <% end %>
+    }
+
+    .button:hover {
+        color: white;
+    }
+
 </style>
 <p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
 
-<h3 class="subtitle box"><%= t 'views.dashboard.unread_messages' %></h3>
+  <a href="/notifications" class="button" id="notifications-button"><%= t('views.dashboard.unread_messages', num: @user.notifications.where(unread: true).size) %></a>
 
 <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
     <%= render "lent_items"%>

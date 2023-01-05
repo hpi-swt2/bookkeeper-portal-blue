@@ -19,7 +19,8 @@ de:
       title: "Übersicht"
       no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
       greeting: "Hallo, %{name}!"
-      unread_messages: "Du hast ... ungelesene Nachrichten"
+      not_signed_in: "Du bist nicht angemeldet."
+      unread_messages: "Du hast %{num} ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"
         expired: "abgelaufen am %{date}"
