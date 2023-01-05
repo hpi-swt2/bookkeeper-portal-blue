@@ -90,13 +90,12 @@ class ItemsController < ApplicationController
   def accept_lend
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
-    @item.holder = @notification.borrower.id
     @notification.update(active: false)
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
     LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                       active: false)
+                                       active: false, unread: true)
     redirect_to item_url(@item)
   end
 

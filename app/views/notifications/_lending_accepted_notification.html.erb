@@ -31,3 +31,9 @@
     </div>
   </div>
 </div>
+
+<script>
+    $('<%="notificationModal#{notification.id}" %>').on('shown.bs.modal', function (e) {
+        "<% notification.mark_as_read%>";
+    })
+</script>
