@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence(:unread) { true }
     sequence(:accepted) { false }
     borrower { FactoryBot.build(:user) }
-    user { FactoryBot.build(:user) }
+    receiver { FactoryBot.build(:user) }
     item { FactoryBot.build(:item) }
   end
 end
