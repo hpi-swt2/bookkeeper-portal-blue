@@ -48,11 +48,20 @@ en:
       edit_btn: "Edit user profile"
     dashboard:
       title: "Dashboard"
+      no_lent_items: "Currently you have no lent items."
       greeting: "Hello, %{name}!"
       not_signed_in: "You are not signed in."
       unread_messages: "You have %{num} unread messages"
       lent_items:
         title: "LENT ITEMS"
+        expired: "expired on %{date}"
+        today: "today"
+        days: 
+          one: "%{count} day left"
+          other: "%{count} days left"
+        weeks: 
+          one: "%{count} week left"
+          other: "%{count} weeks left"
       offered_items:
         title: "OFFERED ITEMS"
         nothing_offered: "You do not offer any items at the moment."
