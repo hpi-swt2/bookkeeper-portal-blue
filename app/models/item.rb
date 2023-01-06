@@ -3,10 +3,6 @@ class Item < ApplicationRecord
   has_one_attached :image
   has_one :waitlist, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
-  has_many :return_request_notifications, dependent: :destroy
-  has_many :return_accepted_notifications, dependent: :destroy
-  has_many :move_up_on_waitlist_notification, dependent: :destroy
-  has_many :added_to_waitlist_notification, dependent: :destroy
   has_and_belongs_to_many :users, join_table: "wishlist"
 
   validates :name, presence: true
@@ -52,15 +48,12 @@ class Item < ApplicationRecord
     self.lend_status = :unavailable
   end
 
-  def price_in_euro=(euros)
-    self.price_ct = euros * 100
+  def deny_return
+    self.lend_status = :unavailable
   end
 
-  def reset_status
-    self.rental_start = nil
-    self.rental_duration_sec = nil
-    self.holder = nil
-    set_status_available
+  def price_in_euro=(euros)
+    self.price_ct = euros * 100
   end
 
   def add_to_waitlist(user)

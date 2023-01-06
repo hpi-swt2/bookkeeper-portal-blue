@@ -11,7 +11,7 @@ describe "Notifications Page", type: :feature do
     FactoryBot.reload
     # need to use some subclass of notification
     # because notifications are "abstract"
-    @notifications = create_list(:lend_request_notification, 5, receiver: user, item: item, borrower: borrower)
+    @notifications = create_list(:lend_request_notification, 5, user: user, item: item, borrower: borrower)
     @notifications.each(&:save)
   end
 

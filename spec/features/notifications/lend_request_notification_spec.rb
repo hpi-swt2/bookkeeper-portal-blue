@@ -9,7 +9,7 @@ describe "Lend Request Notifications", type: :feature do
 
   before do
     sign_in user
-    @notification = build(:lend_request_notification, receiver: user, item: item, borrower: borrower, active: true)
+    @notification = build(:lend_request_notification, user: user, item: item, borrower: borrower, active: true)
     @notification.save
   end
 

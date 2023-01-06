@@ -9,7 +9,7 @@ RSpec.describe LendRequestNotification, type: :model do
   end
 
   it "belongs to a user, a date, an item and a borrower" do
-    expect(notification.receiver).not_to be_blank
+    expect(notification.user).not_to be_blank
     expect(notification.item).not_to be_blank
     expect(notification.borrower).not_to be_blank
     expect(notification.date).not_to be_blank

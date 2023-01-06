@@ -34,20 +34,14 @@ de:
       deletion_history: "Verlauf"
       lend_request:
         title: "Ausleihanfrage"
-        description: "%{receiver} möchte %{item} von dir ausleihen."
-        description_accepted: "%{receiver} hat %{item} von dir ausgeliehen."
-        description_declined: "Du hast abgelehnt %{item} an %{receiver} auszuleihen"
+        description: "%{user} möchte %{item} von dir ausleihen."
+        description_accepted: "%{user} hat %{item} von dir ausgeliehen."
+        description_declined: "Du hast abgelehnt %{item} an %{user} auszuleihen"
         accepted: "Akzeptiert"
         declined: "Abgelehnt"
       return_request:
         title: "Gegenstand zurückgeben"
-        description: "%{receiver} möchte %{item} zurückgeben. Bitte beachte, dass der Gegenstand aus dem System entfernt wird, wenn du die Rückgabe ablehnst."
-      return_declined:
-        title: "Rückgabe abgelehnt"
-        description: "%{owner} hat die Rückgabe von %{item} abgelehnt. Dies könnte verschiedene Ursachen haben, z.B. Beschädigungen am Gegenstand. Setze dich am besten nochmal mit den Eigentümer des Gegenstandes in Kontakt."
-      return_accepted:
-        title: "Rückgabe akzeptiert"
-        description: "%{owner} hat die Rückgabe von %{item} akzeptiert. Du hast den Gegenstand also erfolgreich zurückgegeben."
+        description: "%{user} möchte %{item} zurückgeben."
       added_to_waitlist:
         title: "Zur Warteliste hinzugefügt"
         description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."

@@ -47,7 +47,7 @@ RSpec.describe Waitlist, type: :model do
     waitlist = create(:waitlist_with_item)
     user = create(:peter)
     waitlist.add_user(user)
-    notification = AddedToWaitlistNotification.find_by(receiver: user, item: waitlist.item)
+    notification = AddedToWaitlistNotification.find_by(user: user, item: waitlist.item)
     expect(notification).not_to be_nil
   end
 
@@ -55,7 +55,7 @@ RSpec.describe Waitlist, type: :model do
     waitlist = create(:waitlist_with_item)
     user = waitlist.users[0]
     waitlist.remove_user(user)
-    notification = MoveUpOnWaitlistNotification.find_by(receiver: waitlist.users[0], item: waitlist.item)
+    notification = MoveUpOnWaitlistNotification.find_by(user: waitlist.users[0], item: waitlist.item)
     expect(notification).not_to be_nil
   end
 end

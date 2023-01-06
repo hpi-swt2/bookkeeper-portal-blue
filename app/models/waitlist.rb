@@ -42,26 +42,26 @@ class Waitlist < ApplicationRecord
   end
 
   def add_added_to_waitlist_notification(user)
-    @notification = AddedToWaitlistNotification.new(receiver: user, date: Time.zone.now, item: item, active: false,
+    @notification = AddedToWaitlistNotification.new(user: user, date: Time.zone.now, item: item, active: false,
                                                     unread: true)
     @notification.save
   end
 
   def add_move_up_on_waitlist_notification(user)
-    @notification = MoveUpOnWaitlistNotification.new(receiver: user, date: Time.zone.now, item: item, active: false,
+    @notification = MoveUpOnWaitlistNotification.new(user: user, date: Time.zone.now, item: item, active: false,
                                                      unread: true)
     @notification.save
   end
 
   def delete_added_to_waitlist_notification(user)
-    @notification = AddedToWaitlistNotification.find_by(item: item, receiver: user)
+    @notification = AddedToWaitlistNotification.find_by(item: item, user: user)
     return if @notification.nil?
 
     @notification.destroy
   end
 
   def delete_moved_up_on_waitlist_notification(user)
-    @notification = MoveUpOnWaitlistNotification.find_by(item: item, receiver: user)
+    @notification = MoveUpOnWaitlistNotification.find_by(item: item, user: user)
     return if @notification.nil?
 
     @notification.destroy
