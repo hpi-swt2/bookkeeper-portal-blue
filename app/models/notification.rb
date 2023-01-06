@@ -15,10 +15,6 @@ class Notification < ApplicationRecord
     update(unread: false)
   end
 
-  def mark_as_inactive
-    update(active: false)
-  end
-
   # parse the time scheme for the notification
   def parse_time
     time = date
