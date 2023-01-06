@@ -15,16 +15,16 @@ export default class extends Controller {
 
   // The qr-codes for items follow the scheme "item:[id]". id is an integer. Example: "item:7"
   _found(result) {
-    const split_result = result.data.split(":")
-    if (split_result.length != 2) {
+    const splitResult = result.data.split(":")
+    if (splitResult.length != 2) {
       return;
     }
-    if (split_result[0] != "item" || !this._isPositiveInteger(split_result[1])) {
+    if (splitResult[0] != "item" || !this._isPositiveInteger(splitResult[1])) {
       return;
     }
-    const item_id = split_result[1];
+    const itemId = splitResult[1];
     this.close();
-    window.location.href = "/items/" + item_id;
+    window.location.href = "/items/" + itemId;
   }
 
   open() {

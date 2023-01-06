@@ -41,7 +41,7 @@
         </div>
         <%= text_field_tag :lastsearch, params[:lastsearch], class: "form-control invisible", value: @lastsearch %>
     <% end %>
-
+</div>
     <% if @results %>
     <h2>Your search results:</h2>
     <div class="row row-cols-1 row-cols-md-4 g-3">
@@ -49,5 +49,5 @@
             <%= render :partial => "partials/itemcard", :locals => { :item => result } %>
         <% end %>
     </div>
-</div>
+
 <% end %>
