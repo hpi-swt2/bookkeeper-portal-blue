@@ -62,7 +62,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     visit item_path(item)
     find(:button, "Lend").click
-    expect(AuditEvent.where(item_id: item.id, event_type: "request_lend").count).to be(1)
+    expect(AuditEvent.where(item_id: item.id, event_type: "request_lend", triggering_user: user).count).to be(1)
   end
 
   it "has return button when item is lent by borrower" do
@@ -82,7 +82,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in borrower
     visit item_path(item_lent)
     find(:button, "Return").click
-    expect(AuditEvent.where(item_id: item_lent.id, event_type: "request_return").count).to be(1)
+    expect(AuditEvent.where(item_id: item_lent.id, event_type: "request_return", triggering_user: borrower).count).to be(1)
   end
 
   it "has enter waitlist button when not on list and item not available" do
@@ -120,7 +120,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     visit item_path(item_lent)
     find(:button, "Enter Waitlist").click
-    expect(AuditEvent.where(item_id: item_lent.id, event_type: "add_to_waitlist").count).to be(1)
+    expect(AuditEvent.where(item_id: item_lent.id, event_type: "add_to_waitlist", triggering_user: user).count).to be(1)
   end
 
   it "removes user from waitlist when clicking remove from waitlist button" do
@@ -136,7 +136,7 @@ RSpec.describe "items/show", type: :feature do
     item_lent.waitlist.add_user(user)
     visit item_path(item_lent)
     find(:button, "Leave Waitlist").click
-    expect(AuditEvent.where(item_id: item_lent.id, event_type: "leave_waitlist").count).to be(1)
+    expect(AuditEvent.where(item_id: item_lent.id, event_type: "leave_waitlist", triggering_user: user).count).to be(1)
   end
 
   it "creates added to waitlist notification when adding user to waitlist" do
