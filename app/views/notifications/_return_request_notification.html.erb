@@ -31,17 +31,14 @@
   }
 </style>
 
-<button type="button" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important"
-        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>">
+<button type="button" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important" 
+        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>"> 
   <div class="notification">
     <h2 class="subtitle">
       <%= notification.title %>
     </h2>
     <p class="description">
       <%= notification.description %>
-    </p>
-    <p class="timestamp">
-      <%= notification.parse_time %>
     </p>
   </div>
 </button>
@@ -62,9 +59,9 @@
           </div>
         </p>
       </div>
-
-      <div class="modal-footer">
-        <%if notification.active == true %>
+      
+      <div class="modal-footer">    
+        <%if notification.active == true %>    
         <%= button_to t("defaults.decline"), deny_return_path(id: notification.item.id), class:"btn btn-danger" %>
         <%= button_to t("defaults.accept"), accept_return_path(id: notification.item.id), class:"btn btn-success" %>
         <%end%>

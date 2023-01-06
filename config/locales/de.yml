@@ -33,14 +33,6 @@ de:
     notifications:
       title: "Benachrichtigungen"
       deletion_history: "Verlauf"
-      timestamp_yesterday: "Gestern"
-      timestamp_Monday: "Montag"
-      timestamp_Tuesday: "Dienstag"
-      timestamp_Wednesday: "Mittwoch"
-      timestamp_Thursday: "Donnerstag"
-      timestamp_Friday: "Freitag"
-      timestamp_Saturday: "Samstag"
-      timestamp_Sunday: "Sonntag"
       lend_request:
         title: "Ausleihanfrage"
         description: "%{receiver} möchte %{item} von dir ausleihen."
