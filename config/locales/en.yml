@@ -35,7 +35,6 @@ en:
     close: "Close"
     accept: "Accept"
     decline: "Decline"
-    submit: "Submit"
     check: "Check"
   views:
     landing_page:
@@ -94,8 +93,6 @@ en:
       title: "Home"
     new_item:
       title: "New Item"
-      item_name: "Item Name"
-      location: "Location"
     show_item:
       author: "Author"
       category: "Category"
