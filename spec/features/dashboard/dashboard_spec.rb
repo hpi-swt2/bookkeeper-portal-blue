@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "Dashboard", type: :feature do
+
   let(:user) { build(:user) }
 
   it "redirects to login without user signed in" do
@@ -96,12 +97,5 @@ RSpec.describe "Dashboard", type: :feature do
     sign_in @user
     visit dashboard_path
     expect(page).to have_content I18n.t('views.dashboard.wishlist.lend_by_you')
-  end
-
-  it "displays the progess as 0 if the rental start is in the future" do
-    @user = create(:user)
-    @holder = create(:user)
-    item = create(:item, holder: @holder.id, rental_start: Time.now.utc + 1.day)
-    expect(item.progress_lent_time).to equal(0)
   end
 end

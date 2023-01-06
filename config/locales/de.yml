@@ -17,19 +17,10 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
-      no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
       greeting: "Hallo, %{name}!"
       unread_messages: "Du hast ... ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"
-        expired: "abgelaufen am %{date}"
-        today: "heute"
-        days: 
-          one: "noch %{count} Tag"
-          other: "noch %{count} Tage"
-        weeks: 
-          one: "noch %{count} Woche"
-          other: "noch %{count} Wochen"
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
         nothing_offered: "Du bietest bisher nichts an."
