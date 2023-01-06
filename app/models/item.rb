@@ -84,10 +84,8 @@ class Item < ApplicationRecord
   def perform_pickup_check
     return unless status_pending_pickup?
 
-    unless job_id.nil?
-      ReminderNotificationJob.cancel_job(job_id)
-      self.job_id = nil
-    end
+    job = Job.find_by(item: self)
+    job.destroy
     reset_status
     save
   end

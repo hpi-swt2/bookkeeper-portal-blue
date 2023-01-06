@@ -94,8 +94,10 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_pending_pickup
-    job = ReminderNotificationJob.set(wait: 4.days).perform_later(@item)
-    @item.job_id = job.provider_job_id
+    @job = Job.create
+    @job.item = @item
+    @job.save
+    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
     @item.set_rental_start_time
     @item.holder = @notification.borrower.id
     @notification.update(active: false)
@@ -107,6 +109,8 @@ class ItemsController < ApplicationController
 
   def start_lend
     @item = Item.find(params[:id])
+    @job = Job.find_by(item: @item)
+    @job.destroy
     @holder = current_user.id
     @item.set_status_lent
     @item.set_rental_start_time
@@ -117,6 +121,8 @@ class ItemsController < ApplicationController
 
   def abort_lend
     @item = Item.find(params[:id])
+    @job = Job.find_by(item: @item)
+    @job.destroy
     @item.set_status_available
     @item.holder = nil
     @item.save

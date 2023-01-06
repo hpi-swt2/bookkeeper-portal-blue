@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :items
   get 'dashboard', to: 'dashboard#index'
   get 'search', to: 'search#index'
