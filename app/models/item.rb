@@ -3,6 +3,10 @@ class Item < ApplicationRecord
   has_one_attached :image
   has_one :waitlist, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
+  has_many :return_request_notifications, dependent: :destroy
+  has_many :return_accepted_notifications, dependent: :destroy
+  has_many :move_up_on_waitlist_notification, dependent: :destroy
+  has_many :added_to_waitlist_notification, dependent: :destroy
   has_and_belongs_to_many :users, join_table: "wishlist"
 
   validates :name, presence: true
@@ -34,6 +38,7 @@ class Item < ApplicationRecord
 
   def set_status_lent
     self.lend_status = :lent
+    self.rental_start = Time.now.utc
   end
 
   def set_status_pending_return
@@ -56,11 +61,57 @@ class Item < ApplicationRecord
     self.price_ct = euros * 100
   end
 
+  def reset_status
+    self.rental_start = nil
+    self.rental_duration_sec = nil
+    self.holder = nil
+    set_status_available
+  end
+
   def add_to_waitlist(user)
     waitlist.add_user(user)
   end
 
   def remove_from_waitlist(user)
     waitlist.remove_user(user)
+  end
+
+  def rental_end
+    return Time.now.utc if rental_start.nil? || rental_duration_sec.nil?
+
+    rental_start + rental_duration_sec
+  end
+
+  def remaining_rental_duration
+    rental_end - Time.now.utc
+  end
+
+  def print_remaining_rental_duration
+    print_time_from_seconds(remaining_rental_duration)
+  end
+
+  def print_time_from_seconds(seconds)
+    if seconds.negative?
+      I18n.t("views.dashboard.lent_items.expired", date: rental_end.strftime("%d.%m.%Y"))
+    elsif seconds < 86_400
+      I18n.t "views.dashboard.lent_items.today"
+    elsif seconds < 7 * 86_400
+      I18n.t("views.dashboard.lent_items.days", count: (seconds / 86_400).to_i)
+    else
+      I18n.t("views.dashboard.lent_items.weeks", count: (seconds / (7 * 86_400)).to_i)
+    end
+  end
+
+  def progress_lent_time
+    return 100 if rental_start.nil? || rental_duration_sec.nil?
+
+    lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
+    if lent_time_progress.negative?
+      0
+    elsif lent_time_progress > 100
+      100
+    else
+      lent_time_progress
+    end
   end
 end
