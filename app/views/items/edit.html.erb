@@ -60,7 +60,7 @@
     color: var(--grey04);
   }
 
-  .btn-secondary {
+  .secondaryButton {
     width: 100%;
   }
 
@@ -123,7 +123,7 @@
   .locationInput {
     width: 90%;
   }
-  .btn-primary {
+  .primaryButton {
     width: 100%;
   }
   
@@ -162,7 +162,7 @@
   </p>
   </div>
   <div class="row">
-    <p class="body-1" id="location">
+    <p class="body1" id="location">
       <span class="material-symbols-outlined" id="locationIcon">location_on</span>
       <%= form.text_field :location, class: "locationInput borderedInput" %>
     </p>
@@ -178,7 +178,7 @@
     </div>
     <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%></p>
     <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>    
-    <%= form.submit class: "btn-primary" %>
+    <%= form.submit class: "primaryButton" %>
   </div>
   </div>
 <% end %>
