@@ -1,4 +1,3 @@
-# Super-class to hold information about all Notifications
 # This actable (i.e. abstract) class is designed to be the superclass of all
 # specific types of notifications. It is responsible for some very basic functionality
 # and delegating missing methods to the specific notification subclass.
@@ -9,10 +8,6 @@ class Notification < ApplicationRecord
 
   def custom_partial
     specific.class.name.underscore
-  end
-
-  def mark_as_read
-    update(unread: false)
   end
 
   # delegate methods from the "subclasses" (which aren't really subclasses)

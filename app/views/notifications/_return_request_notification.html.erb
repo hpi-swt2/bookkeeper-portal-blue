@@ -1,13 +1,10 @@
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="<%="notificationModal#{notification.id}"%>">
-  <h2><% notification.title%></h2>
-  <p> <%= notification.description %> </p>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   <%=t('defaults.check')%>
 </button>
 
-<!-- Modal-->
-<div class="modal fade" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important"
-id="<%="notificationModal#{notification.id}"%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -25,12 +22,8 @@ id="<%="notificationModal#{notification.id}"%>" tabindex="-1" aria-labelledby="e
       </div>
     </div>
   </div>
-</div> 
-<script>
-$('<%="notificationModal#{notification.id}" %>').on('shown.bs.modal', function (e) {
-  "<% notification.mark_as_read%>";
-})
-</script>
+</div>
+
 
 
 

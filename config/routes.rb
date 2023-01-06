@@ -3,10 +3,6 @@ Rails.application.routes.draw do
   get 'dashboard', to: 'dashboard#index'
   get 'search', to: 'search#index'
   get 'notifications', to: 'notifications#index'
-  get 'notifications/:id', to: 'notifications#show'
-  post 'notifications/:id/accept', to: 'notifications#accept'
-  post 'notifications/:id/decline', to: 'notifications#decline'
-  resources :notifications
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # https://github.com/heartcombo/devise/blob/main/README.md
