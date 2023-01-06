@@ -48,11 +48,14 @@ en:
       edit_btn: "Edit user profile"
     dashboard:
       title: "Dashboard"
-      no_lent_items: "Currently you have no lent items."
       greeting: "Hello, %{name}!"
-      unread_messages: "You have ... unread messages"
+      unread_messages:
+        zero: "You have no unread messages"
+        one: "You have an unread message"
+        other: "You have %{count} unread messages"
       lent_items:
         title: "LENT ITEMS"
+        no_lent_items: "Currently you have no lent items."
         expired: "expired on %{date}"
         today: "today"
         days: 
@@ -64,12 +67,16 @@ en:
       offered_items:
         title: "OFFERED ITEMS"
         nothing_offered: "You do not offer any items at the moment."
+        lent_by_you: "Lent by you"
+        lent: "Lent"
+        not_lent: "Not lent"
+        overdue: "Overdue"
       wishlist:
         title: "YOUR WISHLIST"
         missing_wishlist: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
-        lend_by_you: "Lend by you"
+        lent_by_you: "Lent by you"
     notifications:
       title: "Notifications"
       deletion_history: "History"

@@ -17,11 +17,14 @@ de:
       edit_btn: "Profil bearbeiten"
     dashboard:
       title: "Übersicht"
-      no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
       greeting: "Hallo, %{name}!"
-      unread_messages: "Du hast ... ungelesene Nachrichten"
+      unread_messages:
+        zero: "Du hast keine ungelesenen Nachrichten"
+        one: "Du hast eine ungelesene Nachricht"
+        other: "Du hast %{count} ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"
+        no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
         expired: "abgelaufen am %{date}"
         today: "heute"
         days: 
@@ -33,12 +36,16 @@ de:
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
         nothing_offered: "Du bietest bisher nichts an."
+        lent_by_you: "Von dir ausgeliehen"
+        lent: "Ausgeliehen"
+        not_lent: "Nicht ausgeliehen"
+        overdue: "Überfällig"
       wishlist:
         title: "DEINE WUNSCHLISTE"
         missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
-        lend_by_you: "Von dir ausgeliehen"
+        lent_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
       deletion_history: "Verlauf"
