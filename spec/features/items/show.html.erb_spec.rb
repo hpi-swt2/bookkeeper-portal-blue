@@ -82,7 +82,8 @@ RSpec.describe "items/show", type: :feature do
     sign_in borrower
     visit item_path(item_lent)
     find(:button, "Return").click
-    expect(AuditEvent.where(item_id: item_lent.id, event_type: "request_return", triggering_user: borrower).count).to be(1)
+    expect(AuditEvent.where(item_id: item_lent.id, event_type: "request_return",
+                            triggering_user: borrower).count).to be(1)
   end
 
   it "has enter waitlist button when not on list and item not available" do

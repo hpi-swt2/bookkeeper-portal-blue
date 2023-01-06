@@ -8,7 +8,8 @@ RSpec.describe AuditEvent, type: :model do
   end
 
   it "is valid with all required attributes" do
-    audit_event = described_class.new(item: @item, owner: @user, holder: @user, triggering_user: @user, event_type: "create_item")
+    audit_event = described_class.new(item: @item, owner: @user, holder: @user, triggering_user: @user,
+                                      event_type: "create_item")
     expect(audit_event).to be_valid
   end
 

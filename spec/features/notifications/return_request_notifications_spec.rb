@@ -35,7 +35,8 @@ describe "Return Request Notifications", type: :feature do
     visit notifications_path
 
     click_button('Accept')
-    expect(AuditEvent.where(item: @notification.item.id, event_type: "accept_return", triggering_user: user).count).to be(1)
+    expect(AuditEvent.where(item: @notification.item.id, event_type: "accept_return",
+                            triggering_user: user).count).to be(1)
   end
 
   it "deletes the notification upon clicking on 'Decline" do
@@ -50,6 +51,7 @@ describe "Return Request Notifications", type: :feature do
     visit notifications_path
     click_button('Check')
     click_button('Decline')
-    expect(AuditEvent.where(item: @notification.item.id, event_type: "deny_return", triggering_user: user).count).to be(1)
+    expect(AuditEvent.where(item: @notification.item.id, event_type: "deny_return",
+                            triggering_user: user).count).to be(1)
   end
 end
