@@ -1,43 +1,10 @@
-<style>
-  .button {
-      background-color: grey;
-      color: black;
-      margin-top: 1em;
-      font-family: Roboto, sans-serif;
-      float: bottom;
-  }
-  .button:hover {
-      background-color: #B1063A;
-      color: #efcdd8;
-      border-color: #efcdd8;
-  }
-  .subtitle {
-      font-family: Roboto, sans-serif;
-      font-weight: bold;
-      font-size: 20px;
-      spacing: auto spacing;
-      color: #b8043c;
-      margin-bottom: 7px;
-      margin-top: 0.5em;
-  }
-  .description {
-      font-family: Roboto, sans-serif;
-  }
-  .btn-primary{
-    background-color: #dddfe0 !important;
-    border:  #dddfe0 !important;
-    color: black !important;
-    margin: 5px;
-  }
-</style>
-
 <button type="button" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important"
-        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>">
+        class="btn btn-notification" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>">
   <div class="notification">
     <h2 class="subtitle">
       <%= notification.title %>
     </h2>
-    <p class="description">
+    <p class="body-1">
       <%= notification.description %>
     </p>
     <p class="timestamp">
