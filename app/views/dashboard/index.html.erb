@@ -1,38 +1,12 @@
-<link rel="preconnect" href="https://fonts.googleapis.com%22%3E">
-<link rel="preconnect" href="https://fonts.gstatic.com%22" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap%22" rel="stylesheet">
-<style>
-    .place-holder-nav {
-        margin-bottom: 4cm;
-    }
+<h1 class = "mt-2"><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
 
-    .title {
-        font-family: Roboto, sans-serif;
-        font-weight: light;
-        font-size: 26px;
-        spacing: auto spacing;
-        color: #586464;
-        margin-bottom: 7px;
-        margin-top: 15px;
-    }
+<a href="/notifications" class="btn <% if @notifications_size > 0 %> btn-outline-primary <% else %> btn-outline-secondary <% end %>  mb-3" style="width: 100%" id="notifications-button"><%= I18n.t("views.dashboard.unread_messages", count: @notifications_size) %></a>
 
-    .box {
-        width: 350px;
-        border: 1px solid black;
-        padding: 5px;
-        margin: 5px;
-        margin-bottom: 15px;
-    }
-</style>
-<p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
-
-<h3 class="subtitle box"><%= t 'views.dashboard.unread_messages' %></h3>
-
-<h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.lent_items.title' %></h3>
     <%= render "lent_items"%>
 
-<h3 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h3>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.offered_items.title' %></h3>
     <%= render "offered_items"%>
 
-<h3 class=" subtitle place-holder-nav"><%= t 'views.dashboard.wishlist.title' %></h3>
-  <%= render "wishlist"%>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.wishlist.title' %></h3>
+    <%= render "wishlist"%>
