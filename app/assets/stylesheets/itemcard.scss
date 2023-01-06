@@ -7,10 +7,19 @@
     padding: 0;
 }
 
-.itemcard .card-body img{
+.itemcard .card-body .image{
+    position: relative;
+    padding-bottom: 100%;
+}
+
+.itemcard .card-body .image img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-width: 25em;
+    max-height: 25em;
     border-radius: 5px;
     object-fit: cover;
-    height: 300px;
 }
 
 .itemcard .card-body .card-title{
