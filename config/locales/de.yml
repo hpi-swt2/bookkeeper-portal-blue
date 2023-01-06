@@ -17,6 +17,7 @@ de:
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
+      not_signed_in: "Du bist nicht angemeldet."
       unread_messages: "Du hast ... ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"

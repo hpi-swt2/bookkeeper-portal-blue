@@ -48,6 +48,7 @@ en:
     dashboard:
       title: "Dashboard"
       greeting: "Hello, %{name}!"
+      not_signed_in: "You are not signed in."
       unread_messages: "You have ... unread messages"
       lent_items:
         title: "LENT ITEMS"
