@@ -15,7 +15,7 @@ class Notification < ApplicationRecord
     update(unread: false)
   end
 
-  def mark_as_inactive 
+  def mark_as_inactive
     update(active: false)
   end
 
