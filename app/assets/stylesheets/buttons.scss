@@ -41,6 +41,14 @@
     padding-right: 11px;
 }
 
+.outline-missing-left{
+    border-left: none;
+}
+
+.outline-missing-right{
+    border-right: none;
+}
+
 .btn-notification{
     @extend .btn-primary;
     background-color: #dddfe0 !important;

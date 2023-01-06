@@ -1,0 +1,19 @@
+<div class="modal-fullscreen modal fade" id="filter-modal" tabindex="-1" aria-labelledby="filter-modal-title" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 subtitle" id="filter-modal-title"><%= t 'views.search.filter_modal.title' %></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <%= select_tag "filter_property", raw("<option>Title</option><option>Author</option><option>Release</option>"), class: "form-select" %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
+                    <%= text_field_tag :filter_value, params[:filter_value], class: "form-control" %>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary secondaryButton" data-bs-dismiss="modal"><%= t 'defaults.close' %></button>
+            </div>
+        </div>
+    </div>
+</div>
