@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
     t.integer "owner"
     t.integer "holder"
     t.integer "lend_status", default: 0
+    t.integer "job_id"
     t.index ["holder"], name: "index_items_on_holder"
     t.index ["owner"], name: "index_items_on_owner"
   end
@@ -85,6 +86,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
     t.boolean "accepted"
     t.index ["borrower_id"], name: "index_lend_request_notifications_on_borrower_id"
     t.index ["item_id"], name: "index_lend_request_notifications_on_item_id"
+  end
+
+  create_table "lending_accepted_notifications", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_lending_accepted_notifications_on_item_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -181,6 +189,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
   add_foreign_key "jobs", "items"
   add_foreign_key "lend_request_notifications", "items"
   add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
+  add_foreign_key "lending_accepted_notifications", "items"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "move_up_on_waitlist_notifications", "items"

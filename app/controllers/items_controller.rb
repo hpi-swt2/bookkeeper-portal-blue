@@ -6,7 +6,7 @@ require "stringio"
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :set_item, only: %i[ show edit update destroy request_return accept_return request_lend accept_lend]
 
   # GET /items or /items.json
   def index
@@ -79,7 +79,6 @@ class ItemsController < ApplicationController
   end
 
   def request_lend
-    @item = Item.find(params[:id])
     @user = current_user
     @owner = User.find(@item.owner)
     @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
@@ -91,7 +90,6 @@ class ItemsController < ApplicationController
   end
 
   def accept_lend
-    @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_pending_pickup
     @job = Job.create
@@ -99,11 +97,13 @@ class ItemsController < ApplicationController
     @job.save
     ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
     @item.set_rental_start_time
-    @item.holder = @notification.borrower.id
-    @notification.update(active: false)
+    @item.update(holder: @notification.borrower.id)
+    @notification.mark_as_inactive
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
+    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
+                                       active: false, unread: true)
     redirect_to item_url(@item)
   end
 
@@ -116,6 +116,8 @@ class ItemsController < ApplicationController
     @item.set_rental_start_time
     @item.holder = @holder
     @item.save
+    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
+                                       active: false, unread: true)
     redirect_to item_url(@item)
   end
 
@@ -147,7 +149,7 @@ class ItemsController < ApplicationController
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
-    @accepted_notif = ReturnAcceptedNotification.new(active: true, unread: true, date: Time.zone.now,
+    @accepted_notif = ReturnAcceptedNotification.new(active: false, unread: true, date: Time.zone.now,
                                                      item: @item, receiver: User.find(@item.holder), owner: @user)
     @accepted_notif.save
     @item.reset_status
@@ -162,7 +164,7 @@ class ItemsController < ApplicationController
     @request_notification.destroy
     @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
                                                             receiver: User.find(@item.holder),
-                                                            date: Time.zone.now, active: true, unread: true)
+                                                            date: Time.zone.now, active: false, unread: true)
     @declined_notification.save
     @item.destroy
     redirect_to notifications_path

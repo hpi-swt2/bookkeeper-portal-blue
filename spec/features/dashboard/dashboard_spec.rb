@@ -1,7 +1,11 @@
 require "rails_helper"
 
 RSpec.describe "Dashboard", type: :feature do
-  let(:user) { build(:user) }
+
+  let(:password) { 'password' }
+  let(:user) { create(:user, password: password) }
+  let(:borrower) { create(:max, password: password) }
+  let(:item) { create(:item, owner: user.id) }
 
   it "redirects to login without user signed in" do
     visit dashboard_path
@@ -15,10 +19,16 @@ RSpec.describe "Dashboard", type: :feature do
     expect(page).to have_content(@user.first_name)
   end
 
-  it "shows unread messages" do
+  it "shows unread messages and links to notifications" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.unread_messages')
+    expect(page).to have_link(href: '/notifications')
+    expect(page).to have_content I18n.t('views.dashboard.unread_messages', count: 0)
+    @notifications = create_list(:lend_request_notification, 2, receiver: user, item: item, borrower: borrower,
+                                                                active: true)
+    @notifications.each(&:save)
+    page.refresh
+    expect(page).to have_content I18n.t('views.dashboard.unread_messages', count: 2)
   end
 
   it "shows lent items" do
@@ -95,7 +105,7 @@ RSpec.describe "Dashboard", type: :feature do
     @user.wishlist << (item)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.wishlist.lend_by_you')
+    expect(page).to have_content I18n.t('views.dashboard.wishlist.lent_by_you')
   end
 
   it "displays the progess as 0 if the rental start is in the future" do
