@@ -116,8 +116,6 @@ en:
     search:
       title: "Search"
       filter_button: "Filter"
-      filter_modal:
-        title: "Filter"
       qr_scanner_title: "QR Scanner"
     home:
       title: "Home"
