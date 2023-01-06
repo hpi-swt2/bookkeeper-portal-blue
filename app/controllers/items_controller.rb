@@ -91,7 +91,7 @@ class ItemsController < ApplicationController
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
     @item.update(holder: @notification.borrower.id)
-    @notification.update(active: false)
+    @notification.mark_as_inactive
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
