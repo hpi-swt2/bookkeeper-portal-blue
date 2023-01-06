@@ -6,6 +6,6 @@ class DashboardController < ApplicationController
   end
 
   def fetch_notifications_size
-    @notifications_size = Notification.where(active: true, receiver_id: current_user.id).size
+    @notifications_size = Notification.where(unread: true, receiver_id: current_user.id).size
   end
 end
