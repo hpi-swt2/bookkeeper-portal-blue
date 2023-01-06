@@ -43,9 +43,15 @@
 
 <% if @results %>
 <h2>Your search results:</h2>
-<div class="row row-cols-1 row-cols-md-4 g-3">
+<div class="row row-cols-1 row-cols-md-4 g-4">
     <% @results.each do |result| %>
-        <%= render :partial => "partials/itemcard", :locals => { :item => result } %>
+        <div class="card">
+            <div class="card-body">
+                <%= image_tag(result.image, class: "card-img-top", style: "border-radius: 5px;") if result.image.attached? %>
+                <h5 class="card-title"><%= result.name %></h5>
+                <a href="<%= item_path(result) %>" class="stretched-link"></a>
+            </div>
+        </div>
     <% end %>
 </div>
 <% end %>
