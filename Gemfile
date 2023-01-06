@@ -58,6 +58,8 @@ gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3" # https://steve-co
 gem "devise-i18n" # https://github.com/tigrish/devise-i18n
 gem "devise-bootstrap-views" # https://github.com/hisea/devise-bootstrap-views
 gem "devise-i18n-bootstrap" # https://github.com/maximalink/devise-i18n-bootstrap
+gem 'omniauth_openid_connect'
+gem "omniauth-rails_csrf_protection"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
