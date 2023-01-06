@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'
   post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
   post 'accept_lend/:id', to: 'items#accept_lend', as: 'accept_lend'
-  get 'generate_qrcode/:id', to: 'items#generate_qrcode', as: 'generate_qrcode'
 
   resources :groups
   # Defines the root path route ("/")

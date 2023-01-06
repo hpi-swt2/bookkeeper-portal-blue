@@ -60,10 +60,6 @@
     color: var(--grey04);
   }
 
-  .btn-primary {
-    text-decoration: none;
-  }
-
   .btn-secondary {
     width: 100%;
   }
@@ -163,11 +159,6 @@
         <% end %>
       </p>
       <%= render "adaptive_lend_button", current_user: current_user, item: @item %>
-      <div class="text-center">
-        <% if !current_user.nil? && current_user.id == @item.owner %>
-          <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode"}, class: "btn-primary" %>
-        <% end %>
-      </div>
       <br><br><br>
     </div>
   </div>

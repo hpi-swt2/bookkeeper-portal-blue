@@ -36,18 +36,6 @@ RSpec.describe "items/show", type: :feature do
     expect(page).not_to have_link(href: edit_item_url(item))
   end
 
-  it "shows qr button for owner" do
-    sign_in owner
-    visit item_path(item)
-    expect(page).to have_link(text: /QR/)
-  end
-
-  it "does not show qr button for non-owner" do
-    sign_in user
-    visit item_path(item)
-    expect(page).not_to have_link(text: /QR/)
-  end
-
   it "renders attributes" do
     sign_in user
     visit item_path(item)
