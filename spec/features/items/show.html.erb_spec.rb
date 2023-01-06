@@ -21,7 +21,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
     visit item_url(an_item)
-    expect(page).to have_text(Time.zone.now.advance(days: 1).strftime('%d.%m.%Y'))
+    expect(page).to have_text(Time.now.getlocal.advance(days: 1).strftime('%d.%m.%Y'))
   end
 
   it "shows edit button for owner" do
