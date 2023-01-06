@@ -65,8 +65,6 @@ de:
       waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
-      pending_lend_request: "Warten auf Ausleihbestätigung"
-      pending_return_request: "Warten auf Rückgabebestätigung"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
     profile:

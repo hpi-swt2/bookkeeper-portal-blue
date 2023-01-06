@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe "items/show", type: :feature do
   let(:owner) { create(:user) }
   let(:user) { create(:user) }
-  let(:borrower) { create(:user) }
   let(:item) do
     item = create(:item, owner: owner.id)
     item.waitlist = create(:waitlist_with_item)
@@ -11,7 +10,7 @@ RSpec.describe "items/show", type: :feature do
     item
   end
   let(:item_lent) do
-    item_lent = create(:lent, owner: owner.id, holder: borrower.id)
+    item_lent = create(:lent, owner: owner.id)
     item_lent.waitlist = create(:waitlist_with_item)
     item_lent.waitlist.item = item_lent
     item_lent
@@ -45,54 +44,24 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text(item.description)
   end
 
-  it "has lend button when item is available and not owner of item" do
-    sign_in user
-    visit item_path(item)
-    expect(page).to have_button("Lend")
-  end
-
-  it "has pending lend request button when item is lent but not approved" do
-    sign_in user
-    visit item_path(item)
-    find(:button, "Lend").click
-    expect(page).to have_button("Waiting for lend approval", disabled: true)
-  end
-
-  it "has return button when item is lent by borrower" do
-    sign_in borrower
-    visit item_path(item_lent)
-    expect(page).to have_button("Return")
-  end
-
-  it "has pending return request button when item is returned but not approved" do
-    sign_in borrower
-    visit item_path(item_lent)
-    find(:button, "Return").click
-    expect(page).to have_button("Waiting for return approval", disabled: true)
-  end
-
   it "has enter waitlist button when not on list and item not available" do
     sign_in user
     visit item_path(item_lent)
-    expect(page).to have_button("Enter Waitlist")
+    expect(page).to have_text("Enter Waitlist")
   end
 
-  it "does not have an adaptive lend button when owner of item" do
+  it "does not have enter/leave waitlist button when owner of item" do
     sign_in owner
     visit item_path(item)
-    expect(page).not_to have_button("Lend")
-    expect(page).not_to have_button("Waiting for lend approval")
-    expect(page).not_to have_button("Return")
-    expect(page).not_to have_button("Waiting for return approval")
-    expect(page).not_to have_button("Enter Waitlist")
-    expect(page).not_to have_button("Leave Waitlist")
+    expect(page).not_to have_text("Enter Waitlist")
+    expect(page).not_to have_text("Leave Waitlist")
   end
 
   it "has leave waitlist button when on list" do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit item_path(item_lent)
-    expect(page).to have_button("Leave Waitlist")
+    expect(page).to have_text("Leave Waitlist")
   end
 
   it "adds user to waitlist when clicking add to waitlist button" do
