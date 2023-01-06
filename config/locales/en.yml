@@ -88,9 +88,6 @@ en:
       timestamp_Friday: "Friday"
       timestamp_Saturday: "Saturday"
       timestamp_Sunday: "Sunday"
-      lending_accepted:
-        title: "Lending Accepted"
-        description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
       lend_request:
         title: "Lend Request"
         description: "%{receiver} wants to borrow your %{item}."

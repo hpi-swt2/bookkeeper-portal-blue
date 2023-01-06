@@ -1,10 +1,56 @@
+<style>
+    .button {
+        background-color: grey;
+        color: black;
+        margin-top: 1em;
+        font-family: Roboto, sans-serif;
+        float: bottom;
+    }
+
+    .button:hover {
+        background-color: #B1063A;
+        color: #efcdd8;
+        border-color: #efcdd8;
+    }
+
+    .subtitle {
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        font-size: 20px;
+        spacing: auto spacing;
+        color: #b8043c;
+        margin-bottom: 7px;
+        margin-top: 0.5em;
+    }
+
+    .description {
+        font-family: Roboto, sans-serif;
+    }
+
+    .btn-primary {
+        background-color: #dddfe0 !important;
+        border: #dddfe0 !important;
+        color: black !important;
+        margin: 5px;
+    }
+
+    .timestamp {
+        font: 400 12px Roboto;
+        margin-top: 0.5em;
+        position: relative;
+        text-align: right;
+        line-height: 0;
+        color: #717B80;
+    }
+</style>
+
 <button type="button" style="background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important"
-        class="btn btn-notification" data-bs-toggle="modal" data-bs-target="#<%= "notificationModal#{notification.id}" %>">
+        class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#<%= "notificationModal#{notification.id}" %>">
   <div class="notification">
     <h2 class="subtitle">
       <%= notification.title %>
     </h2>
-    <p class="body-1">
+    <p class="description">
       <%= notification.description %>
     </p>
     <p class="timestamp">
