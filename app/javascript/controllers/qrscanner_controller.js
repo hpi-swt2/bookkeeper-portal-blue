@@ -10,7 +10,7 @@ export default class extends Controller {
 
   _isPositiveInteger(string) {
     const castedString = Number(string);
-    return !(castedString == NaN || castedString < 0 || !Number.isInteger(castedString))
+    return !(castedString == NaN || !Number.isInteger(castedString) || castedString < 0)
   }
 
   _found(result) {
