@@ -116,8 +116,6 @@ class ItemsController < ApplicationController
     @item.set_rental_start_time
     @item.holder = @holder
     @item.save
-    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                       active: false, unread: true)
     redirect_to item_url(@item)
   end
 
