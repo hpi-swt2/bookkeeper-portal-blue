@@ -18,21 +18,45 @@ de:
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
-      unread_messages: "Du hast ... ungelesene Nachrichten"
+      unread_messages:
+        zero: "Du hast keine ungelesenen Nachrichten"
+        one: "Du hast eine ungelesene Nachricht"
+        other: "Du hast %{count} ungelesene Nachrichten"
       lent_items:
         title: "AUSGELIEHENE ARTIKEL"
+        no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
+        expired: "abgelaufen am %{date}"
+        today: "heute"
+        days: 
+          one: "noch %{count} Tag"
+          other: "noch %{count} Tage"
+        weeks: 
+          one: "noch %{count} Woche"
+          other: "noch %{count} Wochen"
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
         nothing_offered: "Du bietest bisher nichts an."
+        lent_by_you: "Von dir ausgeliehen"
+        lent: "Ausgeliehen"
+        not_lent: "Nicht ausgeliehen"
+        overdue: "Überfällig"
       wishlist:
         title: "DEINE WUNSCHLISTE"
         missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
-        lend_by_you: "Von dir ausgeliehen"
+        lent_by_you: "Von dir ausgeliehen"
     notifications:
       title: "Benachrichtigungen"
       deletion_history: "Verlauf"
+      timestamp_yesterday: "Gestern"
+      timestamp_Monday: "Montag"
+      timestamp_Tuesday: "Dienstag"
+      timestamp_Wednesday: "Mittwoch"
+      timestamp_Thursday: "Donnerstag"
+      timestamp_Friday: "Freitag"
+      timestamp_Saturday: "Samstag"
+      timestamp_Sunday: "Sonntag"
       lend_request:
         title: "Ausleihanfrage"
         description: "%{receiver} möchte %{item} von dir ausleihen."

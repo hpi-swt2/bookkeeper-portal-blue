@@ -49,21 +49,45 @@ en:
     dashboard:
       title: "Dashboard"
       greeting: "Hello, %{name}!"
-      unread_messages: "You have ... unread messages"
+      unread_messages:
+        zero: "You have no unread messages"
+        one: "You have an unread message"
+        other: "You have %{count} unread messages"
       lent_items:
         title: "LENT ITEMS"
+        no_lent_items: "Currently you have no lent items."
+        expired: "expired on %{date}"
+        today: "today"
+        days: 
+          one: "%{count} day left"
+          other: "%{count} days left"
+        weeks: 
+          one: "%{count} week left"
+          other: "%{count} weeks left"
       offered_items:
         title: "OFFERED ITEMS"
         nothing_offered: "You do not offer any items at the moment."
+        lent_by_you: "Lent by you"
+        lent: "Lent"
+        not_lent: "Not lent"
+        overdue: "Overdue"
       wishlist:
         title: "YOUR WISHLIST"
         missing_wishlist: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
-        lend_by_you: "Lend by you"
+        lent_by_you: "Lent by you"
     notifications:
       title: "Notifications"
       deletion_history: "History"
+      timestamp_yesterday: "Yesterday"
+      timestamp_Monday: "Monday"
+      timestamp_Tuesday: "Tuesday"
+      timestamp_Wednesday: "Wednesday"
+      timestamp_Thursday: "Thursday"
+      timestamp_Friday: "Friday"
+      timestamp_Saturday: "Saturday"
+      timestamp_Sunday: "Sunday"
       lend_request:
         title: "Lend Request"
         description: "%{receiver} wants to borrow your %{item}."
