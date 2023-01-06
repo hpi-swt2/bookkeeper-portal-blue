@@ -1,12 +1,12 @@
 <h1 class = "mt-2"><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
 
-<a href="/notifications" class="btn <% if @notifications_size > 0 %> btn-primary <% else %> btn-outline-primary <% end %>  mb-3" style="width: 100%" id="notifications-button"><%= I18n.t("views.dashboard.unread_messages", count: @notifications_size) %></a>
+<a href="/notifications" class="btn <% if @notifications_size > 0 %> btn-outline-primary <% else %> btn-outline-secondary <% end %>  mb-3" style="width: 100%" id="notifications-button"><%= I18n.t("views.dashboard.unread_messages", count: @notifications_size) %></a>
 
-<h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.lent_items.title' %></h3>
     <%= render "lent_items"%>
 
-<h3 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h3>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.offered_items.title' %></h3>
     <%= render "offered_items"%>
 
-<h3 class="subtitle"><%= t 'views.dashboard.wishlist.title' %></h3>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.wishlist.title' %></h3>
     <%= render "wishlist"%>
