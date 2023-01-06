@@ -18,7 +18,6 @@ de:
     dashboard:
       title: "Übersicht"
       greeting: "Hallo, %{name}!"
-      not_signed_in: "Du bist nicht angemeldet."
       unread_messages:
         zero: "Du hast keine ungelesenen Nachrichten"
         one: "Du hast eine ungelesene Nachricht"
