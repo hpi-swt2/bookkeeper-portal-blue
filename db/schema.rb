@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_03_132616) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_12_120242) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_03_132616) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -75,7 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_03_132616) do
     t.integer "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "accepted"
     t.index ["borrower_id"], name: "index_lend_request_notifications_on_borrower_id"
     t.index ["item_id"], name: "index_lend_request_notifications_on_item_id"
   end
@@ -100,32 +99,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_03_132616) do
 
   create_table "notifications", force: :cascade do |t|
     t.datetime "date"
-    t.integer "receiver_id", null: false
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "actable_type"
     t.integer "actable_id"
-    t.boolean "active", default: false, null: false
-    t.boolean "unread"
     t.index ["actable_type", "actable_id"], name: "index_notifications_on_actable"
-    t.index ["receiver_id"], name: "index_notifications_on_receiver_id"
-  end
-
-  create_table "return_accepted_notifications", force: :cascade do |t|
-    t.integer "owner_id", null: false
-    t.integer "item_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_return_accepted_notifications_on_item_id"
-    t.index ["owner_id"], name: "index_return_accepted_notifications_on_owner_id"
-  end
-
-  create_table "return_declined_notifications", force: :cascade do |t|
-    t.integer "owner_id", null: false
-    t.string "item_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["owner_id"], name: "index_return_declined_notifications_on_owner_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "return_request_notifications", force: :cascade do |t|
@@ -145,8 +125,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_03_132616) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "provider", limit: 50, default: "", null: false
-    t.string "uid", limit: 50, default: "", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -178,10 +156,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_03_132616) do
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "move_up_on_waitlist_notifications", "items"
-  add_foreign_key "notifications", "users", column: "receiver_id"
-  add_foreign_key "return_accepted_notifications", "items"
-  add_foreign_key "return_accepted_notifications", "users", column: "owner_id"
-  add_foreign_key "return_declined_notifications", "users", column: "owner_id"
+  add_foreign_key "notifications", "users"
   add_foreign_key "return_request_notifications", "items"
   add_foreign_key "return_request_notifications", "users", column: "borrower_id"
   add_foreign_key "waitlists", "items"
