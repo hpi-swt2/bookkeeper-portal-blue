@@ -38,16 +38,10 @@
     }
 }
 
-@mixin caption($color: "default") {
+@mixin caption($color: true) {
     font: 400 12px Roboto;
     line-height: 14px;
-    @if $color == "default" {
+    @if $color {
         color: $Grey07;
-    }
-    @else if $color == "blue" {
-        color: $Secondary06
-    }
-    @else if $color = "red" {
-        color: $Primary06
     }
 }

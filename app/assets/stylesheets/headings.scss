@@ -20,14 +20,6 @@ h2 {
     @include caption;
 }
 
-.caption-primary {
-    @include caption("blue");
-}
-
-.caption-secondary {
-     @include caption("red");
- }
-
 .subtitle {
     @include subtitle;
 }

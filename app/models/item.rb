@@ -38,7 +38,6 @@ class Item < ApplicationRecord
 
   def set_status_lent
     self.lend_status = :lent
-    self.rental_start = Time.now.utc
   end
 
   def set_status_pending_return
@@ -50,10 +49,6 @@ class Item < ApplicationRecord
   end
 
   def set_status_unavailable
-    self.lend_status = :unavailable
-  end
-
-  def deny_return
     self.lend_status = :unavailable
   end
 
@@ -77,13 +72,22 @@ class Item < ApplicationRecord
   end
 
   def rental_end
-    return Time.now.utc if rental_start.nil? || rental_duration_sec.nil?
-
     rental_start + rental_duration_sec
   end
 
   def remaining_rental_duration
     rental_end - Time.now.utc
+  end
+
+  def progress_lent_time
+    lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
+    if lent_time_progress.negative?
+      0
+    elsif lent_time_progress > 100
+      100
+    else
+      lent_time_progress
+    end
   end
 
   def print_remaining_rental_duration
@@ -99,19 +103,6 @@ class Item < ApplicationRecord
       I18n.t("views.dashboard.lent_items.days", count: (seconds / 86_400).to_i)
     else
       I18n.t("views.dashboard.lent_items.weeks", count: (seconds / (7 * 86_400)).to_i)
-    end
-  end
-
-  def progress_lent_time
-    return 100 if rental_start.nil? || rental_duration_sec.nil?
-
-    lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
-    if lent_time_progress.negative?
-      0
-    elsif lent_time_progress > 100
-      100
-    else
-      lent_time_progress
     end
   end
 end
