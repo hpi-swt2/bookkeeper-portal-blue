@@ -4,6 +4,7 @@ require "stringio"
 
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
 
@@ -93,7 +94,9 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_pending_pickup
-    ReminderNotificationJob.set(wait: 4.days).perform_later(@item)
+    job = ReminderNotificationJob.set(wait: 4.days).perform_later(@item)
+    @item.job_id = job.provider_job_id
+    @item.set_rental_start_time
     @item.holder = @notification.borrower.id
     @notification.update(active: false)
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
@@ -106,6 +109,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @holder = current_user.id
     @item.set_status_lent
+    @item.set_rental_start_time
     @item.holder = @holder
     @item.save
     redirect_to item_url(@item)
@@ -208,3 +212,4 @@ end
 
 # rubocop:enable Metrics/ClassLength
 # rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength

@@ -1,7 +1,7 @@
 
 <% if !current_user.nil? && current_user.id != item.owner %>
     <% if item.lend_status == "pending_pickup" %>
-        <%= button_to t('views.show_item.confirm_pickup'), { action: "start_lend" }, class: "primaryButton" %>       
+        <%= button_to t('views.show_item.confirm_pickup'), { action: "start_lend" }, class: "btn-primary" %>       
     <% elsif item.holder == current_user.id %>
         <% if item.lend_status == "pending_return" %>
             <%= button_to t('views.show_item.pending_return_request'), { }, class: "btn-secondary", disabled: true %>

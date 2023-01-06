@@ -65,6 +65,9 @@ GEM
     activejob (7.0.4)
       activesupport (= 7.0.4)
       globalid (>= 0.3.6)
+    activejob-cancel (0.3.2)
+      activejob (>= 4.2.0)
+      activesupport (>= 4.2.0)
     activemodel (7.0.4)
       activesupport (= 7.0.4)
     activerecord (7.0.4)
@@ -333,6 +336,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_record-acts_as
+  activejob-cancel
   bootsnap
   bootstrap (~> 5.2.2)
   capybara

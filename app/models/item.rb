@@ -1,4 +1,5 @@
 # class of a basic item.
+# rubocop:disable Metrics/ClassLength
 class Item < ApplicationRecord
   has_one_attached :image
   has_one :waitlist, dependent: :destroy
@@ -15,6 +16,7 @@ class Item < ApplicationRecord
   validates :description, presence: true
   validates :owner, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+  validates :rental_duration_sec, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   enum :lend_status,
        { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
@@ -58,7 +60,7 @@ class Item < ApplicationRecord
 
   def reset_status
     self.rental_start = nil
-    self.rental_duration_sec = nil
+    self.rental_duration_sec = 0
     self.holder = nil
     set_status_available
   end
@@ -71,6 +73,10 @@ class Item < ApplicationRecord
     waitlist.remove_user(user)
   end
 
+  def set_rental_start_time
+    self.rental_start = Time.now.utc
+  end
+
   def status_pending_pickup?
     lend_status == "pending_pickup"
   end
@@ -78,8 +84,11 @@ class Item < ApplicationRecord
   def perform_pickup_check
     return unless status_pending_pickup?
 
-    set_status_available
-    self.holder = nil
+    unless job_id.nil?
+      ReminderNotificationJob.cancel_job(job_id)
+      self.job_id = nil
+    end
+    reset_status
     save
   end
 
@@ -118,3 +127,4 @@ class Item < ApplicationRecord
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
