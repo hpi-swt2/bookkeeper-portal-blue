@@ -13,6 +13,7 @@ export default class extends Controller {
     return !(castedString == NaN || !Number.isInteger(castedString) || castedString < 0)
   }
 
+  // The qr-codes for items follow the scheme "item:[id]". id is an integer. Example: "item:7"
   _found(result) {
     const split_result = result.data.split(":")
     if (split_result.length != 2) {
