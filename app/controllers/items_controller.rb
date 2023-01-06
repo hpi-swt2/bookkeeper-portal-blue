@@ -75,11 +75,23 @@ class ItemsController < ApplicationController
   def request_lend
     @item = Item.find(params[:id])
     @user = current_user
-    @owner = User.find(@item.owner)
-    @notification = LendRequestNotification.new(item: @item, borrower: @user, user: @owner, date: Time.zone.now)
-    @notification.save
-    @item.set_status_pending_lend_request
+    @item.holder = @user.id
+    @item.set_status_lent
     @item.save
+
+    redirect_to item_url(@item)
+  end
+
+  def request_return
+    @item = Item.find(params[:id])
+    @item.request_return
+    @item.save
+    @user = current_user
+    unless ReturnRequestNotification.find_by(item: @item)
+      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.zone.now, item: @item,
+                                                    borrower: @user)
+      @notification.save
+    end
     redirect_to item_url(@item)
   end
 
@@ -91,28 +103,12 @@ class ItemsController < ApplicationController
     @item.save
   end
 
-  def request_return
-    @item = Item.find(params[:id])
-    @item.set_status_pending_return
-    @item.save
-    @user = current_user
-    unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(user: User.find(@item.owner),
-                                                    date: Time.zone.now, item: @item, borrower: @user)
-      @notification.save
-    end
-    redirect_to item_url(@item)
-  end
-
   def accept_return
     @item = Item.find(params[:id])
     @notification = ReturnRequestNotification.find_by(item: @item)
     @notification.destroy
     # TODO: Send return accepted notification to borrower
-    @item.rental_start = nil
-    @item.rental_duration_sec = nil
-    @item.holder = nil
-    @item.set_status_available
+    @item.accept_return
     @item.save
     redirect_to item_url(@item)
   end

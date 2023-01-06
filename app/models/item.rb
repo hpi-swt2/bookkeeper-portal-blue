@@ -11,8 +11,7 @@ class Item < ApplicationRecord
   validates :description, presence: true
   validates :owner, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
-  enum :lend_status,
-       { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }
+  enum :lend_status, { available: 0, lent: 1, pending_return: 2 }
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
 
   def price_in_euro
@@ -21,35 +20,28 @@ class Item < ApplicationRecord
       euro = (price_ct - ct) / 100
       return euro, ct
     end
+
     [0, 0]
   end
 
-  def set_status_available
+  def request_return
+    # TODO: send request return notification to owner with holder information
+    self.lend_status = :pending_return
+  end
+
+  def accept_return
+    self.rental_start = nil
+    self.rental_duration_sec = nil
+    self.holder = nil
     self.lend_status = :available
   end
 
-  def set_status_pending_lend_request
-    self.lend_status = :pending_lend_request
+  def deny_return
+    # TODO
   end
 
   def set_status_lent
     self.lend_status = :lent
-  end
-
-  def set_status_pending_return
-    self.lend_status = :pending_return
-  end
-
-  def set_status_pending_pickup
-    self.lend_status = :pending_pickup
-  end
-
-  def set_status_unavailable
-    self.lend_status = :unavailable
-  end
-
-  def deny_return
-    self.lend_status = :unavailable
   end
 
   def price_in_euro=(euros)
