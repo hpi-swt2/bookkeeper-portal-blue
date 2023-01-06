@@ -51,3 +51,11 @@
         color: $Primary06
     }
 }
+.timestamp {
+    font: 400 12px Roboto;
+    margin-top: 0.5em;
+    position: relative;
+    text-align: right;
+    line-height: 0;
+    color: #717B80;
+}

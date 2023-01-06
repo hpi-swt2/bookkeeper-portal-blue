@@ -4,7 +4,7 @@ require "stringio"
 
 # rubocop:disable Metrics/ClassLength
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :set_item, only: %i[ show edit update destroy request_return accept_return request_lend accept_lend]
 
   # GET /items or /items.json
   def index
@@ -77,7 +77,6 @@ class ItemsController < ApplicationController
   end
 
   def request_lend
-    @item = Item.find(params[:id])
     @user = current_user
     @owner = User.find(@item.owner)
     @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
@@ -89,19 +88,18 @@ class ItemsController < ApplicationController
   end
 
   def accept_lend
-    @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
-    @item.holder = @notification.borrower.id
     @notification.update(active: false)
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
+    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
+                                       active: false, unread: true)
     redirect_to item_url(@item)
   end
 
   def request_return
-    @item = Item.find(params[:id])
     @item.set_status_pending_return
     @item.save
     @user = current_user
@@ -114,7 +112,6 @@ class ItemsController < ApplicationController
   end
 
   def accept_return
-    @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy

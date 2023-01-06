@@ -48,3 +48,11 @@
 .outline-missing-right{
     border-right: none;
 }
+
+.btn-notification{
+    @extend .btn-primary;
+    background-color: #dddfe0 !important;
+    border:  #dddfe0 !important;
+    color: black !important;
+    margin: 5px;
+}
