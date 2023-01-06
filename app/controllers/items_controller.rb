@@ -3,8 +3,6 @@ require "prawn"
 require "stringio"
 
 # rubocop:disable Metrics/ClassLength
-# rubocop:disable Metrics/AbcSize
-# rubocop:disable Metrics/MethodLength
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy request_return accept_return request_lend accept_lend]
 
@@ -91,12 +89,7 @@ class ItemsController < ApplicationController
 
   def accept_lend
     @notification = LendRequestNotification.find_by(item: @item)
-    @item.set_status_pending_pickup
-    @job = Job.create
-    @job.item = @item
-    @job.save
-    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
-    @item.set_rental_start_time
+    @item.set_status_lent
     @item.update(holder: @notification.borrower.id)
     @notification.mark_as_inactive
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
@@ -107,32 +100,7 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
-  def start_lend
-    @item = Item.find(params[:id])
-    @job = Job.find_by(item: @item)
-    @job.destroy
-    @holder = current_user.id
-    @item.set_status_lent
-    @item.set_rental_start_time
-    @item.holder = @holder
-    @item.save
-    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                       active: false, unread: true)
-    redirect_to item_url(@item)
-  end
-
-  def abort_lend
-    @item = Item.find(params[:id])
-    @job = Job.find_by(item: @item)
-    @job.destroy
-    @item.set_status_available
-    @item.holder = nil
-    @item.save
-    redirect_to item_url(@item)
-  end
-
   def request_return
-    @item = Item.find(params[:id])
     @item.set_status_pending_return
     @item.save
     @user = current_user
@@ -145,7 +113,6 @@ class ItemsController < ApplicationController
   end
 
   def accept_return
-    @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
@@ -219,5 +186,3 @@ class ItemsController < ApplicationController
 end
 
 # rubocop:enable Metrics/ClassLength
-# rubocop:enable Metrics/AbcSize
-# rubocop:enable Metrics/MethodLength

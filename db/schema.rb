@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_02_165603) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,16 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
     t.integer "owner"
     t.integer "holder"
     t.integer "lend_status", default: 0
-    t.integer "job_id"
     t.index ["holder"], name: "index_items_on_holder"
     t.index ["owner"], name: "index_items_on_owner"
-  end
-
-  create_table "jobs", force: :cascade do |t|
-    t.integer "item_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["item_id"], name: "index_jobs_on_item_id"
   end
 
   create_table "lend_request_notifications", force: :cascade do |t|
@@ -186,7 +178,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
   add_foreign_key "added_to_waitlist_notifications", "items"
   add_foreign_key "items", "users", column: "holder"
   add_foreign_key "items", "users", column: "owner"
-  add_foreign_key "jobs", "items"
   add_foreign_key "lend_request_notifications", "items"
   add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
   add_foreign_key "lending_accepted_notifications", "items"
