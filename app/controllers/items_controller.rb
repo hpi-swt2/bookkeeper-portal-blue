@@ -90,7 +90,8 @@ class ItemsController < ApplicationController
   def accept_lend
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_lent
-    @notification.update(active: false)
+    @item.update(holder: @notification.borrower.id)
+    @notification.mark_as_inactive
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
@@ -115,7 +116,7 @@ class ItemsController < ApplicationController
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
-    @accepted_notif = ReturnAcceptedNotification.new(active: true, unread: true, date: Time.zone.now,
+    @accepted_notif = ReturnAcceptedNotification.new(active: false, unread: true, date: Time.zone.now,
                                                      item: @item, receiver: User.find(@item.holder), owner: @user)
     @accepted_notif.save
     @item.reset_status
@@ -130,7 +131,7 @@ class ItemsController < ApplicationController
     @request_notification.destroy
     @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
                                                             receiver: User.find(@item.holder),
-                                                            date: Time.zone.now, active: true, unread: true)
+                                                            date: Time.zone.now, active: false, unread: true)
     @declined_notification.save
     @item.destroy
     redirect_to notifications_path
