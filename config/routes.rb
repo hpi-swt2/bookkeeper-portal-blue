@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :items
   get 'dashboard', to: 'dashboard#index'
   get 'search', to: 'search#index'
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
   post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
   post 'accept_lend/:id', to: 'items#accept_lend', as: 'accept_lend'
   get 'generate_qrcode/:id', to: 'items#generate_qrcode', as: 'generate_qrcode'
+  post 'start_lend/:id', to: 'items#start_lend', as: 'start_lend'
 
   resources :groups
   # Defines the root path route ("/")
