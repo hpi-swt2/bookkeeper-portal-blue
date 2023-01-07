@@ -65,7 +65,6 @@ class Item < ApplicationRecord
 
   def reset_status
     self.rental_start = nil
-    self.rental_duration_sec = 0
     self.holder = nil
     set_status_available
   end
@@ -122,7 +121,7 @@ class Item < ApplicationRecord
   end
 
   def progress_lent_time
-    return 100 if rental_start.nil? || rental_duration_sec.nil?
+    return 100 if rental_start.nil? || rental_duration_sec.nil? || rental_duration_sec.zero?
 
     lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
     if lent_time_progress.negative?
