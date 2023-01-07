@@ -29,7 +29,7 @@
 </style>
 
 <div>
-  <% items = Item.where(owner: current_user).order("LOWER(name) asc") %>
+  <% items = current_user.owned_items.sort_by { |item| item.name.downcase } %>
   <% if items.empty? %>
     <p class="body1"><%= t 'views.dashboard.offered_items.nothing_offered' %></p>
   <% else %>

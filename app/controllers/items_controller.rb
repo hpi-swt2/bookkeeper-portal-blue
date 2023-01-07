@@ -75,7 +75,7 @@ class ItemsController < ApplicationController
   def request_lend
     @item = Item.find(params[:id])
     @user = current_user
-    @owner = User.find(@item.owner)
+    @owner = @item.owning_user
     @notification = LendRequestNotification.new(item: @item, borrower: @user, user: @owner, date: Time.zone.now)
     @notification.save
     @item.set_status_pending_lend_request
@@ -99,7 +99,7 @@ class ItemsController < ApplicationController
     @item.save
     @user = current_user
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(user: User.find(@item.owner),
+      @notification = ReturnRequestNotification.new(user: @item.owning_user,
                                                     date: Time.zone.now, item: @item, borrower: @user)
       @notification.save
     end
@@ -164,7 +164,22 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :owner, :holder, :waitlist_id, :lend_status)
+                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
+          .merge!(owner_hash)
+  end
+
+  def owner_hash
+    owner_id = params.require(:item)[:owner_id]
+    if owner_id.nil?
+      {}
+    else
+      case params[:owner_type]
+      when "group"
+        { owning_group: Group.find(owner_id) }
+      else # "user" as default
+        { owning_user: User.find(owner_id) }
+      end
+    end
   end
 end
 

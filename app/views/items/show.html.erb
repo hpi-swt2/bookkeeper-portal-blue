@@ -116,7 +116,7 @@
   <%= link_to :back do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
-  <% if (!current_user.nil? && @item.owner == current_user.id) %>
+  <% if (!current_user.nil? && @item.owning_user == current_user) %>
     <%= link_to edit_item_url(@item) do %>
         <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
     <% end %>
@@ -145,7 +145,7 @@
       <p class="subtitle"><%= t('views.show_item.description')%></p>
       <p class="body1"><%= @item.description %></p>
       <p class="subtitle"><%= t('views.show_item.owner')%></p>
-      <p class="body1"><%= User.find(@item.owner).email %></p>
+      <p class="body1"><%= @item.owning_user.email %></p>
       <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
       <p class="body1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
       <p class="subtitle"><%= t('views.show_item.waitlist')%></p>
