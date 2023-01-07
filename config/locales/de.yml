@@ -41,7 +41,7 @@ de:
         not_lent: "Nicht ausgeliehen"
         overdue: "Überfällig"
       wishlist:
-        title: "DEINE WUNSCHLISTE"
+        title: "DEINE FAVORITEN"
         missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
