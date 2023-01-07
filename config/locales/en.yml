@@ -72,7 +72,7 @@ en:
         not_lent: "Not lent"
         overdue: "Overdue"
       wishlist:
-        title: "YOUR WISHLIST"
+        title: "YOUR FAVORITES"
         missing_wishlist: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
