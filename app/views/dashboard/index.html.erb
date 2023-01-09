@@ -1,62 +1,12 @@
-<link rel="preconnect" href="https://fonts.googleapis.com%22%3E">
-<link rel="preconnect" href="https://fonts.gstatic.com%22" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap%22" rel="stylesheet">
-<style>
-    .place-holder-nav {
-        margin-bottom: 4cm;
-    }
+<h1 class = "mt-2"><%= t('views.dashboard.greeting', name: @user.first_name)%></h1>
 
-    .title {
-        font-family: Roboto, sans-serif;
-        font-weight: light;
-        font-size: 26px;
-        spacing: auto spacing;
-        color: #586464;
-        margin-bottom: 7px;
-        margin-top: 15px;
-    }
+<a href="/notifications" class="btn <% if @notifications_size > 0 %> btn-outline-primary <% else %> btn-outline-secondary <% end %>  mb-3" style="width: 100%" id="notifications-button"><%= I18n.t("views.dashboard.unread_messages", count: @notifications_size) %></a>
 
-    .subtitle {
-        font-family: Roboto, sans-serif;
-        font-weight: bold;
-        font-size: 20px;
-        spacing: auto spacing;
-        color: #b8043c;
-        margin-bottom: 7px;
-    }
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.lent_items.title' %></h3>
+    <%= render "lent_items"%>
 
-    .box {
-        width: 350px;
-        border: 1px solid black;
-        padding: 5px;
-        margin: 5px;
-        margin-bottom: 15px;
-    }
-</style>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.offered_items.title' %></h3>
+    <%= render "offered_items"%>
 
-<% if user_signed_in? %>
-  <p class="title"><%= t('views.dashboard.greeting', name: @user.first_name)%></p>
-
-
-  <h3 class="subtitle box"><%= t 'views.dashboard.unread_messages' %></h3>
-
-  <h3 class="subtitle"><%= t 'views.dashboard.lent_items.title' %></h3>
-  <div class="feature-icon mb-1">
-    <i class="bi bi-chat-square-quote-fill" style="font-size: 2rem;"></i>
-  </div>
-
-  <h3 class="subtitle"><%= t 'views.dashboard.offered_items.title' %></h3>
-  <%= render "offered_items"%>
-
-  <h3 class=" subtitle place-holder-nav"><%= t 'views.dashboard.wishlist.title' %></h3>
-  <%= render "wishlist"%>
-
-<% else %>
-  <p class="lead mb-4"><%= t 'views.dashboard.not_signed_in' %></p>
-  <%= link_to new_user_session_path, { class: "btn btn-primary btn-lg px-4" } do %>
-    <i class="bi bi-box-arrow-in-right"></i> <%= t 'views.landing_page.login' %>
-  <% end %>
-  <%= link_to new_user_registration_path, { class: "btn btn-outline-primary btn-lg px-4" } do %>
-    <i class="bi bi-person-plus-fill"></i> <%= t 'views.landing_page.signup' %>
-  <% end %>
-<% end %>
+<h3 class="subtitle mt-1"><%= t 'views.dashboard.wishlist.title' %></h3>
+    <%= render "wishlist"%>

@@ -3,7 +3,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:openid_connect]
   has_many :notifications, dependent: :destroy
   has_and_belongs_to_many :items, join_table: "wishlist"
 
@@ -81,5 +81,13 @@ class User < ApplicationRecord
 
   def owned_items
     directly_owned_items + indirectly_owned_items
+  end
+
+  def self.from_omniauth(auth)
+    # Create user in database if it does not exist yet when logging in via OIDC
+    where(email: auth.info.email).first_or_create! do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+    end
   end
 end

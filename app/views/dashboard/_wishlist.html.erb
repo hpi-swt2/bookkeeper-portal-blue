@@ -1,63 +1,19 @@
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-
-    .body1 {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 21px;
-        color: #394044;
-    }
-
-    .body2 {
-        color: #394044;
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 19px;
-    }
-
-    .caption {
-        font-family: 'Roboto';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 14px;
-        color: #717B80;
-    }
-
-    .rect-img {
-        aspect-ratio: 1/1;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-</style>
-
 <div>
   <% wishlist = current_user.wishlist %>
   <% if wishlist.empty? %>
-    <p class="body1"><%= t 'views.dashboard.wishlist.missing_wishlist' %></p>
+    <p class="body-1"><%= t 'views.dashboard.wishlist.missing_wishlist' %></p>
   <% else %>
-    <div class="container text-center">
-      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 align-items-end justify-content-start">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-4 g-4">
         <% wishlist.each do |item| %>
-          <div class="col">
-            <% if item.image.attached? %>
-              <%= image_tag(item.image, class: "rounded mb-2 img-fluid rect-img") %>
-            <% else %>
-              <%= image_tag("image_default.svg", class: "rounded mb-2 img-fluid rect-img") %>
-            <% end %>
-            <p class="body2 mb-0"><%= item.name %></p>
+          <div>
+            <%= render :partial => "partials/itemcard", :locals => { :item => item} %>
             <% if item.holder.nil? %>
-              <p class="caption"><%= t 'views.dashboard.wishlist.available' %></p>
+              <p class="caption-primary text-center"><%= t 'views.dashboard.wishlist.available' %></p>
             <% elsif item.holder == current_user.id %>
-              <p class="caption"><%= t 'views.dashboard.wishlist.lend_by_you' %></p>
+              <p class="caption text-center"><%= t 'views.dashboard.wishlist.lent_by_you' %></p>
             <% else %>
-              <p class="caption"><%= t 'views.dashboard.wishlist.not_available' %></p>
+              <p class="caption-secondary text-center"><%= t 'views.dashboard.wishlist.not_available' %></p>
             <% end %>
           </div>
         <% end %>

@@ -1,26 +1,33 @@
 <p style="color: green"><%= notice %></p>
 
+<h2><%= t 'views.notifications.title' %></h2>
+
 <div id="notifications">
-  <% @dates.each do |(date, notifications)| %>
-    <h2>
-      <%= date %>
-    </h2>
-    <div class="notification-grey-box">
-    <% notifications.each do |notification|%>
+  <% @active_dates.each do |(date, notifications)| %>
+    <% notifications.each do |notification| %>
       <div class="container notification">
         <div class="row ">          
-          <div class="col-sm-1 align-self-center">
+          <div class="align-self-center">
             <%= render_if_exists notification.custom_partial, notification: notification %>
-          </div>
-          <div class="col-sm-11 align-self-center">
-            <h3> <%= notification.title %> </h3>
-            <p> <%= notification.description %> </p>
           </div>
         </div>
       </div>
-    <% end %>
-    </div>
-  <% end %>
+    <%end%>
+  <%end%>
+  <h2>
+    <%= t 'views.notifications.deletion_history' %>
+  </h2>
+  <% @inactive_dates.each do |(date, notifications)| %>
+    <% notifications.each do |notification| %>
+      <div class="container notification">
+        <div class="row ">          
+          <div class="align-self-center">
+            <%= render_if_exists notification.custom_partial, notification: notification %>
+          </div>
+        </div>
+      </div>
+    <%end%>
+  <%end%>
 </div>
 
 

@@ -1,0 +1,17 @@
+
+.rect-img {
+    aspect-ratio: 1/1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .max-width300px {
+    max-width: 300px;
+  }
+
+//https://codepen.io/sosuke/pen/Pjoqqp transform hexColor into filter values
+.filter-gray{
+  //#999999
+  filter: invert(75%) sepia(0%) saturate(3%) hue-rotate(144deg) brightness(81%) contrast(90%);
+}

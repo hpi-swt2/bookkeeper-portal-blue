@@ -36,8 +36,22 @@ FactoryBot.define do
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
     lend_status { :lent }
-    holder { create(:user).id }
-    owning_user { create(:user) }
+    owner { create(:user) }
+    holder { owner.id }
+  end
+  factory :pending_return, class: 'Item' do
+    name { "MyName3" }
+    category { "MyCategory" }
+    location { "MyLocation" }
+    description { "MyDescription" }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 1 }
+    rental_duration_sec { 1 }
+    rental_start { "2022-11-18 15:32:07" }
+    return_checklist { "MyChecklist" }
+    lend_status { :pending_return }
+    owner { create(:user) }
+    holder { owner.id }
   end
   factory :item_book, class: 'Item' do
     name { "Ruby on Rails by Example" }
