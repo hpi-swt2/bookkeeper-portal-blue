@@ -1,6 +1,6 @@
 ---
 name: Spike
-about: Create Spike Teamplate
+about: Create Spike Template
 title: ''
 labels: in preparation
 assignees: ''
