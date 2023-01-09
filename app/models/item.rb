@@ -13,7 +13,6 @@ class Item < ApplicationRecord
   validates :name, presence: true
   validates :category, presence: true
   validates :location, presence: true
-  #validates :description, allow_blank: true
   validates :owner, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   validates :rental_duration_sec, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
