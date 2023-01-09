@@ -15,7 +15,7 @@ describe "Requests handling", type: :feature do
   it "if owner accepts lend request, the item lend status changes to pending_pickup" do
     owner = create(:max)
     borrower = create(:peter)
-    item = create(:item, owner: owner.id)
+    item = create(:item, owning_user: owner)
     sign_in borrower
     visit item_path(item)
     click_button('Lend')
@@ -31,7 +31,7 @@ describe "Requests handling", type: :feature do
   it "if borrower confirms pickup, the item lend status changes to lent" do
     owner = create(:max)
     borrower = create(:peter)
-    item = create(:item, owner: owner.id)
+    item = create(:item, owning_user: owner)
     sign_in borrower
     visit item_path(item)
     click_button('Lend')

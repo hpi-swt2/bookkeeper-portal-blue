@@ -5,7 +5,7 @@ describe "Lend Request Notifications", type: :feature do
   let(:user) { create(:user, password: password) }
   let(:owner) { create(:max) }
   let(:borrower) { create(:peter) }
-  let(:item) { create(:item, owner: user.id) }
+  let(:item) { create(:item, owning_user: user) }
 
   before do
     sign_in user

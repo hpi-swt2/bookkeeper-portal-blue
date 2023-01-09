@@ -26,7 +26,7 @@ RSpec.describe "items/new", type: :view do
 
       assert_select "textarea[name=?]", "item[return_checklist]"
 
-      assert_select "select[name=?]", "item[owner_id]"
+      assert_select "select[name=?]", "item[owner]"
 
       assert_select "select[name=?]", "item[holder]"
     end
