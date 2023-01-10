@@ -146,8 +146,10 @@
       </div>
       <p class="subtitle"><%= t('views.show_item.category')%></p>
       <p class="body-1"><%= @item.category %></p>
+      <% if !@item.description.blank? %>
       <p class="subtitle"><%= t('views.show_item.description')%></p>
-      <p class="body-1"><%= @item.description %></p>
+        <p class="body-1"><%= @item.description %></p>
+      <% end %>
       <p class="subtitle"><%= t('views.show_item.owner')%></p>
       <p class="body-1"><%= User.find(@item.owner).email %></p>
       <p class="subtitle"><%= t('views.show_item.lend_until')%></p>

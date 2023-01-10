@@ -40,9 +40,9 @@ RSpec.describe Item, type: :model do
     expect(item).not_to be_valid
   end
 
-  it "is not valid without description" do
+  it "is valid without description" do
     item = described_class.new(name: "Test", category: "Test", location: "Test", owner: @user.id)
-    expect(item).not_to be_valid
+    expect(item).to be_valid
   end
 
   it "is not valid with negative price" do
