@@ -11,6 +11,6 @@ class LendingDeniedNotification < ApplicationRecord
 
   def description
     owner = User.find(item.owner)
-    I18n.t "views.notifications.lending_accepted.description", owner: owner.name, item: item.name
+    I18n.t "views.notifications.lending_denied.description", owner: owner.name, item: item.name
   end
 end

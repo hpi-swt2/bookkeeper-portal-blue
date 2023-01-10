@@ -126,7 +126,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_161824) do
     t.datetime "updated_at", null: false
     t.string "actable_type"
     t.integer "actable_id"
-    t.boolean "active", null: false
+    t.boolean "active", default: false, null: false
     t.boolean "unread"
     t.index ["actable_type", "actable_id"], name: "index_notifications_on_actable"
     t.index ["receiver_id"], name: "index_notifications_on_receiver_id"
