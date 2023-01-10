@@ -6,7 +6,8 @@ require "stringio"
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[ show edit update destroy request_return accept_return request_lend accept_lend deny_lend]
+  before_action :set_item,
+                only: %i[ show edit update destroy request_return accept_return request_lend accept_lend deny_lend]
 
   # GET /items or /items.json
   def index
@@ -119,7 +120,7 @@ class ItemsController < ApplicationController
     @lendrequest.update(active: false)
     @item.save
     LendingDeniedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                       active: false, unread: true)
+                                     active: false, unread: true)
     redirect_to notifications_path
   end
 
