@@ -242,4 +242,5 @@ class ItemsController < ApplicationController
 end
 
 # rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
