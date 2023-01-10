@@ -143,7 +143,6 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
-  # rubocop:disable Metrics/AbcSize (reduce complexity in future)
   def request_return
     @item = Item.find(params[:id])
     @item.set_status_pending_return
@@ -158,7 +157,6 @@ class ItemsController < ApplicationController
     end
     redirect_to item_url(@item)
   end
-  # rubocop:enable Metrics/AbcSize
 
   def accept_return
     @item = Item.find(params[:id])
