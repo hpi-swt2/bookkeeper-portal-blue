@@ -10,6 +10,7 @@ describe "Requests handling", type: :feature do
     visit item_path(item)
     click_button('Lend')
     expect(item.reload.lend_status).to eq('pending_lend_request')
+    expect(AuditEvent.where(item: item, event_type: "request_lend").count).to be(1)
   end
 
   it "if owner accepts lend request, the item lend status changes to pending_pickup" do
@@ -44,6 +45,7 @@ describe "Requests handling", type: :feature do
     click_button('Confirm pickup')
     puts item.reload.lend_status
     expect(item.reload.lend_status).to eq('lent')
+    expect(AuditEvent.where(item: item, event_type: "accept_lend").count).to be(1)
   end
 
 end
