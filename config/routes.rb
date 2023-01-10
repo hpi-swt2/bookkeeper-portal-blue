@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'
   post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
   post 'accept_lend/:id', to: 'items#accept_lend', as: 'accept_lend'
+  post 'deny_lend/:id', to: 'items#deny_lend', as: 'deny_lend'
   get 'generate_qrcode/:id', to: 'items#generate_qrcode', as: 'generate_qrcode'
   post 'start_lend/:id', to: 'items#start_lend', as: 'start_lend'
 
