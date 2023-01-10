@@ -99,7 +99,7 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
-  # rubocop:disable Metrics/AbcSize (reduce complexity in future)
+  # (reduce complexity in future)
   def accept_lend
     @notification = LendRequestNotification.find_by(item: @item)
     @item.set_status_pending_pickup
@@ -113,9 +113,9 @@ class ItemsController < ApplicationController
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
-   
+
     helpers.audit_accept_lend(@item)
-    
+
     LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
                                        active: false, unread: true)
     redirect_to item_url(@item)
@@ -142,7 +142,6 @@ class ItemsController < ApplicationController
     @item.save
     redirect_to item_url(@item)
   end
-  # rubocop:enable Metrics/AbcSize
 
   # rubocop:disable Metrics/AbcSize (reduce complexity in future)
   def request_return
@@ -186,11 +185,11 @@ class ItemsController < ApplicationController
                                                             receiver: User.find(@item.holder),
                                                             date: Time.zone.now, active: false, unread: true)
     @declined_notification.save
-    @item.destroy 
+    @item.destroy
 
     # Comment out because an item gets deleted, when declining a return
     # helpers.audit_deny_return(@item)
-    
+
     redirect_to notifications_path
   end
 
@@ -243,5 +242,4 @@ class ItemsController < ApplicationController
 end
 
 # rubocop:enable Metrics/ClassLength
-# rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength

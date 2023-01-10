@@ -43,15 +43,14 @@ describe "Return Request Notifications", type: :feature do
     expect(ReturnRequestNotification.exists?(@notification.id)).to be false
   end
 
-=begin Comment out because a item gets deleted, when declining a return
-  it "creates an audit when deleting the notification upon clicking on 'Decline'" do
-    visit notifications_path
-    click_button('Check')
-    click_button('Decline')
-    expect(AuditEvent.where(item: @notification.item.id, event_type: "deny_return",
-                            triggering_user: user).count).to be(1)
-  end
-=end
+  # Comment out because a item gets deleted, when declining a return
+  #   it "creates an audit when deleting the notification upon clicking on 'Decline'" do
+  #     visit notifications_path
+  #     click_button('Check')
+  #     click_button('Decline')
+  #     expect(AuditEvent.where(item: @notification.item.id, event_type: "deny_return",
+  #                             triggering_user: user).count).to be(1)
+  #   end
 
   it "sends a return accepted notification upon clicking on 'Accept'" do
     visit notifications_path(id: @notification.id)
