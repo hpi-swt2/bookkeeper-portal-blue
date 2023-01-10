@@ -13,6 +13,19 @@ class User < ApplicationRecord
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
 
+  has_many :permissions, as: :user_or_group, dependent: :destroy
+  has_many :see_permissions, class_name: 'SeePermission', as: :user_or_group, dependent: :destroy
+  has_many :lend_permissions, class_name: 'LendPermission', as: :user_or_group, dependent: :destroy
+  has_many :ownership_permissions, class_name: 'OwnershipPermission', as: :user_or_group, dependent: :destroy
+
+  has_many :directly_visible_items, through: :see_permissions, source: :item
+  has_many :directly_lendable_items, through: :lend_permissions, source: :item
+  has_many :directly_owned_items, through: :ownership_permissions, source: :item
+
+  has_many :indirectly_visible_items, through: :groups, source: :visible_items
+  has_many :indirectly_lendable_items, through: :groups, source: :lendable_items
+  has_many :indirectly_owned_items, through: :groups, source: :owned_items
+
   has_and_belongs_to_many :waitlists
 
   def email_parts
@@ -56,6 +69,18 @@ class User < ApplicationRecord
     memberships.where(group: group).first_or_create!.becomes!(Membership).save
     group.reload
     reload
+  end
+
+  def visible_items
+    directly_visible_items + indirectly_visible_items
+  end
+
+  def lendable_items
+    directly_lendable_items + indirectly_lendable_items
+  end
+
+  def owned_items
+    directly_owned_items + indirectly_owned_items
   end
 
   def self.from_omniauth(auth)

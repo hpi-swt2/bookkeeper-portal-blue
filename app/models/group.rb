@@ -12,6 +12,15 @@ class Group < ApplicationRecord
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owners, through: :ownerships, source: :user
 
+  has_many :permissions, as: :user_or_group, dependent: :destroy
+  has_many :see_permissions, class_name: 'SeePermission', as: :user_or_group, dependent: :destroy
+  has_many :lend_permissions, class_name: 'LendPermission', as: :user_or_group, dependent: :destroy
+  has_many :ownership_permissions, class_name: 'OwnershipPermission', as: :user_or_group, dependent: :destroy
+
+  has_many :visible_items, through: :see_permissions, source: :item
+  has_many :lendable_items, through: :lend_permissions, source: :item
+  has_many :owned_items, through: :ownership_permissions, source: :item
+
   validate :owner?
 
   def members_without_ownership
