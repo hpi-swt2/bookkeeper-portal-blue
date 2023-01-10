@@ -63,7 +63,7 @@ RSpec.describe Item, type: :model do
     item = create(:item)
     expect(item.owning_user).not_to be_nil
     expect(item.owning_group).to be_nil
-    
+
     item.owning_group = create(:group)
     item.reload
     expect(item.owning_user).to be_nil
@@ -74,7 +74,7 @@ RSpec.describe Item, type: :model do
     item = create(:item_owned_by_group)
     expect(item.owning_user).to be_nil
     expect(item.owning_group).not_to be_nil
-    
+
     item.owning_user = create(:user)
     item.reload
     expect(item.owning_user).not_to be_nil

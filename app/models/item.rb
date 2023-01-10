@@ -23,7 +23,8 @@ class Item < ApplicationRecord
   has_many :users_with_direct_lend_permission, through: :lend_permissions, source: :user_or_group, source_type: 'User'
   has_many :users_with_indirect_lend_permission, through: :groups_with_lend_permission, source: :members
 
-  # Since an item `has_one :ownership_permission`, exactly one of the following attributes is set, the other one is `nil`
+  # Since an item `has_one :ownership_permission`, exactly one of the following attributes is set
+  # the other one will be `nil`
   has_one :owning_user, through: :ownership_permission, source: :user_or_group, source_type: 'User'
   has_one :owning_group, through: :ownership_permission, source: :user_or_group, source_type: 'Group'
 
@@ -103,9 +104,9 @@ class Item < ApplicationRecord
 
   def users_with_ownership_permission
     if owning_user.nil?
-      return owning_group.members
+      owning_group.members
     else
-      return [owning_user]
+      [owning_user]
     end
   end
 
