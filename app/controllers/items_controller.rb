@@ -1,6 +1,12 @@
+require "rqrcode"
+require "prawn"
+require "stringio"
+
 # rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :set_item, only: %i[ show edit update destroy request_return accept_return request_lend accept_lend]
 
   # GET /items or /items.json
   def index
@@ -80,10 +86,9 @@ class ItemsController < ApplicationController
   end
 
   def request_lend
-    @item = Item.find(params[:id])
     @user = current_user
     @owner = User.find(@item.owner)
-    @notification = LendRequestNotification.new(item: @item, borrower: @user, user: @owner, date: Time.zone.now,
+    @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
                                                 unread: true, active: true)
     @notification.save
     @item.set_status_pending_lend_request
@@ -96,17 +101,45 @@ class ItemsController < ApplicationController
 
   # rubocop:disable Metrics/AbcSize (reduce complexity in future)
   def accept_lend
-    @item = Item.find(params[:id])
     @notification = LendRequestNotification.find_by(item: @item)
-    @item.set_status_lent
-    @item.holder = @notification.borrower.id
-    @notification.update(active: false)
+    @item.set_status_pending_pickup
+    @job = Job.create
+    @job.item = @item
+    @job.save
+    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
+    @item.set_rental_start_time
+    @item.update(holder: @notification.borrower.id)
+    @notification.mark_as_inactive
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
-
+   
     helpers.audit_accept_lend(@item)
+    
+    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
+                                       active: false, unread: true)
+    redirect_to item_url(@item)
+  end
 
+  def start_lend
+    @item = Item.find(params[:id])
+    @job = Job.find_by(item: @item)
+    @job.destroy
+    @holder = current_user.id
+    @item.set_status_lent
+    @item.set_rental_start_time
+    @item.holder = @holder
+    @item.save
+    redirect_to item_url(@item)
+  end
+
+  def abort_lend
+    @item = Item.find(params[:id])
+    @job = Job.find_by(item: @item)
+    @job.destroy
+    @item.set_status_available
+    @item.holder = nil
+    @item.save
     redirect_to item_url(@item)
   end
   # rubocop:enable Metrics/AbcSize
@@ -120,8 +153,8 @@ class ItemsController < ApplicationController
     helpers.audit_request_return(@item)
 
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(user: User.find(@item.owner), date: Time.zone.now, item: @item,
-                                                    borrower: current_user, active: true, unread: true)
+      @notification = ReturnRequestNotification.new(receiver: User.find(@item.owner), date: Time.zone.now,
+                                                    item: @item, borrower: current_user, active: true, unread: true)
       @notification.save
     end
     redirect_to item_url(@item)
@@ -130,13 +163,13 @@ class ItemsController < ApplicationController
 
   def accept_return
     @item = Item.find(params[:id])
-    @notification = ReturnRequestNotification.find_by(item: @item)
-    @notification.destroy
-    # TODO: Send return accepted notification to borrower
-    @item.rental_start = nil
-    @item.rental_duration_sec = nil
-    @item.holder = nil
-    @item.set_status_available
+    @user = current_user
+    @request_notification = ReturnRequestNotification.find_by(item: @item)
+    @request_notification.destroy
+    @accepted_notif = ReturnAcceptedNotification.new(active: false, unread: true, date: Time.zone.now,
+                                                     item: @item, receiver: User.find(@item.holder), owner: @user)
+    @accepted_notif.save
+    @item.reset_status
     @item.save
 
     helpers.audit_accept_return(@item)
@@ -146,15 +179,26 @@ class ItemsController < ApplicationController
 
   def deny_return
     @item = Item.find(params[:id])
-    @notification = ReturnRequestNotification.find_by(item: @item)
-    @notification.destroy
-    # TODO: Send return declined notification to borrower and handle decline return
-    @item.deny_return
-    @item.save
-
+    @user = current_user
+    @request_notification = ReturnRequestNotification.find_by(item: @item)
+    @request_notification.destroy
+    @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
+                                                            receiver: User.find(@item.holder),
+                                                            date: Time.zone.now, active: false, unread: true)
+    @declined_notification.save
+    @item.destroy 
     helpers.audit_deny_return(@item)
+    
+    redirect_to notifications_path
+  end
 
-    redirect_to item_url(@item)
+  def generate_qrcode
+    qr = RQRCode::QRCode.new("item:#{params[:id]}")
+    png = qr.as_png(size: 500)
+    dummy_png_file = StringIO.new png.to_blob
+    pdf = Prawn::Document.new(page_size: "A4")
+    pdf.image dummy_png_file, position: :center
+    send_data pdf.render, disposition: "attachment", type: "application/pdf"
   end
 
   private
@@ -197,3 +241,5 @@ class ItemsController < ApplicationController
 end
 
 # rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength

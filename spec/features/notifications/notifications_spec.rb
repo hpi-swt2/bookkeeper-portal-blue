@@ -11,7 +11,7 @@ describe "Notifications Page", type: :feature do
     FactoryBot.reload
     # need to use some subclass of notification
     # because notifications are "abstract"
-    @notifications = create_list(:lend_request_notification, 5, user: user, item: item, borrower: borrower)
+    @notifications = create_list(:lend_request_notification, 5, receiver: user, item: item, borrower: borrower)
     @notifications.each(&:save)
   end
 
@@ -33,6 +33,11 @@ describe "Notifications Page", type: :feature do
       expect(page).to have_text(notification.title)
       expect(page).to have_text(notification.description)
     end
+  end
+
+  it "has a timestamp" do
+    visit notifications_path
+    expect(page).to have_content(@notifications[0].parse_time)
   end
 
   it "is clickable" do

@@ -9,7 +9,7 @@ describe "Lend Request Notifications", type: :feature do
 
   before do
     sign_in user
-    @notification = build(:lend_request_notification, user: user, item: item, borrower: borrower, active: true)
+    @notification = build(:lend_request_notification, receiver: user, item: item, borrower: borrower, active: true)
     @notification.save
   end
 
@@ -47,5 +47,16 @@ describe "Lend Request Notifications", type: :feature do
     visit notifications_path
     expect(page).to have_text(borrower.name)
     expect(page).to have_text(item.name)
+  end
+
+  it "borrower gets notified when the request is accepted" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Accept')
+    sign_in borrower
+    visit notifications_path
+    expect(page).to have_text(user.name)
+    expect(page).to have_text(item.name)
+    expect(page).to have_text('Lending Accepted')
   end
 end
