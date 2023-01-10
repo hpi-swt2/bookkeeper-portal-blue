@@ -29,6 +29,8 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    @item = Item.find(params[:id])
+    @owner_id = @item.owning_user.id
   end
 
   # POST /items or /items.json
