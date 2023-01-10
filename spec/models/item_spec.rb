@@ -125,4 +125,41 @@ RSpec.describe Item, type: :model do
     item.groups_with_lend_permission << @group
     expect(item.groups_with_see_permission).to include(@group)
   end
+
+  it "does not permit arbitrary users to own" do
+    item = create(:item)
+    expect(item.users_with_ownership_permission).not_to include(@user)
+  end
+
+  it "does not permit users with direct lend permission to own" do
+    item = create(:item)
+    item.users_with_direct_lend_permission << @user
+    expect(item.users_with_ownership_permission).not_to include(@user)
+  end
+
+  it "does not permit users with indirect lend permission to own" do
+    item = create(:item)
+    item.groups_with_lend_permission << @group
+    @group.members << @user
+    expect(item.users_with_ownership_permission).not_to include(@user)
+  end
+
+  it "does not permit users with direct see permission to lend" do
+    item = create(:item)
+    item.users_with_direct_see_permission << @user
+    expect(item.users_with_lend_permission).not_to include(@user)
+  end
+
+  it "does not permit users with indirect see permission to lend" do
+    item = create(:item)
+    item.groups_with_see_permission << @group
+    @group.members << @user
+    expect(item.users_with_lend_permission).not_to include(@user)
+  end
+
+  it "does not permit groups with see permission to lend" do
+    item = create(:item)
+    item.groups_with_see_permission << @group
+    expect(item.groups_with_lend_permission).not_to include(@group)
+  end
 end
