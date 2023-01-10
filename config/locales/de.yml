@@ -94,6 +94,7 @@ de:
       title: "Neuer Gegenstand"
       item_name: "Name des Gegenstands"
       location: "Standort"
+      required_fields: "erforderliche Felder"
     show_item:
       author: "Autor"
       category: "Kategorie"

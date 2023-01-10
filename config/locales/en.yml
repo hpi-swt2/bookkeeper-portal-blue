@@ -125,6 +125,7 @@ en:
       title: "New Item"
       item_name: "Item Name"
       location: "Location"
+      required_fields: "required fields"
     show_item:
       author: "Author"
       category: "Category"
