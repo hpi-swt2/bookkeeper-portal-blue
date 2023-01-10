@@ -187,7 +187,9 @@ class ItemsController < ApplicationController
                                                             date: Time.zone.now, active: false, unread: true)
     @declined_notification.save
     @item.destroy 
-    helpers.audit_deny_return(@item)
+
+    # Comment out because an item gets deleted, when declining a return
+    # helpers.audit_deny_return(@item)
     
     redirect_to notifications_path
   end
