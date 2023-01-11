@@ -19,15 +19,24 @@ RSpec.describe "Dashboard", type: :feature do
     expect(page).to have_content(@user.first_name)
   end
 
-  it "shows unread messages and links to notifications" do
+  it "links to notifications" do
     sign_in user
     visit dashboard_path
     expect(page).to have_link(href: '/notifications')
+  end
+
+  it "shows unread messages when there are none" do
+    sign_in user
+    visit dashboard_path
     expect(page).to have_content I18n.t('views.dashboard.unread_messages', count: 0)
+  end
+
+  it "shows the correct number of unread messages" do
+    sign_in user
     @notifications = create_list(:lend_request_notification, 2, receiver: user, item: item, borrower: borrower,
                                                                 active: true)
     @notifications.each(&:save)
-    page.refresh
+    visit dashboard_path
     expect(page).to have_content I18n.t('views.dashboard.unread_messages', count: 2)
   end
 
