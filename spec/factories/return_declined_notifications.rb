@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :return_declined_notification do
     receiver { FactoryBot.build(:user) }
     date { Time.zone.now }
-    item_name { FactoryBot.build(:lent, owner: receiver.id).name }
+    item_name { FactoryBot.build(:lent, owning_user: receiver).name }
     owner { FactoryBot.build(:max) }
   end
 
