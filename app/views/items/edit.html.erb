@@ -87,28 +87,6 @@
       'opsz' 48
   }
 
-  @media screen and (min-width: 768px) {
-    .image{
-      position:relative;
-      overflow:hidden;
-      padding-bottom:20em;
-      width: 23em;
-      height: 23em !important;
-      padding-left: 0px;
-      padding-right: 0px;   
-    }
-    .image img{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      border-radius: 5px;
-    }
-    .centeredContainer{
-      margin: 0 auto;
-      width: 25em;
-    }
-  }
   .notBorderedInput {
     width: 100%;
     margin-bottom: 8px
@@ -138,25 +116,29 @@
 
 <div>
 <%= form_with(model: @item) do |form| %>
-  <div class="row">
-    <div class="centeredContainer">
-          <div class="text-center">
 
-  <% if @item.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+  
 
-      <ul>
-        <% @item.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+    <% if @item.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
 
-  <div class="image container-fluid rounded">
-    <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
-  </div>
+        <ul>
+          <% @item.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="text-center col">
+
+
+          <div class="image container-fluid rounded">
+            <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
+          </div>
 
   <%= form.file_field :image, class: "notBorderedInput" %>
  
