@@ -39,6 +39,7 @@ class Item < ApplicationRecord
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
 
   before_save do
+    #convert rental duration to seconds
     self.rental_duration_sec = self.rental_duration_sec * 86400
   end
 
