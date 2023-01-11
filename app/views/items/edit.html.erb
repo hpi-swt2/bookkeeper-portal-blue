@@ -119,9 +119,11 @@
 
   
 
-  <% if @item.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+  
+
+    <% if @item.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
 
       <ul>
         <% @item.errors.each do |error| %>
@@ -131,15 +133,9 @@
     </div>
   <% end %>
 
-  <div class="container">
-    <div class="row row-cols-1 row-cols-md-2">
-      <div class="text-center col">
-
-
-        <div class="image container-fluid rounded">
-          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
-        </div>
-      </div>
+  <div class="image container-fluid rounded">
+    <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
+  </div>
 
   <%= form.file_field :image, class: "notBorderedInput" %>
  
