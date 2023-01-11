@@ -143,7 +143,7 @@ en:
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
     edit_item:
-      rental_duration_sec: "Rental Duration (seconds)"
+      rental_duration_sec: "Rental Duration (days)"
     profile:
       title: "Profile"
       roles: "Roles"
