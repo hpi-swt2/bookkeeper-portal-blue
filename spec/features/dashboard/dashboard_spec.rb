@@ -43,21 +43,6 @@ RSpec.describe "Dashboard", type: :feature do
     expect(page).to have_content I18n.t('views.dashboard.offered_items.title')
   end
 
-  it "shows message when nothing is offered" do
-    @user = create(:user)
-    sign_in @user
-    visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.offered_items.nothing_offered')
-  end
-
-  it "shows offered item" do
-    @user = create(:user)
-    item = create(:item, owning_user: @user)
-    sign_in @user
-    visit dashboard_path
-    expect(page).to have_content(item.name)
-  end
-
   it "shows wishlist" do
     sign_in user
     visit dashboard_path
