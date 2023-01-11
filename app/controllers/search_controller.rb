@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def index
-    @avalability_options = [["unavailable", 0], ["available", 1]]
+    @availability_options = [["unavailable", 0], ["available", 1]]
     @category_options = Item.select(:category).distinct.pluck(:category)
 
     search_term = params[:search]

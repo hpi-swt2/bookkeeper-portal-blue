@@ -8,9 +8,9 @@ RSpec.describe "search/index", type: :view do
 
       assert_select "input[type=?][id=?]", "text", "search"
 
-      assert_select "select[id=?]", "filter_property"
+      assert_select "select[id=?]", "availability"
 
-      assert_select "input[type=?][id=?]", "text", "filter_value"
+      assert_select "select[id=?]", "category"
 
       assert_select "button[type=?]", "submit"
     end

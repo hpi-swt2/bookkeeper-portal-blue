@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <h4 class="subtitle mt-2">Verfügbarkeit</h4>
-                <%= select_tag "availability", options_for_select(@avalability_options), class: "form-select", include_blank: true, placeholder: "All availabilities" %>
+                <%= select_tag "availability", options_for_select(@availability_options), class: "form-select", include_blank: true %>
                 <h4 class="subtitle mt-2">Kategorie</h4>
                 <%= select_tag "category", options_for_select(@category_options), class: "form-select", include_blank: true %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
             </div>
