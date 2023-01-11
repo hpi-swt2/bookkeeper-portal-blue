@@ -176,10 +176,10 @@ function readURL(input) {
         <p class="subtitle"><%= t('views.show_item.description')%></p>
         <%= form.text_area :description, class: "borderedInput body1" %>
 
-        <p class="subtitle"><%= t('views.show_item.owner')%></p>
-        <div class="notBorderedInput">
-          <%= form.collection_select(:owner, User.all, :id, :email, :include_blank => true)%>
-        </div>
+    <p class="subtitle"><%= t('views.show_item.owner')%></p>
+    <div class="notBorderedInput">
+      <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true)%>
+    </div>
 
         <p class="subtitle"><%= t('views.show_item.holder')%></p>
         <div class="notBorderedInput">
