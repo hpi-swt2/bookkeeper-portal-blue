@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Progress Bar under Lent items", type: :feature do
+RSpec.describe "Wishlist", type: :feature do
 
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
