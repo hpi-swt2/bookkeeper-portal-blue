@@ -73,33 +73,6 @@
      color: var(--grey09);
   }
 
-  @media screen and (min-width: 768px) {
-    .image{
-      position:relative;
-      overflow:hidden;
-      padding-bottom:20em;
-      width: 23em;
-      height: 23em !important;
-      padding-left: 0px;
-      padding-right: 0px;   
-    }
-    .image img{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      border-radius: 5px;
-    }
-    .centeredContainer{
-      margin: 0 auto;
-      width: 25em;
-    }
-    #imagePlaceholder {
-    background-color: var(--grey11);
-    width: 23em;
-    height: 23em !important;
-  }
-  }
   .notBorderedInput {
     width: 100%;
     margin-bottom: 8px
@@ -156,9 +129,6 @@ function readURL(input) {
 </script>
 <div>
 <%= form_with(model: @item, :html => {:multipart => true}) do |form| %>
-  <div class="row">
-    <div class="centeredContainer">
-          <div class="text-center">
 
   <% if @item.errors.any? %>
     <div style="color: red">
@@ -172,60 +142,67 @@ function readURL(input) {
     </div>
   <% end %>
 
-  <div class="image container-fluid rounded">
-    <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
-    <div class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" id=imagePlaceholder>
-      <span class="material-symbols-outlined" id="imageIcon">image</span>
-    </div> 
-  </div>
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="text-center col">
 
-  <%= form.file_field :image, multiple: false, direct_upload: true, :onchange => "readURL(this)"%>  
+        <div class="image container-fluid rounded">
+          <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
+          <div class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" id=imagePlaceholder>
+            <span class="material-symbols-outlined" id="imageIcon">image</span>
+          </div> 
+        </div>
+
+        <%= form.file_field :image, multiple: false, direct_upload: true, :onchange => "readURL(this)"%>
+
+      </div>  
 
 
-  <div>
-  <p class="title">
-    <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name') %>
-  </p>
-  </div>
-  <div class="row">
-    <p class="body1" id="location">
-      <span class="material-symbols-outlined" id="locationIcon">location_on</span>
-      <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location') %>
-    </p>
-  </div>
-  </div>
-    <p class="subtitle"><%= t('views.show_item.category')%></p>
-    <%= form.text_field :category, class: "borderedInput body1" %>
+      <div class="col">
+        <div>
+          <p class="title">
+            <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name') %>
+          </p>
+          <div class="row">
+            <p class="body1" id="location">
+              <span class="material-symbols-outlined" id="locationIcon">location_on</span>
+              <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location') %>
+            </p>
+        </div>
+      
+        <p class="subtitle"><%= t('views.show_item.category')%></p>
+        <%= form.text_field :category, class: "borderedInput body1" %>
 
-    <p class="subtitle"><%= t('views.show_item.description')%></p>
-    <%= form.text_area :description, class: "borderedInput body1" %>
+        <p class="subtitle"><%= t('views.show_item.description')%></p>
+        <%= form.text_area :description, class: "borderedInput body1" %>
 
     <p class="subtitle"><%= t('views.show_item.owner')%></p>
     <div class="notBorderedInput">
       <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true)%>
     </div>
 
-    <p class="subtitle"><%= t('views.show_item.holder')%></p>
-    <div class="notBorderedInput">
-      <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true)%>
+        <p class="subtitle"><%= t('views.show_item.holder')%></p>
+        <div class="notBorderedInput">
+          <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true)%>
+        </div>
+
+        <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
+        <%= form.number_field :price_ct, class: "borderedInput body1" %>
+
+        <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%></p>
+        <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
+
+        <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
+        <%= form.text_area :return_checklist, class: "borderedInput body1" %> 
+
+        <div class="" id="buttonDiv">
+          <%= form.submit t('defaults.submit'), class: "btn-primary"%>
+          <%= link_to @item_new do %>
+            <button class="btn-secondary"><%= t('defaults.delete')%></button>
+          <% end %>
+        </div>
+      </div>
     </div>
-
-    <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
-    <%= form.number_field :price_ct, class: "borderedInput body1" %>
-
-    <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%></p>
-    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
-
-    <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
-    <%= form.text_area :return_checklist, class: "borderedInput body1" %> 
-
-    <div class="" id="buttonDiv">
-      <%= form.submit t('defaults.submit'), class: "btn-primary"%>
-      <%= link_to @item_new do %>
-        <button class="btn-secondary"><%= t('defaults.delete')%></button>
-      <% end %>
-    </div>
-  </div>
   </div>
 <% end %>
 </div>
