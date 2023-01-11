@@ -6,13 +6,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="input-group">
-                    <%= select_tag "filter_property", raw("<option>Title</option><option>Author</option><option>Release</option>"), class: "form-select" %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
-                    <%= text_field_tag :filter_value, params[:filter_value], class: "form-control" %>
-                </div>
+                <h4 class="subtitle mt-2">Verfügbarkeit</h4>
+                <%= select_tag "availability", options_for_select(@avalability_options), class: "form-select", include_blank: true, placeholder: "All availabilities" %>
+                <h4 class="subtitle mt-2">Kategorie</h4>
+                <%= select_tag "category", options_for_select(@category_options), class: "form-select", include_blank: true %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary secondaryButton" data-bs-dismiss="modal"><%= t 'defaults.close' %></button>
+            <div class="modal-footer align-center">
+                <button class="btn btn-secondary secondaryButton" data-bs-dismiss="modal" type="submit">Ergebnisse anzeigen</button>
             </div>
         </div>
     </div>

@@ -14,7 +14,7 @@
         <button class="btn btn-secondary secondaryButton" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false">
             <%= t 'views.search.filter_button' %> <i class="bi bi-sliders2-vertical"></i>
         </button>
-        <%= render "filter-modal" %>
+        <%= render "filter-modal", :locals => { :avalability_options => @avalability_options, :category_options => @category_options } %>
 
         <%= text_field_tag :lastsearch, params[:lastsearch], class: "form-control invisible", value: @lastsearch %>
     <% end %>
