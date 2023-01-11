@@ -29,7 +29,8 @@ RSpec.describe "Lent Items", type: :feature do
                          rental_duration_sec: 86_400)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content(item.print_remaining_rental_duration)
+    expect(page).to have_content(item.name)
+    expect(page).to have_content I18n.t('views.dashboard.lent_items.today')
   end
 
   it "shows the correct tag for lent items which are overdue" do
@@ -39,6 +40,8 @@ RSpec.describe "Lent Items", type: :feature do
                          rental_duration_sec: 5)
     sign_in @user
     visit dashboard_path
-    expect(page).to have_content(item.print_remaining_rental_duration)
+    expect(page).to have_content(item.name)
+    expect(page).to have_content I18n.t('views.dashboard.lent_items.expired',
+                                        date: item.rental_end.strftime("%d.%m.%Y"))
   end
 end
