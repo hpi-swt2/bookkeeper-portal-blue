@@ -23,8 +23,14 @@ export default class extends Controller {
       return;
     }
     const itemId = splitResult[1];
-    this.close();
-    window.location.href = "/items/" + itemId;
+    
+    fetch("items/" + itemId)
+      .then(response => {
+        if(response.status != 404) {
+          window.location.href = "/items/" + itemId;
+          this.close();
+        }
+      });
   }
 
   open() {
