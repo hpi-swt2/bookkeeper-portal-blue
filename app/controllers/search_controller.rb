@@ -2,19 +2,25 @@ class SearchController < ApplicationController
   def index
     setup_variables
 
-    search_term = params[:search]
-    if search_term.blank?
-      @lastsearch = params[:lastsearch]
-      search_term = @lastsearch
-    else
-      @lastsearch = search_term
-    end
+    @search_term = params[:search]
+    @lastsearch = params[:lastsearch]
+    @availability = params[:availability]
+    @category = params[:category]
+
     parse_filters
 
-    @results = helpers.search_for_items(search_term, @filters)
+    @results = helpers.search_for_items(@search_term, @filters)
   end
 
   private
+
+  def lastsearch
+    if @search_term.blank?
+      @search_term = @lastsearch
+    else
+      @lastsearch = @search_term
+    end
+  end
 
   def setup_variables
     @availability_options = [[t('views.search.filter_modal.available'), 0],
@@ -23,17 +29,17 @@ class SearchController < ApplicationController
   end
 
   def parse_filters
-    availability = params[:availability]
-    category = params[:category]
+    availability = @availability
+    category = @category
 
     @filters = {}
 
     if availability.present? && availability.to_i <= 1 && availability.to_i >= 0
-      @filters[:lend_status] = availability.to_i
+      @filters["lend_status"] = availability.to_i
     end
 
     return if category.blank?
 
-    @filters[:category] = category
+    @filters["category"] = category
   end
 end
