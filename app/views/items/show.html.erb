@@ -35,9 +35,9 @@
     overflow:hidden;
     padding-bottom:100%;
     max-width: 25em;
-    max-height: 25em !important; 
+    max-height: 25em !important;
     padding-left: 0px;
-    padding-right: 0px;  
+    padding-right: 0px;
   }
   .image img{
     position:absolute;
@@ -90,10 +90,10 @@
       'GRAD' 0,
       'opsz' 48
   }
-  
+
 </style>
 <div>
- 
+
   <%= link_to :back do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
@@ -102,7 +102,7 @@
         <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
     <% end %>
   <% end %>
-  
+
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col">
@@ -110,10 +110,10 @@
           <!--only show filled icon if icon is on wishlist-->
           <!--span class="material-symbols-outlined wishlistIcon" id="filledWishlistIcon">grade</span-->
           <span class="material-symbols-outlined wishlistIcon" id="notFilledWishlistIcon">grade</span>
-          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached?%>
+          <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block" unless @item.image.nil? %>
         </div>
       </div>
-        
+
       <div class="col">
           <div>
             <div>
@@ -124,8 +124,8 @@
               location_on</span>
             <%= @item.location %></p>
             <br>
-          </div> 
-    
+          </div>
+
 
         <p class="subtitle"><%= t('views.show_item.category')%></p>
         <p class="body-1"><%= @item.category %></p>

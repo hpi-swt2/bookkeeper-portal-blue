@@ -46,6 +46,10 @@ class Item < ApplicationRecord
     [0, 0]
   end
 
+  def image_url
+    "data:application/octet-stream;base64,#{Base64.strict_encode64(image)}"
+  end
+
   def set_status_available
     self.lend_status = :available
   end

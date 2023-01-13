@@ -35,9 +35,9 @@
     overflow:hidden;
     padding-bottom:100%;
     max-width: 25em;
-    max-height: 25em !important; 
+    max-height: 25em !important;
     padding-left: 0px;
-    padding-right: 0px;  
+    padding-right: 0px;
   }
   .image img{
     position:absolute;
@@ -93,7 +93,7 @@
   }
   .borderedInput {
     border: 1px solid #AAB0B3;
-    border-radius: 5px; 
+    border-radius: 5px;
     padding-left: 5px;
     width: 100%;
     margin-bottom: 8px
@@ -110,7 +110,7 @@
   select {
     width: 100%;
   }
-  
+
 </style>
   <%= link_to @item do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
@@ -137,12 +137,12 @@
 
 
       <div class="image container-fluid rounded">
-        <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
+        <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block" unless @item.image.nil? %>
       </div>
     </div>
 
   <%= form.file_field :image, class: "notBorderedInput" %>
- 
+
   <div>
   <p class="title">
     <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name')+"*"%>
@@ -164,10 +164,10 @@
     <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true, :selected => @owner_id)%>
     </div>
     <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
-    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %> 
+    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
 
     <p class="caption">* <%= t('views.new_item.required_fields')%></p>
-   
+
     <%= form.submit class: "btn-primary" %>
   </div>
   </div>
