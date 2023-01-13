@@ -87,28 +87,6 @@
       'opsz' 48
   }
 
-  @media screen and (min-width: 768px) {
-    .image{
-      position:relative;
-      overflow:hidden;
-      padding-bottom:20em;
-      width: 23em;
-      height: 23em !important;
-      padding-left: 0px;
-      padding-right: 0px;   
-    }
-    .image img{
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      border-radius: 5px;
-    }
-    .centeredContainer{
-      margin: 0 auto;
-      width: 25em;
-    }
-  }
   .notBorderedInput {
     width: 100%;
     margin-bottom: 8px
@@ -140,13 +118,10 @@
 
 <div>
 <%= form_with(model: @item) do |form| %>
-  <div class="row">
-    <div class="centeredContainer">
-          <div class="text-center">
 
-  <% if @item.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+    <% if @item.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
 
       <ul>
         <% @item.errors.each do |error| %>
@@ -156,9 +131,15 @@
     </div>
   <% end %>
 
-  <div class="image container-fluid rounded">
-    <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
-  </div>
+  <div class="container">
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="text-center col">
+
+
+      <div class="image container-fluid rounded">
+        <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
+      </div>
+    </div>
 
   <%= form.file_field :image, class: "notBorderedInput" %>
  
@@ -180,7 +161,7 @@
     <%= form.text_area :description, class: "borderedInput body1" %>
     <p class="subtitle"><%= t('views.show_item.owner')%>*</p>
     <div class="notBorderedInput">
-    <%= form.collection_select(:owner, User.all, :id, :email, :include_blank => true)%>
+    <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true, :selected => @owner_id)%>
     </div>
     <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
     <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %> 

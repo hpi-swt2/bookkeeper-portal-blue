@@ -1,6 +1,6 @@
 
-<% if !current_user.nil? && current_user.id != item.owner %>
-    <% if item.lend_status == "pending_pickup" && !LendRequestNotification.find_by(receiver: item.owner, item: item, borrower: current_user).nil?  %>
+<% if !current_user.nil? && current_user != item.owning_user %>
+    <% if item.lend_status == "pending_pickup" && !LendRequestNotification.find_by(receiver: item.owning_user, item: item, borrower: current_user).nil?  %>
         <%= button_to t('views.show_item.confirm_pickup'), { action: "start_lend" }, class: "btn-primary" %>       
     <% elsif item.holder == current_user.id %>
         <% if item.lend_status == "pending_return" %>
@@ -11,7 +11,7 @@
     <% elsif item.lend_status == "available" %>
         <%= button_to t('views.show_item.lend'), { action: "request_lend" }, class: "btn-primary" %>
     <% elsif !item.waitlist.users.exists?(current_user.id) %>
-        <% if item.lend_status == "pending_lend_request" && !LendRequestNotification.find_by(receiver: item.owner, item: item, borrower: current_user).nil? %>
+        <% if item.lend_status == "pending_lend_request" && !LendRequestNotification.find_by(receiver: item.owning_user, item: item, borrower: current_user).nil? %>
             <%= button_to t('views.show_item.pending_lend_request'), { }, class: "btn-secondary", disabled: true %>
         <% else %>
             <%= button_to t('views.show_item.enter_waitlist'), { action: "add_to_waitlist" }, class: "btn-primary" %>

@@ -27,7 +27,7 @@ module SearchHelper
   # CREATE CLAUSE FOR PARTIAL MATCHING
 
   def create_partial_matching_attribute_term(search_attribute, search_term)
-    "#{search_attribute} LIKE '%#{Item.sanitize_sql_like(search_term)}%'"
+    "LOWER( #{search_attribute} ) LIKE '%#{Item.sanitize_sql_like(search_term.downcase)}%'"
   end
 
   def create_partial_matching_one_search_term(search_term)
