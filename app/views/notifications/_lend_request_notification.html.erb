@@ -42,7 +42,7 @@
       <div class="modal-footer">
         <% if notification.active == true %>
           <%= button_to t("defaults.decline"), { action: "decline", id: notification.id }, method: :post, class: "btn btn-danger" %>
-          <%= button_to t("defaults.accept"), accept_lend_path(id: notification.item.id), class: "btn btn-success" %>
+          <%= button_to t("defaults.accept"), accept_lend_path(id: notification.item.id, notification_id: notification.id), class: "btn btn-success" %>
         <% end %>
       </div>
     </div>
