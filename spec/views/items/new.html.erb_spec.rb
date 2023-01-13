@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe "items/new", type: :view do
   before do
     assign(:item, build(:item))
+    # https://stackoverflow.com/a/54700034/11057370
+    allow(view).to receive(:current_user)
   end
 
   it "renders new item form" do
@@ -26,7 +28,7 @@ RSpec.describe "items/new", type: :view do
 
       assert_select "textarea[name=?]", "item[return_checklist]"
 
-      assert_select "select[name=?]", "item[owner]"
+      assert_select "select[name=?]", "item[owner_id]"
 
       assert_select "select[name=?]", "item[holder]"
     end

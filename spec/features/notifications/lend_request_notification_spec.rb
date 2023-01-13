@@ -5,7 +5,7 @@ describe "Lend Request Notifications", type: :feature do
   let(:user) { create(:user, password: password) }
   let(:owner) { create(:max) }
   let(:borrower) { create(:peter) }
-  let(:item) { create(:item, owner: user.id) }
+  let(:item) { create(:item, owning_user: user) }
 
   before do
     sign_in user
@@ -39,7 +39,7 @@ describe "Lend Request Notifications", type: :feature do
   end
 
   it "user gets notified someone wants to lend his/her item" do
-    item = create(:item, owner: owner.id)
+    item = create(:item, owning_user: owner)
     sign_in borrower
     visit item_path(item)
     click_button('Lend')

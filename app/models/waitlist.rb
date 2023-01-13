@@ -12,7 +12,7 @@ class Waitlist < ApplicationRecord
   end
 
   def add_user(user)
-    unless users.exists?(user.id) || user.id == item.owner
+    unless users.exists?(user.id) || user == item.owning_user
       users << user
       add_added_to_waitlist_notification(user)
       return true

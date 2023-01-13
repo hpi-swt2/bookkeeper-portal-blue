@@ -1,0 +1,2 @@
+class LendPermission < SeePermission
+end

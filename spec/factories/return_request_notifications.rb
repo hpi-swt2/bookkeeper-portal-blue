@@ -4,7 +4,7 @@ FactoryBot.define do
     unread { true }
     receiver { FactoryBot.build(:user) }
     date { Time.zone.now }
-    item { FactoryBot.build(:pending_return, owner: receiver.id, holder: receiver.id) }
+    item { FactoryBot.build(:pending_return, owning_user: receiver, holder: receiver.id) }
     borrower { FactoryBot.build(:max) }
   end
 
