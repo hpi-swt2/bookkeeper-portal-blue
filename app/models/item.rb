@@ -1,7 +1,6 @@
 # class of a basic item.
 # rubocop:disable Metrics/ClassLength
 class Item < ApplicationRecord
-  has_one_attached :image
   has_one :waitlist, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
   has_many :return_request_notifications, dependent: :destroy

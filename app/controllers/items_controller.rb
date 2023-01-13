@@ -36,7 +36,11 @@ class ItemsController < ApplicationController
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    params = item_params
+    unless params[:image].nil? then
+      params[:image] = params[:image].read
+    end
+    @item = Item.new(params)
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
 
