@@ -104,7 +104,9 @@
   .btn-primary {
     width: 100%;
   }
-
+  .caption{
+    text-align: left;
+  }
   select {
     width: 100%;
   }
@@ -143,26 +145,29 @@
  
   <div>
   <p class="title">
-    <%= form.text_field :name, class: "borderedInput" %>
+    <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name')+"*"%>
   </p>
   </div>
   <div class="row">
     <p class="body-1" id="location">
       <span class="material-symbols-outlined" id="locationIcon">location_on</span>
-      <%= form.text_field :location, class: "locationInput borderedInput" %>
+      <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location')+"*"%>
     </p>
   </div>
   </div>
-    <p class="subtitle"><%= t('views.show_item.category')%></p>
+    <p class="subtitle"><%= t('views.show_item.category')%>*</p>
     <%= form.text_field :category, class: "borderedInput body1" %>
     <p class="subtitle"><%= t('views.show_item.description')%></p>
     <%= form.text_area :description, class: "borderedInput body1" %>
-    <p class="subtitle"><%= t('views.show_item.owner')%></p>
+    <p class="subtitle"><%= t('views.show_item.owner')%>*</p>
     <div class="notBorderedInput">
     <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true, :selected => @owner_id)%>
     </div>
-    <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%></p>
-    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>    
+    <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
+    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %> 
+
+    <p class="caption">* <%= t('views.new_item.required_fields')%></p>
+   
     <%= form.submit class: "btn-primary" %>
   </div>
   </div>
