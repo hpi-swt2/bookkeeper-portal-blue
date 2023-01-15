@@ -38,11 +38,6 @@ class Item < ApplicationRecord
        { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
 
-  before_save do
-    #convert rental duration to seconds
-    self.rental_duration_sec = self.rental_duration_sec * 86400
-  end
-
   def price_in_euro
     unless price_ct.nil?
       ct = price_ct % 100
@@ -135,15 +130,15 @@ class Item < ApplicationRecord
   def rental_end
     return Time.now.utc if rental_start.nil? || rental_duration_sec.nil?
 
-    rental_start + rental_duration_sec
+    rental_start + rental_duration_sec * 86400
   end
 
-  def remaining_rental_duration
+  def remaining_rental_duration_sec
     rental_end - Time.now.utc
   end
 
-  def print_remaining_rental_duration
-    print_time_from_seconds(remaining_rental_duration)
+  def print_remaining_rental_duration_sec
+    print_time_from_seconds(remaining_rental_duration_sec)
   end
 
   def print_time_from_seconds(seconds)
@@ -161,7 +156,7 @@ class Item < ApplicationRecord
   def progress_lent_time
     return 100 if rental_start.nil? || rental_duration_sec.nil? || rental_duration_sec.zero?
 
-    lent_time_progress = (((rental_duration_sec - remaining_rental_duration) * 100) / rental_duration_sec).to_i
+    lent_time_progress = (((rental_duration_sec * 86400 - remaining_rental_duration_sec) * 100) / rental_duration_sec).to_i
     if lent_time_progress.negative?
       0
     elsif lent_time_progress > 100

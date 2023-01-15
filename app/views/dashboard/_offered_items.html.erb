@@ -14,7 +14,7 @@
               <p class="caption text-center"><%= t 'views.dashboard.offered_items.lent_by_you' %></p>
             <% else %>
               <p class="caption mb-1 text-center"><%= t 'views.dashboard.offered_items.lent' %></p>
-              <% if item.remaining_rental_duration <= 0 %>
+              <% if item.remaining_rental_duration_sec <= 0 %>
                 <div class="caption-secondary text-center"><%= t 'views.dashboard.offered_items.overdue' %></div>
               <% end %>
             <% end %>
