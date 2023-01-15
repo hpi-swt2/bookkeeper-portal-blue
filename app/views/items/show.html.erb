@@ -136,7 +136,7 @@
         <p class="subtitle"><%= t('views.show_item.owner')%></p>
         <p class="body-1"><%= @item.owning_user.email %></p>
         <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
-        <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec*86400)).strftime('%d.%m.%Y') %></p>
+        <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_days.nil? ? 86400 : @item.rental_duration_days*86400)).strftime('%d.%m.%Y') %></p>
         <p class="subtitle"><%= t('views.show_item.waitlist')%></p>
         <p class="body-1">
           <% if !current_user.nil? %>

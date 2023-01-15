@@ -6,7 +6,7 @@ class CreateItems < ActiveRecord::Migration[7.0]
       t.string :location
       t.text :description
       t.integer :price_ct
-      t.integer :rental_duration_sec
+      t.integer :rental_duration_days
       t.timestamp :rental_start
       t.text :return_checklist
 

@@ -26,11 +26,11 @@
                 <div class="progress-bar" role="progressbar" style="width:<%= item.progress_lent_time %>%"></div>
               </div>
               <p
-                <% if item.remaining_rental_duration_sec < 172_800 %> class="caption-secondary text-center"
-                <% elsif item.remaining_rental_duration_sec < 604_800 %> class="caption-primary text-center"
+                <% if item.remaining_rental_duration_days < 172_800 %> class="caption-secondary text-center"
+                <% elsif item.remaining_rental_duration_days < 604_800 %> class="caption-primary text-center"
                 <% else %>  class="caption" <% end %> id="hourglass_empty">
                 <span class="material-symbols-outlined text-center" id="hourglass_emptyIcon"> hourglass_empty </span>
-                <%= item.print_remaining_rental_duration_sec%>
+                <%= item.print_remaining_rental_duration_days%>
               </p>
           </div>
         <% end %>

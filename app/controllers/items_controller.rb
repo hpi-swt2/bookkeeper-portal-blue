@@ -213,7 +213,7 @@ class ItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def item_params
-    params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
+    params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_days,
                                  :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
           .merge!(owner_hash)
   end

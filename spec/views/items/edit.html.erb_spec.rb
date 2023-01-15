@@ -24,7 +24,7 @@ RSpec.describe "items/edit", type: :view do
 
       assert_select "input[name=?]", "item[image]"
 
-      assert_select "input[name=?]", "item[rental_duration_sec]"
+      assert_select "input[name=?]", "item[rental_duration_days]"
 
       assert_select "select[name=?]", "item[owner_id]"
 

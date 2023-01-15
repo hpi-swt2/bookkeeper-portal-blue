@@ -33,7 +33,7 @@ class Item < ApplicationRecord
   validates :location, presence: true
   validates :ownership_permission, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
-  validates :rental_duration_sec, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+  validates :rental_duration_days, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   enum :lend_status,
        { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
@@ -128,17 +128,17 @@ class Item < ApplicationRecord
   end
 
   def rental_end
-    return Time.now.utc if rental_start.nil? || rental_duration_sec.nil?
+    return Time.now.utc if rental_start.nil? || rental_duration_days.nil?
 
-    rental_start + rental_duration_sec * 86400
+    rental_start + rental_duration_days * 86400
   end
 
-  def remaining_rental_duration_sec
+  def remaining_rental_duration_days
     rental_end - Time.now.utc
   end
 
-  def print_remaining_rental_duration_sec
-    print_time_from_seconds(remaining_rental_duration_sec)
+  def print_remaining_rental_duration_days
+    print_time_from_seconds(remaining_rental_duration_days)
   end
 
   def print_time_from_seconds(seconds)
@@ -154,9 +154,9 @@ class Item < ApplicationRecord
   end
 
   def progress_lent_time
-    return 100 if rental_start.nil? || rental_duration_sec.nil? || rental_duration_sec.zero?
+    return 100 if rental_start.nil? || rental_duration_days.nil? || rental_duration_days.zero?
 
-    lent_time_progress = (((rental_duration_sec * 86400 - remaining_rental_duration_sec) * 100) / rental_duration_sec).to_i
+    lent_time_progress = (((rental_duration_days * 86400 - remaining_rental_duration_days) * 100) / rental_duration_days).to_i
     if lent_time_progress.negative?
       0
     elsif lent_time_progress > 100
