@@ -111,6 +111,29 @@
     width: 100%;
   }
   
+      @media screen and (min-width: 480px) and (max-width: 767px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1200px)  and (max-width: 1399px){
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1400px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
 </style>
   <%= link_to @item do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
@@ -133,8 +156,7 @@
 
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
-      <div class="text-center col">
-
+      <div class="text-center col my-auto">
 
         <div class="image container-fluid rounded">
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
@@ -142,8 +164,6 @@
         </div>
       </div>
 
-      
- 
       <div class="col">
         <p class="title">
           <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name')+"*"%>
