@@ -32,7 +32,8 @@ class ItemsController < ApplicationController
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
-    @owner_id = @item.owning_user.id
+    @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
+    @groups = Group.all.filter{ |group| group.members.include? current_user }
   end
 
   # POST /items or /items.json
