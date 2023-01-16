@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :set_item, only: %i[ show create promote demote add_user ]
+  before_action :set_group, only: %i[ show create promote demote add_user ]
 
   def show
   end
