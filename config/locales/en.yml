@@ -71,9 +71,9 @@ en:
         lent: "Lent"
         not_lent: "Not lent"
         overdue: "Overdue"
-      wishlist:
+      favorites:
         title: "YOUR FAVORITES"
-        missing_wishlist: "You don't have any items saved at the moment."
+        missing_favorites: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
         lent_by_you: "Lent by you"
