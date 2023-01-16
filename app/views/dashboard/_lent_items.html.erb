@@ -23,7 +23,7 @@
           <div>
             <%= render :partial => "partials/itemcard", :locals => { :item => item } %>
               <div class="progress mb-2">
-                <div class="progress-bar" role="progressbar" style="width:<%= item.progress_lent_time %>%"></div>
+                <div class="progress-bar" role="progressbar" style="width:<%= item.progress_lent_time %>%" aria-valuenow="<%= item.progress_lent_time %>%" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <p
                 <% if item.remaining_rental_duration_sec < 172_800 %> class="caption-secondary text-center"
