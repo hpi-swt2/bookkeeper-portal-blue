@@ -22,7 +22,7 @@ RSpec.describe "/items", type: :request do
   end
 
   let(:valid_request_attributes) do
-    { name: "Test", location: "Test", category: "Test", description: "Test", owner_id: create(:user).id }
+    { name: "Test", location: "Test", category: "Test", description: "Test", owner_id: "user:#{create(:user).id}" }
   end
 
   let(:invalid_attributes) do
