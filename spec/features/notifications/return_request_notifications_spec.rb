@@ -59,7 +59,10 @@ describe "Return Request Notifications", type: :feature do
 
   it "sends a lend request notification from the first user on the waitlist upon accepting the return of an item" do
     visit notifications_path(id: @notification.id)
-    @max = User.find(2)
+    @max_hash = attributes_for(:max)
+    create(:max) unless User.exists?(email: @max_hash[:email])
+
+    @max = User.find_by(email: @max_hash[:email])
     @notification.item.waitlist = Waitlist.new
     @notification.item.waitlist.add_user(@max)
     @notification.item.waitlist.save
