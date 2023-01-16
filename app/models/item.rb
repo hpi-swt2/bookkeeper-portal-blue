@@ -72,6 +72,19 @@ class Item < ApplicationRecord
     self.lend_status = :unavailable
   end
 
+  def accept_return
+    reset_status
+    return if waitlist.users.empty?
+
+    @new_borrower = waitlist.first_user
+    waitlist.remove_user(@new_borrower)
+    @owner = owning_user
+    @lend_notification = LendRequestNotification.new(item: self, borrower: @new_borrower, receiver: @owner,
+                                                     date: Time.zone.now, unread: true, active: true)
+    @lend_notification.save
+    set_status_pending_lend_request
+  end
+
   def deny_return
     self.lend_status = :unavailable
   end
