@@ -91,9 +91,6 @@ en:
       lending_accepted:
         title: "Lending Accepted"
         description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
-      lending_denied:
-        title: "Lending Denied"
-        description: "%{owner} has denied your request to borrow %{item}."
       lend_request:
         title: "Lend Request"
         description: "%{receiver} wants to borrow your %{item}."
@@ -128,7 +125,6 @@ en:
       title: "New Item"
       item_name: "Item Name"
       location: "Location"
-      required_fields: "required fields"
     show_item:
       author: "Author"
       category: "Category"
