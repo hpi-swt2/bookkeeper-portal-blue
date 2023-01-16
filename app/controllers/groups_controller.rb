@@ -1,6 +1,7 @@
 class GroupsController < ApplicationController
+  before_action :set_item, only: %i[ show create promote demote add_user ]
+
   def show
-    @group = Group.find(params[:id])
   end
 
   def new
@@ -8,7 +9,6 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(group_params)
     @group.owners.append(current_user)
     if @group.save
       redirect_to @group
@@ -18,8 +18,6 @@ class GroupsController < ApplicationController
   end
 
   def promote
-    @group = Group.find(params[:id])
-
     if @group.owners.include?(current_user)
       @user = User.find(params[:user_id])
       @user.to_owner_of! @group
@@ -29,8 +27,6 @@ class GroupsController < ApplicationController
   end
 
   def demote
-    @group = Group.find(params[:id])
-
     if @group.owners.include?(current_user)
       @user = User.find(params[:user_id])
       @user.to_member_of! @group
@@ -39,7 +35,21 @@ class GroupsController < ApplicationController
     redirect_to @group
   end
 
+  def add_user
+    user = User.find(params[:user_id])
+    if user.nil?
+      format.html { render :show, status: :unprocessable_entity }
+    else
+      user.to_member_of!(@group)
+      format.html { redirect_to @group, notice: t("views.groups.user_addded", user: user.name) }
+    end
+  end
+
   def group_params
     params.require(:group).permit(:name)
+  end
+
+  def set_group
+    @group = Group.find(params[:id])
   end
 end

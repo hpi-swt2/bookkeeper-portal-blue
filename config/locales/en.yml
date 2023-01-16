@@ -160,6 +160,7 @@ en:
       members: "Members"
       promote: "Make owner"
       demote: "Remove owner"
+      user_added: "Member %{user} added successfully"
   models:
     item:
       item: "Item"

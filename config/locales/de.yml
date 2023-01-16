@@ -131,6 +131,7 @@ de:
       members: "Mitglieder"
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
+      user_added: "Mitglied %{user} wurde hinzugefügt"
   models:
     item:
       item: "Gegenstand"

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
   resources :groups
   post 'groups/:id/promote/:user_id', to: 'groups#promote', as: 'group_promote'
   post 'groups/:id/demote/:user_id', to: 'groups#demote', as: 'group_demote'
+  post 'groups/:id/add_user/:user_id', to: 'groups#add_user', as: 'group_add_user'
   # Defines the root path route ("/")
   root "landing_page#index"
 end
