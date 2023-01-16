@@ -1,31 +1,43 @@
-<%- if devise_mapping.omniauthable? %>
+<div class="row">
+
+<%- if controller_name != 'sessions' %>
+<div class="mb-3 col">
+  <%= link_to t(".sign_in"), new_session_path(resource_name), class: "btn btn-outline-secondary btn-full-width" %><br />
+</div>
+<% end %>
+<%- if devise_mapping.registerable? && controller_name != 'users' %>
+<div class="mb-3 col">
+  <%= link_to t(".sign_up"), new_registration_path(resource_name), class: "btn btn-outline-secondary btn-full-width" %><br />
+  </div>
+<% end %>
+
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+<div class="mb-3 col">
+  <%= link_to t(".forgot_your_password"), new_password_path(resource_name), class: "btn btn-outline-secondary btn-full-width" %><br />
+  </div>
+<% end %>
+
+<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+<div class="mb-3 col">
+  <%= link_to t('.didn_t_receive_confirmation_instructions'), new_confirmation_path(resource_name) %><br />
+  </div>
+<% end %>
+
+<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+<div class="mb-3 col">
+  <%= link_to t('.didn_t_receive_unlock_instructions'), new_unlock_path(resource_name) %><br />
+  </div>
+<% end %>
+
+</div>
+
+<%- if devise_mapping.omniauthable? && controller_name != 'users' %>
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= button_to(omniauth_authorize_path(resource_name, provider),
-                  class: 'btn btn-primary', id: "#{provider}-signin" ,
+                  class: 'btn btn-primary btn-full-width mb-3', id: "#{provider}-signin" ,
                   method: :post,
                   data: {disable_with: "<i class='fa fa-spinner fa-spin'></i>", turbo: "false"}) do %>
       <%= t('.sign_in_with_provider', provider: OmniAuth::Utils.camelize(provider)) %>
     <% end %>
   <% end %>
 <% end %>
-
-<%- if controller_name != 'sessions' %>
-  <%= link_to t(".sign_in"), new_session_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to t(".sign_up"), new_registration_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to t(".forgot_your_password"), new_password_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to t('.didn_t_receive_confirmation_instructions'), new_confirmation_path(resource_name) %><br />
-<% end %>
-
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <%= link_to t('.didn_t_receive_unlock_instructions'), new_unlock_path(resource_name) %><br />
-<% end %>
-
