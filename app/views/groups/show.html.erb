@@ -1,4 +1,26 @@
-<h1><%= @group.name %></h1>
+<h1>
+    <%= @group.name %>
+
+    <% if @group.owners.include?(current_user) %>
+        <div class="dropdown" style="float: right;">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-plus"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                <% @addable_users.each do |user| %>
+                    <li>
+                        <%= link_to user.name, group_add_user_path(@group, user), class: "dropdown-item", data: {turbo_method: :post} %>
+                    </li>
+                <% end %>
+                <% if @addable_users.empty? %>
+                    <li>
+                        <i><%= t 'views.groups.no_addable_users' %></i>
+                    </li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+</h1>
 
 <h2><%= t 'views.groups.owners' %></h2>
 <ul id="group-owners">

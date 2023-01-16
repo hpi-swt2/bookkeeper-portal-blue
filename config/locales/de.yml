@@ -132,6 +132,7 @@ de:
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
       user_added: "Mitglied %{user} wurde hinzugefügt"
+      no_addable_users: "Keine Nutzer zum Hinzufügen gefunden"
   models:
     item:
       item: "Gegenstand"

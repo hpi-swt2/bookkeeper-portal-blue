@@ -161,6 +161,7 @@ en:
       promote: "Make owner"
       demote: "Remove owner"
       user_added: "Member %{user} added successfully"
+      no_addable_users: "No addable users found"
   models:
     item:
       item: "Item"

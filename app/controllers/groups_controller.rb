@@ -1,7 +1,9 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[ show create promote demote add_user ]
+  before_action :set_group, only: %i[ show promote demote add_user ]
+  before_action :check_owner, only: %i[ promote demote add_user ]
 
   def show
+    @addable_users = User.all - @group.members
   end
 
   def new
@@ -9,6 +11,7 @@ class GroupsController < ApplicationController
   end
 
   def create
+    @group = Group.new(group_params)
     @group.owners.append(current_user)
     if @group.save
       redirect_to @group
@@ -18,30 +21,28 @@ class GroupsController < ApplicationController
   end
 
   def promote
-    if @group.owners.include?(current_user)
-      @user = User.find(params[:user_id])
-      @user.to_owner_of! @group
-    end
+    @user = User.find(params[:user_id])
+    @user.to_owner_of! @group
 
     redirect_to @group
   end
 
   def demote
-    if @group.owners.include?(current_user)
-      @user = User.find(params[:user_id])
-      @user.to_member_of! @group
-    end
+    @user = User.find(params[:user_id])
+    @user.to_member_of! @group
 
     redirect_to @group
   end
 
   def add_user
-    user = User.find(params[:user_id])
-    if user.nil?
-      format.html { render :show, status: :unprocessable_entity }
-    else
-      user.to_member_of!(@group)
-      format.html { redirect_to @group, notice: t("views.groups.user_addded", user: user.name) }
+    respond_to do |format|
+      user = User.find(params[:user_id])
+      if user.nil?
+        format.html { render :show, status: :unprocessable_entity }
+      else
+        user.to_member_of!(@group)
+        format.html { redirect_to @group, notice: t("views.groups.user_added", user: user.name) }
+      end
     end
   end
 
@@ -51,5 +52,9 @@ class GroupsController < ApplicationController
 
   def set_group
     @group = Group.find(params[:id])
+  end
+
+  def check_owner
+    redirect_to @group unless @group.owners.include?(current_user)
   end
 end
