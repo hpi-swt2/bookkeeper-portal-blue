@@ -1,6 +1,6 @@
 <style>
   .imageLink {
-    color: #000;
+    color: #394044;
     text-decoration: none;
   }
 </style>
@@ -15,11 +15,11 @@
     <% end %>
 </div>
 
-<p style="text-align:center">
+<div style="text-align:center">
   <%= image_tag "profile_picture_placeholder.png", class: "rounded-circle", size: "128x128", alt: "Profilbild" %>
-</p>
+</div>
 
-<h1 style="text-align:center"> <%= @user.name %> </h1>
+<h1 class="mt-1" style="text-align:center"> <%= @user.name %> </h1>
 
 <h2><%= t 'views.profile.roles' %></h2>
 <p class="body-1">Student</p>
