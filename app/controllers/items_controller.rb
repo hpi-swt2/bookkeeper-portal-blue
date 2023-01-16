@@ -241,11 +241,12 @@ class ItemsController < ApplicationController
     if owner_id.nil?
       {}
     else
-      case params[:owner_type]
+      user_or_group, id = owner_id.split(":")
+      case user_or_group
       when "group"
-        { owning_group: Group.find(owner_id) }
+        { owning_group: Group.find(id.to_i) }
       else # "user" as default
-        { owning_user: User.find(owner_id) }
+        { owning_user: User.find(id.to_i) }
       end
     end
   end
