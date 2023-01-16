@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "yourmail@gmail.com"
+  default from: "bookkeeperblue.notification@gmail.com"
   layout "mailer"
 end
