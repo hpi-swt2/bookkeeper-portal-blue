@@ -19,6 +19,9 @@ class GroupsController < ApplicationController
 
   def promote
     @group = Group.find(params[:id])
+
+    redirect_to @group unless @group.owners.include?(current_user)
+
     @user = User.find(params[:user_id])
     @user.to_owner_of! @group
     redirect_to @group
@@ -26,6 +29,9 @@ class GroupsController < ApplicationController
 
   def demote
     @group = Group.find(params[:id])
+
+    redirect_to @group unless @group.owners.include?(current_user)
+
     @user = User.find(params[:user_id])
     @user.to_member_of! @group
     redirect_to @group
