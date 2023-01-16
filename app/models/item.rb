@@ -130,15 +130,15 @@ class Item < ApplicationRecord
   def rental_end
     return Time.now.utc if rental_start.nil? || rental_duration_days.nil?
 
-    rental_start + rental_duration_days * 86400
+    rental_start + (rental_duration_days * 86_400)
   end
 
-  def remaining_rental_duration_days
+  def remaining_rental_duration_sec
     rental_end - Time.now.utc
   end
 
-  def print_remaining_rental_duration_days
-    print_time_from_seconds(remaining_rental_duration_days)
+  def print_remaining_rental_duration_sec
+    print_time_from_seconds(remaining_rental_duration_sec)
   end
 
   def print_time_from_seconds(seconds)
@@ -156,7 +156,8 @@ class Item < ApplicationRecord
   def progress_lent_time
     return 100 if rental_start.nil? || rental_duration_days.nil? || rental_duration_days.zero?
 
-    lent_time_progress = (((rental_duration_days * 86400 - remaining_rental_duration_days) * 100) / rental_duration_days).to_i
+    rental_duration_sec = rental_duration_days * 86_400
+    lent_time_progress = (((rental_duration_sec - remaining_rental_duration_sec) * 100) / rental_duration_days).to_i
     if lent_time_progress.negative?
       0
     elsif lent_time_progress > 100
