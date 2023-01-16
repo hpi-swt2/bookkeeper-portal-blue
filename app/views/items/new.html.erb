@@ -188,11 +188,6 @@ function readURL(input) {
           <% end %>
         </div>
 
-        <p class="subtitle"><%= t('views.show_item.holder')%></p>
-        <div class="notBorderedInput">
-          <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true)%>
-        </div>
-
         <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
         <%= form.number_field :price_ct, class: "borderedInput body1" %>
 
