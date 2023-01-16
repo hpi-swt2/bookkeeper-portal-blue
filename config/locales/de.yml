@@ -129,6 +129,8 @@ de:
     groups:
       owners: "Admins"
       members: "Mitglieder"
+      add_member: "Mitglied hinzufügen"
+      no_users_to_add: "Alle Nutzer sind bereits Mitglieder. Die Gruppe scheint sehr beliebt zu sein."
   models:
     item:
       item: "Gegenstand"

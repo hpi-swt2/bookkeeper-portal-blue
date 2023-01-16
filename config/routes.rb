@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   post 'start_lend/:id', to: 'items#start_lend', as: 'start_lend'
 
   resources :groups
+  post 'groups/:id/add_member', to: 'groups#add_member', as: 'add_member'
   # Defines the root path route ("/")
   root "landing_page#index"
 end

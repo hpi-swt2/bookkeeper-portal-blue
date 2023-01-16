@@ -1,4 +1,28 @@
+<style>
+  form {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    gap: 15px;
+  }
+
+  select {
+    flex: 1;
+  }
+</style>
 <h1><%= @group.name %></h1>
+
+<% if current_user.owns_group? @group %>
+  <% if (User.all - @group.members).length > 0 %>
+    <%= form_with url: url_for(action: 'add_member', controller: 'groups' ) do |form| %>
+        <%= form.collection_select(:user_id, User.all - @group.members, :id, :email) %>
+        <%= form.submit t('views.groups.add_member'), class: "btn-primary"%>
+    <% end %>
+  <% else %>
+    <p><%= t 'views.groups.no_users_to_add' %></p>
+  <% end %>
+<% end %>
 
 <h2><%= t 'views.groups.owners' %></h2>
 <ul id="group-owners">

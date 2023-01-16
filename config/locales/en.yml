@@ -158,6 +158,8 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      add_member: "Add member"
+      no_users_to_add: "All users are already in this group. You are very popular!"
   models:
     item:
       item: "Item"
