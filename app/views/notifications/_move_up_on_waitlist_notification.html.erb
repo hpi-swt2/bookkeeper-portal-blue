@@ -1,0 +1,43 @@
+<button type="button" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important"
+        class="btn btn-notification" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>">
+  <div class="notification">
+    <h2 class="subtitle">
+      <%= notification.title %>
+    </h2>
+    <p class="body-1">
+      <%= notification.description %>
+    </p>
+    </p>
+    <p class="timestamp">
+      <%= notification.parse_time %>
+    </p>
+  </div>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="<%="notificationModal#{notification.id}"%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><%= notification.title %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <%= notification.description %>
+        </p>
+      </div>
+      
+      <div class="modal-footer">    
+        <%if notification.active == true %>    
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('<%="notificationModal#{notification.id}" %>').on('shown.bs.modal', function (e) {
+    "<% notification.mark_as_read%>";
+  })
+</script>

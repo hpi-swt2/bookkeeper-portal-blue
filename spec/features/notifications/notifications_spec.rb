@@ -3,11 +3,15 @@ require "rails_helper"
 describe "Notifications Page", type: :feature do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
+  let(:borrower) { create(:max, password: password) }
+  let(:item) { create(:item, owning_user: user) }
 
   before do
     sign_in user
     FactoryBot.reload
-    @notifications = create_list(:notification, 5, user: user)
+    # need to use some subclass of notification
+    # because notifications are "abstract"
+    @notifications = create_list(:lend_request_notification, 5, receiver: user, item: item, borrower: borrower)
     @notifications.each(&:save)
   end
 
@@ -26,22 +30,27 @@ describe "Notifications Page", type: :feature do
   it "displays the notifications of the current user with text" do
     visit notifications_path
     @notifications.each do |notification|
-      expect(page).to have_text(notification.notification_snippet)
+      expect(page).to have_text(notification.title)
+      expect(page).to have_text(notification.description)
     end
   end
 
-  it "is grouped by date" do
-    same_day_notifications = create_list(:notification, 2, user: user, date: DateTime.now)
-    same_day_notifications.each(&:save)
+  it "has a timestamp" do
     visit notifications_path
-    @notifications.each do |notification|
-      expect(page).to have_text(notification.date.strftime("%d. %B %y"))
-    end
+    expect(page).to have_content(@notifications[0].parse_time)
   end
 
   it "is clickable" do
     visit notifications_path
-    expect(page).to have_link @notifications[0].notification_snippet
+    all('.notification', text: @notifications[0].description)[0].click
+    expect(page).to have_text(@notifications[0].description)
   end
 
+  it "is unread until page is viewed, then it is read" do
+    expect(@notifications[1].unread).to be true
+    visit notifications_path
+    all('.notification', text: @notifications[1].description)[1].click
+    @notifications[1].reload
+    expect(@notifications[1].unread).to be false
+  end
 end

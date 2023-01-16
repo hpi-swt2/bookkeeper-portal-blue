@@ -1,9 +1,217 @@
-<h1>New item</h1>
+<p style="color: green"><%= notice %></p>
+<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-<%= render "form", item: @item %>
 
-<br>
+<style>
+:root{
+  --grey04: #394044;
+  --grey09: #AAB0B3;
+  --grey11: #DDDFE0;
+  --secondary08: #55A6BE;
+  }
+  .caption{
+    text-align: center;
+  }
+  .subtitle{
+     margin-bottom: 0px;
+  }
+  .title{
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    text-align: center;
+    text-transform: capitalize;
+    color: var(--grey04);
+    margin: 1em 0px 0px 0px;
+  }
+  #location{
+      text-align: center;
+  }
+  .centeredContainer{
+      margin: 0 auto;
+      width: 65%;
+  }
+  .image{
+    position:relative;
+    overflow:hidden;
+    padding-bottom:100%;
+    max-width: 25em;
+    max-height: 25em !important; 
+    padding-left: 0px;
+    padding-right: 0px;  
+  }
+  .image img{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 25em !important;
+  }
 
+  #locationIcon{
+    font-size: 20px;
+    vertical-align: text-top;
+  }
+
+  .material-symbols-outlined{
+    color: var(--grey04);
+  }
+
+  #imagePlaceholder {
+    background-color: var(--grey11);
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 25em !important;
+  }
+
+  #imageIcon {
+     font-size: 10em;
+     color: var(--grey09);
+  }
+
+  .notBorderedInput {
+    width: 100%;
+    margin-bottom: 8px
+  }
+  .borderedInput {
+    border: 1px solid #AAB0B3;
+    border-radius: 5px; 
+    padding-left: 5px;
+    width: 100%;
+    margin-bottom: 8px
+  }
+  .locationInput {
+    width: 90%;
+  }
+  .btn-primary {
+    margin-bottom: 8px;
+    width: 48%;
+    display: inline-block;
+  }
+  .btn-secondary {
+    width: 48%;
+    display: inline-block;
+  }
+  #buttonDiv {
+    width: 100%;
+    text-align: center;
+  }
+  .caption{
+    text-align: left;
+  }
+  select {
+    width: 100%;
+  }
+</style>
+<script>
+(function() {
+  // Load the script
+  const script = document.createElement("script");
+  script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js';
+  script.type = 'text/javascript';
+  document.head.appendChild(script);
+})();
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader();
+
+      reader.addEventListener("load", (e) => {
+        $('#img_prev').attr('src', e.target.result);
+        // remove the background color since hide() doesnt work
+        $('#imagePlaceholder').css("background-color", "transparent");
+        $('#imageIcon').hide();
+        });
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
 <div>
-  <%= link_to "Back to items", items_path %>
+<%= form_with(model: @item, :html => {:multipart => true}) do |form| %>
+
+  <% if @item.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% @item.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="text-center col">
+
+        <div class="image container-fluid rounded">
+          <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
+          <div class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" id=imagePlaceholder>
+            <span class="material-symbols-outlined" id="imageIcon">image</span>
+          </div> 
+        </div>
+
+        <%= form.file_field :image, multiple: false, direct_upload: true, :onchange => "readURL(this)"%>
+
+      </div>  
+
+
+      <div class="col">
+        <div>
+          <p class="title">
+            <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name')+"*" %>
+          </p>
+          <div class="row">
+            <p class="body1" id="location">
+              <span class="material-symbols-outlined" id="locationIcon">location_on</span>
+              <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location')+"*" %>
+            </p>
+        </div>
+      
+        <p class="subtitle"><%= t('views.show_item.category')%>*</p>
+        <%= form.text_field :category, class: "borderedInput body1" %>
+
+        <p class="subtitle"><%= t('views.show_item.description')%></p>
+        <%= form.text_area :description, class: "borderedInput body1" %>
+
+        <p class="subtitle"><%= t('views.show_item.owner')%>*</p>
+        <div class="notBorderedInput">
+          <% if current_user.nil? %>
+            <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
+          <% else %>
+            <%= form.collection_select(:owner_id, [current_user], :id, :email, :selected => current_user.id) %>
+          <% end %>
+        </div>
+
+        <p class="subtitle"><%= t('views.show_item.holder')%></p>
+        <div class="notBorderedInput">
+          <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true)%>
+        </div>
+
+        <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
+        <%= form.number_field :price_ct, class: "borderedInput body1" %>
+
+        <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
+        <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
+
+        <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
+        <%= form.text_area :return_checklist, class: "borderedInput body1" %> 
+
+        <p class="caption">* <%= t('views.new_item.required_fields')%></p>
+
+        <div class="" id="buttonDiv">
+          <%= form.submit t('defaults.submit'), class: "btn-primary"%>
+          <%= link_to @item_new do %>
+            <button class="btn-secondary"><%= t('defaults.delete')%></button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 </div>

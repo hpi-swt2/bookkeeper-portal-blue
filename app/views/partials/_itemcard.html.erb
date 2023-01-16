@@ -1,0 +1,15 @@
+<div class="col">
+    <div class="card itemcard">
+        <div class="card-body">
+            <div class="image">
+              <% if item.image.attached? %>
+                <%= image_tag(item.image, class: "card-img-top") %>
+              <% else %>
+                <%= image_tag("image_default.svg", class: "card-img-top filter-gray") %>
+              <% end %>
+            </div>
+            <h5 class="card-title mt-1"><%= item.name %></h5>
+            <a href="<%= item_path(item) %>" class="stretched-link"></a>
+        </div>
+    </div>
+</div>

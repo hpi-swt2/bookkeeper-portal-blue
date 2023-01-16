@@ -18,7 +18,11 @@ RSpec.describe "/items", type: :request do
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    { name: "Test", location: "Test", category: "Test", description: "Test", owner: create(:user).id }
+    { name: "Test", location: "Test", category: "Test", description: "Test", owning_user: create(:user) }
+  end
+
+  let(:valid_request_attributes) do
+    { name: "Test", location: "Test", category: "Test", description: "Test", owner_id: create(:user).id }
   end
 
   let(:invalid_attributes) do
@@ -36,6 +40,7 @@ RSpec.describe "/items", type: :request do
   describe "GET /show" do
     it "renders a successful response" do
       item = create(:item)
+      item.waitlist = create(:waitlist_with_item)
       get item_url(item)
       expect(response).to be_successful
     end
@@ -60,12 +65,12 @@ RSpec.describe "/items", type: :request do
     context "with valid parameters" do
       it "creates a new Item" do
         expect do
-          post items_url, params: { item: valid_attributes }
+          post items_url, params: { item: valid_request_attributes }
         end.to change(Item, :count).by(1)
       end
 
       it "redirects to the created item" do
-        post items_url, params: { item: valid_attributes }
+        post items_url, params: { item: valid_request_attributes }
         expect(response).to redirect_to(item_url(Item.last))
       end
     end

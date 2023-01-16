@@ -9,7 +9,62 @@ FactoryBot.define do
     rental_duration_sec { 1 }
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
-    owner { create(:user).id }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+  factory :item_owned_by_group, class: 'Item' do
+    name { "MyName" }
+    category { "MyCategory" }
+    location { "MyLocation" }
+    description { "MyDescription" }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 1 }
+    rental_duration_sec { 1 }
+    rental_start { "2022-11-18 15:32:07" }
+    return_checklist { "MyChecklist" }
+    lend_status { :available }
+    owning_group { create(:group) }
+  end
+  factory :pending, class: 'Item' do
+    name { "MyName2" }
+    category { "MyCategory" }
+    location { "MyLocation" }
+    description { "MyDescription" }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 1 }
+    rental_duration_sec { 1 }
+    rental_start { "2022-11-18 15:32:07" }
+    return_checklist { "MyChecklist" }
+    lend_status { :pending_return }
+    owning_user { create(:user) }
+  end
+  factory :lent, class: 'Item' do
+    name { "MyName3" }
+    category { "MyCategory" }
+    location { "MyLocation" }
+    description { "MyDescription" }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 1 }
+    rental_duration_sec { 1 }
+    rental_start { "2022-11-18 15:32:07" }
+    return_checklist { "MyChecklist" }
+    lend_status { :lent }
+    owning_user { create(:user) }
+    holder { owning_user.id }
+  end
+  factory :pending_return, class: 'Item' do
+    name { "MyName3" }
+    category { "MyCategory" }
+    location { "MyLocation" }
+    description { "MyDescription" }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 1 }
+    rental_duration_sec { 1 }
+    rental_start { "2022-11-18 15:32:07" }
+    return_checklist { "MyChecklist" }
+    lend_status { :pending_return }
+    owning_user { create(:user) }
+    holder { owning_user.id }
   end
   factory :item_book, class: 'Item' do
     name { "Ruby on Rails by Example" }
@@ -21,7 +76,8 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 24 * 7 }
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "Close the book. Remove sticky notes." }
-    owner { create(:user).id }
+    lend_status { :lent }
+    owning_user { create(:user) }
   end
   factory :item_beamer, class: 'Item' do
     name { "Beamer" }
@@ -33,7 +89,8 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 3 }
     rental_start { "2022-11-21 15:32:07" }
     return_checklist { "Turn off the beamer." }
-    owner { create(:user).id }
+    lend_status { :pending_return }
+    owning_user { create(:user) }
   end
   factory :item_whiteboard, class: 'Item' do
     name { "Whiteboard" }
@@ -45,7 +102,7 @@ FactoryBot.define do
     rental_duration_sec { 60 * 60 * 5 }
     rental_start { "2022-10-10 3:14:15" }
     return_checklist { "Clean the whiteboard." }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
 
   factory :item_without_time, class: 'Item' do
@@ -58,6 +115,6 @@ FactoryBot.define do
     rental_duration_sec { nil }
     rental_start { nil }
     return_checklist { "Clean the whiteboard." }
-    owner { create(:user).id }
+    owning_user { create(:user) }
   end
 end

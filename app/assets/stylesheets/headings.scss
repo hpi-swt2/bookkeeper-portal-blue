@@ -1,0 +1,33 @@
+@import 'text';
+
+h1 {
+    @include headline-1;
+}
+
+h2 {
+    @include headline-2;
+}
+
+.body-1 {
+    @include body-1;
+}
+
+.body-2 {
+    @include body-2;
+}
+
+.caption {
+    @include caption;
+}
+
+.caption-primary {
+    @include caption("blue");
+}
+
+.caption-secondary {
+     @include caption("red");
+ }
+
+.subtitle {
+    @include subtitle;
+}

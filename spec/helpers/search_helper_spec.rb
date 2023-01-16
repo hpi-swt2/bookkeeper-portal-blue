@@ -15,6 +15,12 @@ RSpec.describe "Search", type: :helper do
     expect(results).not_to include(@item_beamer)
   end
 
+  it "Searches correctly case insensitive" do
+    results = search_for_items(@item_book.name.downcase)
+    expect(results).to include(@item_book)
+    expect(results).not_to include(@item_beamer)
+  end
+
   it "Searches correctly for description" do
     results = search_for_items(@item_book.description)
     expect(results).to include(@item_book)

@@ -1,0 +1,2 @@
+class SeePermission < Permission
+end

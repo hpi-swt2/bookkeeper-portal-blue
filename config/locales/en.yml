@@ -33,6 +33,10 @@ en:
   defaults:
     delete: "Delete"
     close: "Close"
+    accept: "Accept"
+    decline: "Decline"
+    submit: "Submit"
+    check: "Check"
   views:
     landing_page:
       title: "Bookkeeper Blue"
@@ -45,29 +49,86 @@ en:
     dashboard:
       title: "Dashboard"
       greeting: "Hello, %{name}!"
-      not_signed_in: "You are not signed in."
-      unread_messages: "You have ... unread messages"
+      unread_messages:
+        zero: "You have no unread messages"
+        one: "You have an unread message"
+        other: "You have %{count} unread messages"
       lent_items:
         title: "LENT ITEMS"
+        no_lent_items: "Currently you have no lent items."
+        expired: "expired on %{date}"
+        today: "today"
+        days: 
+          one: "%{count} day left"
+          other: "%{count} days left"
+        weeks: 
+          one: "%{count} week left"
+          other: "%{count} weeks left"
       offered_items:
         title: "OFFERED ITEMS"
         nothing_offered: "You do not offer any items at the moment."
+        lent_by_you: "Lent by you"
+        lent: "Lent"
+        not_lent: "Not lent"
+        overdue: "Overdue"
       wishlist:
-        title: "YOUR WISHLIST"
+        title: "YOUR FAVORITES"
         missing_wishlist: "You don't have any items saved at the moment."
         available: "Available"
         not_available: "Not available"
-        lend_by_you: "Lend by you"
+        lent_by_you: "Lent by you"
     notifications:
       title: "Notifications"
+      deletion_history: "History"
+      timestamp_yesterday: "Yesterday"
+      timestamp_Monday: "Monday"
+      timestamp_Tuesday: "Tuesday"
+      timestamp_Wednesday: "Wednesday"
+      timestamp_Thursday: "Thursday"
+      timestamp_Friday: "Friday"
+      timestamp_Saturday: "Saturday"
+      timestamp_Sunday: "Sunday"
+      lending_accepted:
+        title: "Lending Accepted"
+        description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
+      lending_denied:
+        title: "Lending Denied"
+        description: "%{owner} has denied your request to borrow %{item}."
+      lend_request:
+        title: "Lend Request"
+        description: "%{receiver} wants to borrow your %{item}."
+        description_accepted: "You have lent %{item} to %{receiver}"
+        description_declined: "You have declined to lent %{item} to %{receiver}"
+        accepted: "Accepted"
+        declined: "Declined"
+      return_request:
+        title: "Return Item"
+        description: "%{receiver} wants to return your %{item}. Please note that the item will be removed from the system upon declining the return request."
+      return_declined:
+        title: "Return Declined"
+        description: "%{owner} has declined the return of %{item}. The item might be damaged, please contact the owner of the item for more information."
+      return_accepted:
+        title: "Return Accepted"
+        description: "%{owner} has accepted the return of %{item}. You successfully returned the item."
+      added_to_waitlist:
+        title: "Added to Waitlist"
+        description: "You have been added to Waitlist of %{item} at Position %{position}."
+      move_up_on_waitlist:
+        title: "Moved up on Waitlist"
+        description: "You have been moved up to Position %{position} on Waitlist for %{item}."
     search:
       title: "Search"
       filter_button: "Filter"
+      filter_modal:
+        title: "Filter"
       qr_scanner_title: "QR Scanner"
     home:
       title: "Home"
     new_item:
       title: "New Item"
+      item_name: "Item Name"
+      location: "Location"
+      required_fields: "required fields"
     show_item:
       author: "Author"
       category: "Category"
@@ -75,7 +136,16 @@ en:
       owner: "Owner"
       lend_until: "Lend Until"
       enter_waitlist: "Enter Waitlist"
+      leave_waitlist: "Leave Waitlist"
+      waitlist: "Waitlist"
+      users_waiting: "%{amount} Users are waiting for this Object."
+      waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
+      return: "Return"
+      qr_button: "Download QR-Code"
+      pending_lend_request: "Waiting for lend approval"
+      pending_return_request: "Waiting for return approval"
+      confirm_pickup: "Confirm pickup"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
     profile:
@@ -94,6 +164,9 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+    waitlist:
+      added_to_waitlist: "Added to Waitlist at Position %{position}."
+      failed_adding_to_waitlist: "Not added to Waitlist."
     group:
       add: "Add Group"
       name: "Group Name"

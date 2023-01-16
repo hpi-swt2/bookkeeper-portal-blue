@@ -1,6 +1,6 @@
 ---
 name: Feature
-about: Create Feature Teamplate
+about: Create Feature Template
 title: ''
 labels: in preparation
 assignees: ''

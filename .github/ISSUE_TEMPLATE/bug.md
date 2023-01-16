@@ -1,9 +1,10 @@
 ---
 name: Bug
-about: Bug-Teamplate
-title: ‘’
+about: Bug-Template
+title: "‘’"
 labels: Bug
-assignees: ‘’
+assignees: ''
+
 ---
 
 ## Bug: <descriptive-name>
