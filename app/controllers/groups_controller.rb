@@ -17,6 +17,20 @@ class GroupsController < ApplicationController
     end
   end
 
+  def promote
+    @group = Group.find(params[:id])
+    @user = User.find(params[:user_id])
+    @user.to_owner_of! @group
+    redirect_to @group
+  end
+
+  def demote
+    @group = Group.find(params[:id])
+    @user = User.find(params[:user_id])
+    @user.to_member_of! @group
+    redirect_to @group
+  end
+
   def group_params
     params.require(:group).permit(:name)
   end

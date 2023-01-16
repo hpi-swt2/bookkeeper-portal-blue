@@ -158,6 +158,8 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      promote: "Make owner"
+      demote: "Remove owner"
   models:
     item:
       item: "Item"
