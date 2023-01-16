@@ -26,6 +26,7 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
+    @groups = Group.all.filter{ |group| group.members.include? current_user }
   end
 
   # GET /items/1/edit

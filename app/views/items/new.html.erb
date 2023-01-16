@@ -184,7 +184,10 @@ function readURL(input) {
           <% if current_user.nil? %>
             <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
           <% else %>
-            <%= form.collection_select(:owner_id, [current_user], :id, :email, :selected => current_user.id) %>
+            <%= form.collection_select(:owner_id, [current_user]+@groups, 
+              Proc.new { | user_or_group | (user_or_group.is_a?(User) ? "user:" : "group:") + user_or_group.id.to_s}, # todo add handling in controller
+              Proc.new { | user_or_group | user_or_group.is_a?(User) ? user_or_group.email : user_or_group.name },
+              :selected => "user:#{current_user.id}") %>
           <% end %>
         </div>
 
