@@ -12,10 +12,6 @@ class User < ApplicationRecord
 
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
-  after_create :send_welcome_email
-  def send_welcome_email
-    BookkeeperMailer.notification.deliver_now
-  end
 
   has_many :permissions, as: :user_or_group, dependent: :destroy
   has_many :see_permissions, class_name: 'SeePermission', as: :user_or_group, dependent: :destroy
