@@ -57,9 +57,6 @@ describe "Notifications Page", type: :feature do
   it "shows text if there are no notifications" do
     @notifications.each(&:destroy)
     visit notifications_path
-    #print all notifications
-    puts page.all('.notification').map(&:text)
-    #expect page to have no notifications
     expect(page).to have_text("You have no notifications")
   end
 end
