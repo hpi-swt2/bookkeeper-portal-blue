@@ -157,7 +157,7 @@ class Item < ApplicationRecord
     return 100 if rental_start.nil? || rental_duration_days.nil? || rental_duration_days.zero?
 
     rental_duration_sec = rental_duration_days * 86_400
-    lent_time_progress = (((rental_duration_sec - remaining_rental_duration_sec) * 100) / rental_duration_days).to_i
+    lent_time_progress = (((rental_duration_sec - remaining_rental_duration_sec) * 100) / rental_duration_sec).to_i
     if lent_time_progress.negative?
       0
     elsif lent_time_progress > 100

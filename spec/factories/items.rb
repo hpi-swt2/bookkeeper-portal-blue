@@ -73,7 +73,7 @@ FactoryBot.define do
     description { "Useful book for all who want to dive deeper" }
     image { nil }
     price_ct { 10_000 }
-    rental_duration_days { 60 * 60 * 24 * 7 }
+    rental_duration_days { 7 }
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "Close the book. Remove sticky notes." }
     lend_status { :lent }
@@ -86,7 +86,7 @@ FactoryBot.define do
     description { "Very small but powerful beamer to use during presentations. Also suitable for watching films." }
     image { nil }
     price_ct { 100 }
-    rental_duration_days { 60 * 60 * 3 }
+    rental_duration_days { 1 }
     rental_start { "2022-11-21 15:32:07" }
     return_checklist { "Turn off the beamer." }
     lend_status { :pending_return }
@@ -99,7 +99,7 @@ FactoryBot.define do
     description { "Standard Whiteboard with lots of space for innovative ideas." }
     image { nil }
     price_ct { 500 }
-    rental_duration_days { 60 * 60 * 5 }
+    rental_duration_days { 1 }
     rental_start { "2022-10-10 3:14:15" }
     return_checklist { "Clean the whiteboard." }
     owning_user { create(:user) }
