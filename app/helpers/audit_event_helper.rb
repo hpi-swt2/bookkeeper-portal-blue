@@ -35,7 +35,7 @@ module AuditEventHelper
   private
 
   def create_audit_event(item, event_type)
-    audit_event = AuditEvent.new(item: item, owner_id: item.owner, holder_id: item.holder,
+    audit_event = AuditEvent.new(item: item, holder_id: item.holder,
                                  triggering_user: current_user, event_type: event_type)
     audit_event.save
   end

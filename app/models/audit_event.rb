@@ -1,6 +1,5 @@
 class AuditEvent < ApplicationRecord
   belongs_to :item
-  belongs_to :owner, class_name: 'User'
   belongs_to :holder, class_name: 'User', optional: true
   belongs_to :triggering_user, class_name: 'User'
 
