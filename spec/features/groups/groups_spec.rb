@@ -98,4 +98,37 @@ RSpec.describe "Groups", type: :feature do
     expect(group.owners).not_to include(owner)
     expect(group.members).to include(owner)
   end
+
+  it "shows remove buttons if current user is owner" do
+    owner = create(:max)
+    group.owners << owner
+    visit group_path(group)
+
+    group.members_without_ownership.each do |member|
+      expect(page).to have_link("Remove from group", href: group_remove_path(group, member))
+    end
+  end
+
+  it "does not show remove buttons if current user is not owner" do
+    member = create(:max)
+    group.members << member
+    sign_in member
+    visit group_path(group)
+
+    expect(page).not_to have_link("Remove from group")
+  end
+
+  it "removes members from group on button click" do
+    member = create(:max)
+    group.members << member
+    sign_in group.owners.first
+    visit group_path(group)
+
+    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+
+    group.reload
+
+    expect(group.members).not_to include(member)
+  end
+
 end

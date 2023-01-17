@@ -165,6 +165,7 @@ en:
       members: "Members"
       promote: "Make owner"
       demote: "Remove owner"
+      remove: "Remove from group"
   models:
     item:
       item: "Item"
