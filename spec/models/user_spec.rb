@@ -56,4 +56,55 @@ describe User, type: :model do
     expect(user.groups).to include(@group)
     expect(user.owned_groups).not_to include(@group)
   end
+
+  it "can own items" do
+    item = create(:item)
+    expect(item.owning_user.owned_items).to include(item)
+  end
+
+  it "can lend owned items" do
+    item = create(:item)
+    expect(item.owning_user.lendable_items).to include(item)
+  end
+
+  it "can see owned items" do
+    item = create(:item)
+    expect(item.owning_user.visible_items).to include(item)
+  end
+
+  it "can have lend permission on items" do
+    item = create(:item)
+    item.users_with_direct_lend_permission << user
+    expect(user.lendable_items).to include(item)
+  end
+
+  it "can see lendable items" do
+    item = create(:item)
+    item.users_with_direct_lend_permission << user
+    expect(user.visible_items).to include(item)
+  end
+
+  it "does not own lendable items" do
+    item = create(:item)
+    item.users_with_direct_lend_permission << user
+    expect(user.owned_items).not_to include(item)
+  end
+
+  it "can have see permission on items" do
+    item = create(:item)
+    item.users_with_direct_see_permission << user
+    expect(user.visible_items).to include(item)
+  end
+
+  it "cannot lend visible items" do
+    item = create(:item)
+    item.users_with_direct_see_permission << user
+    expect(user.lendable_items).not_to include(item)
+  end
+
+  it "does not own visible items" do
+    item = create(:item)
+    item.users_with_direct_see_permission << user
+    expect(user.owned_items).not_to include(item)
+  end
 end

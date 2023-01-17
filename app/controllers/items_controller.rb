@@ -6,7 +6,8 @@ require "stringio"
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
 class ItemsController < ApplicationController
-  before_action :set_item, only: %i[ show edit update destroy request_return accept_return request_lend accept_lend]
+  before_action :set_item,
+                only: %i[ show edit update destroy request_return accept_return request_lend accept_lend deny_lend]
 
   # GET /items or /items.json
   def index
@@ -29,6 +30,8 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    @item = Item.find(params[:id])
+    @owner_id = @item.owning_user.id
   end
 
   # POST /items or /items.json
@@ -87,7 +90,7 @@ class ItemsController < ApplicationController
 
   def request_lend
     @user = current_user
-    @owner = User.find(@item.owner)
+    @owner = @item.owning_user
     @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
                                                 unread: true, active: true)
     @notification.save
@@ -121,6 +124,22 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
+  def deny_lend
+    @notification = LendRequestNotification.find_by(item: @item)
+    @item.set_status_available
+    @job = Job.create
+    @job.item = @item
+    @job.save
+    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
+    @notification.mark_as_inactive
+    @lendrequest = LendRequestNotification.find(@notification.actable_id)
+    @lendrequest.update(active: false)
+    @item.save
+    LendingDeniedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
+                                     active: false, unread: true)
+    redirect_to notifications_path
+  end
+
   def start_lend
     @item = Item.find(params[:id])
     @job = Job.find_by(item: @item)
@@ -151,7 +170,7 @@ class ItemsController < ApplicationController
     helpers.audit_request_return(@item)
 
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(receiver: User.find(@item.owner), date: Time.zone.now,
+      @notification = ReturnRequestNotification.new(receiver: @item.owning_user, date: Time.zone.now,
                                                     item: @item, borrower: current_user, active: true, unread: true)
       @notification.save
     end
@@ -235,7 +254,22 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :owner, :holder, :waitlist_id, :lend_status)
+                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
+          .merge!(owner_hash)
+  end
+
+  def owner_hash
+    owner_id = params.require(:item)[:owner_id]
+    if owner_id.nil?
+      {}
+    else
+      case params[:owner_type]
+      when "group"
+        { owning_group: Group.find(owner_id) }
+      else # "user" as default
+        { owning_user: User.find(owner_id) }
+      end
+    end
   end
 end
 

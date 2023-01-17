@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_10_161824) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -77,11 +77,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
     t.text "return_checklist"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "owner"
     t.integer "holder"
     t.integer "lend_status", default: 0
     t.index ["holder"], name: "index_items_on_holder"
-    t.index ["owner"], name: "index_items_on_owner"
   end
 
   create_table "jobs", force: :cascade do |t|
@@ -106,6 +104,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_lending_accepted_notifications_on_item_id"
+  end
+
+  create_table "lending_denied_notifications", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_lending_denied_notifications_on_item_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -137,6 +142,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
     t.boolean "unread"
     t.index ["actable_type", "actable_id"], name: "index_notifications_on_actable"
     t.index ["receiver_id"], name: "index_notifications_on_receiver_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "type"
+    t.integer "item_id", null: false
+    t.string "user_or_group_type", null: false
+    t.integer "user_or_group_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id", "user_or_group_id", "user_or_group_type"], name: "index_permission_on_item_and_user_or_group", unique: true
+    t.index ["item_id"], name: "index_permissions_on_item_id"
+    t.index ["user_or_group_type", "user_or_group_id"], name: "index_permissions_on_user_or_group"
   end
 
   create_table "return_accepted_notifications", force: :cascade do |t|
@@ -202,15 +219,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_06_180533) do
   add_foreign_key "audit_events", "users", column: "owner_id"
   add_foreign_key "audit_events", "users", column: "triggering_user_id"
   add_foreign_key "items", "users", column: "holder"
-  add_foreign_key "items", "users", column: "owner"
   add_foreign_key "jobs", "items"
   add_foreign_key "lend_request_notifications", "items"
   add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
   add_foreign_key "lending_accepted_notifications", "items"
+  add_foreign_key "lending_denied_notifications", "items"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "move_up_on_waitlist_notifications", "items"
   add_foreign_key "notifications", "users", column: "receiver_id"
+  add_foreign_key "permissions", "items"
   add_foreign_key "return_accepted_notifications", "items"
   add_foreign_key "return_accepted_notifications", "users", column: "owner_id"
   add_foreign_key "return_declined_notifications", "users", column: "owner_id"
