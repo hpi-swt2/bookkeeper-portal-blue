@@ -23,6 +23,9 @@
             <%= link_to group_promote_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
                 <i class="bi bi-award"></i><%= t 'views.groups.promote' %>
             <% end %>
+        <%= link_to group_remove_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
+          <i class="bi bi-trash"></i><%= t 'views.groups.remove' %>
+        <% end %>
         <% end %>
     </li>
 <% end %>

@@ -39,6 +39,17 @@ class GroupsController < ApplicationController
     redirect_to @group
   end
 
+  def remove
+    @group = Group.find(params[:id])
+
+    if @group.owners.include?(current_user)
+      @user = User.find(params[:user_id])
+      @user.groups.delete(@group) if @group.owners.exclude?(@user) && @group.members.include?(@user)
+    end
+
+    redirect_to @group
+  end
+
   def group_params
     params.require(:group).permit(:name)
   end
