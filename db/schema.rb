@@ -92,6 +92,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_15_113230) do
     t.index ["item_id"], name: "index_lending_accepted_notifications_on_item_id"
   end
 
+  create_table "lending_denied_notifications", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_lending_denied_notifications_on_item_id"
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.string "type"
     t.integer "group_id", null: false
@@ -198,6 +205,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_15_113230) do
   add_foreign_key "lend_request_notifications", "items"
   add_foreign_key "lend_request_notifications", "users", column: "borrower_id"
   add_foreign_key "lending_accepted_notifications", "items"
+  add_foreign_key "lending_denied_notifications", "items"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
   add_foreign_key "move_up_on_waitlist_notifications", "items"

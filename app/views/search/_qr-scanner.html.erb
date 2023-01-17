@@ -3,13 +3,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="qrScannerLabel"><%= t 'views.search.qr_scanner_title' %></h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" data-action="click->qrscanner#close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <video id="qrvideo"></video>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-action="click->qrscanner#close"><%= t 'defaults.close' %></button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t 'defaults.close' %></button>
             </div>
         </div>
     </div>
