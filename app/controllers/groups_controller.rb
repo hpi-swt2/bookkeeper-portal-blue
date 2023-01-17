@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  before_action :set_group, only: %i[ remove]
   before_action :check_owner, only: %i[ remove ]
 
   def show
@@ -54,5 +55,12 @@ class GroupsController < ApplicationController
 
   def group_params
     params.require(:group).permit(:name)
+  end
+
+  def set_group
+    @group = Group.find(params[:id])
+  end
+  def check_owner
+    redirect_to @group unless @group.owners.include?(current_user)
   end
 end
