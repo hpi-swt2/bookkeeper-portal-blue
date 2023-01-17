@@ -85,6 +85,7 @@ de:
       move_up_on_waitlist:
         title: "Auf Warteliste aufgerückt"
         description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
+      no_notifications: "Du hast noch keine Nachrichten erhalten."
     search:
       title: "Suche"
       filter_button: "Filter"
