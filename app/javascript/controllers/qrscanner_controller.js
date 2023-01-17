@@ -23,9 +23,14 @@ export default class extends Controller {
       return;
     }
     const itemId = splitResult[1];
-    this.qrScanner.stop();
-    this.qrScanner.destroy();
-    window.location.href = "/items/" + itemId;
+    fetch("items/" + itemId)
+      .then(response => {
+        if(response.status != 404) {
+          window.location.href = "/items/" + itemId;
+          this.qrScanner.stop();
+          this.qrScanner.destroy();
+        }
+      });
   }
 
   open() {
