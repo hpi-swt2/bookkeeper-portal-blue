@@ -23,7 +23,8 @@ export default class extends Controller {
       return;
     }
     const itemId = splitResult[1];
-    this.close();
+    this.qrScanner.stop();
+    this.qrScanner.destroy();
     window.location.href = "/items/" + itemId;
   }
 

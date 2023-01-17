@@ -2,6 +2,8 @@
 <script type="text/javascript" src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
 
 <script type="text/javascript">
+    // stop scanning the QR code when the modal containing it is closed
+    // since the qrscanner is controlled by a stimulus controller we have to use Stimulus to find it
     $(document).on('hide.bs.modal','#qrscanner', function () {
         let controller = Stimulus.controllers.find(c => {return 'qrScanner' in c});
         if (controller === undefined) {
