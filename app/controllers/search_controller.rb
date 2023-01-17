@@ -6,7 +6,8 @@ class SearchController < ApplicationController
     @availability = params[:availability]
     @category = params[:category]
 
-    parse_filters
+    create_availability_filter
+    create_category_filters
 
     @results = helpers.search_for_items(@search_term, @filters, @numerical_filters)
   end
