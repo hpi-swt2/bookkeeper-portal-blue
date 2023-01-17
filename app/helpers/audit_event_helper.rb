@@ -19,11 +19,6 @@ module AuditEventHelper
     create_audit_event(item, :accept_return)
   end
 
-  # Not used because an item gets deleted when declining a return
-  def audit_deny_return(item)
-    create_audit_event(item, :deny_return)
-  end
-
   def audit_add_to_waitlist(item)
     create_audit_event(item, :add_to_waitlist)
   end

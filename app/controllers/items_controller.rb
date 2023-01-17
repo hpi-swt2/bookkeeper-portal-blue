@@ -204,9 +204,6 @@ class ItemsController < ApplicationController
     @declined_notification.save
     @item.destroy
 
-    # Comment out because an item gets deleted, when declining a return
-    # helpers.audit_deny_return(@item)
-
     redirect_to notifications_path
   end
 
