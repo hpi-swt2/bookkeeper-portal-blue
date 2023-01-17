@@ -44,7 +44,7 @@ class GroupsController < ApplicationController
 
     if @group.owners.include?(current_user)
       @user = User.find(params[:user_id])
-      @user.groups.delete(@group) if @group.owners.exclude?(@user) && @group.members.include?(@user)
+      @user.groups.delete(@group) if @group.members_without_ownership.include?(@user)
     end
 
     redirect_to @group
