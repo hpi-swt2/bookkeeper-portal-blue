@@ -107,6 +107,10 @@
     width: 100%;
   }
 
+  #uploadBtn {
+    margin-top: 8px;
+  }
+
     @media screen and (min-width: 480px) and (max-width: 767px) {
       .image {
         padding-bottom: 26em;
@@ -181,7 +185,7 @@ function readURL(input) {
           </div> 
         </div>
 
-        <%= form.file_field :image, multiple: false, direct_upload: true, :onchange => "readURL(this)"%>
+        <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
 
       </div>  
 

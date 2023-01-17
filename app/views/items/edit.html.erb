@@ -110,6 +110,10 @@
   select {
     width: 100%;
   }
+
+  #uploadBtn {
+    margin-top: 8px;
+  }
   
   @media screen and (min-width: 480px) and (max-width: 767px) {
       .image {
@@ -187,7 +191,7 @@ function readURL(input) {
             <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block", id: "itemImg" if @item.image.attached? %>
             <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
           </div>
-          <%= form.file_field :image, multiple: false, direct_upload: true, :onchange => "readURL(this)"%>
+          <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
         </div>
 
         <div class="col">
