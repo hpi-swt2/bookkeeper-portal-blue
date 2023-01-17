@@ -128,7 +128,9 @@ class ItemsController < ApplicationController
   end
 
   def deny_lend
-    @notification = LendRequestNotification.find_by(item: @item)
+    @notification = Notification.find_by(id: params[:notification_id])
+    @notification.mark_as_inactive
+    @notification = LendRequestNotification.find_by(id: @notification.actable_id)
     @item.set_status_available
     @job = Job.create
     @job.item = @item
