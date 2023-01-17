@@ -60,6 +60,7 @@ class GroupsController < ApplicationController
   def set_group
     @group = Group.find(params[:id])
   end
+
   def check_owner
     redirect_to @group unless @group.owners.include?(current_user)
   end
