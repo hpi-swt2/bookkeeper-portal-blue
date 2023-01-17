@@ -23,7 +23,8 @@ export default class extends Controller {
       return;
     }
     const itemId = splitResult[1];
-    this.close();
+    this.qrScanner.stop();
+    this.qrScanner.destroy();
     window.location.href = "/items/" + itemId;
   }
 
@@ -34,13 +35,5 @@ export default class extends Controller {
       { highlightCodeOutline: true, highlightScanRegion: true, maxScansPerSecond: 10},
     );
     this.qrScanner.start();
-  }
-
-  close() {
-    if (this.qrScanner != null) {
-      this.qrScanner.stop();
-      this.qrScanner.destroy();
-      this.qrScanner = null;
-    }
   }
 }
