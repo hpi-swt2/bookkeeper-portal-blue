@@ -98,7 +98,7 @@ de:
       item_name: "Name des Gegenstands"
       location: "Standort"
       required_fields: "erforderliche Felder"
-      price_ct : "Preis in ct"
+      price_ct : "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
     show_item:
       author: "Autor"
