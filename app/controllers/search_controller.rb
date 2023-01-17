@@ -3,7 +3,6 @@ class SearchController < ApplicationController
     setup_variables
 
     @search_term = params[:search]
-    @lastsearch = params[:lastsearch]
     @availability = params[:availability]
     @category = params[:category]
 
@@ -13,14 +12,6 @@ class SearchController < ApplicationController
   end
 
   private
-
-  def lastsearch
-    if @search_term.blank?
-      @search_term = @lastsearch
-    else
-      @lastsearch = @search_term
-    end
-  end
 
   def setup_variables
     @availability_options = [[t('views.search.filter_modal.available'), 0],
