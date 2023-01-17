@@ -5,7 +5,7 @@
 <div id="notifications">
   <!-- show text if there are no notifications -->
   <% if @notifications.nil? %>
-    <p><%= t 'views.notifications.no_notifications' %></p>
+    <p class="body-1"><%= t 'views.notifications.no_notifications' %></p>
   <% end %>
   <% @active_dates.each do |(date, notifications)| %>
     <% notifications.each do |notification| %>
