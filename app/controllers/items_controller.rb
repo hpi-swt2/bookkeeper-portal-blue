@@ -8,7 +8,7 @@ require "stringio"
 
 class ItemsController < ApplicationController
   before_action :set_item,
-                only: %i[ show edit update destroy request_return accept_return request_lend accept_lend deny_lend]
+                only: %i[ show edit update destroy request_return accept_return request_lend]
 
   # GET /items or /items.json
   def index
@@ -101,48 +101,6 @@ class ItemsController < ApplicationController
     helpers.audit_request_lend(@item)
 
     redirect_to item_url(@item)
-  end
-
-  # (reduce complexity in future)
-  def accept_lend
-    @notification = Notification.find_by(id: params[:notification_id])
-    @notification.mark_as_inactive
-    @notification = LendRequestNotification.find_by(id: @notification.actable_id)
-    @item.set_status_pending_pickup
-    @job = Job.create
-    @job.item = @item
-    @job.save
-    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
-    @item.set_rental_start_time
-    @item.update(holder: @notification.borrower.id)
-
-    @lendrequest = LendRequestNotification.find(@notification.actable_id)
-    @lendrequest.update(accepted: true)
-    @item.save
-
-    helpers.audit_accept_lend(@item)
-
-    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                       active: false, unread: true)
-    redirect_to notifications_path
-  end
-
-  def deny_lend
-    @notification = Notification.find_by(id: params[:notification_id])
-    @notification.mark_as_inactive
-    @notification = LendRequestNotification.find_by(id: @notification.actable_id)
-    @item.set_status_available
-    @job = Job.create
-    @job.item = @item
-    @job.save
-    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
-    @notification.mark_as_inactive
-    @lendrequest = LendRequestNotification.find(@notification.actable_id)
-    @lendrequest.update(active: false)
-    @item.save
-    LendingDeniedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                     active: false, unread: true)
-    redirect_to notifications_path
   end
 
   def start_lend

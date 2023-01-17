@@ -12,6 +12,14 @@ class LendRequestNotification < ApplicationRecord
     I18n.t "views.notifications.lend_request.title"
   end
 
+  def set_accepted
+    update(accepted: true)
+  end
+
+  def set_denied
+    update(accepted: false)
+  end
+
   def description
     user_name = borrower.name
     item_name = item.name
