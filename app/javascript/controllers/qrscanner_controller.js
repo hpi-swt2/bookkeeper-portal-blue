@@ -23,12 +23,12 @@ export default class extends Controller {
       return;
     }
     const itemId = splitResult[1];
-    
     fetch("items/" + itemId)
       .then(response => {
         if(response.status != 404) {
           window.location.href = "/items/" + itemId;
-          this.close();
+          this.qrScanner.stop();
+          this.qrScanner.destroy();
         }
       });
   }
@@ -40,13 +40,5 @@ export default class extends Controller {
       { highlightCodeOutline: true, highlightScanRegion: true, maxScansPerSecond: 10},
     );
     this.qrScanner.start();
-  }
-
-  close() {
-    if (this.qrScanner != null) {
-      this.qrScanner.stop();
-      this.qrScanner.destroy();
-      this.qrScanner = null;
-    }
   }
 }
