@@ -14,6 +14,8 @@ require 'rails_helper'
 
 RSpec.describe "/items", type: :request do
 
+  let(:user) { create(:user) }
+
   # This should return the minimal set of attributes required to create a valid
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
@@ -72,6 +74,12 @@ RSpec.describe "/items", type: :request do
       it "redirects to the created item" do
         post items_url, params: { item: valid_request_attributes }
         expect(response).to redirect_to(item_url(Item.last))
+      end
+
+      it "creates an audit event" do
+        sign_in user
+        post items_url, params: { item: valid_request_attributes }
+        expect(AuditEvent.where(event_type: "create_item").count).to be(1)
       end
     end
 
