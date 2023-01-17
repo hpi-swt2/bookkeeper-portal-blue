@@ -48,7 +48,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_161824) do
 
   create_table "audit_events", force: :cascade do |t|
     t.integer "item_id", null: false
-    t.integer "owner_id", null: false
     t.integer "holder_id"
     t.integer "triggering_user_id", null: false
     t.integer "event_type"
@@ -56,7 +55,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_161824) do
     t.datetime "updated_at", null: false
     t.index ["holder_id"], name: "index_audit_events_on_holder_id"
     t.index ["item_id"], name: "index_audit_events_on_item_id"
-    t.index ["owner_id"], name: "index_audit_events_on_owner_id"
     t.index ["triggering_user_id"], name: "index_audit_events_on_triggering_user_id"
   end
 
@@ -216,7 +214,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_10_161824) do
   add_foreign_key "added_to_waitlist_notifications", "items"
   add_foreign_key "audit_events", "items"
   add_foreign_key "audit_events", "users", column: "holder_id"
-  add_foreign_key "audit_events", "users", column: "owner_id"
   add_foreign_key "audit_events", "users", column: "triggering_user_id"
   add_foreign_key "items", "users", column: "holder"
   add_foreign_key "jobs", "items"
