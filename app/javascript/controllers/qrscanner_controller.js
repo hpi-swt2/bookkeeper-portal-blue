@@ -36,10 +36,4 @@ export default class extends Controller {
     );
     this.qrScanner.start();
   }
-
-  toggleFlash() {
-    if (this.qrScanner.hasFlash()) {
-      this.qrScanner.toggleFlash();
-    }
-  }
 }

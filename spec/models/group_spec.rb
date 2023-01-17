@@ -38,4 +38,55 @@ RSpec.describe Group, type: :model do
     expect { @group.members.append(user) }.to raise_error(ActiveRecord::RecordNotUnique)
     expect { @group.owners.append(user) }.to raise_error(ActiveRecord::RecordNotUnique)
   end
+
+  it "can own items" do
+    item = create(:item_owned_by_group)
+    expect(item.owning_group.owned_items).to include(item)
+  end
+
+  it "can lend owned items" do
+    item = create(:item_owned_by_group)
+    expect(item.owning_group.lendable_items).to include(item)
+  end
+
+  it "can see owned items" do
+    item = create(:item_owned_by_group)
+    expect(item.owning_group.visible_items).to include(item)
+  end
+
+  it "can have lend permission on items" do
+    item = create(:item)
+    item.groups_with_lend_permission << @group
+    expect(@group.lendable_items).to include(item)
+  end
+
+  it "can see lendable items" do
+    item = create(:item)
+    item.groups_with_lend_permission << @group
+    expect(@group.visible_items).to include(item)
+  end
+
+  it "does not own lendable items" do
+    item = create(:item)
+    item.groups_with_lend_permission << @group
+    expect(@group.owned_items).not_to include(item)
+  end
+
+  it "can have see permission on items" do
+    item = create(:item)
+    item.groups_with_see_permission << @group
+    expect(@group.visible_items).to include(item)
+  end
+
+  it "cannot lend visible items" do
+    item = create(:item)
+    item.groups_with_see_permission << @group
+    expect(@group.lendable_items).not_to include(item)
+  end
+
+  it "does not own visible items" do
+    item = create(:item)
+    item.groups_with_see_permission << @group
+    expect(@group.owned_items).not_to include(item)
+  end
 end
