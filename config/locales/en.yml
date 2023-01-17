@@ -163,7 +163,7 @@ en:
       promote: "Make owner"
       demote: "Remove owner"
     sessions:
-      sign_in_with_email: "Sign in with email"
+      sign_in_with_password: "Sign in with password"
   models:
     item:
       item: "Item"

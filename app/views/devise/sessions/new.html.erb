@@ -1,7 +1,7 @@
 <div class="container mt-3">
   <h2><%= t('.sign_in') %></h2>
 
-  <% if @sign_in_method == 'email' %>
+  <% if @sign_in_method == 'password' %>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="mb-3">
         <%= f.label :email, class: "form-label" %><br/>
@@ -26,7 +26,7 @@
     <% end %>
   <% else %>
     <div class="mb-3 col">
-      <%= link_to t('views.sessions.sign_in_with_email'), new_session_path(resource_name, method: :email), class: "btn btn-outline-primary btn-full-width" %>
+      <%= link_to t('views.sessions.sign_in_with_password'), new_session_path(resource_name, method: :password), class: "btn btn-outline-primary btn-full-width" %>
     </div>
   <% end %>
   <%= render "devise/shared/links" %>

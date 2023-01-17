@@ -34,7 +34,7 @@
 
 </div>
 
-<%- if devise_mapping.omniauthable? && controller_name != 'users' && @sign_in_method != 'email' %>
+<%- if devise_mapping.omniauthable? && controller_name != 'users' && @sign_in_method != 'password' %>
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= button_to(omniauth_authorize_path(resource_name, provider),
                   class: 'btn btn-primary btn-full-width mb-3', id: "#{provider}-signin",

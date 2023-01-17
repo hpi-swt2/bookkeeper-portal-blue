@@ -136,7 +136,7 @@ de:
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
     sessions:
-      sign_in_with_email: "Mit Email anmelden"
+      sign_in_with_password: "Mit Passwort anmelden"
   models:
     item:
       item: "Gegenstand"
