@@ -45,7 +45,7 @@ describe "Search page", type: :feature do
     expect(page).to have_text(@item_whiteboard.name)
   end
 
-  it "shows no item at first if you visit the page" do
+  it "shows all items at first if you visit the page" do
     expect(page).to have_text(@item_book.name)
     expect(page).to have_text(@item_beamer.name)
     expect(page).to have_text(@item_whiteboard.name)
