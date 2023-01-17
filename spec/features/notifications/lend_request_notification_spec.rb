@@ -59,4 +59,15 @@ describe "Lend Request Notifications", type: :feature do
     expect(page).to have_text(item.name)
     expect(page).to have_text('Lending Accepted')
   end
+
+  it "borrower gets notified when the request is denied" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Decline')
+    sign_in borrower
+    visit notifications_path
+    expect(page).to have_text(user.name)
+    expect(page).to have_text(item.name)
+    expect(page).to have_text('Lending Denied')
+  end
 end

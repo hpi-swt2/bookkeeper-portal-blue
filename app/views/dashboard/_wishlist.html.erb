@@ -4,10 +4,10 @@
     <p class="body-1"><%= t 'views.dashboard.wishlist.missing_wishlist' %></p>
   <% else %>
     <div class="container">
-      <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-4">
         <% wishlist.each do |item| %>
           <div>
-            <%= render :partial => "partials/itemcard", :locals => { :item => item} %>
+            <%= render :partial => "partials/itemcard", :locals => { :item => item } %>
             <% if item.holder.nil? %>
               <p class="caption-primary text-center"><%= t 'views.dashboard.wishlist.available' %></p>
             <% elsif item.holder == current_user.id %>

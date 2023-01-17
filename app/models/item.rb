@@ -3,6 +3,7 @@
 class Item < ApplicationRecord
   has_one_attached :image
   has_one :waitlist, dependent: :destroy
+  has_many :audit_events, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
   has_many :return_request_notifications, dependent: :destroy
   has_many :return_accepted_notifications, dependent: :destroy

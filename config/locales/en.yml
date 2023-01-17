@@ -91,6 +91,9 @@ en:
       lending_accepted:
         title: "Lending Accepted"
         description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
+      lending_denied:
+        title: "Lending Denied"
+        description: "%{owner} has denied your request to borrow %{item}."
       lend_request:
         title: "Lend Request"
         description: "%{receiver} wants to borrow your %{item}."
@@ -125,6 +128,8 @@ en:
       title: "New Item"
       item_name: "Item Name"
       location: "Location"
+      required_fields: "required fields"
+      price_ct : "Price in Cent"
     show_item:
       author: "Author"
       category: "Category"
@@ -144,6 +149,7 @@ en:
       confirm_pickup: "Confirm pickup"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
+      price_ct : "Price in Cent"
     profile:
       title: "Profile"
       roles: "Roles"
@@ -154,6 +160,8 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      promote: "Make owner"
+      demote: "Remove owner"
   models:
     item:
       item: "Item"

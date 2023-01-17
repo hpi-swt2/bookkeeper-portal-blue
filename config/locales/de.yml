@@ -60,6 +60,9 @@ de:
       lending_accepted:
         title: "Ausleihanfrage angenommen"
         description: "%{owner} hat deine Anfrage zu %{item} angenommen. Du kannst es jetzt abholen"
+      lending_denied:
+        title: "Ausleihanfrage abgelehnt"
+        description: "%{owner} hat deine Anfrage zu %{item} abgelehnt."
       lend_request:
         title: "Ausleihanfrage"
         description: "%{receiver} möchte %{item} von dir ausleihen."
@@ -94,6 +97,9 @@ de:
       title: "Neuer Gegenstand"
       item_name: "Name des Gegenstands"
       location: "Standort"
+      required_fields: "erforderliche Felder"
+      price_ct : "Preis in Cent"
+      return_checklist: "Rückgabe Checkliste"
     show_item:
       author: "Autor"
       category: "Kategorie"
@@ -113,6 +119,8 @@ de:
       confirm_pickup: "Abholung bestätigen"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
+      price_ct : "Preis in ct"
+      return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
       roles: "Rollen"
@@ -125,6 +133,8 @@ de:
     groups:
       owners: "Admins"
       members: "Mitglieder"
+      promote: "Zu Admin machen"
+      demote: "Admin entfernen"
   models:
     item:
       item: "Gegenstand"
