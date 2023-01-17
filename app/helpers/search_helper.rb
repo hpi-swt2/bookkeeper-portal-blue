@@ -82,6 +82,6 @@ module SearchHelper
   end
 
   def relevant_numerical_attribute
-    %w[price_ct]
+    %w[price_ct lend_status]
   end
 end

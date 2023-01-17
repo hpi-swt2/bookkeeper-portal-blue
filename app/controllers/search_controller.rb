@@ -8,7 +8,7 @@ class SearchController < ApplicationController
 
     parse_filters
 
-    @results = helpers.search_for_items(@search_term, @filters)
+    @results = helpers.search_for_items(@search_term, @filters, @numerical_filters)
   end
 
   private
@@ -19,15 +19,25 @@ class SearchController < ApplicationController
     @category_options = Item.select(:category).distinct.pluck(:category)
   end
 
-  def parse_filters
+  def create_availability_filter
     availability = @availability
+    @numerical_filters = {}
+
+    return if availability.blank? || availability.to_i > 1 || availability.to_i.negative?
+
+    avail = availability.to_i
+
+    @numerical_filters["lend_status"] = if avail.zero?
+                                          { "lower_bound" => 0, "upper_bound" => 0 }
+                                        else
+                                          { "lower_bound" => 1, "upper_bound" => 5 }
+                                        end
+  end
+
+  def create_category_filters
     category = @category
 
     @filters = {}
-
-    if availability.present? && availability.to_i <= 1 && availability.to_i >= 0
-      @filters["lend_status"] = availability.to_i
-    end
 
     return if category.blank?
 
