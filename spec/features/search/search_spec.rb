@@ -61,4 +61,33 @@ describe "Search page", type: :feature do
     expect(page).to have_text(@item_whiteboard.name)
   end
 
+  it "shows only the items with the correct category" do
+    page.fill_in "search", with: "book"
+    click_button("filter")
+    select("Books", from: "category").select_option
+    click_button("submit")
+
+    expect(page).to have_text(@item_book.name)
+    expect(page).not_to have_text(@item_beamer.name)
+    expect(page).not_to have_text(@item_whiteboard.name)
+  end
+
+  it "shows only unavailable items when filtering for unavailability" do
+    page.fill_in "search", with: "b"
+    click_button("filter")
+    select("Unavailable", from: "availability").select_option
+    click_button("submit")
+
+    expect(page).to have_text(@item_book.name)
+    expect(page).to have_text(@item_beamer.name)
+    expect(page).not_to have_text(@item_whiteboard.name)
+  end
+
+  it "shows all available categories" do
+    click_button("filter")
+
+    expect(page).to have_text(@item_book.category)
+    expect(page).to have_text(@item_beamer.category)
+    expect(page).to have_text(@item_whiteboard.category)
+  end
 end
