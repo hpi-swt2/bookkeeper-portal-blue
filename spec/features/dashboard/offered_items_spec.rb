@@ -52,8 +52,8 @@ RSpec.describe "Offered Items", type: :feature do
   it "shows the correct tag for offered items which are overdue" do
     @user = create(:user)
     @borrower = create(:user)
-    item = create(:item, owning_user: @user, holder: @borrower.id, rental_start: Time.now.utc - 10.seconds,
-                         rental_duration_sec: 5)
+    item = create(:item, owning_user: @user, holder: @borrower.id, rental_start: Time.now.utc - 2.days.seconds,
+                         rental_duration_days: 1)
     sign_in @user
     visit dashboard_path
     expect(page).to have_content(item.name)
