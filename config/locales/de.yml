@@ -130,6 +130,8 @@ de:
     groups:
       owners: "Admins"
       members: "Mitglieder"
+      promote: "Zu Admin machen"
+      demote: "Admin entfernen"
   models:
     item:
       item: "Gegenstand"
