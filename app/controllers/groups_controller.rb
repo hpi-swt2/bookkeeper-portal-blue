@@ -1,4 +1,6 @@
 class GroupsController < ApplicationController
+  before_action :check_owner, only: %i[ remove ]
+
   def show
     @group = Group.find(params[:id])
   end
@@ -41,12 +43,12 @@ class GroupsController < ApplicationController
 
   def remove
     @group = Group.find(params[:id])
-
-    if @group.owners.include?(current_user)
-      @user = User.find(params[:user_id])
-      @user.groups.delete(@group) if @group.members_without_ownership.include?(@user)
+    @user = User.find(params[:user_id])
+    if @group.members_without_ownership.include?(@user)
+      @user.groups.delete(@group)
+      @notification = RemovedFromGroupNotification.new(receiver: @user, date: Time.zone.now, group_name: @group.name,
+                                                       active: false, unread: true).save
     end
-
     redirect_to @group
   end
 
