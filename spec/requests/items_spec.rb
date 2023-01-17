@@ -78,7 +78,7 @@ RSpec.describe "/items", type: :request do
 
       it "creates an audit event" do
         sign_in user
-        post items_url, params: { item: valid_attributes }
+        post items_url, params: { item: valid_request_attributes }
         expect(AuditEvent.where(event_type: "create_item").count).to be(1)
       end
     end
