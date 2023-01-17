@@ -80,46 +80,68 @@
         color: var(--grey09);
     }
 
-    .notBorderedInput {
-        width: 100%;
-        margin-bottom: 8px
-    }
+  .notBorderedInput {
+    width: 100%;
+    margin-bottom: 8px
+  }
+  .borderedInput {
+    border: 1px solid #AAB0B3;
+    border-radius: 5px; 
+    padding-left: 5px;
+    width: 100%;
+    margin-bottom: 8px
+  }
+  .locationInput {
+    width: 90%;
+  }
+  .btn-primary {
+    margin-bottom: 8px;
+    width: 48%;
+    display: inline-block;
+  }
+  .btn-secondary {
+    width: 48%;
+    display: inline-block;
+  }
+  #buttonDiv {
+    width: 100%;
+    text-align: center;
+  }
+  .caption{
+    text-align: left;
+  }
+  select {
+    width: 100%;
+  }
 
-    .borderedInput {
-        border: 1px solid #AAB0B3;
-        border-radius: 5px;
-        padding-left: 5px;
-        width: 100%;
-        margin-bottom: 8px
-    }
+  #uploadBtn {
+    margin-top: 8px;
+  }
 
-    .locationInput {
-        width: 90%;
-    }
+    @media screen and (min-width: 480px) and (max-width: 767px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
 
-    .btn-primary {
-        margin-bottom: 8px;
-        width: 48%;
-        display: inline-block;
-    }
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+      .image {
+        padding-bottom: 25em;
+      }
+  }
 
-    .btn-secondary {
-        width: 48%;
-        display: inline-block;
-    }
+  @media screen and (min-width: 1200px)  and (max-width: 1399px){
+      .image {
+        padding-bottom: 25em;
+      }
+  }
 
-    #buttonDiv {
-        width: 100%;
-        text-align: center;
-    }
+  @media screen and (min-width: 1400px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
 
-    .caption {
-        text-align: left;
-    }
-
-    select {
-        width: 100%;
-    }
 </style>
 <script>
     (function () {
@@ -159,9 +181,9 @@
       </div>
     <% end %>
 
-    <div class="container">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="text-center col">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="text-center col my-auto">
 
           <div class="image container-fluid rounded">
             <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
@@ -170,9 +192,9 @@
             </div>
           </div>
 
-          <%= form.file_field :image, multiple: false, direct_upload: true, :onchange => "readURL(this)" %>
+        <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
 
-        </div>
+      </div>  
 
 
         <div class="col">
@@ -193,19 +215,14 @@
             <p class="subtitle"><%= t('views.show_item.description') %></p>
             <%= form.text_area :description, class: "borderedInput body1" %>
 
-            <p class="subtitle"><%= t('views.show_item.owner') %>*</p>
-            <div class="notBorderedInput">
-              <% if current_user.nil? %>
-                <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
-              <% else %>
-                <%= form.collection_select(:owner_id, [current_user], :id, :email, :selected => current_user.id) %>
-              <% end %>
-            </div>
-
-            <p class="subtitle"><%= t('views.show_item.holder') %></p>
-            <div class="notBorderedInput">
-              <%= form.collection_select(:holder, User.all, :id, :email, :include_blank => true) %>
-            </div>
+        <p class="subtitle"><%= t('views.show_item.owner')%>*</p>
+        <div class="notBorderedInput">
+          <% if current_user.nil? %>
+            <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
+          <% else %>
+            <%= form.collection_select(:owner_id, [current_user], :id, :email, :selected => current_user.id) %>
+          <% end %>
+        </div>
 
             <p class="subtitle"><%= t('views.edit_item.price_ct') %></p>
             <%= form.number_field :price_ct, class: "borderedInput body1" %>

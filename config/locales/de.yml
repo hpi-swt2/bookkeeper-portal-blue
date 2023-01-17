@@ -98,6 +98,8 @@ de:
       item_name: "Name des Gegenstands"
       location: "Standort"
       required_fields: "erforderliche Felder"
+      price_ct : "Preis in Cent"
+      return_checklist: "Rückgabe Checkliste"
     show_item:
       author: "Autor"
       category: "Kategorie"
@@ -117,6 +119,8 @@ de:
       confirm_pickup: "Abholung bestätigen"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
+      price_ct : "Preis in ct"
+      return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
       roles: "Rollen"
