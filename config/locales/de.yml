@@ -116,7 +116,7 @@ de:
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
     edit_item:
-      rental_duration_days: "Ausleihdauer (Tagen)"
+      rental_duration_days: "Maximale Ausleihdauer in Tagen"
     profile:
       title: "Profil"
       roles: "Rollen"
