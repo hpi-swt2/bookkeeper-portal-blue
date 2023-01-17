@@ -26,7 +26,7 @@
     <% end %>
   <% else %>
     <div class="mb-3 col">
-      <%= link_to "Sign in with email", new_session_path(resource_name, method: :email), class: "btn btn-outline-primary btn-full-width" %>
+      <%= link_to t('views.sessions.sign_in_with_email'), new_session_path(resource_name, method: :email), class: "btn btn-outline-primary btn-full-width" %>
     </div>
   <% end %>
   <%= render "devise/shared/links" %>

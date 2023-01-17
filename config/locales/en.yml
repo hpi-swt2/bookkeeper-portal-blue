@@ -162,6 +162,8 @@ en:
       members: "Members"
       promote: "Make owner"
       demote: "Remove owner"
+    sessions:
+      sign_in_with_email: "Sign in with email"
   models:
     item:
       item: "Item"

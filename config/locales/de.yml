@@ -135,6 +135,8 @@ de:
       members: "Mitglieder"
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
+    sessions:
+      sign_in_with_email: "Mit Email anmelden"
   models:
     item:
       item: "Gegenstand"
