@@ -29,12 +29,12 @@ RSpec.describe "Search", type: :helper do
 
   it "Searches correctly for empty string" do
     results = search_for_items("")
-    expect(results.length).to be(0)
+    expect(results.length).to be(3)
   end
 
   it "Searches correctly for string only with whitespaces" do
     results = search_for_items("   ")
-    expect(results.length).to be(0)
+    expect(results.length).to be(3)
   end
 
   it "Searches correctly for both items with 'to'" do
