@@ -103,6 +103,7 @@ de:
       category: "Kategorie"
       description: "Beschreibung"
       owner: "Besitzer"
+      price: "Preis"
       lent_until: "Geliehen bis"
       maximum_lending_duration: "Maximale Ausleihdauer"
       enter_waitlist: "Auf die Warteliste"
@@ -118,6 +119,8 @@ de:
       confirm_pickup: "Abholung bestätigen"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
+      price_ct: "Preis(ct)"
+      return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
       roles: "Rollen"

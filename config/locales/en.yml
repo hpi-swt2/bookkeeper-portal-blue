@@ -134,6 +134,7 @@ en:
       category: "Category"
       description: "Description"
       owner: "Owner"
+      price: "Price"
       lent_until: "Lent Until"
       maximum_lending_duration: "Maximum Lending Duration"
       enter_waitlist: "Enter Waitlist"
@@ -149,6 +150,8 @@ en:
       confirm_pickup: "Confirm pickup"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
+      price_ct: "Preis(ct)"
+      return_checklist: "Return Checklist"
     profile:
       title: "Profile"
       roles: "Roles"
