@@ -68,7 +68,7 @@
     width: 100%;
   }
 
-  .wishlistIcon {
+  .favoritesIcon {
     font-size: 1.5em;
     position: absolute;
     top: 0.225em;
@@ -82,7 +82,7 @@
     vertical-align: middle;
   }
 
-  #filledWishlistIcon {
+  #filledFavoritesIcon {
     color: var(--secondary08);
     font-variation-settings:
       'FILL' 1,
@@ -131,9 +131,9 @@
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
-          <!--only show filled icon if icon is on wishlist-->
-          <!--span class="material-symbols-outlined wishlistIcon" id="filledWishlistIcon">grade</span-->
-          <span class="material-symbols-outlined wishlistIcon" id="notFilledWishlistIcon">grade</span>
+          <!--only show filled icon if icon is on favorites-->
+          <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
+          <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached?%>
         </div>
       </div>

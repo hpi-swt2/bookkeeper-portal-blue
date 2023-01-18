@@ -35,14 +35,14 @@ de:
           other: "noch %{count} Wochen"
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
-        nothing_offered: "Du bietest bisher nichts an."
+        nothing_offered: "Aktuell hast du keine angebotenen Artikel."
         lent_by_you: "Von dir ausgeliehen"
         lent: "Ausgeliehen"
         not_lent: "Nicht ausgeliehen"
         overdue: "Überfällig"
-      wishlist:
-        title: "DEINE FAVORITEN"
-        missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
+      favorites:
+        title: "DEINE MERKLISTE"
+        missing_favorites: "Aktuell hast du keine gespeicherten Artikel."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
         lent_by_you: "Von dir ausgeliehen"
