@@ -3,13 +3,30 @@
 <h2><%= t 'views.groups.owners' %></h2>
 <ul id="group-owners">
 <% @group.owners.each do |user| %>
-    <li><%= user.name %></li>
+    <li>
+        <%= user.name %>
+        <% if @group.owners.include?(current_user) %>
+            <%= link_to group_demote_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
+                <i class="bi bi-award-fill"></i><%= t 'views.groups.demote' %>
+            <% end %>
+        <% end %>
+    </li>
 <% end %>
-  </ul>
+</ul>
 
 <h2><%= t 'views.groups.members' %></h2>
 <ul id="group-members">
 <% @group.members_without_ownership.each do |user| %>
-    <li><%= user.name %></li>
+    <li>
+        <%= user.name %>
+        <% if @group.owners.include?(current_user) %>
+            <%= link_to group_promote_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
+                <i class="bi bi-award"></i><%= t 'views.groups.promote' %>
+            <% end %>
+        <%= link_to group_remove_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
+          <i class="bi bi-trash"></i><%= t 'views.groups.remove' %>
+        <% end %>
+        <% end %>
+    </li>
 <% end %>
 </ul>

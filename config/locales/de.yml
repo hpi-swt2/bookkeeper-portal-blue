@@ -35,14 +35,14 @@ de:
           other: "noch %{count} Wochen"
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
-        nothing_offered: "Du bietest bisher nichts an."
+        nothing_offered: "Aktuell hast du keine angebotenen Artikel."
         lent_by_you: "Von dir ausgeliehen"
         lent: "Ausgeliehen"
         not_lent: "Nicht ausgeliehen"
         overdue: "Überfällig"
-      wishlist:
-        title: "DEINE FAVORITEN"
-        missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
+      favorites:
+        title: "DEINE MERKLISTE"
+        missing_favorites: "Aktuell hast du keine gespeicherten Artikel."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
         lent_by_you: "Von dir ausgeliehen"
@@ -99,6 +99,8 @@ de:
       item_name: "Name des Gegenstands"
       location: "Standort"
       required_fields: "erforderliche Felder"
+      price_ct : "Preis in Cent"
+      return_checklist: "Rückgabe Checkliste"
     show_item:
       author: "Autor"
       category: "Kategorie"
@@ -118,6 +120,8 @@ de:
       confirm_pickup: "Abholung bestätigen"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
+      price_ct : "Preis in ct"
+      return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
       roles: "Rollen"
@@ -130,6 +134,9 @@ de:
     groups:
       owners: "Admins"
       members: "Mitglieder"
+      promote: "Zu Admin machen"
+      demote: "Admin entfernen"
+      remove: "Aus Gruppe entfernen"
   models:
     item:
       item: "Gegenstand"

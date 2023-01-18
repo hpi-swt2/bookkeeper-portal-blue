@@ -1,43 +1,40 @@
-<head>
-  <style>
-      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
-      circle {
-          border-radius: 50%;
-      }
-      p {
-          text-align:left;
-          font-size: 18px;
-          font-family: 'Roboto';
-          font-weight: 400;
-          color: #394044;
-      }
-  </style>
+<style>
+  .imageLink {
+    color: #394044;
+    text-decoration: none;
+  }
+</style>
 
-<p style="text-align:right">
-  <%= link_to edit_user_registration_path do %>
-    <%= image_tag "edit_square.png", class: "mt-3 ", size: "35x35", alt: "Profil bearbeiten"%>
-  <% end %>
-</p>
+<div class="mt-3" style="text-align:right">
+    <%= link_to edit_user_registration_path, class: "imageLink" do%>
+      <span class="material-symbols-outlined me-1">edit</span>
+    <% end %>
+    <%= link_to destroy_user_session_path, class: "imageLink", data: { "turbo-method": :delete } do %>
+      <span class="material-symbols-outlined ms-1">logout</span>
+    <% end %>
+</div>
 
-<p style="text-align:center">
-  <%= image_tag "profile_picture_placeholder.png", class: "rounded-circle",  size: "128x128", alt: "Profilbild"%>
-</p>
+<div style="text-align:center">
+  <%= image_tag "profile_picture_placeholder.png", class: "rounded-circle", size: "128x128", alt: "Profilbild" %>
+</div>
 
-<h1> <%= @user.name %> </h1>
+<h1 class="mt-1" style="text-align:center"> <%= @user.name %> </h1>
 
 <h2><%= t 'views.profile.roles' %></h2>
-<p>Student</p>
+<p class="body-1">Student</p>
 
 <h2><%= t 'views.profile.email' %></h2>
-<p> <%= @user.email %> </p>
+<p class="body-1"> <%= @user.email %> </p>
 
-<h2><%= t 'views.profile.groups' %> <a class="badge rounded-pill text-bg-primary" href="<%= new_group_path %>"><i class="bi bi-plus"></i><%= t 'models.group.add' %></a></h2>
+<h2><%= t 'views.profile.groups' %>
+  <a class="badge rounded-pill text-bg-primary" href="<%= new_group_path %>"><i class="bi bi-plus"></i><%= t 'models.group.add' %>
+  </a></h2>
 <% if @user.groups.empty? %>
-  <p> <%= t 'views.profile.no_groups' %></p>
+  <p class="body-1"> <%= t 'views.profile.no_groups' %></p>
 <% else %>
-<ul>
-<% @user.groups.each do |group| %>
-  <li><%= link_to group.name, group %></li>
-<% end %>
-</ul>
+  <ul>
+    <% @user.groups.each do |group| %>
+      <li><%= link_to group.name, group %></li>
+    <% end %>
+  </ul>
 <% end %>

@@ -1,0 +1,23 @@
+<div>
+  <% favorites = current_user.favorites %>
+  <% if favorites.empty? %>
+    <p class="body-1"><%= t 'views.dashboard.favorites.missing_favorites' %></p>
+  <% else %>
+    <div class="container">
+      <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-4">
+        <% favorites.each do |item| %>
+          <div>
+            <%= render :partial => "partials/itemcard", :locals => { :item => item } %>
+            <% if item.holder.nil? %>
+              <p class="caption-primary text-center"><%= t 'views.dashboard.favorites.available' %></p>
+            <% elsif item.holder == current_user.id %>
+              <p class="caption text-center"><%= t 'views.dashboard.favorites.lent_by_you' %></p>
+            <% else %>
+              <p class="caption-secondary text-center"><%= t 'views.dashboard.favorites.not_available' %></p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
