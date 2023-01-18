@@ -70,4 +70,27 @@ describe "Lend Request Notifications", type: :feature do
     expect(page).to have_text(item.name)
     expect(page).to have_text('Lending Denied')
   end
+
+  it "doesn't change to read when clicked" do
+    visit notifications_path
+    click_on('Lend Request')
+    @notification.reload
+    expect(@notification.unread).to be true
+  end
+
+  it "does change to read when accepted" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Accept')
+    @notification.reload
+    expect(@notification.unread).to be false
+  end
+
+  it "does change to read when declined" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Decline')
+    @notification.reload
+    expect(@notification.unread).to be false
+  end
 end

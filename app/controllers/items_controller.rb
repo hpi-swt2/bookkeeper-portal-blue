@@ -113,6 +113,7 @@ class ItemsController < ApplicationController
     @item.set_rental_start_time
     @item.update(holder: @notification.borrower.id)
     @notification.mark_as_inactive
+    @notification.mark_as_read
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(accepted: true)
     @item.save
@@ -132,6 +133,7 @@ class ItemsController < ApplicationController
     @job.save
     ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
     @notification.mark_as_inactive
+    @notification.mark_as_read
     @lendrequest = LendRequestNotification.find(@notification.actable_id)
     @lendrequest.update(active: false)
     @item.save
