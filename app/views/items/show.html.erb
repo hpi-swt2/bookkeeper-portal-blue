@@ -90,6 +90,30 @@
       'GRAD' 0,
       'opsz' 48
   }
+
+      @media screen and (min-width: 480px) and (max-width: 767px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1200px)  and (max-width: 1399px){
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1400px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
   
 </style>
 <div>
@@ -105,7 +129,7 @@
   
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
-      <div class="text-center col">
+      <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
           <!--only show filled icon if icon is on favorites-->
           <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->

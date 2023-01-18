@@ -129,6 +129,7 @@ en:
       item_name: "Item Name"
       location: "Location"
       required_fields: "required fields"
+      price_ct : "Price in Cent"
     show_item:
       author: "Author"
       category: "Category"
@@ -148,6 +149,7 @@ en:
       confirm_pickup: "Confirm pickup"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
+      price_ct : "Price in Cent"
     profile:
       title: "Profile"
       roles: "Roles"
@@ -158,6 +160,9 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      promote: "Make owner"
+      demote: "Remove owner"
+      remove: "Remove from group"
   models:
     item:
       item: "Item"

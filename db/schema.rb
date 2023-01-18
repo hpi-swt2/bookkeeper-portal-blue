@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_16_103028) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_10_161824) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -46,9 +46,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_16_103028) do
     t.index ["item_id"], name: "index_added_to_waitlist_notifications_on_item_id"
   end
 
-  create_table "favorites", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
+  create_table "audit_events", force: :cascade do |t|
     t.integer "item_id", null: false
+    t.integer "holder_id"
+    t.integer "triggering_user_id", null: false
+    t.integer "event_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["holder_id"], name: "index_audit_events_on_holder_id"
+    t.index ["item_id"], name: "index_audit_events_on_item_id"
+    t.index ["triggering_user_id"], name: "index_audit_events_on_triggering_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
@@ -197,9 +204,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_16_103028) do
     t.index ["item_id"], name: "index_waitlists_on_item_id"
   end
 
+  create_table "wishlist", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "item_id", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "added_to_waitlist_notifications", "items"
+  add_foreign_key "audit_events", "items"
+  add_foreign_key "audit_events", "users", column: "holder_id"
+  add_foreign_key "audit_events", "users", column: "triggering_user_id"
   add_foreign_key "items", "users", column: "holder"
   add_foreign_key "jobs", "items"
   add_foreign_key "lend_request_notifications", "items"
