@@ -24,8 +24,4 @@ class LendRequestNotification < ApplicationRecord
       I18n.t "views.notifications.lend_request.description_declined", receiver: user_name, item: item_name
     end
   end
-
-  def send_mail
-    NotificationMailer.notification(self).deliver_now
-  end
 end
