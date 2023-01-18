@@ -143,7 +143,7 @@ en:
       waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
       return: "Return"
-      qr_button: "Download QR-Code"
+      qr_button: "Show QR-Code"
       pending_lend_request: "Waiting for lend approval"
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
