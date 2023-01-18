@@ -42,7 +42,28 @@ RSpec.describe "Profile", type: :feature do
   it "has an edit profile button" do
     sign_in user
     visit profile_path
-    expect(page).to have_link 'Profil bearbeiten', href: edit_user_registration_path
+    expect(page).to have_link(href: edit_user_registration_path)
+  end
+
+  it "has a logout button" do
+    sign_in user
+    visit profile_path
+    expect(page).to have_link(href: destroy_user_session_path)
+  end
+
+  it "has a logout button which redirects to the login page" do
+    sign_in user
+    visit profile_path
+    click_on('logout')
+    expect(page).to have_current_path(new_user_session_path)
+  end
+
+  it "has a logout button which ends the current session" do
+    sign_in user
+    visit profile_path
+    click_on('logout')
+    visit dashboard_path
+    expect(page).to have_current_path(new_user_session_path)
   end
 
   it "has a create group button" do
