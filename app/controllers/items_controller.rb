@@ -250,9 +250,9 @@ class ItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def item_params
-    params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
+    params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct,
                                  :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
-          .merge!(owner_hash)
+          .merge!(owner_hash).merge!(rental_duration_hash)
   end
 
   def owner_hash
@@ -266,6 +266,30 @@ class ItemsController < ApplicationController
       else # "user" as default
         { owning_user: User.find(owner_id) }
       end
+    end
+  end
+
+  def rental_duration_hash
+    rental_duration = params.require(:item)[:rental_duration].to_i
+    rental_duration_unit = params.require(:item)[:rental_duration_unit]
+    
+    hash = {rental_duration: rental_duration, rental_duration_unit: rental_duration_unit}
+    
+    case rental_duration_unit
+    when nil
+      {}
+    when 'Month(s)'
+      hash.merge!({ rental_duration_sec: rental_duration.months.to_s})
+    when 'Week(s)'
+      hash.merge!({ rental_duration_sec: rental_duration.week.to_s})
+    when 'Day(s)'
+      hash.merge!({ rental_duration_sec: rental_duration.day.to_s})
+    when 'Hour(s)'
+      hash.merge!({ rental_duration_sec: rental_duration.hour.to_s})
+    when 'Minute(s)'
+      hash.merge!({ rental_duration_sec: rental_duration.minute.to_s})
+    when 'Second(s)'
+      hash.merge!({ rental_duration_sec: rental_duration})
     end
   end
 end

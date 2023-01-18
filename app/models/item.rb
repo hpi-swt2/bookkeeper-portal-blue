@@ -34,6 +34,8 @@ class Item < ApplicationRecord
   validates :location, presence: true
   validates :ownership_permission, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+  validates :rental_duration, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+  validates :rental_duration_unit, presence: true
   validates :rental_duration_sec, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   enum :lend_status,
        { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }

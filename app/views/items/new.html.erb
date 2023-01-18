@@ -228,7 +228,8 @@
             <%= form.number_field :price_ct, class: "borderedInput body1" %>
 
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec') %>*</p>
-            <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
+            <%= form.number_field :rental_duration, class: "borderedInput body1" %>
+            <%= form.select :rental_duration_unit, ['Month(s)', 'Week(s)', 'Day(s)', 'Hour(s)', 'Minute(s)', 'Second(s)']%>
 
             <p class="subtitle"><%= t('views.edit_item.return_checklist') %></p>
             <%= form.text_area :return_checklist, class: "borderedInput body1" %>
