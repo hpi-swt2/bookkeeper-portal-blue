@@ -97,7 +97,7 @@
   <%= link_to :back do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
-  <% if !current_user.nil? && (@item.owning_user.nil? ? @item.owning_group.members.include?(current_user) : @item.owning_user == current_user) %>
+  <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
     <%= link_to edit_item_url(@item) do %>
         <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
     <% end %>
@@ -149,7 +149,7 @@
         </p>
         <%= render "adaptive_lend_button", current_user: current_user, item: @item %>
         <div class="text-center">
-          <% if !current_user.nil? && (@item.owning_user.nil? ? @item.owning_group.members.include?(current_user) : @item.owning_user == current_user) %>
+          <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
             <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode"}, class: "btn-primary" %>
           <% end %>
         </div>
