@@ -56,4 +56,8 @@ describe "Return Request Notifications", type: :feature do
     expect(ReturnDeclinedNotification.exists?(id: @declined_notification.actable_id,
                                               item_name: @notification.item.name)).to be true
   end
+
+  it "sends an email after creation" do
+    expect(ActionMailer::Base.deliveries.last.to).to eq [user.email]
+  end
 end

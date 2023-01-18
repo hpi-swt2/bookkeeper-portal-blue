@@ -13,6 +13,10 @@ describe "Lend Request Notifications", type: :feature do
     @notification.save
   end
 
+  it "sends an email after creation" do
+    expect(ActionMailer::Base.deliveries.last.to).to eq [user.email]
+  end
+
   it "has accept and decline buttons" do
     visit notifications_path
     click_on('Lend Request')

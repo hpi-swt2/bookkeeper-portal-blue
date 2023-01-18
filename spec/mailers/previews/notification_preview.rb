@@ -3,7 +3,7 @@ class NotificationPreview < ActionMailer::Preview
 
   # Preview this email at http://localhost:3000/rails/mailers/notification/notification
   def notification
-    NotificationMailer.notification
+    NotificationMailer.notification(build(:lend_request_notification))
   end
 
 end
