@@ -1,5 +1,5 @@
-<h1>Notification#notification</h1>
+<h1><%= I18n.t("notification_mailer.notification.subject", notification_name: @title) %></h1>
 
 <p>
-  <%= @greeting %>, find me in app/views/notification_mailer/notification.html.erb
+  <%= @description %>
 </p>
