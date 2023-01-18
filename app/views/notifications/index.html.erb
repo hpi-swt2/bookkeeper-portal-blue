@@ -1,7 +1,9 @@
 <p style="color: green"><%= notice %></p>
 
   <% if @active_dates.empty? and @inactive_dates.empty? %>
+  <div class="vh-100 d-flex align-items-center justify-content-center">
     <p class="h1" style="text-align: center"><%= t 'views.notifications.no_notifications' %></p>
+  </div>
   <%else %>
   <h2><%= t 'views.notifications.title' %></h2>
   <div id="notifications">
