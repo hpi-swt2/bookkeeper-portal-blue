@@ -104,7 +104,6 @@ FactoryBot.define do
     return_checklist { "Clean the whiteboard." }
     owning_user { create(:user) }
   end
-
   factory :item_without_time, class: 'Item' do
     name { "Whiteboard" }
     category { "Equipment" }
@@ -115,6 +114,42 @@ FactoryBot.define do
     rental_duration_sec { nil }
     rental_start { nil }
     return_checklist { "Clean the whiteboard." }
+    owning_user { create(:user) }
+  end
+  factory :item_without_price, class: 'Item' do
+    name { "Whiteboard" }
+    category { "Equipment" }
+    location { "D-Space" }
+    description { "Standard Whiteboard with lots of space for innovative ideas." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { nil }
+    rental_duration_sec { nil }
+    rental_start { nil }
+    return_checklist { "Clean the whiteboard." }
+    owning_user { create(:user) }
+  end
+  factory :item_price_zero, class: 'Item' do
+    name { "Whiteboard" }
+    category { "Equipment" }
+    location { "D-Space" }
+    description { "Standard Whiteboard with lots of space for innovative ideas." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 0 }
+    rental_duration_sec { nil }
+    rental_start { nil }
+    return_checklist { "Clean the whiteboard." }
+    owning_user { create(:user) }
+  end
+  factory :item_empty_return_checklist, class: 'Item' do
+    name { "Whiteboard" }
+    category { "Equipment" }
+    location { "D-Space" }
+    description { "Standard Whiteboard with lots of space for innovative ideas." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 987 }
+    rental_duration_sec { nil }
+    rental_start { nil }
+    return_checklist { "" }
     owning_user { create(:user) }
   end
 end
