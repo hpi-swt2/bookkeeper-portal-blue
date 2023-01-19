@@ -43,6 +43,7 @@ de:
       waitlist:
         title: "WARTEND AUF ..."
         nowhere_on_waitlists: "Aktuell wartest du auf keine Artikel."
+        position: "Wartelistenposition: %{position}"
       favorites:
         title: "DEINE MERKLISTE"
         missing_favorites: "Aktuell hast du keine gespeicherten Artikel."
