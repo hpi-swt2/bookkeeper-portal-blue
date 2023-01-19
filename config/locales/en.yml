@@ -148,6 +148,7 @@ en:
       pending_lend_request: "Waiting for lend approval"
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
+      show_waitlist: "Show waitlist"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
       price_ct : "Price in Cent"
