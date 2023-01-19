@@ -118,6 +118,7 @@ RSpec.describe "Groups", type: :feature do
 
   it "shows remove buttons if current user is owner" do
     owner = create(:max)
+    sign_in owner
     group.owners << owner
     visit group_path(group)
 
