@@ -44,13 +44,13 @@ describe "Lend Request Notifications", type: :feature do
     click_button('Decline')
     @notification.reload
     expect(@notification.active).to be false
-    @notification_2 = build(:lend_request_notification, receiver: user, item: item, borrower: user, active: true)
-    @notification_2.save
+    @notification2 = build(:lend_request_notification, receiver: user, item: item, borrower: user, active: true)
+    @notification2.save
     visit notifications_path
     click_on('wants to borrow your')
     click_button('Decline')
-    @notification_2.reload
-    expect(@notification_2.active).to be false
+    @notification2.reload
+    expect(@notification2.active).to be false
   end
 
   it "user gets notified someone wants to lend his/her item" do
