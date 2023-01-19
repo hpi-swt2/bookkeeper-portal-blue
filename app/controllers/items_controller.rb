@@ -85,7 +85,7 @@ class ItemsController < ApplicationController
 
   def request_lend
     @user = current_user
-    @owner = @item.owning_user
+    @owner = @item.owning_user.nil? @item.owning_group.members[0] : @item.owning_user
     @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
                                                 unread: true, active: true)
     @notification.save
@@ -155,8 +155,9 @@ class ItemsController < ApplicationController
     @item.set_status_pending_return
     @item.save
     @user = current_user
+    notified_user = @item.owning_user.nil? @item.owning_group.members[0] : @item.owning_user
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(receiver: @item.owning_user, date: Time.zone.now,
+      @notification = ReturnRequestNotification.new(receiver: notified_user, date: Time.zone.now,
                                                     item: @item, borrower: @user, active: true, unread: true)
       @notification.save
     end
