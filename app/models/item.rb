@@ -179,5 +179,15 @@ class Item < ApplicationRecord
       lent_time_progress
     end
   end
+
+  def age
+    Time.current.to_i - created_at.to_i
+  end
+
+  def waitlist_length
+    return 0 if waitlist.nil?
+
+    waitlist.users.length
+  end
 end
 # rubocop:enable Metrics/ClassLength

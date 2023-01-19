@@ -117,4 +117,43 @@ FactoryBot.define do
     return_checklist { "Clean the whiteboard." }
     owning_user { create(:user) }
   end
+
+  factory :itemAudited0, class: 'Item' do
+    id { 42_420 }
+    name { "AuditedItem0" }
+    category { "Books" }
+    location { "D-Space" }
+    description { "An audited item" }
+    image { nil }
+    price_ct { 42 }
+    rental_duration_sec { 42 }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+
+  factory :itemAudited1, class: 'Item' do
+    id { 42_421 }
+    name { "AuditedItem1" }
+    category { "Books" }
+    location { "D-Space" }
+    description { "An audited item" }
+    image { nil }
+    price_ct { 42 }
+    rental_duration_sec { 42 }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+
+  factory :itemAudited2, class: 'Item' do
+    id { 42_422 }
+    name { "AuditedItem2" }
+    category { "Books" }
+    location { "D-Space" }
+    description { "An audited item" }
+    image { nil }
+    price_ct { 42 }
+    rental_duration_sec { 42 }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
 end
