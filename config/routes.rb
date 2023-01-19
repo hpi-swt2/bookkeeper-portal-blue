@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # https://github.com/heartcombo/devise/blob/main/README.md
-  devise_for :users, controllers: { registrations: 'users', omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { registrations: 'users', omniauth_callbacks: "users/omniauth_callbacks", sessions: 'sessions/sessions' }
   devise_scope :user do
     get 'profile', to: 'users#profile'
   end
@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   resources :groups
   post 'groups/:id/promote/:user_id', to: 'groups#promote', as: 'group_promote'
   post 'groups/:id/demote/:user_id', to: 'groups#demote', as: 'group_demote'
+  post 'groups/:id/remove/:user_id', to: 'groups#remove', as: 'group_remove'
   # Defines the root path route ("/")
   root "landing_page#index"
 end

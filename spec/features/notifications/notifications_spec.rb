@@ -53,4 +53,10 @@ describe "Notifications Page", type: :feature do
     @notifications[1].reload
     expect(@notifications[1].unread).to be false
   end
+
+  it "shows text if there are no notifications" do
+    @notifications.each(&:destroy)
+    visit notifications_path
+    expect(page).to have_text("You have not received any notifications yet")
+  end
 end
