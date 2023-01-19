@@ -165,6 +165,8 @@ en:
       promote: "Make owner"
       demote: "Remove owner"
       remove: "Remove from group"
+    sessions:
+      sign_in_with_password: "Sign in with password"
   models:
     item:
       item: "Item"
