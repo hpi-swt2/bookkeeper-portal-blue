@@ -36,8 +36,8 @@ module ApplicationHelper
       else
         updated_locale = locale
       end
-    content_class = "flag flag-#{updated_locale}"
+    content_class = "flag-icon flag-icon-#{updated_locale}"
     content_tag(:span, nil, class: content_class)
-  end
+end
 
 end

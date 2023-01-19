@@ -6,16 +6,16 @@
         <% end %>
     <% end %>
     <div>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" style = "list-style:none">
            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-             Select Language
+            <%= language_flag(I18n.locale)%>
            </a>
            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-             <li>
-              <%= link_to "English", { :locale => 'en' }, class: "dropdown-item" %>
+            <li>
+              <%= link_to "English", params.permit!.merge(locale: 'en'), class: "dropdown-item" %>
             </li>
             <li>
-              <%= link_to "Deutsch", { :locale => 'de' }, class: "dropdown-item" %>
+              <%= link_to "Deutsch", params.permit!.merge(locale: 'de'), class: "dropdown-item" %>
             </li>
           </ul>
         </li>

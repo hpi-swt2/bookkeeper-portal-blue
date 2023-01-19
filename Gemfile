@@ -48,6 +48,8 @@ gem "bootstrap", "~> 5.2.2"
 # Use Sass to process CSS
 gem "sassc-rails"
 
+gem 'flag-icons-rails'
+
 # Adding this removes some warnings caused by double-loading of the net-protocol library
 # (see https://github.com/ruby/net-imap/issues/16)
 # we should be able to remove this after upgrading to Ruby 3
