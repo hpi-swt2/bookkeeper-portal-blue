@@ -38,6 +38,21 @@ describe "Lend Request Notifications", type: :feature do
     expect(@notification.accepted).to be false
   end
 
+  it "can be for the same item" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Decline')
+    @notification.reload
+    expect(@notification.active).to be false
+    @notification_2 = build(:lend_request_notification, receiver: user, item: item, borrower: user, active: true)
+    @notification_2.save
+    visit notifications_path
+    click_on('wants to borrow your')
+    click_button('Decline')
+    @notification_2.reload
+    expect(@notification_2.active).to be false
+  end
+
   it "user gets notified someone wants to lend his/her item" do
     item = create(:item, owning_user: owner)
     sign_in borrower
