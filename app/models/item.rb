@@ -108,6 +108,10 @@ class Item < ApplicationRecord
     waitlist.remove_user(user)
   end
 
+  def waitlist_contains(user)
+    !(waitlist.nil? || waitlist.position(user).nil?)
+  end
+
   def users_with_see_permission
     users_with_direct_see_permission + users_with_indirect_see_permission
   end

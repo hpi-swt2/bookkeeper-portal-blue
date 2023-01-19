@@ -71,6 +71,9 @@ en:
         lent: "Lent"
         not_lent: "Not lent"
         overdue: "Overdue"
+      waitlist:
+        title: "WAITING FOR ..."
+        nowhere_on_waitlists: "Currently, you are not waiting for any items."
       favorites:
         title: "YOUR FAVORITES"
         missing_favorites: "Currently, you have no favored items."

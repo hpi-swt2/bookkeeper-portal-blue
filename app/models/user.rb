@@ -83,6 +83,10 @@ class User < ApplicationRecord
     directly_owned_items + indirectly_owned_items
   end
 
+  def waitlists
+    waitlists
+  end
+
   def self.from_omniauth(auth)
     # Create user in database if it does not exist yet when logging in via OIDC
     where(email: auth.info.email).first_or_create! do |user|

@@ -40,6 +40,9 @@ de:
         lent: "Ausgeliehen"
         not_lent: "Nicht ausgeliehen"
         overdue: "Überfällig"
+      waitlist:
+        title: "WARTEND AUF ..."
+        nowhere_on_waitlists: "Aktuell wartest du auf keine Artikel."
       favorites:
         title: "DEINE MERKLISTE"
         missing_favorites: "Aktuell hast du keine gespeicherten Artikel."
