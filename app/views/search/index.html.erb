@@ -34,9 +34,9 @@
 </div>
 
 <% if @results %>
-    <div class="row row-cols-1 row-cols-md-4 g-3">
-        <% @results.each do |result| %>
-            <%= render :partial => "partials/itemcard", :locals => { :item => result } %>
-        <% end %>
-    </div>
+  <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-3">
+    <% @results.each do |result| %>
+      <%= render :partial => "partials/itemcard", :locals => { :item => result } %>
+    <% end %>
+  </div>
 <% end %>

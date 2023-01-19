@@ -69,7 +69,7 @@
     display: inline;
   }
 
-  .wishlistIcon {
+  .favoritesIcon {
     font-size: 1.5em;
     position: absolute;
     top: 0.225em;
@@ -83,7 +83,7 @@
     vertical-align: middle;
   }
 
-  #filledWishlistIcon {
+  #filledFavoritesIcon {
     color: var(--secondary08);
     font-variation-settings:
       'FILL' 1,
@@ -98,6 +98,30 @@
 
   .button {
     display: inline-block;
+   }
+  
+  @media screen and (min-width: 480px) and (max-width: 767px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1200px)  and (max-width: 1399px){
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1400px) {
+      .image {
+        padding-bottom: 26em;
+      }
   }
   
 </style>
@@ -114,11 +138,11 @@
   
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
-      <div class="text-center col">
+      <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
-          <!--only show filled icon if icon is on wishlist-->
-          <!--span class="material-symbols-outlined wishlistIcon" id="filledWishlistIcon">grade</span-->
-          <span class="material-symbols-outlined wishlistIcon" id="notFilledWishlistIcon">grade</span>
+          <!--only show filled icon if icon is on favorites-->
+          <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
+          <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached?%>
         </div>
       </div>
