@@ -18,6 +18,39 @@ class GroupsController < ApplicationController
     end
   end
 
+  def promote
+    @group = Group.find(params[:id])
+
+    if @group.owners.include?(current_user)
+      @user = User.find(params[:user_id])
+      @user.to_owner_of! @group
+    end
+
+    redirect_to @group
+  end
+
+  def demote
+    @group = Group.find(params[:id])
+
+    if @group.owners.include?(current_user)
+      @user = User.find(params[:user_id])
+      @user.to_member_of! @group
+    end
+
+    redirect_to @group
+  end
+
+  def remove
+    @group = Group.find(params[:id])
+
+    if @group.owners.include?(current_user)
+      @user = User.find(params[:user_id])
+      @user.groups.delete(@group) if @group.members_without_ownership.include?(@user)
+    end
+
+    redirect_to @group
+  end
+
   def group_params
     params.require(:group).permit(:name)
   end
