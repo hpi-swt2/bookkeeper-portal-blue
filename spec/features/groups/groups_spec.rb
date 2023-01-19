@@ -149,4 +149,18 @@ RSpec.describe "Groups", type: :feature do
     expect(group.members).not_to include(member)
   end
 
+  it "creates a notification when a user is removed from a group" do
+    member = create(:max)
+    group.members << member
+    sign_in group.owners.first
+    visit group_path(group)
+
+    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+
+    expect(Notification.count).to eq(1)
+    notification = Notification.first
+    expect(notification.receiver).to eq(member)
+    expect(notification.description).to include(group.name)
+  end
+
 end
