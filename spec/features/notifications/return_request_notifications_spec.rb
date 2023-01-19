@@ -65,4 +65,23 @@ describe "Return Request Notifications", type: :feature do
                                               item_name: @notification.item.name)).to be true
 
   end
+
+  it "sends a lend request notification from the first user on the waitlist upon accepting the return of an item" do
+    visit notifications_path(id: @notification.id)
+    @max_hash = attributes_for(:max)
+    create(:max) unless User.exists?(email: @max_hash[:email])
+
+    @max = User.find_by(email: @max_hash[:email])
+    @notification.item.waitlist = Waitlist.new
+    @notification.item.waitlist.add_user(@max)
+    @notification.item.waitlist.save
+
+    expect(ReturnRequestNotification.exists?(@notification.id)).to be true
+    click_button('Accept')
+    @lend_notification = Notification.find_by(receiver: @notification.item.holder,
+                                              actable_type: "LendRequestNotification")
+    expect(@lend_notification.nil?).to be false
+    expect(LendRequestNotification.exists?(id: @lend_notification.actable_id, borrower: @max)).to be true
+
+  end
 end
