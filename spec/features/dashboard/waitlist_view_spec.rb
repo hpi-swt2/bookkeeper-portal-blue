@@ -15,21 +15,13 @@ RSpec.describe "Waitlist View", type: :feature do
     item_lent.waitlist.add_user(user)
     visit dashboard_path
     expect(page).to have_content(item_lent.name)
+    expect(page).to have_content I18n.t 'views.dashboard.waitlist.position',
+                                        position: (item_lent.waitlist.position(user) + 1)
   end
 
   it "shows message when you are not waiting for any items" do
     sign_in user
     visit dashboard_path
     expect(page).to have_content I18n.t('views.dashboard.waitlist.nowhere_on_waitlists')
-  end
-
-  it "shows the position in the waitlist as a tag" do
-    sign_in user
-    item_lent.waitlist.add_user(user)
-    visit item_path(item_lent)
-    find(:button, "Show waitlist").click
-    visit dashboard_path
-    expect(page).to have_content I18n.t 'views.dashboard.waitlist.position',
-                                        position: (item_lent.waitlist.position(user) + 1)
   end
 end
