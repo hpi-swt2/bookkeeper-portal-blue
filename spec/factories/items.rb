@@ -156,7 +156,7 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-  
+
   factory :available_item, class: 'Item' do
     name { "AvailableItem" }
     category { "book" }
@@ -169,7 +169,7 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-  
+
   factory :lent_item, class: 'Item' do
     name { "LentItem" }
     category { "book" }
