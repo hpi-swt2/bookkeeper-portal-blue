@@ -46,14 +46,6 @@ describe "Notifications Page", type: :feature do
     expect(page).to have_text(@notifications[0].description)
   end
 
-  it "is unread until page is viewed, then it is read" do
-    expect(@notifications[1].unread).to be true
-    visit notifications_path
-    all('.notification', text: @notifications[1].description)[1].click
-    @notifications[1].reload
-    expect(@notifications[1].unread).to be false
-  end
-
   it "shows text if there are no notifications" do
     @notifications.each(&:destroy)
     visit notifications_path

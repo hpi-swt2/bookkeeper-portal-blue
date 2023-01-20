@@ -35,6 +35,7 @@ class NotificationsController < ApplicationController
 
   def accept
     @notification = Notification.find(params[:id])
+    @notification.mark_as_read
     @notification.mark_as_inactive
     @notification.set_accepted
     @item = @notification.item
@@ -46,6 +47,7 @@ class NotificationsController < ApplicationController
 
   def decline
     @notification = Notification.find(params[:id])
+    @notification.mark_as_read
     @notification.mark_as_inactive
     @notification.set_denied
     @item = @notification.item

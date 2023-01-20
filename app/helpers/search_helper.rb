@@ -16,7 +16,7 @@ module SearchHelper
                                                                   :generate_equals_clause)
     numerical_attribute_clause = create_mutiple_attribute_clause(filter_numerical, relevant_numerical_attribute,
                                                                  :generate_range_clause)
-    partial_matching_clause.and(categorial_attribute_clause).and(numerical_attribute_clause)
+    partial_matching_clause.and(categorial_attribute_clause).and(numerical_attribute_clause).order(lend_status: :asc)
   end
 
   private

@@ -1,9 +1,8 @@
 FactoryBot.define do
-  factory :audit_event do
+  factory :audit_event, class: 'AuditEvent' do
     item { nil }
-    owner { nil }
     holder { nil }
-    triggering_user { nil }
+    triggering_user { create(:user) }
     event_type { 1 }
   end
 end
