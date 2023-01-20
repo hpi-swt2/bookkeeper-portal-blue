@@ -84,4 +84,10 @@ describe "Return Request Notifications", type: :feature do
     expect(LendRequestNotification.exists?(id: @lend_notification.actable_id, borrower: @max)).to be true
 
   end
+
+  it "doesn't change to read when clicked" do
+    visit notifications_path
+    @notification.reload
+    expect(@notification.unread).to be true
+  end
 end
