@@ -98,4 +98,11 @@ RSpec.describe "Search", type: :helper do
     expect(results).to include(@item_whiteboard)
   end
 
+  it "rejects sql injections as search term parameter" do 
+    results = search_for_items("some-random-thing'/**/OR/**/1=1/**/OR/**/description/**/LIKE/**/'")
+    expect(results).not_to include(@item_book)
+    expect(results).not_to include(@item_beamer)
+    expect(results).not_to include(@item_whiteboard)
+  end
+
 end
