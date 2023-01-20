@@ -65,6 +65,7 @@ describe "Return Request Notifications", type: :feature do
                                               item_name: @notification.item.name)).to be true
 
   end
+
   it "sends a lend request notification from the first user on the waitlist upon accepting the return of an item" do
     visit notifications_path(id: @notification.id)
     @max_hash = attributes_for(:max)
@@ -83,7 +84,7 @@ describe "Return Request Notifications", type: :feature do
     expect(LendRequestNotification.exists?(id: @lend_notification.actable_id, borrower: @max)).to be true
 
   end
-  
+
   it "doesn't change to read when clicked" do
     visit notifications_path
     @notification.reload
