@@ -9,7 +9,7 @@ class Item < ApplicationRecord
   has_many :return_accepted_notifications, dependent: :destroy
   has_many :move_up_on_waitlist_notification, dependent: :destroy
   has_many :added_to_waitlist_notification, dependent: :destroy
-  has_and_belongs_to_many :users, join_table: "wishlist"
+  has_and_belongs_to_many :users, join_table: "favorites"
 
   has_many :permissions, dependent: :destroy
   has_many :see_permissions, class_name: 'SeePermission', dependent: :destroy
@@ -71,6 +71,19 @@ class Item < ApplicationRecord
 
   def set_status_unavailable
     self.lend_status = :unavailable
+  end
+
+  def accept_return
+    reset_status
+    return if waitlist.users.empty?
+
+    @new_borrower = waitlist.first_user
+    waitlist.remove_user(@new_borrower)
+    @owner = owning_user
+    @lend_notification = LendRequestNotification.new(item: self, borrower: @new_borrower, receiver: @owner,
+                                                     date: Time.zone.now, unread: true, active: true)
+    @lend_notification.save
+    set_status_pending_lend_request
   end
 
   def deny_return

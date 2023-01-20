@@ -62,13 +62,14 @@
 
   .btn-primary {
     text-decoration: none;
+    display: inline;
   }
 
   .btn-secondary {
-    width: 100%;
+    display: inline;
   }
 
-  .wishlistIcon {
+  .favoritesIcon {
     font-size: 1.5em;
     position: absolute;
     top: 0.225em;
@@ -82,7 +83,7 @@
     vertical-align: middle;
   }
 
-  #filledWishlistIcon {
+  #filledFavoritesIcon {
     color: var(--secondary08);
     font-variation-settings:
       'FILL' 1,
@@ -91,7 +92,15 @@
       'opsz' 48
   }
 
-      @media screen and (min-width: 480px) and (max-width: 767px) {
+  #buttons {
+    width: 100%;
+  }
+
+  .button {
+    display: inline-block;
+   }
+  
+  @media screen and (min-width: 480px) and (max-width: 767px) {
       .image {
         padding-bottom: 26em;
       }
@@ -131,9 +140,9 @@
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
-          <!--only show filled icon if icon is on wishlist-->
-          <!--span class="material-symbols-outlined wishlistIcon" id="filledWishlistIcon">grade</span-->
-          <span class="material-symbols-outlined wishlistIcon" id="notFilledWishlistIcon">grade</span>
+          <!--only show filled icon if icon is on favorites-->
+          <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
+          <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached?%>
         </div>
       </div>
@@ -171,7 +180,12 @@
             <% end %>
           <% end %>
         </p>
-        <%= render "adaptive_lend_button", current_user: current_user, item: @item %>
+        <div id="buttons">
+          <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
+          <div class="button"> <% if @item.waitlist.users.size != 0 %> </div>
+            <%= render "show_waitlist_button", item: @item %>
+          <% end %>
+        </div>
         <div class="text-center">
           <% if !current_user.nil? && current_user == @item.owning_user %>
             <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode"}, class: "btn-primary" %>
