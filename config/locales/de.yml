@@ -85,6 +85,9 @@ de:
       move_up_on_waitlist:
         title: "Auf Warteliste aufgerückt"
         description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
+      removed_from_group:
+        title: "Aus Gruppe entfernt"
+        description: "Du wurdest aus der Gruppe \"%{group_name}\" entfernt."
       no_notifications: "Du hast noch keine Nachrichten erhalten"
     search:
       title: "Suche"
@@ -138,6 +141,8 @@ de:
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
       remove: "Aus Gruppe entfernen"
+    sessions:
+      sign_in_with_password: "Mit Passwort anmelden"
   models:
     item:
       item: "Gegenstand"

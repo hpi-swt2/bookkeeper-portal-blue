@@ -156,4 +156,30 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
+  
+  factory :available_item, class: 'Item' do
+    name { "AvailableItem" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This item is available." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+  
+  factory :lent_item, class: 'Item' do
+    name { "LentItem" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This item is lent." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :lent }
+    owning_user { create(:user) }
+  end
 end

@@ -116,6 +116,9 @@ en:
       move_up_on_waitlist:
         title: "Moved up on Waitlist"
         description: "You have been moved up to Position %{position} on Waitlist for %{item}."
+      removed_from_group:
+        title: "Removed from group"
+        description: "You have been removed from the group \"%{group_name}\"."
       no_notifications: "You have not received any notifications yet"
     search:
       title: "Search"
@@ -165,6 +168,8 @@ en:
       promote: "Make owner"
       demote: "Remove owner"
       remove: "Remove from group"
+    sessions:
+      sign_in_with_password: "Sign in with password"
   models:
     item:
       item: "Item"
