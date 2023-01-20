@@ -26,7 +26,10 @@ RSpec.describe "Waitlist View", type: :feature do
   it "shows the position in the waitlist as a tag" do
     sign_in user
     item_lent.waitlist.add_user(user)
+    visit item_path(item_lent)
+    find(:button, "Show waitlist").click
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.waitlist.position', position: 2)
+    expect(page).to have_content I18n.t 'views.dashboard.waitlist.position',
+                                        position: (item_lent.waitlist.position(user) + 1)
   end
 end
