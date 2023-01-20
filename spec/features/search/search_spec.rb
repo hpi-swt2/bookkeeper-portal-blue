@@ -5,6 +5,8 @@ describe "Search page", type: :feature do
     @item_book = create(:item_book)
     @item_beamer = create(:item_beamer)
     @item_whiteboard = create(:item_whiteboard)
+    @item_available = create(:available_item)
+    @item_lent = create(:lent_item)
     visit search_path
   end
 
@@ -59,6 +61,12 @@ describe "Search page", type: :feature do
     expect(page).to have_text(@item_book.name)
     expect(page).to have_text(@item_beamer.name)
     expect(page).to have_text(@item_whiteboard.name)
+  end
+
+  it "shows available items first" do
+    page.fill_in "search", with: "item"
+    click_button("submit")
+    expect(page).to have_text(/#{@item_available.name}.*\n.*#{@item_lent.name}/)
   end
 
 end
