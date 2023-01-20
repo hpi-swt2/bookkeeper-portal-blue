@@ -27,6 +27,7 @@ RSpec.describe "Waitlist View", type: :feature do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.waitlist.position', position: item_lent.waitlist.position(user) + 1)
+    expect(page).to have_content I18n.t('views.dashboard.waitlist.position',
+                                        position: item_lent.waitlist.position(user) + 1)
   end
 end

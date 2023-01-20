@@ -1,6 +1,5 @@
 <div>
-  <% items = Item.all %>
-  <% items = items.select {|item| item.waitlist_contains(current_user)}%>
+  <% items = current_user.waitlists.map{|waitlist| waitlist.item }%>
   <% items = items.sort_by { |item| [item.waitlist.position(current_user), item.name] } %>
   <% if items.empty? %>
     <p class="body-1"><%= t 'views.dashboard.waitlist.nowhere_on_waitlists' %></p>
