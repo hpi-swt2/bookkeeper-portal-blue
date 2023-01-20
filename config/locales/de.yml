@@ -99,6 +99,11 @@ de:
       filter_modal:
         title: "Filter"
       qr_scanner_title: "QR Scanner"
+      order:
+        default: "Ergebnisse sortieren"
+        popularity: "Beliebtheit"
+        name_a_z: "Name (A-Z)"
+        name_z_a: "Name (Z-A)"
     home:
       title: "Startseite"
     new_item:

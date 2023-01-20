@@ -27,13 +27,13 @@
             </button>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col">
                 <button class="btn btn-secondary secondaryButton" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false">
                     <%= t 'views.search.filter_button' %> <i class="bi bi-sliders2-vertical"></i>
                 </button>
             </div>
-            <div class="col-4">
-                <%= select_tag "order", raw("<option>Sortieren</option><option>Name A-Z</option><option>Name Z-A</option><option>Popularity</option>"), class: "form-select" %>
+            <div class="col">
+                <%= select_tag "order", options_for_select(@order_options), class: "form-select order-select" %>
             </div>
         </div>
         <%= render "filter-modal" %>

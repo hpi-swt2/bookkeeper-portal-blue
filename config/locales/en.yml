@@ -130,6 +130,11 @@ en:
       filter_modal:
         title: "Filter"
       qr_scanner_title: "QR Scanner"
+      order:
+        default: "Order results"
+        popularity: "Popularity"
+        name_a_z: "Name (A-Z)"
+        name_z_a: "Name (Z-A)"
     home:
       title: "Home"
     new_item:
