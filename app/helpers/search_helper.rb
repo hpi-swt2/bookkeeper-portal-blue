@@ -16,10 +16,7 @@ module SearchHelper
                                                                   :generate_equals_clause)
     numerical_attribute_clause = create_mutiple_attribute_clause(filter_numerical, relevant_numerical_attribute,
                                                                  :generate_range_clause)
-
-    Item.where(partial_matching_clause)
-        .where(categorial_attribute_clause)
-        .where(numerical_attribute_clause)
+    partial_matching_clause.and(categorial_attribute_clause).and(numerical_attribute_clause)
   end
 
   private
@@ -27,20 +24,20 @@ module SearchHelper
   # CREATE CLAUSE FOR PARTIAL MATCHING
 
   def create_partial_matching_attribute_term(search_attribute, search_term)
-    "LOWER( #{search_attribute} ) LIKE '%#{Item.sanitize_sql_like(search_term.downcase)}%'"
+    Item.where("LOWER( #{search_attribute} ) LIKE ?", "%" + Item.sanitize_sql_like(search_term.downcase) + "%")
   end
 
   def create_partial_matching_one_search_term(search_term)
     clauses = relevant_search_attributes.map do |attribute|
       create_partial_matching_attribute_term(attribute, search_term)
     end
-    clauses.join(" OR ")
+    clauses.inject {| joined, current | joined.or(current)}
   end
 
   def create_partial_matching_clause(search_term)
     search_terms = search_term.split
     clauses = search_terms.map { |term| create_partial_matching_one_search_term(term) }
-    clauses.map { |clause| "(#{clause})" }.join(' AND ')
+    clauses.inject {| joined, current | joined.and(current)}
   end
 
   # GENERATE CLAUSE FOR ATTRIBUTES
@@ -49,26 +46,25 @@ module SearchHelper
     clauses = relevant_attributes.map do |attribute|
       create_single_attribute_clause(attribute, filter, clause_generator)
     end
-    filtered_clauses = clauses.compact_blank
-    filtered_clauses.map { |clause| "(#{clause})" }.join(' AND ')
+    clauses.inject{| joined, current | joined.and(current)}
   end
 
   def create_single_attribute_clause(search_attribute, filter, clause_generator)
-    return "" unless filter.key?(search_attribute)
+    return Item.all unless filter.key?(search_attribute)
 
     method(clause_generator).call(search_attribute, filter)
   end
 
   def generate_equals_clause(search_attribute, filter)
     search_value = filter[search_attribute]
-    "#{search_attribute} = '#{search_value}'"
+    Item.where("#{search_attribute} = ?", search_value)
   end
 
   def generate_range_clause(search_attribute, filter)
     bounds = filter[search_attribute]
     lower_bound = bounds["lower_bound"]
     upper_bound = bounds["upper_bound"]
-    "#{search_attribute} BETWEEN #{lower_bound} AND #{upper_bound}"
+    Item.where("#{search_attribute} BETWEEN ? AND ?", lower_bound, upper_bound)
   end
 
   # CONSTANTS
