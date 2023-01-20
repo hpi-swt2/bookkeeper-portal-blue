@@ -2,6 +2,9 @@ module StatisticsHelper
   # Module for generating and collecting statistics.
   # Please let your helper function start with "statistics_"
 
+  # Please keep the documentaion up to date:
+  # https://github.com/hpi-swt2/bookkeeper-portal-blue/wiki/Statistics
+
   def statistics_item_popularity(item)
     lend_events = item_lend_events(item)
     return_events = item_return_events(item)
