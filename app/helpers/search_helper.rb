@@ -24,20 +24,20 @@ module SearchHelper
   # CREATE CLAUSE FOR PARTIAL MATCHING
 
   def create_partial_matching_attribute_term(search_attribute, search_term)
-    Item.where("LOWER( #{search_attribute} ) LIKE ?", "%" + Item.sanitize_sql_like(search_term.downcase) + "%")
+    Item.where("LOWER( #{search_attribute} ) LIKE ?", "%#{Item.sanitize_sql_like(search_term.downcase)}%")
   end
 
   def create_partial_matching_one_search_term(search_term)
     clauses = relevant_search_attributes.map do |attribute|
       create_partial_matching_attribute_term(attribute, search_term)
     end
-    clauses.inject {| joined, current | joined.or(current)}
+    clauses.inject { |joined, current| joined.or(current) }
   end
 
   def create_partial_matching_clause(search_term)
     search_terms = search_term.split
     clauses = search_terms.map { |term| create_partial_matching_one_search_term(term) }
-    clauses.inject {| joined, current | joined.and(current)}
+    clauses.inject { |joined, current| joined.and(current) }
   end
 
   # GENERATE CLAUSE FOR ATTRIBUTES
@@ -46,7 +46,7 @@ module SearchHelper
     clauses = relevant_attributes.map do |attribute|
       create_single_attribute_clause(attribute, filter, clause_generator)
     end
-    clauses.inject{| joined, current | joined.and(current)}
+    clauses.inject { |joined, current| joined.and(current) }
   end
 
   def create_single_attribute_clause(search_attribute, filter, clause_generator)
