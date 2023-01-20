@@ -6,7 +6,7 @@ RSpec.describe "Waitlist View", type: :feature do
 
   let(:item_lent) do
     item_lent = create(:item)
-    item_lent.waitlist = create(:waitlist_with_item)
+    item_lent.waitlist = create(:waitlist_with_one_waiter)
     item_lent.waitlist.item = item_lent
   end
 
@@ -27,7 +27,6 @@ RSpec.describe "Waitlist View", type: :feature do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit dashboard_path
-    expect(page).to have_content I18n.t('views.dashboard.waitlist.position',
-                                        position: item_lent.waitlist.position(user) + 1)
+    expect(page).to have_content I18n.t('views.dashboard.waitlist.position', position: 2)
   end
 end
