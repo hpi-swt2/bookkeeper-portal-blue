@@ -24,18 +24,17 @@
       <div class="modal-body">
         <p>
           <%= notification.description %>
-          <div class="col-md-4">
-              <%= image_tag notification.item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" if notification.item.image.attached? %>
-          </div>
         </p>
       </div>
 
       <div class="modal-footer">
-        <%if notification.active == true %>
-        <%= button_to t("defaults.decline"), deny_return_path(id: notification.item.id), class:"btn btn-danger" %>
-        <%= button_to t("defaults.accept"), accept_return_path(id: notification.item.id), class:"btn btn-success" %>
-        <%end%>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $('<%="notificationModal#{notification.id}" %>').on('shown.bs.modal', function (e) {
+    "<% notification.mark_as_read%>";
+  })
+</script>

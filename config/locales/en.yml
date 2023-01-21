@@ -55,7 +55,7 @@ en:
         other: "You have %{count} unread messages"
       lent_items:
         title: "LENT ITEMS"
-        no_lent_items: "Currently you have no lent items."
+        no_lent_items: "Currently, you have no lent items."
         expired: "expired on %{date}"
         today: "today"
         days: 
@@ -66,14 +66,18 @@ en:
           other: "%{count} weeks left"
       offered_items:
         title: "OFFERED ITEMS"
-        nothing_offered: "You do not offer any items at the moment."
+        nothing_offered: "Currently, you have no offered items."
         lent_by_you: "Lent by you"
         lent: "Lent"
         not_lent: "Not lent"
         overdue: "Overdue"
-      wishlist:
+      waitlist:
+        title: "WAITING FOR ..."
+        nowhere_on_waitlists: "Currently, you are not waiting for any items."
+        position: "Waitlist Position: %{position}"
+      favorites:
         title: "YOUR FAVORITES"
-        missing_wishlist: "You don't have any items saved at the moment."
+        missing_favorites: "Currently, you have no favored items."
         available: "Available"
         not_available: "Not available"
         lent_by_you: "Lent by you"
@@ -116,6 +120,10 @@ en:
       move_up_on_waitlist:
         title: "Moved up on Waitlist"
         description: "You have been moved up to Position %{position} on Waitlist for %{item}."
+      removed_from_group:
+        title: "Removed from group"
+        description: "You have been removed from the group \"%{group_name}\"."
+      no_notifications: "You have not received any notifications yet"
     search:
       title: "Search"
       filter_button: "Filter"
@@ -129,6 +137,7 @@ en:
       item_name: "Item Name"
       location: "Location"
       required_fields: "required fields"
+      price_ct : "Price in Cent"
     show_item:
       author: "Author"
       category: "Category"
@@ -146,8 +155,10 @@ en:
       pending_lend_request: "Waiting for lend approval"
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
+      show_waitlist: "Show waitlist"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
+      price_ct : "Price in Cent"
     profile:
       title: "Profile"
       roles: "Roles"
@@ -158,6 +169,11 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      promote: "Make owner"
+      demote: "Remove owner"
+      remove: "Remove from group"
+    sessions:
+      sign_in_with_password: "Sign in with password"
   models:
     item:
       item: "Item"

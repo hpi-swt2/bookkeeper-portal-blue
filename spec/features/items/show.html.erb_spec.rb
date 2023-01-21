@@ -70,6 +70,13 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_button("Waiting for lend approval", disabled: true)
   end
 
+  it "creates audit event when requesting for lending" do
+    sign_in user
+    visit item_path(item)
+    find(:button, "Lend").click
+    expect(AuditEvent.where(item_id: item.id, event_type: "request_lend", triggering_user: user).count).to be(1)
+  end
+
   it "has return button when item is lent by borrower" do
     sign_in borrower
     visit item_path(item_lent)
@@ -81,6 +88,14 @@ RSpec.describe "items/show", type: :feature do
     visit item_path(item_lent)
     find(:button, "Return").click
     expect(page).to have_button("Waiting for return approval", disabled: true)
+  end
+
+  it "creates audit event when requesting for returning" do
+    sign_in borrower
+    visit item_path(item_lent)
+    find(:button, "Return").click
+    expect(AuditEvent.where(item_id: item_lent.id, event_type: "request_return",
+                            triggering_user: borrower).count).to be(1)
   end
 
   it "has enter waitlist button when not on list and item not available" do
@@ -114,12 +129,27 @@ RSpec.describe "items/show", type: :feature do
     expect(Item.find(item_lent.id).waitlist.users).to include(user)
   end
 
+  it "creates audit event when entering for waitlist" do
+    sign_in user
+    visit item_path(item_lent)
+    find(:button, "Enter Waitlist").click
+    expect(AuditEvent.where(item_id: item_lent.id, event_type: "add_to_waitlist", triggering_user: user).count).to be(1)
+  end
+
   it "removes user from waitlist when clicking remove from waitlist button" do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit item_path(item_lent)
     find(:button, "Leave Waitlist").click
     expect(Item.find(item_lent.id).waitlist.users).not_to include(user)
+  end
+
+  it "creates audit event when leaving waitlist" do
+    sign_in user
+    item_lent.waitlist.add_user(user)
+    visit item_path(item_lent)
+    find(:button, "Leave Waitlist").click
+    expect(AuditEvent.where(item_id: item_lent.id, event_type: "leave_waitlist", triggering_user: user).count).to be(1)
   end
 
   it "creates added to waitlist notification when adding user to waitlist" do
@@ -137,6 +167,27 @@ RSpec.describe "items/show", type: :feature do
     notification = MoveUpOnWaitlistNotification.find_by(receiver: Item.find(item_lent.id).waitlist.users[0],
                                                         item: item_lent)
     expect(notification).not_to be_nil
+  end
+
+  it "does not show button to display waitlist if empty" do
+    sign_in user
+    item.waitlist.users.clear
+    visit item_path(item)
+    expect(page).not_to have_button("Show waitlist")
+  end
+
+  it "displays button to show waitlist if not empty" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_button("Show waitlist")
+  end
+
+  it "the waitlist contains order and names of people on it" do
+    sign_in user
+    visit item_path(item)
+    find(:button, "Show waitlist").click
+    expect(page).to have_text("1. #{item.waitlist.users[0].name}")
+    expect(page).to have_text("2. #{item.waitlist.users[1].name}")
   end
 
 end
