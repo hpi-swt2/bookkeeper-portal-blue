@@ -1,5 +1,4 @@
 class NotificationMailer < ApplicationMailer
-
   def notification(notification)
     @title = notification.title
     @description = notification.description

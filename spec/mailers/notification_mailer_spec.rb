@@ -6,7 +6,7 @@ RSpec.describe NotificationMailer, type: :mailer do
       @notification = build(:lend_request_notification)
     end
 
-    let(:mail) { NotificationMailer.notification(@notification) }
+    let(:mail) { described_class.notification(@notification) }
 
     it "renders the headers" do
       expect(mail.subject).to eq("New Notification: Lend Request")
