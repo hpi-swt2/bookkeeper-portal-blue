@@ -91,8 +91,19 @@
     width: 100%;
     margin-bottom: 8px
   }
+  select {
+    border: 1px solid #AAB0B3;
+    border-radius: 5px; 
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
   .locationInput {
     width: 90%;
+  }
+  .rentalDurationInput{
+    width: 49%;
+    display: inline-block;
   }
   .btn-primary {
     margin-bottom: 8px;
@@ -106,6 +117,9 @@
   #buttonDiv {
     width: 100%;
     text-align: center;
+  }
+  #rentalDurationDiv {
+    width: 100%;
   }
   .caption{
     text-align: left;
@@ -226,10 +240,12 @@
 
             <p class="subtitle"><%= t('views.edit_item.price_ct') %></p>
             <%= form.number_field :price_ct, class: "borderedInput body1" %>
-
+            
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec') %>*</p>
-            <%= form.number_field :rental_duration, class: "borderedInput body1" %>
-            <%= form.select :rental_duration_unit, ['Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds']%>
+            <div class="", id="rentalDurationDiv">
+              <div class="rentalDurationInput"><%= form.number_field :rental_duration, class: "borderedInput body1" %></div>
+              <div class="rentalDurationInput"><%= form.select :rental_duration_unit, ['Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds'] %></div>
+            </div>
 
             <p class="subtitle"><%= t('views.edit_item.return_checklist') %></p>
             <%= form.text_area :return_checklist, class: "borderedInput body1" %>
