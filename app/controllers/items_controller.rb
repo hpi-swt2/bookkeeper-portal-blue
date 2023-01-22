@@ -272,24 +272,22 @@ class ItemsController < ApplicationController
   def rental_duration_hash
     rental_duration = params.require(:item)[:rental_duration].to_i
     rental_duration_unit = params.require(:item)[:rental_duration_unit]
-    
-    hash = {rental_duration: rental_duration, rental_duration_unit: rental_duration_unit}
-    
+
+    hash = { rental_duration: rental_duration, rental_duration_unit: rental_duration_unit }
+
     case rental_duration_unit
-    when nil
-      {}
-    when 'Month(s)'
-      hash.merge!({ rental_duration_sec: rental_duration.months.to_s})
-    when 'Week(s)'
-      hash.merge!({ rental_duration_sec: rental_duration.week.to_s})
-    when 'Day(s)'
-      hash.merge!({ rental_duration_sec: rental_duration.day.to_s})
-    when 'Hour(s)'
-      hash.merge!({ rental_duration_sec: rental_duration.hour.to_s})
-    when 'Minute(s)'
-      hash.merge!({ rental_duration_sec: rental_duration.minute.to_s})
-    when 'Second(s)'
-      hash.merge!({ rental_duration_sec: rental_duration})
+    when 'Months'
+      hash.merge!({ rental_duration_sec: rental_duration.months.to_s })
+    when 'Weeks'
+      hash.merge!({ rental_duration_sec: rental_duration.week.to_s })
+    when 'Days'
+      hash.merge!({ rental_duration_sec: rental_duration.day.to_s })
+    when 'Hours'
+      hash.merge!({ rental_duration_sec: rental_duration.hour.to_s })
+    when 'Minutes'
+      hash.merge!({ rental_duration_sec: rental_duration.minute.to_s })
+    when 'Seconds'
+      hash.merge!({ rental_duration_sec: rental_duration })
     end
   end
 end
