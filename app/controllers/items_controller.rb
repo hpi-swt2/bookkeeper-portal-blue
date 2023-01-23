@@ -33,6 +33,8 @@ class ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     @owner_id = @item.owning_user.id
+    @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
+    @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
 
   # POST /items or /items.json
@@ -40,6 +42,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
+    @item.save
 
     helpers.audit_create_item(@item)
 
@@ -216,6 +219,7 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
                                  :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
           .merge!(owner_hash)
+          .merge!(permission_hash)
   end
 
   def owner_hash
@@ -230,6 +234,24 @@ class ItemsController < ApplicationController
         { owning_user: User.find(owner_id) }
       end
     end
+  end
+
+  def permission_hash
+    lend_group_ids = params.require(:item)[:lend_group_ids].compact_blank!
+    see_group_ids = params.require(:item)[:see_group_ids].compact_blank!
+
+    see_group_ids -= lend_group_ids
+
+    # owning_group = Item.find(params[:id]).owning_group
+    # unless owning_group.nil?
+    #   lend_group_ids.delete!(owning_group)
+    #   see_group_ids.delete!(owning_group)
+    # end
+
+    {
+      groups_with_see_permission: Group.find(see_group_ids),
+      groups_with_lend_permission: Group.find(lend_group_ids)
+    }
   end
 end
 
