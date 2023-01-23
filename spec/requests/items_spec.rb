@@ -27,6 +27,10 @@ RSpec.describe "/items", type: :request do
     { name: "Test", location: "Test", category: "Test", description: "Test", owner_id: "user:#{create(:user).id}" }
   end
 
+  let(:valid_request_attributes_group) do
+    { name: "Test", location: "Test", category: "Test", description: "Test", owner_id: "group:#{create(:group).id}" }
+  end
+
   let(:invalid_attributes) do
     { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt" }
   end
@@ -68,6 +72,12 @@ RSpec.describe "/items", type: :request do
       it "creates a new Item" do
         expect do
           post items_url, params: { item: valid_request_attributes }
+        end.to change(Item, :count).by(1)
+      end
+
+      it "creates a new item owned by a group" do
+        expect do
+          post items_url, params: { item: valid_request_attributes_group }
         end.to change(Item, :count).by(1)
       end
 

@@ -36,6 +36,18 @@ RSpec.describe "items/show", type: :feature do
     expect(page).not_to have_link(href: edit_item_url(item))
   end
 
+  it "shows edit button for group members, hides for others" do
+    group = create(:group)
+    member = group.owners[0]
+    group_item = create(:item, owning_group: group)
+    sign_in member
+    visit item_path(group_item)
+    expect(page).to have_link(href: edit_item_url(group_item))
+    sign_in user
+    visit item_path(group_item)
+    expect(page).not_to have_link(href: edit_item_url(group_item))
+  end
+
   it "shows qr button for owner" do
     sign_in owner
     visit item_path(item)
@@ -48,6 +60,18 @@ RSpec.describe "items/show", type: :feature do
     expect(page).not_to have_link(text: /QR/)
   end
 
+  it "shows qr button for group members, hides for others" do
+    group = create(:group)
+    member = group.owners[0]
+    group_item = create(:item, owning_group: group)
+    sign_in member
+    visit item_path(group_item)
+    expect(page).to have_link(text: /QR/)
+    sign_in user
+    visit item_path(group_item)
+    expect(page).not_to have_link(text: /QR/)
+  end
+
   it "renders attributes" do
     sign_in user
     visit item_path(item)
@@ -55,6 +79,16 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text(item.category)
     expect(page).to have_text(item.location)
     expect(page).to have_text(item.description)
+  end
+
+  it "renders owning group name" do
+    group = create(:group)
+    group_item = create(:item, owning_group: group)
+    sign_in user
+    visit item_path(group_item)
+    expect(page).to have_text(group.name)
+    visit item_path(item)
+    expect(page).not_to have_text(group.name)
   end
 
   it "has lend button when item is available and not owner of item" do
