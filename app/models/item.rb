@@ -108,6 +108,10 @@ class Item < ApplicationRecord
     waitlist.remove_user(user)
   end
 
+  def waitlist_contains(user)
+    !(waitlist.nil? || waitlist.position(user).nil?)
+  end
+
   def users_with_see_permission
     users_with_direct_see_permission + users_with_indirect_see_permission
   end
@@ -178,6 +182,16 @@ class Item < ApplicationRecord
     else
       lent_time_progress
     end
+  end
+
+  def age
+    Time.current.to_i - created_at.to_i
+  end
+
+  def waitlist_length
+    return 0 if waitlist.nil?
+
+    waitlist.users.length
   end
 end
 # rubocop:enable Metrics/ClassLength
