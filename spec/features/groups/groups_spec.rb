@@ -98,4 +98,72 @@ RSpec.describe "Groups", type: :feature do
     expect(group.owners).not_to include(owner)
     expect(group.members).to include(owner)
   end
+
+  it "shows remove buttons if current user is owner" do
+    owner = create(:max)
+    group.owners << owner
+    visit group_path(group)
+
+    group.members_without_ownership.each do |member|
+      expect(page).to have_link("Remove from group", href: group_remove_path(group, member))
+    end
+  end
+
+  it "does not show remove buttons if current user is not owner" do
+    member = create(:max)
+    group.members << member
+    sign_in member
+    visit group_path(group)
+
+    expect(page).not_to have_link("Remove from group")
+  end
+
+  it "removes members from group on button click" do
+    member = create(:max)
+    group.members << member
+    sign_in group.owners.first
+    visit group_path(group)
+
+    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+
+    group.reload
+
+    expect(group.members).not_to include(member)
+  end
+
+  it "creates a notification when a user is removed from a group" do
+    member = create(:max)
+    group.members << member
+    sign_in group.owners.first
+    visit group_path(group)
+
+    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+
+    expect(Notification.count).to eq(1)
+    notification = Notification.first
+    expect(notification.receiver).to eq(member)
+    expect(notification.description).to include(group.name)
+  end
+
+  it "does not add normal users to the HPI group" do
+    user = create(:user)
+    sign_in user
+    expect(user.groups).not_to include(Group.default_hpi)
+  end
+
+  it "adds OIDC users to the HPI group" do
+    oidc_user = create(:peter)
+    OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
+      provider: "openid_connect",
+      uid: "peter.lustig",
+      info: {
+        email: oidc_user.email
+      }
+    )
+
+    visit new_user_session_path
+    find_by_id('openid_connect-signin').click
+    expect(oidc_user.groups).to include(Group.default_hpi)
+  end
+
 end

@@ -1,0 +1,18 @@
+<div>
+  <% items = current_user.waitlists.map { |waitlist| waitlist.item } %>
+  <% items = items.sort_by { |item| [item.waitlist.position(current_user), item.name] } %>
+  <% if items.empty? %>
+    <p class="body-1"><%= t 'views.dashboard.waitlist.nowhere_on_waitlists' %></p>
+  <% else %>
+    <div class="container">
+      <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-4">
+        <% items.each do |item| %>
+          <div>
+            <%= render :partial => "partials/itemcard", :locals => { :item => item } %>
+            <p class="<% if item.waitlist.first_user.eql?(current_user) %> caption-primary <% else %> caption <% end %>  text-center"> <%= t 'views.dashboard.waitlist.position', position: item.waitlist.position(current_user) + 1 %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
