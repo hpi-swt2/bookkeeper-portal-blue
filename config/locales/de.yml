@@ -100,7 +100,7 @@ de:
         title: "Filter"
       qr_scanner_title: "QR Scanner"
       order:
-        default: "Ergebnisse sortieren"
+        default: "Sortieren nach"
         popularity: "Beliebtheit"
         name_a_z: "Name (A-Z)"
         name_z_a: "Name (Z-A)"
