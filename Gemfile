@@ -48,6 +48,8 @@ gem "bootstrap", "~> 5.2.2"
 # Use Sass to process CSS
 gem "sassc-rails"
 
+gem "rails-i18n"
+
 gem 'flag-icons-rails'
 
 # Adding this removes some warnings caused by double-loading of the net-protocol library

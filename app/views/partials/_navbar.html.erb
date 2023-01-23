@@ -12,10 +12,10 @@
            </a>
            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li>
-              <%= link_to "English", params.permit!.merge(locale: 'en'), class: "dropdown-item" %>
+              <%= link_to "English", params.permit.merge(locale: :en), class: "dropdown-item" %>
             </li>
             <li>
-              <%= link_to "Deutsch", params.permit!.merge(locale: 'de'), class: "dropdown-item" %>
+              <%= link_to "Deutsch", params.permit.merge(locale: :de), class: "dropdown-item" %>
             </li>
           </ul>
         </li>
