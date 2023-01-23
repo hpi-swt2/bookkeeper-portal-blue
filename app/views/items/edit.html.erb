@@ -163,12 +163,12 @@ function readURL(input) {
 </script>
 
 <div>
-    <%= link_to @item do %>
+    <%= link_to @item.becomes(Item) do %>
       <span class="material-symbols-outlined" id="back-button">chevron_left</span>
     <% end %>
 
   <div>
-  <%= form_with(model: @item) do |form| %>
+  <%= form_with(model: @item.becomes(Item)) do |form| %>
 
       <% if @item.errors.any? %>
         <div style="color: red">

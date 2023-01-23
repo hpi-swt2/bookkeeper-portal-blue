@@ -167,7 +167,7 @@
     }
 </script>
 <div>
-  <%= form_with(model: @item, :html => { :multipart => true }) do |form| %>
+  <%= form_with(model: @item.becomes(Item), :html => { :multipart => true }) do |form| %>
 
     <% if @item.errors.any? %>
       <div style="color: red">
@@ -211,6 +211,7 @@
 
             <p class="subtitle"><%= t('views.show_item.category') %>*</p>
             <%= form.text_field :category, class: "borderedInput body1" %>
+            sadsdassd
 
             <p class="subtitle"><%= t('views.show_item.description') %></p>
             <%= form.text_area :description, class: "borderedInput body1" %>

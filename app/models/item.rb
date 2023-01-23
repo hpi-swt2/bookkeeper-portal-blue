@@ -29,6 +29,7 @@ class Item < ApplicationRecord
   has_one :owning_user, through: :ownership_permission, source: :user_or_group, source_type: 'User'
   has_one :owning_group, through: :ownership_permission, source: :user_or_group, source_type: 'Group'
 
+  validates :type, presence: true
   validates :name, presence: true
   validates :category, presence: true
   validates :location, presence: true
