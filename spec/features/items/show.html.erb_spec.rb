@@ -196,6 +196,7 @@ RSpec.describe "items/show", type: :feature do
     lent_until = (item_lent.rental_start + item_lent.rental_duration_sec).strftime('%d.%m.%Y')
     expect(page).to have_text(lent_until)
   end
+
   it "does not show button to display waitlist if empty" do
     sign_in user
     item.waitlist.users.clear

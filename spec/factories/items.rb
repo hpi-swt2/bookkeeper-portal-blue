@@ -150,7 +150,7 @@ FactoryBot.define do
     rental_duration_sec { nil }
     rental_start { nil }
     return_checklist { "" }
-
+  end
   factory :itemAudited0, class: 'Item' do
     id { 42_420 }
     name { "AuditedItem0" }
@@ -163,7 +163,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :itemAudited1, class: 'Item' do
     id { 42_421 }
     name { "AuditedItem1" }
@@ -176,7 +175,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :itemAudited2, class: 'Item' do
     id { 42_422 }
     name { "AuditedItem2" }
@@ -189,7 +187,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :available_item, class: 'Item' do
     name { "AvailableItem" }
     category { "book" }
@@ -202,7 +199,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :lent_item, class: 'Item' do
     name { "LentItem" }
     category { "book" }
