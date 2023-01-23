@@ -147,6 +147,7 @@ de:
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
       remove: "Aus Gruppe entfernen"
+      leave: "Gruppe verlassen"
     sessions:
       sign_in_with_password: "Mit Passwort anmelden"
   models:

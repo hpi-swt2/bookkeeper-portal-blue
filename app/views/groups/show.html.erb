@@ -11,6 +11,12 @@
       <p><%= t 'views.groups.no_users_to_add' %></p>
     <% end %>
   <% end %>
+
+  <% if @group.members.include?(current_user) %>
+      <%= link_to group_leave_path(@group), class: "btn btn-primary", data: {turbo_method: :delete} do %>
+        <i class="bi bi-door-open-fill"></i><%= t 'views.groups.leave' %>
+      <% end %>
+  <% end %>
 </div>
 
 
