@@ -27,7 +27,7 @@ RSpec.describe "items/show", type: :feature do
   it "shows edit button for owner" do
     sign_in owner
     visit item_path(item)
-    expect(page).to have_link(href: edit_item_url(item))
+    expect(page).to have_link(href: edit_item_url(item, locale: RSpec.configuration.locale))
   end
 
   it "does not show edit button for non-owner" do

@@ -23,7 +23,7 @@ describe "Search page", type: :feature do
     page.fill_in "search", with: "Ruby"
     click_button("submit")
     expect(page).to have_text(@item_book.name)
-    expect(page).to have_link href: item_path(@item_book)
+    expect(page).to have_link href: item_path(@item_book, locale: RSpec.configuration.locale)
     expect(page).not_to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
   end
@@ -32,7 +32,7 @@ describe "Search page", type: :feature do
     page.fill_in "search", with: "book"
     click_button("submit")
     expect(page).to have_text(@item_book.name)
-    expect(page).to have_link href: item_path(@item_book)
+    expect(page).to have_link href: item_path(@item_book, locale: RSpec.configuration.locale)
     expect(page).not_to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
   end

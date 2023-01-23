@@ -18,7 +18,7 @@ describe "OpenId Connect Login", type: :feature do
     end
 
     it "redirects to dashboard path" do
-      expect(page).to have_current_path(dashboard_path)
+      expect(page).to have_current_path(dashboard_path(locale: RSpec.configuration.locale))
     end
 
     it "displays a success message" do

@@ -40,7 +40,7 @@ RSpec.describe "Groups", type: :feature do
     visit group_path(group)
 
     group.owners.each do |owner|
-      expect(page).to have_link("Remove owner", href: group_demote_path(group, owner))
+      expect(page).to have_link("Remove owner", href: group_demote_path(group, owner, locale: RSpec.configuration.locale))
     end
   end
 
@@ -50,7 +50,7 @@ RSpec.describe "Groups", type: :feature do
     visit group_path(group)
 
     group.members_without_ownership.each do |member|
-      expect(page).to have_link("Make owner", href: group_promote_path(group, member))
+      expect(page).to have_link("Make owner", href: group_promote_path(group, member, locale: RSpec.configuration.locale))
     end
   end
 
@@ -78,7 +78,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Make owner", href: group_promote_path(group, member)).click
+    find(:link, "Make owner", href: group_promote_path(group, member, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -91,7 +91,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove owner", href: group_demote_path(group, owner)).click
+    find(:link, "Remove owner", href: group_demote_path(group, owner, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -124,7 +124,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+    find(:link, "Remove from group", href: group_remove_path(group, member, locale: RSpec.configuration.locale)).click
 
     group.reload
 
