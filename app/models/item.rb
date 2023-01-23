@@ -171,6 +171,21 @@ class Item < ApplicationRecord
     end
   end
 
+  def print_rental_duration
+    seconds = rental_duration_sec
+    if seconds < 86_400
+      I18n.t "views.show_item.less_than_one_day"
+    elsif seconds == 86_400
+      I18n.t "views.show_item.one_day"
+    elsif seconds < 7 * 86_400
+      I18n.t("views.show_item.less_than_days", days_amount: (seconds / 86_400) +1)
+    elsif seconds == 7 * 86_400
+      I18n.t "views.show_item.one_week"
+    else
+      I18n.t("views.show_item.less_than_weeks", weeks_amount: (seconds / (7 * 86_400)) +1)
+    end
+  end
+
   def progress_lent_time
     return 100 if rental_start.nil? || rental_duration_sec.nil? || rental_duration_sec.zero?
 
@@ -194,4 +209,5 @@ class Item < ApplicationRecord
     waitlist.users.length
   end
 end
+
 # rubocop:enable Metrics/ClassLength

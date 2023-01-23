@@ -181,7 +181,7 @@
             <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
           <% end %>
           <p class="subtitle"><%= t('views.show_item.rental_duration') %></p>
-          <p class="body-1"><%= @item.rental_duration_sec %></p>
+          <p class="body-1"><%= @item.print_rental_duration %></p>
           <p class="subtitle"><%= t('views.show_item.lent_by') %></p>
 
           <p class="body-1">
