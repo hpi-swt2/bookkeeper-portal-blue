@@ -191,4 +191,4 @@ en:
       update: "Update Item"
   notification_mailer:
     notification:
-      subject: "New Notification: %{notification_name}"
+      subject: "%{notification_name}"

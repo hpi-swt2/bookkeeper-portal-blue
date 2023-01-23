@@ -164,4 +164,4 @@ de:
       update: "Gegendstand ändern"
   notification_mailer:
     notification:
-      subject: "Neue Benachrichtigung: %{notification_name}"
+      subject: "%{notification_name}: %{item_name}"
