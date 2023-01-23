@@ -68,7 +68,7 @@ class GroupsController < ApplicationController
     @user = User.find(params[:user_id])
     @group.members.append(@user) unless @group.members.include?(@user)
     redirect_to @group
-  end 
+  end
 
   def set_group
     @group = Group.find(params[:id])

@@ -16,7 +16,9 @@ RSpec.describe "Groups", type: :request do
 
     it "as member" do
       sign_in user
-      post "/groups/#{group.id}/add_member", params: { user_id: other_user.id }
+      expect do
+        post "/groups/#{group.id}/add_member", params: { user_id: other_user.id }
+      end.not_to change(group.members, :count)
       expect(response).to be_unauthorized
     end
 
