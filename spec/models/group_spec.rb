@@ -10,9 +10,15 @@ RSpec.describe Group, type: :model do
     expect(@group).to be_valid
   end
 
-  it "is not valid without an owner" do
+  it "is not valid without an owner by default" do
     @group.owners.delete_all
     expect(@group).not_to be_valid
+  end
+
+  it "is is valid without an owner if it is not user-defined" do
+    @group.system_name = "test-group"
+    @group.owners.delete_all
+    expect(@group).to be_valid
   end
 
   it "lists owners in the list of members" do

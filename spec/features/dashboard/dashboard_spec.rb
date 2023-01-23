@@ -52,6 +52,12 @@ RSpec.describe "Dashboard", type: :feature do
     expect(page).to have_content I18n.t('views.dashboard.offered_items.title')
   end
 
+  it "shows what items you are waiting for" do
+    sign_in user
+    visit dashboard_path
+    expect(page).to have_content I18n.t('views.dashboard.waitlist.title')
+  end
+
   it "shows favorites" do
     sign_in user
     visit dashboard_path

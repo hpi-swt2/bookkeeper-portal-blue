@@ -27,9 +27,17 @@ class Group < ApplicationRecord
     members - owners
   end
 
+  def self.default_hpi
+    where(system_name: :default_group_hpi).first_or_create!(name: "HPI")
+  end
+
   private
 
   def owner?
-    errors.add(:base, "Group has to have an owner") if owners.empty?
+    errors.add(:base, "User defined group has to have an owner") if owners.empty? && user_defined?
+  end
+
+  def user_defined?
+    system_name.nil?
   end
 end

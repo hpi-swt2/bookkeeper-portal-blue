@@ -5,14 +5,14 @@ Rails.application.routes.draw do
   get 'search', to: 'search#index'
   get 'notifications', to: 'notifications#index'
   get 'notifications/:id', to: 'notifications#show'
-  post 'notifications/:id/accept', to: 'notifications#accept'
-  post 'notifications/:id/decline', to: 'notifications#decline'
+  post 'notifications/:id/accept', to: 'notifications#accept', as: 'notification_accept_lend'
+  post 'notifications/:id/decline', to: 'notifications#decline', as: 'notification_deny_lend'
   resources :notifications
   get 'profile', to: 'profile#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # https://github.com/heartcombo/devise/blob/main/README.md
-  devise_for :users, controllers: { registrations: 'users', omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: { registrations: 'users', omniauth_callbacks: "users/omniauth_callbacks", sessions: 'sessions/sessions' }
   devise_scope :user do
     get 'profile', to: 'users#profile'
   end
@@ -24,8 +24,6 @@ Rails.application.routes.draw do
   post 'accept_return/:id', to: 'items#accept_return', as: 'accept_return'
   post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'
   post 'request_lend/:id', to: 'items#request_lend', as: 'request_lend'
-  post 'accept_lend/:id', to: 'items#accept_lend', as: 'accept_lend'
-  post 'deny_lend/:id', to: 'items#deny_lend', as: 'deny_lend'
   get 'generate_qrcode/:id', to: 'items#generate_qrcode', as: 'generate_qrcode'
   post 'start_lend/:id', to: 'items#start_lend', as: 'start_lend'
 

@@ -74,6 +74,19 @@ class Item < ApplicationRecord
     self.lend_status = :unavailable
   end
 
+  def accept_return
+    reset_status
+    return if waitlist.users.empty?
+
+    @new_borrower = waitlist.first_user
+    waitlist.remove_user(@new_borrower)
+    @owner = owning_user
+    @lend_notification = LendRequestNotification.new(item: self, borrower: @new_borrower, receiver: @owner,
+                                                     date: Time.zone.now, unread: true, active: true)
+    @lend_notification.save
+    set_status_pending_lend_request
+  end
+
   def deny_return
     self.lend_status = :unavailable
   end
@@ -94,6 +107,10 @@ class Item < ApplicationRecord
 
   def remove_from_waitlist(user)
     waitlist.remove_user(user)
+  end
+
+  def waitlist_contains(user)
+    !(waitlist.nil? || waitlist.position(user).nil?)
   end
 
   def users_with_see_permission
@@ -166,6 +183,16 @@ class Item < ApplicationRecord
     else
       lent_time_progress
     end
+  end
+
+  def age
+    Time.current.to_i - created_at.to_i
+  end
+
+  def waitlist_length
+    return 0 if waitlist.nil?
+
+    waitlist.users.length
   end
 end
 # rubocop:enable Metrics/ClassLength

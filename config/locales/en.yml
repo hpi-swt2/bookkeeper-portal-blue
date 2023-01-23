@@ -71,6 +71,10 @@ en:
         lent: "Lent"
         not_lent: "Not lent"
         overdue: "Overdue"
+      waitlist:
+        title: "WAITING FOR ..."
+        nowhere_on_waitlists: "Currently, you are not waiting for any items."
+        position: "Waitlist Position: %{position}"
       favorites:
         title: "YOUR FAVORITES"
         missing_favorites: "Currently, you have no favored items."
@@ -116,6 +120,10 @@ en:
       move_up_on_waitlist:
         title: "Moved up on Waitlist"
         description: "You have been moved up to Position %{position} on Waitlist for %{item}."
+      removed_from_group:
+        title: "Removed from group"
+        description: "You have been removed from the group \"%{group_name}\"."
+      no_notifications: "You have not received any notifications yet"
     search:
       title: "Search"
       filter_button: "Filter"
@@ -147,6 +155,7 @@ en:
       pending_lend_request: "Waiting for lend approval"
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
+      show_waitlist: "Show waitlist"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
       price_ct : "Price in Cent"
@@ -163,6 +172,8 @@ en:
       promote: "Make owner"
       demote: "Remove owner"
       remove: "Remove from group"
+    sessions:
+      sign_in_with_password: "Sign in with password"
   models:
     item:
       item: "Item"
