@@ -24,11 +24,19 @@ RSpec.describe "/items", type: :request do
   end
 
   let(:valid_request_attributes) do
-    { name: "Test", location: "Test", category: "Test", description: "Test", owner_id: create(:user).id }
+    {
+      name: "Test",
+      location: "Test",
+      category: "Test",
+      description: "Test",
+      owner_id: create(:user).id,
+      lend_group_ids: [],
+      see_group_ids: []
+    }
   end
 
   let(:invalid_attributes) do
-    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt" }
+    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt", lend_group_ids: [], see_group_ids: [] }
   end
 
   describe "GET /index" do

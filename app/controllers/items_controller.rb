@@ -5,6 +5,8 @@ require "stringio"
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
 
 class ItemsController < ApplicationController
   before_action :set_item,
@@ -42,7 +44,6 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params.merge!(permission_hash))
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
-    @item.save
 
     helpers.audit_create_item(@item)
 
@@ -67,8 +68,19 @@ class ItemsController < ApplicationController
   def update_with_permissions
     false if @item.update(item_params)
 
-    lend_group_ids = params.require(:item)[:lend_group_ids].compact_blank!
-    see_group_ids = params.require(:item)[:see_group_ids].compact_blank!
+    lend_group_ids =
+      if params.require(:item)[:lend_group_ids].nil?
+        @item.groups_with_lend_permission.map(&:id)
+      else
+        params.require(:item)[:lend_group_ids].compact_blank!
+      end
+
+    see_group_ids =
+      if params.require(:item)[:see_group_ids].nil?
+        @item.groups_with_see_permission.map(&:id)
+      else
+        params.require(:item)[:see_group_ids].compact_blank!
+      end
 
     see_group_ids -= lend_group_ids
 
@@ -280,3 +292,5 @@ end
 # rubocop:enable Metrics/ClassLength
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
