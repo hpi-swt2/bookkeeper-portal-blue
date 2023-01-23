@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_17_204118) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_21_122621) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_204118) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "system_name"
   end
 
   create_table "items", force: :cascade do |t|
@@ -141,7 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_17_204118) do
     t.datetime "updated_at", null: false
     t.string "actable_type"
     t.integer "actable_id"
-    t.boolean "active", null: false
+    t.boolean "active", default: false, null: false
     t.boolean "unread"
     t.index ["actable_type", "actable_id"], name: "index_notifications_on_actable"
     t.index ["receiver_id"], name: "index_notifications_on_receiver_id"

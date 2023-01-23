@@ -145,4 +145,25 @@ RSpec.describe "Groups", type: :feature do
     expect(notification.description).to include(group.name)
   end
 
+  it "does not add normal users to the HPI group" do
+    user = create(:user)
+    sign_in user
+    expect(user.groups).not_to include(Group.default_hpi)
+  end
+
+  it "adds OIDC users to the HPI group" do
+    oidc_user = create(:peter)
+    OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
+      provider: "openid_connect",
+      uid: "peter.lustig",
+      info: {
+        email: oidc_user.email
+      }
+    )
+
+    visit new_user_session_path
+    find_by_id('openid_connect-signin').click
+    expect(oidc_user.groups).to include(Group.default_hpi)
+  end
+
 end
