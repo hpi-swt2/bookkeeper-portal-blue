@@ -1,0 +1,9 @@
+<% if current_user.favorites.exists?(item.id) %>
+  <%= link_to leave_favorites_path(item) do %>
+    <span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span>
+  <% end %>
+<% else %>
+  <%= link_to add_to_favorites_path(item) do %>
+    <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
+  <% end %>
+<% end %>

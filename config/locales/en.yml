@@ -156,6 +156,8 @@ en:
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
       show_waitlist: "Show waitlist"
+      enter_favorites: "Added to favorites"
+      leave_favorites: "Removed from favorites"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
       price_ct : "Price in Cent"
