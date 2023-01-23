@@ -150,6 +150,7 @@ FactoryBot.define do
     rental_duration_sec { nil }
     rental_start { nil }
     return_checklist { "" }
+    owning_user { create(:user) }
   end
   factory :itemAudited0, class: 'Item' do
     id { 42_420 }
