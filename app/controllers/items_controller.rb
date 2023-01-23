@@ -39,7 +39,7 @@ class ItemsController < ApplicationController
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    @item = Item.new(item_params.merge!(permission_hash))
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
     @item.save
@@ -52,7 +52,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1 or /items/1.json
   def update
     respond_to do |format|
-      if @item.update(item_params)
+      if update_with_permissions
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
         format.json { render :show, status: :ok, location: @item }
       else
@@ -60,6 +60,35 @@ class ItemsController < ApplicationController
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # Due to the way we handle permissions, `@item.update` can't be used to update them
+  # This method applies all "simple" updates with the usual `@item.update` and then handles the permissions separately
+  def update_with_permissions
+    false if @item.update(item_params)
+
+    lend_group_ids = params.require(:item)[:lend_group_ids].compact_blank!
+    see_group_ids = params.require(:item)[:see_group_ids].compact_blank!
+
+    see_group_ids -= lend_group_ids
+
+    if @item.owning_group.nil?
+      @item.groups_with_lend_permission.delete_all
+      @item.groups_with_see_permission.delete_all
+    else
+      @item.groups_with_lend_permission.delete_if { |group| group != @item.owning_group }
+      @item.groups_with_see_permission.delete_if { |group| group != @item.owning_group }
+    end
+
+    lend_group_ids.each do |group_id|
+      @item.groups_with_lend_permission << Group.find(group_id)
+    end
+
+    see_group_ids.each do |group_id|
+      @item.groups_with_see_permission << Group.find(group_id)
+    end
+
+    @item.save
   end
 
   # DELETE /items/1 or /items/1.json
@@ -219,7 +248,6 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
                                  :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
           .merge!(owner_hash)
-          .merge!(permission_hash)
   end
 
   def owner_hash
@@ -241,12 +269,6 @@ class ItemsController < ApplicationController
     see_group_ids = params.require(:item)[:see_group_ids].compact_blank!
 
     see_group_ids -= lend_group_ids
-
-    # owning_group = Item.find(params[:id]).owning_group
-    # unless owning_group.nil?
-    #   lend_group_ids.delete!(owning_group)
-    #   see_group_ids.delete!(owning_group)
-    # end
 
     {
       groups_with_see_permission: Group.find(see_group_ids),
