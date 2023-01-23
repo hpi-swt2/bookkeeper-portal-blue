@@ -20,6 +20,7 @@ module SearchHelper
     Item.where(partial_matching_clause)
         .where(categorial_attribute_clause)
         .where(numerical_attribute_clause)
+        .order(lend_status: :asc)
   end
 
   private

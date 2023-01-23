@@ -62,10 +62,11 @@
 
   .btn-primary {
     text-decoration: none;
+    display: inline;
   }
 
   .btn-secondary {
-    width: 100%;
+    display: inline;
   }
 
   .favoritesIcon {
@@ -91,7 +92,15 @@
       'opsz' 48
   }
 
-      @media screen and (min-width: 480px) and (max-width: 767px) {
+  #buttons {
+    width: 100%;
+  }
+
+  .button {
+    display: inline-block;
+   }
+  
+  @media screen and (min-width: 480px) and (max-width: 767px) {
       .image {
         padding-bottom: 26em;
       }
@@ -188,7 +197,12 @@
             <% end %>
           <% end %>
         </p>
-        <%= render "adaptive_lend_button", current_user: current_user, item: @item %>
+        <div id="buttons">
+          <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
+          <div class="button"> <% if @item.waitlist.users.size != 0 %> </div>
+            <%= render "show_waitlist_button", item: @item %>
+          <% end %>
+        </div>
         <div class="text-center">
           <% if !current_user.nil? && current_user == @item.owning_user %>
             <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode"}, class: "btn-primary" %>

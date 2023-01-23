@@ -58,4 +58,13 @@ RSpec.describe Waitlist, type: :model do
     notification = MoveUpOnWaitlistNotification.find_by(receiver: waitlist.users[0], item: waitlist.item)
     expect(notification).not_to be_nil
   end
+
+  it "removes the first user on the waitlist from the waitlist upon accepting an item return" do
+    waitlist = create(:waitlist_with_item)
+    user1 = waitlist.first_user
+    user2 = waitlist.users[1]
+    waitlist.item.accept_return
+    expect(waitlist.users).not_to include(user1)
+    expect(waitlist.first_user.name).to eq user2.name
+  end
 end

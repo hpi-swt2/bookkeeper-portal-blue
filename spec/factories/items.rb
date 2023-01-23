@@ -46,7 +46,7 @@ FactoryBot.define do
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
     price_ct { 1 }
     rental_duration_sec { 1 }
-    rental_start { "2022-11-18 15:32:07" }
+    rental_start { "git2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
     lend_status { :lent }
     owning_user { create(:user) }
@@ -150,6 +150,69 @@ FactoryBot.define do
     rental_duration_sec { nil }
     rental_start { nil }
     return_checklist { "" }
+
+  factory :itemAudited0, class: 'Item' do
+    id { 42_420 }
+    name { "AuditedItem0" }
+    category { "Books" }
+    location { "D-Space" }
+    description { "An audited item" }
+    image { nil }
+    price_ct { 42 }
+    rental_duration_sec { 42 }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+
+  factory :itemAudited1, class: 'Item' do
+    id { 42_421 }
+    name { "AuditedItem1" }
+    category { "Books" }
+    location { "D-Space" }
+    description { "An audited item" }
+    image { nil }
+    price_ct { 42 }
+    rental_duration_sec { 42 }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+
+  factory :itemAudited2, class: 'Item' do
+    id { 42_422 }
+    name { "AuditedItem2" }
+    category { "Books" }
+    location { "D-Space" }
+    description { "An audited item" }
+    image { nil }
+    price_ct { 42 }
+    rental_duration_sec { 42 }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+
+  factory :available_item, class: 'Item' do
+    name { "AvailableItem" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This item is available." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :available }
+    owning_user { create(:user) }
+  end
+
+  factory :lent_item, class: 'Item' do
+    name { "LentItem" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This item is lent." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :lent }
     owning_user { create(:user) }
   end
 end
