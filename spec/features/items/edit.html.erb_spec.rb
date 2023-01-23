@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "items/show", type: :feature do
-  it "should preselect the owning user or group" do
+  it "preselects the owning user or group" do
     group = create(:group)
-    group2 = create(:group)
+    create(:group)
     member = group.owners[0]
     group_item = create(:item, owning_group: group)
     user_item = create(:item, owning_user: member)

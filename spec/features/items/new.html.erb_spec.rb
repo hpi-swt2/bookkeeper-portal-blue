@@ -24,7 +24,7 @@ RSpec.describe "items/show", type: :feature do
 
   it "has the option to select groups that the user is a member of" do
     group = create(:group)
-    group2 = create(:group)
+    create(:group)
     member = group.owners[0]
     sign_in member
     visit(new_item_url)
