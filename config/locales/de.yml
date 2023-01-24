@@ -98,6 +98,12 @@ de:
       filter_button: "Filter"
       filter_modal:
         title: "Filter"
+        availability: "Verfügbarkeit"
+        available: "Verfügbar"
+        unavailable: "Nicht verfügbar"
+        category: "Kategorie"
+        results: "Ergebnisse anzeigen"
+        all: "Alle Ergebnisse"
       qr_scanner_title: "QR Scanner"
       order:
         default: "Sortieren nach"
