@@ -30,7 +30,9 @@ RSpec.describe "items/new", type: :view do
 
       assert_select "select[name=?]", "item[owner_id]"
 
-      assert_select "select[name=?]", "item[holder]"
+      assert_select "select[id=?]", "item_see_group_ids"
+
+      assert_select "select[id=?]", "item_lend_group_ids"
     end
   end
 end

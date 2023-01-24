@@ -27,22 +27,26 @@ de:
         no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
         expired: "abgelaufen am %{date}"
         today: "heute"
-        days: 
+        days:
           one: "noch %{count} Tag"
           other: "noch %{count} Tage"
-        weeks: 
+        weeks:
           one: "noch %{count} Woche"
           other: "noch %{count} Wochen"
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
-        nothing_offered: "Du bietest bisher nichts an."
+        nothing_offered: "Aktuell hast du keine angebotenen Artikel."
         lent_by_you: "Von dir ausgeliehen"
         lent: "Ausgeliehen"
         not_lent: "Nicht ausgeliehen"
         overdue: "Überfällig"
-      wishlist:
-        title: "DEINE FAVORITEN"
-        missing_wishlist: "Du hast zurzeit keine Artikel gespeichert."
+      waitlist:
+        title: "WARTEND AUF ..."
+        nowhere_on_waitlists: "Aktuell wartest du auf keine Artikel."
+        position: "Wartelistenposition: %{position}"
+      favorites:
+        title: "DEINE MERKLISTE"
+        missing_favorites: "Aktuell hast du keine gespeicherten Artikel."
         available: "Verfügbar"
         not_available: "Nicht verfügbar"
         lent_by_you: "Von dir ausgeliehen"
@@ -85,12 +89,27 @@ de:
       move_up_on_waitlist:
         title: "Auf Warteliste aufgerückt"
         description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
+      removed_from_group:
+        title: "Aus Gruppe entfernt"
+        description: "Du wurdest aus der Gruppe \"%{group_name}\" entfernt."
+      no_notifications: "Du hast noch keine Nachrichten erhalten"
     search:
       title: "Suche"
       filter_button: "Filter"
       filter_modal:
         title: "Filter"
+        availability: "Verfügbarkeit"
+        available: "Verfügbar"
+        unavailable: "Nicht verfügbar"
+        category: "Kategorie"
+        results: "Ergebnisse anzeigen"
+        all: "Alle Ergebnisse"
       qr_scanner_title: "QR Scanner"
+      order:
+        default: "Sortieren nach"
+        popularity: "Beliebtheit"
+        name_a_z: "Name (A-Z)"
+        name_z_a: "Name (Z-A)"
     home:
       title: "Startseite"
     new_item:
@@ -98,11 +117,17 @@ de:
       item_name: "Name des Gegenstands"
       location: "Standort"
       required_fields: "erforderliche Felder"
+      price_ct : "Preis in Cent"
+      return_checklist: "Rückgabe Checkliste"
     show_item:
       author: "Autor"
       category: "Kategorie"
       description: "Beschreibung"
       owner: "Besitzer"
+      lend_permission: "Gruppen mit Ausleihberechtigung"
+      lend_permission_notice: "Besitzer erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
+      see_permission: "Gruppen mit Ansichtsberechtigung"
+      see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
       leave_waitlist: "Warteliste verlassen"
@@ -111,12 +136,15 @@ de:
       waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
-      qr_button: "QR-Code Herunterladen"
+      qr_button: "QR-Code Anzeigen"
       pending_lend_request: "Warten auf Ausleihbestätigung"
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
+      show_waitlist: "Warteliste zeigen"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
+      price_ct : "Preis in ct"
+      return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
       roles: "Rollen"
@@ -129,6 +157,13 @@ de:
     groups:
       owners: "Admins"
       members: "Mitglieder"
+      add_member: "Mitglied hinzufügen"
+      no_users_to_add: "Alle Nutzer sind bereits Mitglieder. Die Gruppe scheint sehr beliebt zu sein."
+      promote: "Zu Admin machen"
+      demote: "Admin entfernen"
+      remove: "Aus Gruppe entfernen"
+    sessions:
+      sign_in_with_password: "Mit Passwort anmelden"
   models:
     item:
       item: "Gegenstand"
@@ -144,3 +179,6 @@ de:
   helpers:
     submit:
       update: "Gegendstand ändern"
+  notification_mailer:
+    notification:
+      subject: "%{notification_name}"

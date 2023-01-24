@@ -13,20 +13,35 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/items", type: :request do
-
   # This should return the minimal set of attributes required to create a valid
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    { name: "Test", location: "Test", category: "Test", description: "Test", owning_user: create(:user) }
+    {
+      name: "Test",
+      location: "Test",
+      category: "Test",
+      description: "Test",
+      owning_user: create(:user),
+      groups_with_lend_permission: [create(:group)],
+      groups_with_see_permission: [create(:group)]
+    }
   end
 
   let(:valid_request_attributes) do
-    { name: "Test", location: "Test", category: "Test", description: "Test", owner_id: create(:user).id }
+    {
+      name: "Test",
+      location: "Test",
+      category: "Test",
+      description: "Test",
+      owner_id: create(:user).id,
+      lend_group_ids: [create(:group).id],
+      see_group_ids: [create(:group).id]
+    }
   end
 
   let(:invalid_attributes) do
-    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt" }
+    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt", lend_group_ids: [], see_group_ids: [] }
   end
 
   describe "GET /index" do
@@ -73,6 +88,21 @@ RSpec.describe "/items", type: :request do
         post items_url, params: { item: valid_request_attributes }
         expect(response).to redirect_to(item_url(Item.last))
       end
+
+      it "creates an audit event" do
+        sign_in create(:user)
+        post items_url, params: { item: valid_request_attributes }
+        expect(AuditEvent.where(event_type: "create_item").count).to be(1)
+      end
+
+      it "added groups with see and lend permissions" do
+        post items_url, params: { item: valid_request_attributes }
+
+        expect(Item.last.groups_with_see_permission.map(&:id)).to match_array(
+          valid_request_attributes[:see_group_ids] + valid_request_attributes[:lend_group_ids]
+        )
+        expect(Item.last.groups_with_lend_permission.map(&:id)).to match_array valid_request_attributes[:lend_group_ids]
+      end
     end
 
     context "with invalid parameters" do
@@ -87,7 +117,12 @@ RSpec.describe "/items", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) do
-        { description: "NewDescription", location: "NewLocation" }
+        {
+          description: "NewDescription",
+          location: "NewLocation",
+          see_group_ids: [ create(:group).id ],
+          lend_group_ids: [ create(:group).id ]
+        }
       end
 
       it "updates the requested item" do
@@ -103,6 +138,17 @@ RSpec.describe "/items", type: :request do
         patch item_url(item), params: { item: new_attributes }
         item.reload
         expect(response).to redirect_to(item_url(item))
+      end
+
+      it "updates the groups with see and lend permissions accordingly" do
+        item = Item.create! valid_attributes
+        patch item_url(item), params: { item: new_attributes }
+        item.reload
+
+        expect(Item.last.groups_with_see_permission.map(&:id)).to match_array(
+          new_attributes[:see_group_ids] + new_attributes[:lend_group_ids]
+        )
+        expect(Item.last.groups_with_lend_permission.map(&:id)).to match_array new_attributes[:lend_group_ids]
       end
     end
 
