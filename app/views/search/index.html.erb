@@ -33,7 +33,7 @@
                 </button>
             </div>
             <div class="col">
-                <%= select_tag "order", options_for_select(@order_options), class: "form-select order-select" %>
+                <%= select_tag "order", options_for_select(@order_options, params[:order]), class: "form-select order-select", :onchange => "this.form.requestSubmit();" %>
             </div>
         </div>
         <%= render "filter-modal", :locals => { :availability_options => @availability_options, :category_options => @category_options } %>

@@ -182,4 +182,30 @@ FactoryBot.define do
     lend_status { :lent }
     owning_user { create(:user) }
   end
+
+  factory :alphabetical_first_item, class: 'Item' do
+    name { "Aalphabetical" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This alphabetically the first." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :lent }
+    owning_user { create(:user) }
+  end
+
+  factory :alphabetical_second_item, class: 'Item' do
+    name { "Balphabetical" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This alphabetically the second." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :lent }
+    owning_user { create(:user) }
+  end
 end

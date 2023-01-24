@@ -5,11 +5,13 @@ class SearchController < ApplicationController
     @search_term = params[:search]
     @availability = params[:availability]
     @category = params[:category]
+    order = params[:order]
 
     create_availability_filter
     create_category_filters
 
-    @results = helpers.search_for_items(@search_term, @filters, @numerical_filters)
+    unsorted_results = helpers.search_for_items(@search_term, @filters, @numerical_filters)
+    sort_results(order, unsorted_results)
   end
 
   private
@@ -47,5 +49,17 @@ class SearchController < ApplicationController
     return if @category.blank?
 
     @filters["category"] = @category
+  end
+
+  def sort_results(order, unsorted_results)
+    @results =
+      case order
+      when "2"
+        unsorted_results.order(name: :asc, lend_status: :asc)
+      when "3"
+        unsorted_results.order(name: :desc, lend_status: :asc)
+      else # add popularity sort here
+        unsorted_results.order(lend_status: :asc)
+      end
   end
 end
