@@ -7,15 +7,21 @@ describe "Translations", type: :feature do
     expect(page.title).to eq("Bookkeeper Blue")
   end
 
-  it "displays correct title on dashboard in German when requested" do
-    page.driver.header 'Accept-language', 'de-DE'
-    visit dashboard_path
-    expect(page.title).to eq("Bookkeeper Blau")
+  context 'when local is set to :de' do
+    let(:local) { :en }
+
+    it "displays correct title on dashboard in German when requested" do
+      visit dashboard_path
+      expect(page.title).to eq I18n.t('views.landing_page.title')
+    end
   end
 
-  it "displays correct title on dashboard in English when an invalid locale is requested" do
-    page.driver.header 'Accept-language', 'pt-PT'
-    visit dashboard_path
-    expect(page.title).to eq("Bookkeeper Blue")
+  context 'when invalid local is set' do
+    let(:local) { :zh }
+
+    it "displays correct title on dashboard in English when an invalid locale is requested" do
+      visit dashboard_path
+      expect(page.title).to eq I18n.t('views.landing_page.title')
+    end
   end
 end

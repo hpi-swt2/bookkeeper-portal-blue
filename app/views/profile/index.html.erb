@@ -4,10 +4,6 @@
     text-decoration: none;
   }
 
-  .dropdown-menu {
-    min-width:150px;
-  }
-
   @media screen and (min-width: 992px) {
   div.dropdown {
     display: none;
@@ -15,24 +11,24 @@
 }
 </style>
 
-<div class="d-flex justify-content-end mt-3">
-<div>
+<div class="mt-3 d-flex justify-content-end">
+  <div>
     <%= link_to edit_user_registration_path, class: "imageLink" do%>
       <span class="material-symbols-outlined me-1">edit</span>
     <% end %>
     <%= link_to destroy_user_session_path, class: "imageLink", data: { "turbo-method": :delete } do %>
       <span class="material-symbols-outlined me-1 ms-1">logout</span>
     <% end %>
-</div>
-<div class="dropdown ms-1">
-  <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+  </div>
+  <div class="dropdown ms-1">
+    <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <%= language_flag(I18n.locale)%>
     </span>
-    <div class="dropdown-menu dropdown-menu-right">
+    <div class="dropdown-menu">
       <li> <%= link_to "English", params.permit.merge(locale: :en), class: "dropdown-item" %> </li>
       <li> <%= link_to "Deutsch", params.permit.merge(locale: :de), class: "dropdown-item" %> </li>
     </div>
-</div>
+  </div>
 </div>
 
 <div style="text-align:center">

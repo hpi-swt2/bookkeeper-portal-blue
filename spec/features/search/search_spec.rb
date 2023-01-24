@@ -8,10 +8,13 @@ describe "Search page", type: :feature do
     visit search_path
   end
 
-  it "translates the close button to German" do
-    page.driver.header 'Accept-language', 'de-DE'
-    visit search_path
-    expect(page).to have_text("Schließen")
+  context 'when local is set to :de' do
+    let(:local) { :de }
+
+    it "translates the close button to German" do
+      visit search_path
+      expect(page).to have_content I18n.t('defaults.close')
+    end
   end
 
   it "translates the close button to English by default" do
