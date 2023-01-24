@@ -6,6 +6,8 @@ describe "Search page", type: :feature do
     @item_beamer = create(:item_beamer)
     @item_whiteboard = create(:item_whiteboard)
     @item_available = create(:available_item)
+    @item_alphabetical_first = create(:alphabetical_first_item)
+    @item_alphabetical_second = create(:alphabetical_second_item)
     @item_lent = create(:lent_item)
     visit search_path
   end
@@ -69,4 +71,21 @@ describe "Search page", type: :feature do
     expect(page).to have_text(/#{@item_available.name}.*\n.*#{@item_lent.name}/)
   end
 
+  it "shows items sorted by name ascending" do
+    I18n.with_locale(:en) do
+      page.select "Name (A-Z)", from: 'order'
+      page.fill_in "search", with: "alphabetical"
+      click_button("submit")
+      expect(page).to have_text(/#{@item_alphabetical_first.name}.*\n.*#{@item_alphabetical_second.name}/)
+    end
+  end
+
+  it "shows items sorted by name descending" do
+    I18n.with_locale(:en) do
+      page.select "Name (Z-A)", from: 'order'
+      page.fill_in "search", with: "alphabetical"
+      click_button("submit")
+      expect(page).to have_text(/#{@item_alphabetical_second.name}.*\n.*#{@item_alphabetical_first.name}/)
+    end
+  end
 end
