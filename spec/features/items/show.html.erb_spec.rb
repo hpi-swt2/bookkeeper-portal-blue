@@ -57,6 +57,18 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text(item.description)
   end
 
+  it "renders an image" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_css("main img")
+  end
+
+  it "renders an image with a data url" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_css('main img[src^="data:"]')
+  end
+
   it "has lend button when item is available and not owner of item" do
     sign_in user
     visit item_path(item)
