@@ -5,9 +5,12 @@ require "stringio"
 # rubocop:disable Metrics/ClassLength
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+
 class ItemsController < ApplicationController
   before_action :set_item,
-                only: %i[ show edit update destroy request_return accept_return request_lend accept_lend deny_lend]
+                only: %i[ show edit update destroy request_return accept_return request_lend]
 
   # GET /items or /items.json
   def index
@@ -32,11 +35,13 @@ class ItemsController < ApplicationController
   def edit
     @item = Item.find(params[:id])
     @owner_id = @item.owning_user.id
+    @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
+    @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params)
+    @item = Item.new(item_params.merge!(permission_hash))
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
 
@@ -48,7 +53,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1 or /items/1.json
   def update
     respond_to do |format|
-      if @item.update(item_params)
+      if update_with_permissions
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
         format.json { render :show, status: :ok, location: @item }
       else
@@ -56,6 +61,46 @@ class ItemsController < ApplicationController
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # Due to the way we handle permissions, `@item.update` can't be used to update them
+  # This method applies all "simple" updates with the usual `@item.update` and then handles the permissions separately
+  def update_with_permissions
+    false if @item.update(item_params)
+
+    lend_group_ids =
+      if params.require(:item)[:lend_group_ids].nil?
+        @item.groups_with_lend_permission.map(&:id)
+      else
+        params.require(:item)[:lend_group_ids].compact_blank!
+      end
+
+    see_group_ids =
+      if params.require(:item)[:see_group_ids].nil?
+        @item.groups_with_see_permission.map(&:id)
+      else
+        params.require(:item)[:see_group_ids].compact_blank!
+      end
+
+    see_group_ids -= lend_group_ids
+
+    if @item.owning_group.nil?
+      @item.groups_with_lend_permission.delete_all
+      @item.groups_with_see_permission.delete_all
+    else
+      @item.groups_with_lend_permission.delete_if { |group| group != @item.owning_group }
+      @item.groups_with_see_permission.delete_if { |group| group != @item.owning_group }
+    end
+
+    lend_group_ids.each do |group_id|
+      @item.groups_with_lend_permission << Group.find(group_id)
+    end
+
+    see_group_ids.each do |group_id|
+      @item.groups_with_see_permission << Group.find(group_id)
+    end
+
+    @item.save
   end
 
   # DELETE /items/1 or /items/1.json
@@ -100,44 +145,6 @@ class ItemsController < ApplicationController
     helpers.audit_request_lend(@item)
 
     redirect_to item_url(@item)
-  end
-
-  # (reduce complexity in future)
-  def accept_lend
-    @notification = LendRequestNotification.find_by(item: @item)
-    @item.set_status_pending_pickup
-    @job = Job.create
-    @job.item = @item
-    @job.save
-    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
-    @item.set_rental_start_time
-    @item.update(holder: @notification.borrower.id)
-    @notification.mark_as_inactive
-    @lendrequest = LendRequestNotification.find(@notification.actable_id)
-    @lendrequest.update(accepted: true)
-    @item.save
-
-    helpers.audit_accept_lend(@item)
-
-    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                       active: false, unread: true)
-    redirect_to item_url(@item)
-  end
-
-  def deny_lend
-    @notification = LendRequestNotification.find_by(item: @item)
-    @item.set_status_available
-    @job = Job.create
-    @job.item = @item
-    @job.save
-    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
-    @notification.mark_as_inactive
-    @lendrequest = LendRequestNotification.find(@notification.actable_id)
-    @lendrequest.update(active: false)
-    @item.save
-    LendingDeniedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
-                                     active: false, unread: true)
-    redirect_to notifications_path
   end
 
   def start_lend
@@ -185,7 +192,7 @@ class ItemsController < ApplicationController
     @accepted_notif = ReturnAcceptedNotification.new(active: false, unread: true, date: Time.zone.now,
                                                      item: @item, receiver: User.find(@item.holder), owner: @user)
     @accepted_notif.save
-    @item.reset_status
+    @item.accept_return
     @item.save
 
     helpers.audit_accept_return(@item)
@@ -268,8 +275,22 @@ class ItemsController < ApplicationController
       end
     end
   end
+
+  def permission_hash
+    lend_group_ids = params.require(:item)[:lend_group_ids].compact_blank!
+    see_group_ids = params.require(:item)[:see_group_ids].compact_blank!
+
+    see_group_ids -= lend_group_ids
+
+    {
+      groups_with_see_permission: Group.find(see_group_ids),
+      groups_with_lend_permission: Group.find(lend_group_ids)
+    }
+  end
 end
 
 # rubocop:enable Metrics/ClassLength
 # rubocop:enable Metrics/AbcSize
 # rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity

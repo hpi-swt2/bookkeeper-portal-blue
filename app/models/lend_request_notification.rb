@@ -7,9 +7,18 @@ class LendRequestNotification < ApplicationRecord
 
   belongs_to :borrower, class_name: "User"
   belongs_to :item
+  after_create :send_mail
 
   def title
     I18n.t "views.notifications.lend_request.title"
+  end
+
+  def set_accepted
+    update(accepted: true)
+  end
+
+  def set_denied
+    update(accepted: false)
   end
 
   def description

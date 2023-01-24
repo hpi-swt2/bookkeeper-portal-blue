@@ -6,4 +6,7 @@ FactoryBot.define do
     users { [ build(:user), build(:max) ] }
     item { build(:item) }
   end
+  factory :empty_waitlist, class: 'Waitlist' do
+    item { build(:item) }
+  end
 end

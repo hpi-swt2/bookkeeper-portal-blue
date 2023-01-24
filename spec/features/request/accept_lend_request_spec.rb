@@ -27,8 +27,6 @@ describe "Requests handling", type: :feature do
     expect(item.reload.lend_status).to eq('pending_pickup')
   end
 
-  # TODO: fix this test! It fails because there is no Check button is renamed to the notification title
-
   it "if borrower confirms pickup, the item lend status changes to lent" do
     owner = create(:max)
     borrower = create(:peter)
@@ -43,7 +41,6 @@ describe "Requests handling", type: :feature do
     sign_in borrower
     visit item_path(item)
     click_button('Confirm pickup')
-    puts item.reload.lend_status
     expect(item.reload.lend_status).to eq('lent')
     expect(AuditEvent.where(item: item, event_type: "accept_lend").count).to be(1)
   end

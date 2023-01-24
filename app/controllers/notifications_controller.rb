@@ -35,17 +35,40 @@ class NotificationsController < ApplicationController
 
   def accept
     @notification = Notification.find(params[:id])
-    @notification.update(active: false)
-    @lendrequest = LendRequestNotification.find(@notification.actable_id)
-    @lendrequest.update(accepted: true)
+    @notification.mark_as_read
+    @notification.mark_as_inactive
+    @notification.set_accepted
+    @item = @notification.item
+    accept_item
+    LendingAcceptedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
+                                       active: false, unread: true)
     redirect_to notifications_path
   end
 
   def decline
     @notification = Notification.find(params[:id])
-    @notification.update(active: false)
-    @lendrequest = LendRequestNotification.find(@notification.actable_id)
-    @lendrequest.update(accepted: false)
+    @notification.mark_as_read
+    @notification.mark_as_inactive
+    @notification.set_denied
+    @item = @notification.item
+    @item.set_status_available
+    @item.save
+    LendingDeniedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
+                                     active: false, unread: true)
     redirect_to notifications_path
+  end
+
+  private
+
+  def accept_item
+    @item.set_status_pending_pickup
+    @job = Job.create
+    @job.item = @item
+    @job.save
+    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
+    @item.set_rental_start_time
+    @item.update(holder: @notification.borrower.id)
+    @item.save
+    helpers.audit_accept_lend(@item)
   end
 end

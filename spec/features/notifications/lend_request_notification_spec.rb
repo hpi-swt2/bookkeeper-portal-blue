@@ -13,6 +13,10 @@ describe "Lend Request Notifications", type: :feature do
     @notification.save
   end
 
+  it "sends an email after creation" do
+    expect(ActionMailer::Base.deliveries.last.to).to eq [user.email]
+  end
+
   it "has accept and decline buttons" do
     visit notifications_path
     click_on('Lend Request')
@@ -36,6 +40,21 @@ describe "Lend Request Notifications", type: :feature do
     @notification.reload
     expect(@notification.active).to be false
     expect(@notification.accepted).to be false
+  end
+
+  it "can be for the same item" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Decline')
+    @notification.reload
+    expect(@notification.active).to be false
+    @notification2 = build(:lend_request_notification, receiver: user, item: item, borrower: user, active: true)
+    @notification2.save
+    visit notifications_path
+    click_on('wants to borrow your')
+    click_button('Decline')
+    @notification2.reload
+    expect(@notification2.active).to be false
   end
 
   it "user gets notified someone wants to lend his/her item" do
@@ -69,5 +88,28 @@ describe "Lend Request Notifications", type: :feature do
     expect(page).to have_text(user.name)
     expect(page).to have_text(item.name)
     expect(page).to have_text('Lending Denied')
+  end
+
+  it "doesn't change to read when clicked" do
+    visit notifications_path
+    click_on('Lend Request')
+    @notification.reload
+    expect(@notification.unread).to be true
+  end
+
+  it "does change to read when accepted" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Accept')
+    @notification.reload
+    expect(@notification.unread).to be false
+  end
+
+  it "does change to read when declined" do
+    visit notifications_path
+    click_on('Lend Request')
+    click_button('Decline')
+    @notification.reload
+    expect(@notification.unread).to be false
   end
 end
