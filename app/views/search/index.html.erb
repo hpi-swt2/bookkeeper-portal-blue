@@ -26,9 +26,16 @@
                 <i class="bi bi-qr-code-scan"></i>
             </button>
         </div>
-        <button class="btn btn-secondary secondaryButton mb-3" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false">
-            <%= t 'views.search.filter_button' %> <i class="bi bi-sliders2-vertical"></i>
-        </button>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-secondary secondaryButton mb-3" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false">
+                    <%= t 'views.search.filter_button' %> <i class="bi bi-sliders2-vertical"></i>
+                </button>
+            </div>
+            <div class="col">
+                <%= select_tag "order", options_for_select(@order_options), class: "form-select order-select" %>
+            </div>
+        </div>
         <%= render "filter-modal" %>
     <% end %>
 </div>

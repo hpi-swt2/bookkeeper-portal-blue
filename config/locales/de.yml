@@ -27,10 +27,10 @@ de:
         no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
         expired: "abgelaufen am %{date}"
         today: "heute"
-        days: 
+        days:
           one: "noch %{count} Tag"
           other: "noch %{count} Tage"
-        weeks: 
+        weeks:
           one: "noch %{count} Woche"
           other: "noch %{count} Wochen"
       offered_items:
@@ -99,6 +99,11 @@ de:
       filter_modal:
         title: "Filter"
       qr_scanner_title: "QR Scanner"
+      order:
+        default: "Sortieren nach"
+        popularity: "Beliebtheit"
+        name_a_z: "Name (A-Z)"
+        name_z_a: "Name (Z-A)"
     home:
       title: "Startseite"
     new_item:
@@ -113,6 +118,10 @@ de:
       category: "Kategorie"
       description: "Beschreibung"
       owner: "Besitzer"
+      lend_permission: "Gruppen mit Ausleihberechtigung"
+      lend_permission_notice: "Besitzer erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
+      see_permission: "Gruppen mit Ansichtsberechtigung"
+      see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
       leave_waitlist: "Warteliste verlassen"
@@ -121,7 +130,7 @@ de:
       waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
-      qr_button: "QR-Code Herunterladen"
+      qr_button: "QR-Code Anzeigen"
       pending_lend_request: "Warten auf Ausleihbestätigung"
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
@@ -142,6 +151,8 @@ de:
     groups:
       owners: "Admins"
       members: "Mitglieder"
+      add_member: "Mitglied hinzufügen"
+      no_users_to_add: "Alle Nutzer sind bereits Mitglieder. Die Gruppe scheint sehr beliebt zu sein."
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
       remove: "Aus Gruppe entfernen"

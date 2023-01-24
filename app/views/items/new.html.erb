@@ -18,6 +18,11 @@
         margin-bottom: 0px;
     }
 
+
+    .notice{
+        margin-bottom: 0px;
+    }
+
     .title {
         font-family: Roboto;
         font-style: normal;
@@ -86,7 +91,7 @@
   }
   .borderedInput {
     border: 1px solid #AAB0B3;
-    border-radius: 5px; 
+    border-radius: 5px;
     padding-left: 5px;
     width: 100%;
     margin-bottom: 8px
@@ -194,7 +199,7 @@
 
         <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
 
-      </div>  
+      </div>
 
 
         <div class="col">
@@ -223,6 +228,18 @@
             <%= form.collection_select(:owner_id, [current_user], :id, :email, :selected => current_user.id) %>
           <% end %>
         </div>
+
+            <p class="subtitle"><%= t('views.show_item.lend_permission') %></p>
+            <p class="notice"><%= t('views.show_item.lend_permission_notice') %></p>
+            <div class="notBorderedInput">
+              <%= form.collection_select(:lend_group_ids, Group.all, :id, :name, {}, {size: 5, multiple: true, class: "borderedInput body1"})%>
+            </div>
+
+            <p class="subtitle"><%= t('views.show_item.see_permission') %></p>
+            <p class="notice"><%= t('views.show_item.see_permission_notice') %></p>
+            <div class="notBorderedInput">
+              <%= form.collection_select(:see_group_ids, Group.all, :id, :name, {}, {size: 5, multiple: true, class: "borderedInput body1"})%>
+            </div>
 
             <p class="subtitle"><%= t('views.edit_item.price_ct') %></p>
             <%= form.number_field :price_ct, class: "borderedInput body1" %>
