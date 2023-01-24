@@ -175,4 +175,4 @@ de:
       update: "Gegendstand ändern"
   notification_mailer:
     notification:
-      subject: "%{notification_name}: %{item_name}"
+      subject: "%{notification_name}"
