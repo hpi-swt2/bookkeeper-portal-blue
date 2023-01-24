@@ -138,6 +138,13 @@ en:
       location: "Location"
       required_fields: "required fields"
       price_ct : "Price in Cent"
+      duration:
+        months: "Month"
+        weeks: "Week"
+        days: "Day"
+        hours: "Hour"
+        minutes: "Minute"
+        seconds: "Seconds"
     show_item:
       author: "Author"
       category: "Category"
@@ -157,8 +164,16 @@ en:
       confirm_pickup: "Confirm pickup"
       show_waitlist: "Show waitlist"
     edit_item:
-      rental_duration_sec: "Rental Duration (seconds)"
+      rental_duration_sec: "Rental Duration"
+      rental_duration_unit: ['Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds']
       price_ct : "Price in Cent"
+      duration:
+        months: "Month"
+        weeks: "Week"
+        days: "Day"
+        hours: "Hour"
+        minutes: "Minute"
+        seconds: "Seconds"
     profile:
       title: "Profile"
       roles: "Roles"

@@ -244,7 +244,16 @@
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec') %>*</p>
             <div class="", id="rentalDurationDiv">
               <div class="rentalDurationInput"><%= form.number_field :rental_duration, class: "borderedInput body1" %></div>
-              <div class="rentalDurationInput"><%= form.select :rental_duration_unit, ['Months', 'Weeks', 'Days', 'Hours', 'Minutes', 'Seconds'] %></div>
+              <div class="rentalDurationInput">
+                <%= form.select :rental_duration_unit, [
+                  [t('views.edit_item.duration.months'), 'Months'],
+                  [t('views.edit_item.duration.weeks'), 'Weeks'],
+                  [t('views.edit_item.duration.days'), 'Days'],
+                  [t('views.edit_item.duration.hours'), 'Hours'],
+                  [t('views.edit_item.duration.minutes'), 'Minutes'],
+                  [t('views.edit_item.duration.seconds'), 'Seconds'],
+                ] %>
+              </div>
             </div>
 
             <p class="subtitle"><%= t('views.edit_item.return_checklist') %></p>

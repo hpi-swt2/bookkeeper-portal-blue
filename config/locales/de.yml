@@ -108,6 +108,13 @@ de:
       required_fields: "erforderliche Felder"
       price_ct : "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
+      duration:
+        months: "Monaten"
+        weeks: "Wochen"
+        days: "Tagen"
+        hours: "Stunden"
+        minutes: "Minuten"
+        seconds: "Sekunden"
     show_item:
       author: "Autor"
       category: "Kategorie"
@@ -127,9 +134,16 @@ de:
       confirm_pickup: "Abholung bestätigen"
       show_waitlist: "Warteliste zeigen"
     edit_item:
-      rental_duration_sec: "Ausleihdauer (Sekunden)"
+      rental_duration_sec: "Ausleihdauer"
       price_ct : "Preis in ct"
       return_checklist: "Rückgabe Checkliste"
+      duration:
+        months: "Monaten"
+        weeks: "Wochen"
+        days: "Tagen"
+        hours: "Stunden"
+        minutes: "Minuten"
+        seconds: "Sekunden"
     profile:
       title: "Profil"
       roles: "Rollen"
@@ -162,3 +176,4 @@ de:
   helpers:
     submit:
       update: "Gegendstand ändern"
+  
