@@ -163,7 +163,6 @@ en:
       price_ct : "Price in Cent"
     profile:
       title: "Profile"
-      roles: "Roles"
       email: "Email"
       edit_profile: "Edit Profile"
       groups: "Groups"

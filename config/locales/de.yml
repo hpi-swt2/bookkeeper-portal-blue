@@ -134,7 +134,6 @@ de:
       return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
-      roles: "Rollen"
       email: "Email"
       edit_profile: "Profil bearbeiten"
       edit_profile_image: >
