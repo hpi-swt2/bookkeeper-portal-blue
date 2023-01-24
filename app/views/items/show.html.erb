@@ -146,9 +146,11 @@
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
-          <!--only show filled icon if icon is on favorites-->
-          <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
-          <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
+          <% if current_user != @item.owning_user %>
+            <!--only show filled icon if icon is on favorites-->
+            <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
+            <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
+          <% end %>
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
         </div>
       </div>
@@ -175,15 +177,15 @@
         <p class="subtitle"><%= t('views.show_item.owner') %></p>
         <p class="body-1"><%= @item.owning_user.email %></p>
 
-        <% if current_user == @item.owning_user %>
-          <% if !@item.holder.nil? %>
-            <p class="subtitle"><%= t('views.show_item.lend_until') %></p>
-            <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
-          <% end %>
-          <p class="subtitle"><%= t('views.show_item.rental_duration') %></p>
-          <p class="body-1"><%= @item.print_rental_duration %></p>
-          <p class="subtitle"><%= t('views.show_item.lent_by') %></p>
+        <% if !@item.holder.nil? %>
+          <p class="subtitle"><%= t('views.show_item.lent_until') %></p>
+          <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
+        <% end %>
+        <p class="subtitle"><%= t('views.show_item.rental_duration') %></p>
+        <p class="body-1"><%= @item.print_rental_duration %></p>
 
+        <% if current_user == @item.owning_user %>
+          <p class="subtitle"><%= t('views.show_item.lent_by') %></p>
           <p class="body-1">
             <% if !@item.holder.nil? %>
               <%= @item.holder.email %>

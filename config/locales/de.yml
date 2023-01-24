@@ -113,7 +113,7 @@ de:
       category: "Kategorie"
       description: "Beschreibung"
       owner: "Besitzer"
-      lend_until: "Ausleihen bis"
+      lent_until: "Verliehen bis"
       rental_duration: "Maximale Ausleihdauer"
       lent_by: "Ausgeliehen von"
       not_lent: "Aktuell nicht ausgeliehen."
