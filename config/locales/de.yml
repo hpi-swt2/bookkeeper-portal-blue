@@ -130,7 +130,7 @@ de:
       waitlist_position: "Sie stehen an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
-      qr_button: "QR-Code Herunterladen"
+      qr_button: "QR-Code Anzeigen"
       pending_lend_request: "Warten auf Ausleihbestätigung"
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
