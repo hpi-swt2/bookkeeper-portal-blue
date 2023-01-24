@@ -64,9 +64,9 @@ describe "Search page", type: :feature do
   end
 
   it "shows only the items with the correct category" do
-    page.fill_in "search", with: "book"
+    page.fill_in "search", with: "b"
     click_button("filter")
-    select("Books", from: "category").select_option
+    select(@item_book.category, from: "category").select_option
     click_button("submit")
 
     expect(page).to have_text(@item_book.name)
@@ -85,6 +85,25 @@ describe "Search page", type: :feature do
     expect(page).not_to have_text(@item_whiteboard.name)
   end
 
+  it "shows only available items when seraching for blank and having an availability filter" do
+    select("Available", from: "availability").select_option
+    click_button("submit")
+
+    expect(page).not_to have_text(@item_book.name)
+    expect(page).not_to have_text(@item_beamer.name)
+    expect(page).to have_text(@item_whiteboard.name)
+  end
+
+  it "applies both filters" do
+    select("Unavailable", from: "availability").select_option
+    select(@item_book.category, from: "category").select_option
+    click_button("submit")
+
+    expect(page).to have_text(@item_book.name)
+    expect(page).not_to have_text(@item_beamer.name)
+    expect(page).not_to have_text(@item_whiteboard.name)
+  end
+
   it "shows all available categories" do
     click_button("filter")
 
@@ -98,5 +117,4 @@ describe "Search page", type: :feature do
     click_button("submit")
     expect(page).to have_text(/#{@item_available.name}.*\n.*#{@item_lent.name}/)
   end
-
 end
