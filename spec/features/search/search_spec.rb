@@ -39,6 +39,16 @@ describe "Search page", type: :feature do
     expect(page).not_to have_text(@item_whiteboard.name)
   end
 
+  it "keeps the result the same when searching multiple times" do
+    page.fill_in "search", with: "book"
+    click_button("submit")
+    click_button("submit")
+
+    expect(page).to have_text(@item_book.name)
+    expect(page).not_to have_text(@item_beamer.name)
+    expect(page).not_to have_text(@item_whiteboard.name)
+  end
+
   it "partial matching works for empty string" do
     page.fill_in "search", with: ""
     click_button("submit")
@@ -101,6 +111,18 @@ describe "Search page", type: :feature do
 
     expect(page).to have_text(@item_book.name)
     expect(page).not_to have_text(@item_beamer.name)
+    expect(page).not_to have_text(@item_whiteboard.name)
+  end
+
+  it "keeps the filter selected" do
+    select(@item_beamer.category, from: "category").select_option
+    select("Unavailable", from: "availability").select_option
+
+    click_button("submit")
+    click_button("submit")
+
+    expect(page).not_to have_text(@item_book.name)
+    expect(page).to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
   end
 
