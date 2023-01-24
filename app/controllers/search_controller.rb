@@ -21,8 +21,16 @@ class SearchController < ApplicationController
         unsorted_results.order(name: :asc, lend_status: :asc)
       when "3"
         unsorted_results.order(name: :desc, lend_status: :asc)
-      else # add popularity sort here
-        unsorted_results.order(lend_status: :asc)
+      else
+        sort_results_by_popularity(unsorted_results)
       end
+  end
+
+  def sort_results_by_popularity(unsorted_results)
+    sorted_by_popularity = helpers.statistics_sort_items_by_popularity(unsorted_results)
+    # rubys `sort_by` is unstable. By adding the index as a second key the search is stabilized
+    sorted_by_popularity.each_with_index.sort_by do |item, index|
+      [item.lend_status, index]
+    end.map(&:first)
   end
 end

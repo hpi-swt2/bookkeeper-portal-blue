@@ -9,6 +9,24 @@ describe "Search page", type: :feature do
     @item_alphabetical_first = create(:alphabetical_first_item)
     @item_alphabetical_second = create(:alphabetical_second_item)
     @item_lent = create(:lent_item)
+
+    @audited_items = [
+      create(:itemAudited0),
+      create(:itemAudited1),
+      create(:itemAudited2)
+    ]
+
+    @audited_items.each_with_index do |item, index|
+      ((index + 1) * 10).times do
+        create(:audit_event,
+               item: item,
+               event_type: :accept_lend)
+        create(:audit_event,
+               item: item,
+               event_type: :accept_return)
+      end
+    end
+
     visit search_path
   end
 
@@ -86,6 +104,16 @@ describe "Search page", type: :feature do
       page.fill_in "search", with: "alphabetical"
       click_button("submit")
       expect(page).to have_text(/#{@item_alphabetical_second.name}.*\n.*#{@item_alphabetical_first.name}/)
+    end
+  end
+
+  it "shows items sorted by popularity descending" do
+    I18n.with_locale(:en) do
+      page.select "Popularity", from: 'order'
+      page.fill_in "search", with: "audited"
+      click_button("submit")
+      expect(page).to have_text(/#{@audited_items[2].name}.*\n.*#{@audited_items[1].name}/)
+      expect(page).to have_text(/#{@audited_items[1].name}.*\n.*#{@audited_items[0].name}/)
     end
   end
 end
