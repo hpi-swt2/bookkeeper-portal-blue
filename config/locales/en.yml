@@ -133,6 +133,7 @@ en:
         available: "Available"
         unavailable: "Unavailable"
         category: "Category"
+        group: "Lending group"
         results: "Show results"
         all: "All"
       qr_scanner_title: "QR Scanner"
