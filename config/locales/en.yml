@@ -134,6 +134,7 @@ en:
         unavailable: "Unavailable"
         category: "Category"
         results: "Show results"
+        all: "All"
       qr_scanner_title: "QR Scanner"
       order:
         default: "Sort by"

@@ -103,6 +103,7 @@ de:
         unavailable: "Nicht verfügbar"
         category: "Kategorie"
         results: "Ergebnisse anzeigen"
+        all: "Alle Ergebnisse"
       qr_scanner_title: "QR Scanner"
       order:
         default: "Sortieren nach"
