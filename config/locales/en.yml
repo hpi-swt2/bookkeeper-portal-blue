@@ -200,3 +200,6 @@ en:
   helpers:
     submit:
       update: "Update Item"
+  notification_mailer:
+    notification:
+      subject: "%{notification_name}"

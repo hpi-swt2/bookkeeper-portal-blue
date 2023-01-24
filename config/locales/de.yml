@@ -173,3 +173,6 @@ de:
   helpers:
     submit:
       update: "Gegendstand ändern"
+  notification_mailer:
+    notification:
+      subject: "%{notification_name}: %{item_name}"
