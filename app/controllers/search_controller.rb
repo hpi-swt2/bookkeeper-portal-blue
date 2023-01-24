@@ -7,6 +7,22 @@ class SearchController < ApplicationController
                       [t('views.search.order.name_a_z'), 2],
                       [t('views.search.order.name_z_a'), 3]]
 
-    @results = helpers.search_for_items(search_term)
+    order = params[:order]
+    unsorted_results = helpers.search_for_items(search_term)
+    sort_results(order, unsorted_results)
+  end
+
+  private
+
+  def sort_results(order, unsorted_results)
+    @results =
+      case order
+      when "2"
+        unsorted_results.order(name: :asc, lend_status: :asc)
+      when "3"
+        unsorted_results.order(name: :desc, lend_status: :asc)
+      else # add popularity sort here
+        unsorted_results.order(lend_status: :asc)
+      end
   end
 end
