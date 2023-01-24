@@ -12,6 +12,9 @@
   .subtitle{
      margin-bottom: 0px;
   }
+  .notice{
+    margin-bottom: 0px;
+  }
   .title{
     font-family: Roboto;
     font-style: normal;
@@ -35,9 +38,9 @@
     overflow:hidden;
     padding-bottom:100%;
     max-width: 25em;
-    max-height: 25em !important; 
+    max-height: 25em !important;
     padding-left: 0px;
-    padding-right: 0px;  
+    padding-right: 0px;
   }
   .image img{
     position:absolute;
@@ -64,7 +67,7 @@
     width: 100%;
   }
 
-  .wishlistIcon {
+  .favoritesIcon {
     font-size: 1.5em;
     position: absolute;
     top: 0.225em;
@@ -78,7 +81,7 @@
     vertical-align: middle;
   }
 
-  #filledWishlistIcon {
+  #filledFavoritesIcon {
     color: var(--secondary08);
     font-variation-settings:
       'FILL' 1,
@@ -93,7 +96,7 @@
   }
   .borderedInput {
     border: 1px solid #AAB0B3;
-    border-radius: 5px; 
+    border-radius: 5px;
     padding-left: 5px;
     width: 100%;
     margin-bottom: 8px
@@ -110,66 +113,138 @@
   select {
     width: 100%;
   }
-  
+
+  #uploadBtn {
+    margin-top: 8px;
+  }
+
+  @media screen and (min-width: 480px) and (max-width: 767px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
+
+  @media screen and (min-width: 768px) and (max-width: 1199px) {
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1200px)  and (max-width: 1399px){
+      .image {
+        padding-bottom: 25em;
+      }
+  }
+
+  @media screen and (min-width: 1400px) {
+      .image {
+        padding-bottom: 26em;
+      }
+  }
 </style>
-  <%= link_to @item do %>
-    <span class="material-symbols-outlined" id="back-button">chevron_left</span>
-  <% end %>
+
+<script>
+(function() {
+  // Load the script
+  const script = document.createElement("script");
+  script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js';
+  script.type = 'text/javascript';
+  document.head.appendChild(script);
+})();
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader();
+
+      reader.addEventListener("load", (e) => {
+        $('#img_prev').attr('src', e.target.result);
+        $('#itemImg').hide();
+        });
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+</script>
 
 <div>
-<%= form_with(model: @item) do |form| %>
+    <%= link_to @item do %>
+      <span class="material-symbols-outlined" id="back-button">chevron_left</span>
+    <% end %>
 
-    <% if @item.errors.any? %>
-      <div style="color: red">
-        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+  <div>
+  <%= form_with(model: @item) do |form| %>
 
-      <ul>
-        <% @item.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+      <% if @item.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
 
-  <div class="container">
-  <div class="row row-cols-1 row-cols-md-2">
-    <div class="text-center col">
+          <ul>
+            <% @item.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="text-center col my-auto">
 
-      <div class="image container-fluid rounded">
-        <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
+          <div class="image container-fluid rounded">
+
+            <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block", id: "itemImg" if @item.image.attached? %>
+            <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
+          </div>
+          <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
+        </div>
+
+        <div class="col">
+          <p class="title">
+            <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name')+"*"%>
+          </p>
+          <div class="row">
+            <p class="body-1" id="location">
+              <span class="material-symbols-outlined" id="locationIcon">location_on</span>
+              <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location')+"*"%>
+            </p>
+          </div>
+            <p class="subtitle"><%= t('views.show_item.category')%>*</p>
+            <%= form.text_field :category, class: "borderedInput body1" %>
+
+            <p class="subtitle"><%= t('views.show_item.description')%></p>
+            <%= form.text_area :description, class: "borderedInput body1" %>
+
+            <p class="subtitle"><%= t('views.show_item.owner')%>*</p>
+            <div class="notBorderedInput">
+              <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true, :selected => @owner_id)%>
+            </div>
+
+            <p class="subtitle"><%= t('views.show_item.lend_permission') %></p>
+            <p class="notice"><%= t('views.show_item.lend_permission_notice') %></p>
+            <div class="notBorderedInput">
+              <%= form.collection_select(:lend_group_ids, Group.all, :id, :name, {selected: @lend_group_ids}, {size: 5, multiple: true, class: "borderedInput body1"}) %>
+            </div>
+
+            <p class="subtitle"><%= t('views.show_item.see_permission') %></p>
+            <p class="notice"><%= t('views.show_item.see_permission_notice') %></p>
+            <div class="notBorderedInput">
+              <%= form.collection_select(:see_group_ids, Group.all, :id, :name, {selected: @see_group_ids}, {size: 5, multiple: true, class: "borderedInput body1"})%>
+            </div>
+
+            <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
+            <%= form.number_field :price_ct, class: "borderedInput body1" %>
+
+            <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
+            <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
+
+            <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
+            <%= form.text_area :return_checklist, class: "borderedInput body1" %>
+
+            <p class="caption">* <%= t('views.new_item.required_fields')%></p>
+
+            <%= form.submit class: "btn-primary" %>
+        </div>
       </div>
     </div>
-
-  <%= form.file_field :image, class: "notBorderedInput" %>
- 
-  <div>
-  <p class="title">
-    <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name')+"*"%>
-  </p>
+  <% end %>
   </div>
-  <div class="row">
-    <p class="body-1" id="location">
-      <span class="material-symbols-outlined" id="locationIcon">location_on</span>
-      <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location')+"*"%>
-    </p>
-  </div>
-  </div>
-    <p class="subtitle"><%= t('views.show_item.category')%>*</p>
-    <%= form.text_field :category, class: "borderedInput body1" %>
-    <p class="subtitle"><%= t('views.show_item.description')%></p>
-    <%= form.text_area :description, class: "borderedInput body1" %>
-    <p class="subtitle"><%= t('views.show_item.owner')%>*</p>
-    <div class="notBorderedInput">
-    <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true, :selected => @owner_id)%>
-    </div>
-    <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
-    <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %> 
-
-    <p class="caption">* <%= t('views.new_item.required_fields')%></p>
-   
-    <%= form.submit class: "btn-primary" %>
-  </div>
-  </div>
-<% end %>
 </div>

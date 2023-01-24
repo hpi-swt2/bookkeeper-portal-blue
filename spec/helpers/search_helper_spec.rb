@@ -7,6 +7,12 @@ RSpec.describe "Search", type: :helper do
     @item_book = create(:item_book)
     @item_beamer = create(:item_beamer)
     @item_whiteboard = create(:item_whiteboard)
+
+    @audited_items = [
+      create(:itemAudited0),
+      create(:itemAudited1),
+      create(:itemAudited2)
+    ]
   end
 
   it "Searches correctly for name" do
@@ -29,12 +35,12 @@ RSpec.describe "Search", type: :helper do
 
   it "Searches correctly for empty string" do
     results = search_for_items("")
-    expect(results.length).to be(3)
+    expect(results.length).to be(6)
   end
 
   it "Searches correctly for string only with whitespaces" do
     results = search_for_items("   ")
-    expect(results.length).to be(3)
+    expect(results.length).to be(6)
   end
 
   it "Searches correctly for both items with 'to'" do
@@ -96,6 +102,31 @@ RSpec.describe "Search", type: :helper do
     expect(results).not_to include(@item_book)
     expect(results).not_to include(@item_beamer)
     expect(results).to include(@item_whiteboard)
+  end
+
+  it "rejects sql injections as search term parameter" do
+    results = search_for_items("some-random-thing'/**/OR/**/1=1/**/OR/**/description/**/LIKE/**/'")
+    expect(results).not_to include(@item_book)
+    expect(results).not_to include(@item_beamer)
+    expect(results).not_to include(@item_whiteboard)
+  end
+
+  it "puts items in the correct order when sorted by popularity" do
+    @audited_items.each_with_index do |item, index|
+      ((index + 1) * 10).times do
+        create(:audit_event,
+               item: item,
+               event_type: :accept_lend)
+        create(:audit_event,
+               item: item,
+               event_type: :accept_return)
+      end
+    end
+    @audited_items.take(@audited_items.size - 1)
+                  .zip(@audited_items.drop(1))
+                  .collect do |first_item, second_item|
+      expect(helper.statistics_item_popularity(first_item)).to be <= helper.statistics_item_popularity(second_item)
+    end
   end
 
 end

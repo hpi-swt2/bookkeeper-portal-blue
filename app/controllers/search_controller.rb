@@ -17,7 +17,13 @@ class SearchController < ApplicationController
   def setup_variables
     @availability_options = [[t('views.search.filter_modal.available'), 0],
                              [t('views.search.filter_modal.unavailable'), 1]]
+
     @category_options = Item.select(:category).distinct.pluck(:category)
+
+    @order_options = [[t('views.search.order.default'), 0],
+                      [t('views.search.order.popularity'), 1],
+                      [t('views.search.order.name_a_z'), 2],
+                      [t('views.search.order.name_z_a'), 3]]
   end
 
   def create_availability_filter
@@ -36,12 +42,10 @@ class SearchController < ApplicationController
   end
 
   def create_category_filters
-    category = @category
-
     @filters = {}
 
-    return if category.blank?
+    return if @category.blank?
 
-    @filters["category"] = category
+    @filters["category"] = @category
   end
 end

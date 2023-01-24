@@ -5,7 +5,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:openid_connect]
   has_many :notifications, dependent: :destroy
-  has_and_belongs_to_many :items, join_table: "wishlist"
+  has_and_belongs_to_many :items, join_table: "favorites"
 
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
@@ -37,7 +37,7 @@ class User < ApplicationRecord
     email_parts[0].capitalize
   end
 
-  def wishlist
+  def favorites
     items
   end
 
@@ -89,5 +89,9 @@ class User < ApplicationRecord
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
     end
+  end
+
+  def owns_group?(group)
+    owned_groups.include?(group)
   end
 end
