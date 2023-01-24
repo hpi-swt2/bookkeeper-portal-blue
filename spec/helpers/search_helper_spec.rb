@@ -13,6 +13,17 @@ RSpec.describe "Search", type: :helper do
       create(:itemAudited1),
       create(:itemAudited2)
     ]
+
+    @audited_items.each_with_index do |item, index|
+      ((index + 1) * 10).times do
+        create(:audit_event,
+               item: item,
+               event_type: :accept_lend)
+        create(:audit_event,
+               item: item,
+               event_type: :accept_return)
+      end
+    end
   end
 
   it "Searches correctly for name" do
@@ -112,16 +123,6 @@ RSpec.describe "Search", type: :helper do
   end
 
   it "puts items in the correct order when sorted by popularity" do
-    @audited_items.each_with_index do |item, index|
-      ((index + 1) * 10).times do
-        create(:audit_event,
-               item: item,
-               event_type: :accept_lend)
-        create(:audit_event,
-               item: item,
-               event_type: :accept_return)
-      end
-    end
     @audited_items.take(@audited_items.size - 1)
                   .zip(@audited_items.drop(1))
                   .collect do |first_item, second_item|
