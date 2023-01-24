@@ -1,23 +1,19 @@
-<nav class="bk-nav border-bottom border-top">
+<nav class="bk-nav border-bottom border-top justify-content-between">
+  <div class="bk-nav">
     <% @nav.each do |nav_item| %>
         <%= link_to nav_item[:path], class: "bk-nav-element" do %>
             <i class="<%= nav_item[:icon] %>"></i>
             <span class="bk-nav-text"><%= t(nav_item[:text]) %></span>
         <% end %>
     <% end %>
-    <div>
-        <li class="nav-item dropdown" style = "list-style:none">
-           <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= language_flag(I18n.locale)%>
-           </a>
-           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li>
-              <%= link_to "English", params.permit.merge(locale: :en), class: "dropdown-item" %>
-            </li>
-            <li>
-              <%= link_to "Deutsch", params.permit.merge(locale: :de), class: "dropdown-item" %>
-            </li>
-          </ul>
-        </li>
-    </div>
+  </div>
+  <div>
+    <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <%= language_flag(I18n.locale)%>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <li> <%= link_to "English", params.permit.merge(locale: :en), class: "dropdown-item" %> </li>
+      <li> <%= link_to "Deutsch", params.permit.merge(locale: :de), class: "dropdown-item" %> </li>
+    </ul>
+  </div>
 </nav>
