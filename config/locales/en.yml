@@ -58,10 +58,10 @@ en:
         no_lent_items: "Currently, you have no lent items."
         expired: "expired on %{date}"
         today: "today"
-        days: 
+        days:
           one: "%{count} day left"
           other: "%{count} days left"
-        weeks: 
+        weeks:
           one: "%{count} week left"
           other: "%{count} weeks left"
       offered_items:
@@ -148,6 +148,10 @@ en:
       category: "Category"
       description: "Description"
       owner: "Owner"
+      lend_permission: "Groups with lend permission"
+      lend_permission_notice: "This permission is granted to owners automatically. You can select multiple groups by holding down CTRL."
+      see_permission: "Groups with see permission"
+      see_permission_notice: "This permission is granted to people with lend permission automatically. You can select multiple groups by holding down CTRL."
       lend_until: "Lend Until"
       enter_waitlist: "Enter Waitlist"
       leave_waitlist: "Leave Waitlist"
@@ -174,6 +178,8 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      add_member: "Add member"
+      no_users_to_add: "All users are already in this group. You are very popular!"
       promote: "Make owner"
       demote: "Remove owner"
       remove: "Remove from group"

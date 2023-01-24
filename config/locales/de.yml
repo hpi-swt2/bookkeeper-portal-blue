@@ -27,10 +27,10 @@ de:
         no_lent_items: "Aktuell hast du keine ausgeliehenen Artikel."
         expired: "abgelaufen am %{date}"
         today: "heute"
-        days: 
+        days:
           one: "noch %{count} Tag"
           other: "noch %{count} Tage"
-        weeks: 
+        weeks:
           one: "noch %{count} Woche"
           other: "noch %{count} Wochen"
       offered_items:
@@ -118,6 +118,10 @@ de:
       category: "Kategorie"
       description: "Beschreibung"
       owner: "Besitzer"
+      lend_permission: "Gruppen mit Ausleihberechtigung"
+      lend_permission_notice: "Besitzer erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
+      see_permission: "Gruppen mit Ansichtsberechtigung"
+      see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
       lend_until: "Ausleihen bis"
       enter_waitlist: "Auf die Warteliste"
       leave_waitlist: "Warteliste verlassen"
@@ -147,6 +151,8 @@ de:
     groups:
       owners: "Admins"
       members: "Mitglieder"
+      add_member: "Mitglied hinzufügen"
+      no_users_to_add: "Alle Nutzer sind bereits Mitglieder. Die Gruppe scheint sehr beliebt zu sein."
       promote: "Zu Admin machen"
       demote: "Admin entfernen"
       remove: "Aus Gruppe entfernen"
