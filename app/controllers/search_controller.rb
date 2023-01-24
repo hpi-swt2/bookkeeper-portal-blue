@@ -5,11 +5,14 @@ class SearchController < ApplicationController
     @search_term = params[:search]
     @availability = params[:availability]
     @category = params[:category]
+    @group = params[:group]
+
+    @filters = {}
 
     create_availability_filter
-    create_category_filters
+    create_category_filter
 
-    @results = helpers.search_for_items(@search_term, @filters, @numerical_filters)
+    @results = helpers.search_for_items(@search_term, @filters, @numerical_filters, @group.to_i)
   end
 
   private
@@ -24,15 +27,16 @@ class SearchController < ApplicationController
                       [t('views.search.order.popularity'), 1],
                       [t('views.search.order.name_a_z'), 2],
                       [t('views.search.order.name_z_a'), 3]]
+
+    @group_options = Group.select(:name).pluck(:name, :id)
   end
 
   def create_availability_filter
-    availability = @availability
     @numerical_filters = {}
 
-    return if availability.blank? || availability.to_i > 1 || availability.to_i.negative?
+    return if @availability.blank? || @availability.to_i > 1 || @availability.to_i.negative?
 
-    avail = availability.to_i
+    avail = @availability.to_i
 
     @numerical_filters["lend_status"] = if avail.zero?
                                           { "lower_bound" => 0, "upper_bound" => 0 }
@@ -41,9 +45,7 @@ class SearchController < ApplicationController
                                         end
   end
 
-  def create_category_filters
-    @filters = {}
-
+  def create_category_filter
     return if @category.blank?
 
     @filters["category"] = @category
