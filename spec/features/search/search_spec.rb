@@ -92,7 +92,7 @@ describe "Search page", type: :feature do
     expect(page).to have_text(@item_beamer.category)
     expect(page).to have_text(@item_whiteboard.category)
   end
-  
+
   it "shows available items first" do
     page.fill_in "search", with: "item"
     click_button("submit")
