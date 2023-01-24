@@ -123,6 +123,9 @@ en:
       removed_from_group:
         title: "Removed from group"
         description: "You have been removed from the group \"%{group_name}\"."
+      pickupreminder:
+        title: "Pickup Reminder"
+        description: "You have lend %{item}. Please pick it up soon."
       no_notifications: "You have not received any notifications yet"
     search:
       title: "Search"

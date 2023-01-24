@@ -65,10 +65,10 @@ class NotificationsController < ApplicationController
     @job = Job.create
     @job.item = @item
     @job.save
-    ReminderNotificationJob.set(wait: 4.days).perform_later(@job)
     @item.set_rental_start_time
     @item.update(holder: @notification.borrower.id)
     @item.save
+    ReminderNotificationJob.set(wait: 2.days).perform_later(@job)
     helpers.audit_accept_lend(@item)
   end
 end

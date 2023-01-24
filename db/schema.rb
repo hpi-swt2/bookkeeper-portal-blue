@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_21_122621) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_24_150601) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -160,6 +160,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_122621) do
     t.index ["user_or_group_type", "user_or_group_id"], name: "index_permissions_on_user_or_group"
   end
 
+  create_table "pickup_reminder_notifications", force: :cascade do |t|
+    t.integer "item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_pickup_reminder_notifications_on_item_id"
+  end
+
   create_table "removed_from_group_notifications", force: :cascade do |t|
     t.string "group_name"
     t.datetime "created_at", null: false
@@ -233,6 +240,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_122621) do
   add_foreign_key "move_up_on_waitlist_notifications", "items"
   add_foreign_key "notifications", "users", column: "receiver_id"
   add_foreign_key "permissions", "items"
+  add_foreign_key "pickup_reminder_notifications", "items"
   add_foreign_key "return_accepted_notifications", "items"
   add_foreign_key "return_accepted_notifications", "users", column: "owner_id"
   add_foreign_key "return_declined_notifications", "users", column: "owner_id"
