@@ -90,4 +90,8 @@ describe "Return Request Notifications", type: :feature do
     @notification.reload
     expect(@notification.unread).to be true
   end
+
+  it "sends an email after creation" do
+    expect(ActionMailer::Base.deliveries.last.to).to eq [user.email]
+  end
 end
