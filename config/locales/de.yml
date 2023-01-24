@@ -138,9 +138,9 @@ de:
       price_ct : "Preis in ct"
       return_checklist: "Rückgabe Checkliste"
       duration:
-        months: "Monaten"
+        months: "Monate"
         weeks: "Wochen"
-        days: "Tagen"
+        days: "Tage"
         hours: "Stunden"
         minutes: "Minuten"
         seconds: "Sekunden"
