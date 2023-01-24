@@ -109,7 +109,7 @@ de:
       price_ct : "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
       duration:
-        months: "Monaten"
+        months: "Monate"
         weeks: "Wochen"
         days: "Tagen"
         hours: "Stunden"
