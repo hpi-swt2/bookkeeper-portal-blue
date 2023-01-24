@@ -7,9 +7,9 @@
             </div>
             <div class="modal-body">
                 <h4 class="subtitle mt-2"><%= t 'views.search.filter_modal.availability' %></h4>
-                <%= select_tag "availability", options_for_select(@availability_options), class: "form-select", include_blank: true %>
+                <%= select_tag "availability", options_for_select(@availability_options, params[:availability]), class: "form-select", include_blank: true %>
                 <h4 class="subtitle mt-2"><%= t 'views.search.filter_modal.category' %></h4>
-                <%= select_tag "category", options_for_select(@category_options), class: "form-select", include_blank: true %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
+                <%= select_tag "category", options_for_select(@category_options, params[:category]), class: "form-select", include_blank: true %>
             </div>
             <div class="modal-footer align-center">
                 <button class="btn btn-secondary secondaryButton" data-bs-dismiss="modal" type="submit"><%= t 'views.search.filter_modal.results' %></button>
