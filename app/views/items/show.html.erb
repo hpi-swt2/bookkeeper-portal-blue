@@ -126,8 +126,8 @@
             padding-bottom: 26em;
         }
     }
-
 </style>
+
 <div>
 
   <%= link_to :back do %>
@@ -143,10 +143,12 @@
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
+
           <% if !current_user.nil? && !@item.users_with_ownership_permission.include?(current_user) %>
             <%= render "adaptive_favorites_button", current_user: current_user, item: @item %>
           <% end %>
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
+
         </div>
       </div>
 
@@ -159,9 +161,9 @@
             <span class="material-symbols-outlined" id="locationIcon">
               location_on</span>
             <%= @item.location %></p>
+
           <br>
         </div>
-
 
         <p class="subtitle"><%= t('views.show_item.category') %></p>
         <p class="body-1"><%= @item.category %></p>

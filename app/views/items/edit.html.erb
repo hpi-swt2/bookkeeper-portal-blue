@@ -191,7 +191,7 @@ function readURL(input) {
 
           <div class="image container-fluid rounded">
 
-            <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block", id: "itemImg" if @item.image.attached? %>
+            <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block", id: "itemImg" unless @item.image.nil? %>
             <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
           </div>
           <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>

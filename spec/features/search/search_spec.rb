@@ -13,8 +13,7 @@ describe "Search page", type: :feature do
   end
 
   it "translates the close button to German" do
-    page.driver.header 'Accept-language', 'de-DE'
-    visit search_path
+    visit search_path({ locale: 'de' })
     expect(page).to have_text("Schließen")
   end
 
@@ -27,7 +26,7 @@ describe "Search page", type: :feature do
     page.fill_in "search", with: "Ruby"
     click_button("submit")
     expect(page).to have_text(@item_book.name)
-    expect(page).to have_link href: item_path(@item_book)
+    expect(page).to have_link href: item_path(@item_book, locale: RSpec.configuration.locale)
     expect(page).not_to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
   end
@@ -36,7 +35,7 @@ describe "Search page", type: :feature do
     page.fill_in "search", with: "book"
     click_button("submit")
     expect(page).to have_text(@item_book.name)
-    expect(page).to have_link href: item_path(@item_book)
+    expect(page).to have_link href: item_path(@item_book, locale: RSpec.configuration.locale)
     expect(page).not_to have_text(@item_beamer.name)
     expect(page).not_to have_text(@item_whiteboard.name)
   end

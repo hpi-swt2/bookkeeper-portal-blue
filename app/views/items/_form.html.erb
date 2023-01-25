@@ -33,7 +33,7 @@
 
   <div>
     <%= form.label :image, style: "display: block" %>
-    <%= image_tag(item.image) if item.image.attached? %>
+    <%= image_tag(item.image_url) unless item.image.nil? %>
     <%= form.file_field :image %>
   </div>
 

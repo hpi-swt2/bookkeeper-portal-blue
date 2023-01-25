@@ -104,7 +104,7 @@ RSpec.describe "/items", type: :request do
 
       it "redirects to the created item" do
         post items_url, params: { item: valid_request_attributes }
-        expect(response).to redirect_to(item_url(Item.last))
+        expect(response).to redirect_to(item_url(Item.last, locale: RSpec.configuration.locale))
       end
 
       it "creates an audit event" do
@@ -155,7 +155,7 @@ RSpec.describe "/items", type: :request do
         item = Item.create! valid_attributes
         patch item_url(item), params: { item: new_attributes }
         item.reload
-        expect(response).to redirect_to(item_url(item))
+        expect(response).to redirect_to(item_url(item, locale: RSpec.configuration.locale))
       end
 
       it "updates the groups with see and lend permissions accordingly" do
@@ -197,7 +197,7 @@ RSpec.describe "/items", type: :request do
     it "redirects to the items list" do
       item = Item.create! valid_attributes
       delete item_url(item)
-      expect(response).to redirect_to(items_url)
+      expect(response).to redirect_to(items_url(locale: RSpec.configuration.locale))
     end
   end
 end

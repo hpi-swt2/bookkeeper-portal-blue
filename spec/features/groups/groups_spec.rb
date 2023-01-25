@@ -57,7 +57,8 @@ RSpec.describe "Groups", type: :feature do
     visit group_path(group)
 
     group.owners.each do |owner|
-      expect(page).to have_link("Remove owner", href: group_demote_path(group, owner))
+      expect(page).to have_link("Remove owner",
+                                href: group_demote_path(group, owner, locale: RSpec.configuration.locale))
     end
   end
 
@@ -67,7 +68,8 @@ RSpec.describe "Groups", type: :feature do
     visit group_path(group)
 
     group.members_without_ownership.each do |member|
-      expect(page).to have_link("Make owner", href: group_promote_path(group, member))
+      expect(page).to have_link("Make owner",
+                                href: group_promote_path(group, member, locale: RSpec.configuration.locale))
     end
   end
 
@@ -95,7 +97,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Make owner", href: group_promote_path(group, member)).click
+    find(:link, "Make owner", href: group_promote_path(group, member, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -108,7 +110,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove owner", href: group_demote_path(group, owner)).click
+    find(:link, "Remove owner", href: group_demote_path(group, owner, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -142,7 +144,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+    find(:link, "Remove from group", href: group_remove_path(group, member, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -155,7 +157,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+    find(:link, "Remove from group", href: group_remove_path(group, member, locale: RSpec.configuration.locale)).click
 
     expect(Notification.count).to eq(1)
     notification = Notification.first
@@ -184,4 +186,23 @@ RSpec.describe "Groups", type: :feature do
     expect(oidc_user.groups).to include(Group.default_hpi)
   end
 
+  it "does not crash when the same user signs in again with OIDC" do
+    oidc_user = create(:peter)
+    OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
+      provider: "openid_connect",
+      uid: "peter.lustig",
+      info: {
+        email: oidc_user.email
+      }
+    )
+
+    visit new_user_session_path
+    find_by_id('openid_connect-signin').click
+    visit profile_path
+    click_on('logout')
+    visit new_user_session_path
+    find_by_id('openid_connect-signin').click
+    visit profile_path
+    expect(oidc_user.groups).to include(Group.default_hpi)
+  end
 end
