@@ -194,7 +194,7 @@
           <p class="subtitle"><%= t('views.show_item.lent_by') %></p>
           <p class="body-1">
             <% if !@item.holder.nil? %>
-              <%= @item.holder.email %>
+              <%= User.where(id: @item.holder).first.email %>
             <% else %>
               <%= t('views.show_item.not_lent') %>
             <% end %>
