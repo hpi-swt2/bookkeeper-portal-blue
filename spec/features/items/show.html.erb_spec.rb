@@ -207,7 +207,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     visit item_path(item)
     find(:link, href: add_to_favorites_path(item)).click
-    expect(user.favorites.exists?(item.id))
+    expect(user.favorites.exists?(item.id)).to be(true)
   end
 
   it "has a working leave favorites button" do
@@ -215,6 +215,6 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     visit item_path(item)
     find(:link, href: leave_favorites_path(item)).click
-    expect(!user.favorites.exists?(item.id))
+    expect(user.favorites.exists?(item.id)).to be(false)
   end
 end
