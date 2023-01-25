@@ -58,10 +58,10 @@ en:
         no_lent_items: "Currently, you have no lent items."
         expired: "expired on %{date}"
         today: "today"
-        days: 
+        days:
           one: "%{count} day left"
           other: "%{count} days left"
-        weeks: 
+        weeks:
           one: "%{count} week left"
           other: "%{count} weeks left"
       offered_items:
@@ -129,7 +129,17 @@ en:
       filter_button: "Filter"
       filter_modal:
         title: "Filter"
+        availability: "Availability"
+        available: "Available"
+        unavailable: "Unavailable"
+        category: "Category"
+        results: "Show results"
+        all: "All"
       qr_scanner_title: "QR Scanner"
+      order:
+        popularity: "Popularity"
+        name_a_z: "Name (A-Z)"
+        name_z_a: "Name (Z-A)"
     home:
       title: "Home"
     new_item:
@@ -143,6 +153,13 @@ en:
       category: "Category"
       description: "Description"
       owner: "Owner"
+      price: "Price"
+      maximum_lending_duration: "Maximum Lending Duration"
+      lend_permission: "Groups with lend permission"
+      lend_permission_notice: "This permission is granted to owners automatically. You can select multiple groups by holding down CTRL."
+      see_permission: "Groups with see permission"
+      see_permission_notice: "This permission is granted to people with lend permission automatically. You can select multiple groups by holding down CTRL."
+      lend_until: "Lend Until"
       lent_until: "Lent Until"
       rental_duration: "Maximum Rental Duration"
       lent_by: "Lent By"
@@ -161,17 +178,18 @@ en:
       waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
       return: "Return"
-      qr_button: "Download QR-Code"
+      qr_button: "Show QR-Code"
       pending_lend_request: "Waiting for lend approval"
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
       show_waitlist: "Show waitlist"
+      enter_favorites: "Added to favorites"
+      leave_favorites: "Removed from favorites"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
       price_ct : "Price in Cent"
     profile:
       title: "Profile"
-      roles: "Roles"
       email: "Email"
       edit_profile: "Edit Profile"
       groups: "Groups"
@@ -179,6 +197,8 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      add_member: "Add member"
+      no_users_to_add: "All users are already in this group. You are very popular!"
       promote: "Make owner"
       demote: "Remove owner"
       remove: "Remove from group"
@@ -199,3 +219,6 @@ en:
   helpers:
     submit:
       update: "Update Item"
+  notification_mailer:
+    notification:
+      subject: "%{notification_name}"

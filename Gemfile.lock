@@ -157,6 +157,10 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
+    launchy (2.5.0)
+      addressable (~> 2.7)
+    letter_opener (1.8.1)
+      launchy (>= 2.2, < 3)
     loofah (2.19.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -403,6 +407,7 @@ DEPENDENCIES
   factory_bot_rails
   importmap-rails
   jbuilder
+  letter_opener
   net-http
   omniauth-rails_csrf_protection
   omniauth_openid_connect
