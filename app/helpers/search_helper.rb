@@ -8,21 +8,24 @@ module SearchHelper
   #
   # filter_numerical: filter search by numerial range in the form:
   # {"search_name" => {"lower_bound" => 8, "upper_bound" => 10}, ...}
-  def search_for_items(search_term, filter_category = {}, filter_numerical = {}, _group = 0)
+  def search_for_items(search_term, filter_category = {}, filter_numerical = {}, group = 0)
     partial_matching_clause = create_partial_matching_clause(search_term)
     categorial_attribute_clause = create_mutiple_attribute_clause(filter_category, relevant_categorial_attribute,
                                                                   :generate_equals_clause)
     numerical_attribute_clause = create_mutiple_attribute_clause(filter_numerical, relevant_numerical_attribute,
                                                                  :generate_range_clause)
-    partial_matching_clause.and(categorial_attribute_clause).and(numerical_attribute_clause).order(lend_status: :asc)
+    partial_matching_clause.and(categorial_attribute_clause)
+                           .and(numerical_attribute_clause)
+                           .and(filter_group(group)).order(lend_status: :asc)
   end
 
   private
 
   def filter_group(group)
-    return Items.all if group.zero?
+    return Item.all if group.zero?
 
-    Item.joins(:groups).where(groups: { id: group }).select("items.*")
+    items = Group.find(group).owned_items.ids
+    items.blank? ? Item.where("0 = 1") : Item.where(items)
   end
 
   # CREATE CLAUSE FOR PARTIAL MATCHING
@@ -80,7 +83,7 @@ module SearchHelper
   end
 
   def relevant_categorial_attribute
-    %w[category user_or_group]
+    %w[category]
   end
 
   def relevant_numerical_attribute
