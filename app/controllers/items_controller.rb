@@ -49,9 +49,9 @@ class ItemsController < ApplicationController
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
 
-    if create_create_response
-      helpers.audit_create_item(@item)
-    end
+    return unless create_create_response
+
+    helpers.audit_create_item(@item)
   end
 
   # PATCH/PUT /items/1 or /items/1.json
