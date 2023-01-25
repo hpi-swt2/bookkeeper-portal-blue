@@ -8,12 +8,12 @@
     <% end %>
   </div>
   <div>
-    <span class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <span class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
       <%= language_flag(I18n.locale)%>
     </span>
-    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <div class="dropdown-menu">
       <li> <%= link_to "English", params.permit.merge(locale: :en), class: "dropdown-item" %> </li>
       <li> <%= link_to "Deutsch", params.permit.merge(locale: :de), class: "dropdown-item" %> </li>
-    </ul>
+    </div>
   </div>
 </nav>
