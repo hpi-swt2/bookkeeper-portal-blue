@@ -296,6 +296,18 @@ RSpec.describe "items/show", type: :feature do
     expect(page).not_to have_text I18n.t("views.show_item.lent_by")
   end
 
+  it "shows rental end when item lent" do
+    sign_in user
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.lent_until")
+  end
+
+  it "does not show rental end when item not lent" do
+    sign_in user
+    visit item_url(item)
+    expect(page).not_to have_text I18n.t("views.show_item.lent_until")
+  end
+
   it "renders without rental start and duration set" do
     sign_in user
     an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
