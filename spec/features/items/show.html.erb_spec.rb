@@ -190,4 +190,31 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text("2. #{item.waitlist.users[1].name}")
   end
 
+  it "displays the add to favorites button" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_link(href: add_to_favorites_path(item))
+  end
+
+  it "displays the leave favorites button when item is already a favorite" do
+    user.favorites << (item)
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_link(href: leave_favorites_path(item))
+  end
+
+  it "has a working add to favorites button" do
+    sign_in user
+    visit item_path(item)
+    find(:link, href: add_to_favorites_path(item)).click
+    expect(user.favorites.exists?(item.id))
+  end
+
+  it "has a working leave favorites button" do
+    user.favorites << (item)
+    sign_in user
+    visit item_path(item)
+    find(:link, href: leave_favorites_path(item)).click
+    expect(!user.favorites.exists?(item.id))
+  end
 end
