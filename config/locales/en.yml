@@ -161,7 +161,6 @@ en:
       see_permission_notice: "This permission is granted to people with lend permission automatically. You can select multiple groups by holding down CTRL."
       lend_until: "Lend Until"
       lent_until: "Lent Until"
-      rental_duration: "Maximum Rental Duration"
       lent_by: "Lent By"
       not_lent: "Currently, not lent."
       less_than_one_day: "Less than one day"

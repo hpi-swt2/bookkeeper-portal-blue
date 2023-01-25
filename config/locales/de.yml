@@ -131,7 +131,6 @@ de:
       see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
       lend_until: "Ausleihen bis"
       lent_until: "Verliehen bis"
-      rental_duration: "Maximale Ausleihdauer"
       lent_by: "Ausgeliehen von"
       not_lent: "Aktuell nicht ausgeliehen."
       less_than_one_day: "Weniger als ein Tag"
