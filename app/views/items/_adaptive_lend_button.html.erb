@@ -1,4 +1,5 @@
 
+<!--lending possible if logged in and either owned by group or not owner-->
 <% if !current_user.nil? && (item.owning_user.nil? ? true : current_user != item.owning_user)  %>
     <% if item.lend_status == "pending_pickup" && !LendRequestNotification.find_by(receiver: item.owning_user, item: item, borrower: current_user).nil?  %>
         <%= button_to t('views.show_item.confirm_pickup'), { action: "start_lend" }, class: "btn-primary" %>       

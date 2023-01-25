@@ -24,6 +24,8 @@ RSpec.describe "items/show", type: :feature do
 
   it "has the option to select groups that the user is a member of" do
     group = create(:group)
+    # to check if only 'group' that the user is a member of is shown
+    # in the dropdown, a second group is created
     create(:group)
     member = group.owners[0]
     sign_in member
