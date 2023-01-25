@@ -106,7 +106,6 @@ de:
         all: "Alle Ergebnisse"
       qr_scanner_title: "QR Scanner"
       order:
-        default: "Sortieren nach"
         popularity: "Beliebtheit"
         name_a_z: "Name (A-Z)"
         name_z_a: "Name (Z-A)"
@@ -124,6 +123,9 @@ de:
       category: "Kategorie"
       description: "Beschreibung"
       owner: "Besitzer"
+      price: "Preis"
+      lent_until: "Geliehen bis"
+      maximum_lending_duration: "Maximale Ausleihdauer"
       lend_permission: "Gruppen mit Ausleihberechtigung"
       lend_permission_notice: "Besitzer erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
       see_permission: "Gruppen mit Ansichtsberechtigung"
@@ -141,13 +143,14 @@ de:
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
       show_waitlist: "Warteliste zeigen"
+      enter_favorites: "Auf die Merkliste gesetzt"
+      leave_favorites: "Von der Merkliste entfernt"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
       price_ct : "Preis in ct"
       return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
-      roles: "Rollen"
       email: "Email"
       edit_profile: "Profil bearbeiten"
       edit_profile_image: >

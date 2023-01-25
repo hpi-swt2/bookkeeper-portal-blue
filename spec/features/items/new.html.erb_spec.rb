@@ -21,4 +21,18 @@ RSpec.describe "items/show", type: :feature do
     visit(new_item_url)
     expect(page).to have_select "item_owner_id", options: [user2.email]
   end
+
+  it "has the option to select groups that the user is a member of" do
+    group = create(:group)
+    # to check if only 'group' that the user is a member of is shown
+    # in the dropdown, a second group is created
+    create(:group)
+    member = group.owners[0]
+    sign_in member
+    visit(new_item_url)
+    expect(page).to have_select "item_owner_id", options: [member.email, group.name], selected: member.email
+    sign_in user1
+    visit(new_item_url)
+    expect(page).to have_select "item_owner_id", options: [user1.email]
+  end
 end

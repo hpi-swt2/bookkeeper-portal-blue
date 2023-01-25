@@ -70,26 +70,23 @@
   }
 
   .favoritesIcon {
-    font-size: 1.5em;
+    font-size: 2em;
     position: absolute;
     top: 0.225em;
     right: 0.25em;
     z-index: 100;
   }
 
+  #filledFavoritesIcon {
+      color: #ffd700;
+      font-variation-settings:
+              'FILL' 1
+  }
+
   #notFilledEditItemIcon {
     float: right;
     padding-right: 0.25em;
     vertical-align: middle;
-  }
-
-  #filledFavoritesIcon {
-    color: var(--secondary08);
-    font-variation-settings:
-      'FILL' 1,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 48
   }
 
   #buttons {
@@ -130,7 +127,7 @@
   <%= link_to :back do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
-  <% if (!current_user.nil? && @item.owning_user == current_user) %>
+  <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
     <%= link_to edit_item_url(@item) do %>
         <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
     <% end %>
@@ -143,6 +140,7 @@
           <!--only show filled icon if icon is on favorites-->
           <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
           <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
+          <%= render "adaptive_favorites_button", current_user: current_user, item: @item %>
           <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block" unless @item.image.nil? %>
         </div>
       </div>
@@ -167,9 +165,26 @@
           <p class="body-1"><%= @item.description %></p>
         <% end %>
         <p class="subtitle"><%= t('views.show_item.owner')%></p>
-        <p class="body-1"><%= @item.owning_user.email %></p>
-        <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
-        <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
+        <p class="body-1"><%= @item.owning_user.nil? ? @item.owning_group.name : @item.owning_user.email %></p>
+
+        <% if !@item.price_ct.nil? && @item.price_ct != 0 %>
+          <p class="subtitle"><%= t('views.show_item.price') %></p>
+          <p class="body-1"><%= @item.price_in_euro[0].to_s + "," + @item.price_in_euro[1].to_s + "€" %></p>
+        <% end %>
+
+        <% if @item.lend_status == "lent" %>
+          <p class="subtitle"><%= t('views.show_item.lent_until')%></p>
+          <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
+        <% end %>
+
+        <p class="subtitle"><%= t('views.show_item.maximum_lending_duration')%></p>
+        <p class="body-1"><%= ActiveSupport::Duration.build(@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec).inspect %></p>
+
+        <% if @item.return_checklist != "" %>
+          <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
+          <p class="body-1"><%= @item.return_checklist %></p>
+        <% end %>
+        
         <p class="subtitle"><%= t('views.show_item.waitlist')%></p>
         <p class="body-1">
           <% if !current_user.nil? %>
@@ -182,17 +197,19 @@
         </p>
         <div id="buttons">
           <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
-          <div class="button"> <% if @item.waitlist.users.size != 0 %> </div>
-            <%= render "show_waitlist_button", item: @item %>
-          <% end %>
+          <div class="button"> 
+            <% if @item.waitlist.users.size != 0 %> 
+              <%= render "show_waitlist_button", item: @item %>
+            <% end %>
+          </div>
+          <div class="button">
+            <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
+              <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode"}, class: "btn-primary" %>
+            <% end %>
+          </div>
         </div>
-        <div class="text-center">
-          <% if !current_user.nil? && current_user == @item.owning_user %>
-            <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode"}, class: "btn-primary" %>
-          <% end %>
-        </div>
-        </div>
-        <br><br><br>
+      </div>
+      <br><br><br>
       </div>
     </div>
   </div>

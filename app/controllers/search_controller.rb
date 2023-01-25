@@ -22,10 +22,9 @@ class SearchController < ApplicationController
 
     @category_options = Item.select(:category).distinct.pluck(:category)
 
-    @order_options = [[t('views.search.order.default'), 0],
-                      [t('views.search.order.popularity'), 1],
-                      [t('views.search.order.name_a_z'), 2],
-                      [t('views.search.order.name_z_a'), 3]]
+    @order_options = [[t('views.search.order.popularity'), 0],
+                      [t('views.search.order.name_a_z'), 1],
+                      [t('views.search.order.name_z_a'), 2]]
   end
 
   def create_availability_filter
@@ -54,9 +53,9 @@ class SearchController < ApplicationController
   def sort_results(order, unsorted_results)
     @results =
       case order
-      when "2"
+      when "1"
         unsorted_results.order(name: :asc, lend_status: :asc)
-      when "3"
+      when "2"
         unsorted_results.order(name: :desc, lend_status: :asc)
       else # add popularity sort here
         unsorted_results.order(lend_status: :asc)
