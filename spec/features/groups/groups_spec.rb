@@ -157,7 +157,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+    find(:link, "Remove from group", href: group_remove_path(group, member, locale: RSpec.configuration.locale)).click
 
     expect(Notification.count).to eq(1)
     notification = Notification.first
