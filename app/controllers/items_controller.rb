@@ -29,12 +29,14 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
+    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
   end
 
   # GET /items/1/edit
   def edit
     @item = Item.find(params[:id])
-    @owner_id = @item.owning_user.id
+    @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
+    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
     @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
@@ -135,7 +137,7 @@ class ItemsController < ApplicationController
 
   def request_lend
     @user = current_user
-    @owner = @item.owning_user
+    @owner = @item.owning_user.nil? ? @item.owning_group.members[0] : @item.owning_user
     @notification = LendRequestNotification.new(item: @item, borrower: @user, receiver: @owner, date: Time.zone.now,
                                                 unread: true, active: true)
     @notification.save
@@ -173,11 +175,10 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @item.set_status_pending_return
     @item.save
-
     helpers.audit_request_return(@item)
-
+    notified_user = @item.owning_user.nil? ? @item.owning_group.members[0] : @item.owning_user
     unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(receiver: @item.owning_user, date: Time.zone.now,
+      @notification = ReturnRequestNotification.new(receiver: notified_user, date: Time.zone.now,
                                                     item: @item, borrower: current_user, active: true, unread: true)
       @notification.save
     end
@@ -267,11 +268,12 @@ class ItemsController < ApplicationController
     if owner_id.nil?
       {}
     else
-      case params[:owner_type]
+      user_or_group, id = owner_id.split(":")
+      case user_or_group
       when "group"
-        { owning_group: Group.find(owner_id) }
+        { owning_group: Group.find(id.to_i) }
       else # "user" as default
-        { owning_user: User.find(owner_id) }
+        { owning_user: User.find(id.to_i) }
       end
     end
   end
