@@ -16,7 +16,7 @@ module SearchHelper
                                                                  :generate_range_clause)
     partial_matching_clause.and(categorial_attribute_clause)
                            .and(numerical_attribute_clause)
-                           .and(filter_group(group)).order(lend_status: :asc)
+                           .and(filter_group(group))
   end
 
   private

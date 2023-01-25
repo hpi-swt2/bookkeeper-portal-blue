@@ -7,6 +7,7 @@ class ReturnRequestNotification < ApplicationRecord
 
   validates :receiver, presence: true
   validates :date, presence: true
+  after_create :send_mail
 
   def title
     I18n.t "views.notifications.return_request.title"
