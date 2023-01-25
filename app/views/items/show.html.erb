@@ -146,7 +146,7 @@
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
-          <% if current_user != @item.owning_user %>
+          <% if !current_user.nil? && !@item.users_with_ownership_permission.include?(current_user) %>
             <!--only show filled icon if icon is on favorites-->
             <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
             <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
@@ -184,7 +184,7 @@
         <p class="subtitle"><%= t('views.show_item.rental_duration') %></p>
         <p class="body-1"><%= @item.print_rental_duration %></p>
 
-        <% if !current_user.nil? && current_user.owned_items.include?(@item)%>
+        <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
           <p class="subtitle"><%= t('views.show_item.lent_by') %></p>
           <p class="body-1">
             <% if !@item.holder.nil? %>
@@ -213,7 +213,7 @@
             <% end %>
             </div>
         <div class="text-center">
-          <% if !current_user.nil? && current_user == @item.owning_user %>
+          <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
             <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn-primary" %>
           <% end %>
         </div>

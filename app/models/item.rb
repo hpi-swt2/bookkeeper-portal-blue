@@ -175,16 +175,22 @@ class Item < ApplicationRecord
 
   def print_rental_duration
     seconds = rental_duration_sec
-    if seconds < 86_400
-      I18n.t "views.show_item.less_than_one_day" if seconds < 86_400
-    elsif seconds == 86_400
-      I18n.t "views.show_item.one_day"
-    elsif seconds < 7 * 86_400
-      I18n.t("views.show_item.less_than_days", days_amount: (seconds / 86_400) + 1)
+    if seconds < 7 * 86_400
+      print_rental_duration_days(seconds)
     elsif seconds == 7 * 86_400
       I18n.t "views.show_item.one_week"
     else
       I18n.t("views.show_item.less_than_weeks", weeks_amount: (seconds / (7 * 86_400)) + 1)
+    end
+  end
+
+  def print_rental_duration_days(seconds)
+    if seconds < 86_400
+      I18n.t "views.show_item.less_than_one_day" if seconds < 86_400
+    elsif seconds == 86_400
+      I18n.t "views.show_item.one_day"
+    else
+      I18n.t("views.show_item.less_than_days", days_amount: (seconds / 86_400) + 1)
     end
   end
 
