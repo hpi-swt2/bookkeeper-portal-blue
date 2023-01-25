@@ -148,6 +148,7 @@ en:
       location: "Location"
       required_fields: "required fields"
       price_ct : "Price in Cent"
+      error: "%{count} error(s) prohibited this item from being saved:"
     show_item:
       author: "Author"
       category: "Category"
