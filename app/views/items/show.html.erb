@@ -147,7 +147,7 @@
           <% if !current_user.nil? && !@item.users_with_ownership_permission.include?(current_user) %>
             <%= render "adaptive_favorites_button", current_user: current_user, item: @item %>
           <% end %>
-          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached? %>
+          <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block" unless @item.image.nil? %>
 
         </div>
       </div>
@@ -179,16 +179,16 @@
           <p class="body-1"><%= @item.price_in_euro[0].to_s + "," + @item.price_in_euro[1].to_s + "€" %></p>
         <% end %>
 
-        <% if !@item.holder.nil?%>
+        <% if !@item.holder.nil? %>
           <p class="subtitle"><%= t('views.show_item.lent_until') %></p>
           <p class="body-1"><%= @item.rental_end.strftime('%d.%m.%Y') %></p>
         <% end %>
 
-        <p class="subtitle"><%= t('views.show_item.maximum_lending_duration')%></p>
+        <p class="subtitle"><%= t('views.show_item.maximum_lending_duration') %></p>
         <p class="body-1"><%= @item.print_rental_duration %></p>
 
         <% if @item.return_checklist != "" %>
-          <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
+          <p class="subtitle"><%= t('views.edit_item.return_checklist') %></p>
           <p class="body-1"><%= @item.return_checklist %></p>
         <% end %>
 
