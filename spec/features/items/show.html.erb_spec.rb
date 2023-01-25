@@ -21,7 +21,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
     visit item_url(an_item)
-    expect(page).to have_text(Time.now.getlocal.advance(days: 1).strftime('%d.%m.%Y'))
+    expect(page).to have_text(ActiveSupport::Duration.build(86_400).inspect)
   end
 
   it "shows edit button for owner" do
@@ -55,6 +55,7 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text(item.category)
     expect(page).to have_text(item.location)
     expect(page).to have_text(item.description)
+    expect(page).to have_text(item.rental_duration_sec)
   end
 
   it "has lend button when item is available and not owner of item" do
@@ -167,6 +168,33 @@ RSpec.describe "items/show", type: :feature do
     notification = MoveUpOnWaitlistNotification.find_by(receiver: Item.find(item_lent.id).waitlist.users[0],
                                                         item: item_lent)
     expect(notification).not_to be_nil
+  end
+
+  it "does not display price when 0 or nil" do
+    item_without_price = create(:item_without_price)
+    visit item_path(item_without_price)
+    expect(page).not_to have_text("Price")
+    item_price_zero = create(:item_price_zero)
+    visit item_path(item_price_zero)
+    expect(page).not_to have_text("Price")
+    visit item_path(item)
+    expect(page).to have_text(item.price_ct)
+  end
+
+  it "displays return checklist only if not empty" do
+    item_empty_return_checklist = create(:item_empty_return_checklist)
+    visit item_path(item_empty_return_checklist)
+    expect(page).not_to have_text("Return Checklist")
+
+    visit item_path(item)
+    expect(page).to have_text(item.return_checklist)
+  end
+
+  it "displays lent until if lent" do
+    visit item_path(item_lent)
+    expect(page).to have_text("Lent Until")
+    lent_until = (item_lent.rental_start + item_lent.rental_duration_sec).strftime('%d.%m.%Y')
+    expect(page).to have_text(lent_until)
   end
 
   it "does not show button to display waitlist if empty" do

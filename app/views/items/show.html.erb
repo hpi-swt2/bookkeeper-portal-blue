@@ -168,8 +168,25 @@
         <% end %>
         <p class="subtitle"><%= t('views.show_item.owner')%></p>
         <p class="body-1"><%= @item.owning_user.email %></p>
-        <p class="subtitle"><%= t('views.show_item.lend_until')%></p>
-        <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
+
+        <% if !@item.price_ct.nil? && @item.price_ct != 0 %>
+          <p class="subtitle"><%= t('views.show_item.price') %></p>
+          <p class="body-1"><%= @item.price_in_euro[0].to_s + "," + @item.price_in_euro[1].to_s + "€" %></p>
+        <% end %>
+
+        <% if @item.lend_status == "lent" %>
+          <p class="subtitle"><%= t('views.show_item.lent_until')%></p>
+          <p class="body-1"><%= ((@item.rental_start.nil? ? Time.now() : @item.rental_start) + (@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec)).strftime('%d.%m.%Y') %></p>
+        <% end %>
+
+        <p class="subtitle"><%= t('views.show_item.maximum_lending_duration')%></p>
+        <p class="body-1"><%= ActiveSupport::Duration.build(@item.rental_duration_sec.nil? ? 86400 : @item.rental_duration_sec).inspect %></p>
+
+        <% if @item.return_checklist != "" %>
+          <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
+          <p class="body-1"><%= @item.return_checklist %></p>
+        <% end %>
+        
         <p class="subtitle"><%= t('views.show_item.waitlist')%></p>
         <p class="body-1">
           <% if !current_user.nil? %>
