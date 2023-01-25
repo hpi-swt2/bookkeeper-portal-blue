@@ -35,9 +35,9 @@
     overflow:hidden;
     padding-bottom:100%;
     max-width: 25em;
-    max-height: 25em !important; 
+    max-height: 25em !important;
     padding-left: 0px;
-    padding-right: 0px;  
+    padding-right: 0px;
   }
   .image img{
     position:absolute;
@@ -96,7 +96,7 @@
   .button {
     display: inline-block;
    }
-  
+
   @media screen and (min-width: 480px) and (max-width: 767px) {
       .image {
         padding-bottom: 26em;
@@ -120,10 +120,10 @@
         padding-bottom: 26em;
       }
   }
-  
+
 </style>
 <div>
- 
+
   <%= link_to :back do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
@@ -132,16 +132,19 @@
         <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
     <% end %>
   <% end %>
-  
+
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
+          <!--only show filled icon if icon is on favorites-->
+          <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
+          <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
           <%= render "adaptive_favorites_button", current_user: current_user, item: @item %>
-          <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached?%>
+          <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block" unless @item.image.nil? %>
         </div>
       </div>
-        
+
       <div class="col">
           <div>
             <div>
@@ -152,8 +155,8 @@
               location_on</span>
             <%= @item.location %></p>
             <br>
-          </div> 
-    
+          </div>
+
 
         <p class="subtitle"><%= t('views.show_item.category')%></p>
         <p class="body-1"><%= @item.category %></p>

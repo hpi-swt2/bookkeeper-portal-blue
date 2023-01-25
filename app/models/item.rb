@@ -1,7 +1,6 @@
 # class of a basic item.
 # rubocop:disable Metrics/ClassLength
 class Item < ApplicationRecord
-  has_one_attached :image
   has_one :waitlist, dependent: :destroy
   has_many :audit_events, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
@@ -46,6 +45,10 @@ class Item < ApplicationRecord
       return euro, ct
     end
     [0, 0]
+  end
+
+  def image_url
+    "data:application/octet-stream;base64,#{Base64.strict_encode64(image)}"
   end
 
   def set_status_available
