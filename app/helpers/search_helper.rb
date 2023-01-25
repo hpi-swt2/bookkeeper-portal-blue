@@ -25,7 +25,7 @@ module SearchHelper
     return Item.all if group.zero?
 
     items = Group.find(group).owned_items.ids
-    items.blank? ? Item.where("0 = 1") : Item.where(items)
+    items.blank? ? Item.where("0 = 1") : Item.where(id: items)
   end
 
   # CREATE CLAUSE FOR PARTIAL MATCHING
