@@ -165,6 +165,34 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    function changeInput() {
+      const type = $('#item_type').val()
+      $(".show_movie").addClass("d-none")
+      $(".show_game").addClass("d-none")
+      $(".show_book").addClass("d-none")
+      switch(type) {
+
+        case "MovieItem": {
+          $(".show_movie").removeClass("d-none")
+          break;
+        }
+          
+        case "BookItem": {
+          $(".show_book").removeClass("d-none")
+          break;
+        }
+          
+        case "GameItem": {
+          $(".show_game").removeClass("d-none")
+          break;
+        }
+        default: {
+          console.log("Ungültige Klasse")
+        }
+      }
+    }
+
 </script>
 <div>
   <%= form_with(model: @item.becomes(Item), :html => { :multipart => true }) do |form| %>
@@ -209,9 +237,41 @@
               </p>
             </div>
 
+            <div class="notBorderedInput">
             <p class="subtitle"><%= t('views.show_item.category') %>*</p>
-            <%= form.text_field :category, class: "borderedInput body1" %>
-            sadsdassd
+            <%= form.select :type, Item.valid_types.map{|type| [t("models.item.types.#{type.underscore}"), type]}, {}, {:onchange => "changeInput()"} %>
+            </div>
+
+            <div class="show_movie show_game show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.title') %>*</p>
+              <%= form.text_field :title, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_movie show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.genre') %>*</p>
+              <%= form.text_field :genre, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_game show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.author') %>*</p>
+              <%= form.text_field :author, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_movie d-none">
+              <p class="subtitle"><%= t('views.show_item.movie_duration') %>*</p>
+              <%= form.number_field :movie_duration, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.page_count') %>*</p>
+              <%= form.number_field :page_count, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_game d-none">
+              <p class="subtitle"><%= t('views.show_item.player_count') %>*</p>
+              <%= form.number_field :player_count, class: "borderedInput body1" %>
+            </div>
+
 
             <p class="subtitle"><%= t('views.show_item.description') %></p>
             <%= form.text_area :description, class: "borderedInput body1" %>
@@ -237,7 +297,7 @@
             <p class="caption">* <%= t('views.new_item.required_fields') %></p>
 
             <div class="" id="buttonDiv">
-              <%= form.submit t('defaults.submit'), class: "btn-primary" %>
+              <%= form.submit t('defaults.submit'), class: "btn-primary"%>
               <%= link_to @item_new do %>
                 <button class="btn-secondary"><%= t('defaults.delete') %></button>
               <% end %>

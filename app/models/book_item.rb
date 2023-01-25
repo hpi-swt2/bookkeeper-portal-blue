@@ -3,4 +3,5 @@ class BookItem < Item
   validates :title, presence: true
   validates :genre, presence: true
   validates :author, presence: true
+  validates :movie_duration, :player_count, absence: true
 end

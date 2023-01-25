@@ -31,7 +31,6 @@ class Item < ApplicationRecord
 
   validates :type, presence: true
   validates :name, presence: true
-  validates :category, presence: true
   validates :location, presence: true
   validates :ownership_permission, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
@@ -39,6 +38,10 @@ class Item < ApplicationRecord
   enum :lend_status,
        { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
+
+  def self.valid_types
+    ["OtherItem", "BookItem", "GameItem", "MovieItem"]
+  end
 
   def price_in_euro
     unless price_ct.nil?
@@ -99,6 +102,10 @@ class Item < ApplicationRecord
     self.rental_start = nil
     self.holder = nil
     set_status_available
+  end
+
+  def clear_subclass_fields
+    self.class.validators.filter{|v| v.is_a?(ActiveRecord::Validations::AbsenceValidator)}.each{|v| v.attributes.each{|a| self[a] = nil}}
   end
 
   def add_to_waitlist(user)

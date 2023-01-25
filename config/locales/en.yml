@@ -156,6 +156,11 @@ en:
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
       show_waitlist: "Show waitlist"
+      title: "Title"
+      genre: "Genre"
+      movie_duration: "Movie Duration"
+      page_count: "Page Count"
+      player_count: "Player Count"
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
       price_ct : "Price in Cent"
@@ -180,6 +185,11 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+      types:
+        other_item: "Other"
+        movie_item: "Movie"
+        game_item: "Game"
+        book_item: "Book"
     waitlist:
       added_to_waitlist: "Added to Waitlist at Position %{position}."
       failed_adding_to_waitlist: "Not added to Waitlist."

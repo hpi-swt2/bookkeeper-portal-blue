@@ -161,7 +161,7 @@
     
 
         <p class="subtitle"><%= t('views.show_item.category')%></p>
-        <p class="body-1"><%= @item.category %></p>
+        <p class="body-1"><%= t("models.item.types.#{@item.type.underscore}") %></p>
         <% if !@item.description.blank? %>
           <p class="subtitle"><%= t('views.show_item.description')%></p>
           <p class="body-1"><%= @item.description %></p>

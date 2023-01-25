@@ -1,4 +1,8 @@
 de:
+  errors:
+    messages:
+      blank: "darf nicht freigelassen werden"
+      present: "darf nicht ausgefüllt sein"
   defaults:
     delete: "Löschen"
     close: "Schließen"
@@ -126,6 +130,11 @@ de:
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
       show_waitlist: "Warteliste zeigen"
+      title: "Titel"
+      genre: "Genre"
+      movie_duration: "Filmlänge"
+      page_count: "Seitenzahl"
+      player_count: "Spieleranzahl"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
       price_ct : "Preis in ct"
@@ -153,6 +162,11 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+      types:
+        other_item: "Sonstiges"
+        movie_item: "Film"
+        game_item: "Spiel"
+        book_item: "Buch"
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
