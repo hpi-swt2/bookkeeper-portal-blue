@@ -29,7 +29,7 @@ class Item < ApplicationRecord
   has_one :owning_user, through: :ownership_permission, source: :user_or_group, source_type: 'User'
   has_one :owning_group, through: :ownership_permission, source: :user_or_group, source_type: 'Group'
 
-  belongs_to :holder, class_name: 'User', foreign_key: "holder", inverse_of: :lent_items
+  belongs_to :holder, class_name: 'User', foreign_key: "holder", inverse_of: :lent_items, optional: true
 
   validates :name, presence: true
   validates :category, presence: true
