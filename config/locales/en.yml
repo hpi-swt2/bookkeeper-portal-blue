@@ -137,7 +137,6 @@ en:
         all: "All"
       qr_scanner_title: "QR Scanner"
       order:
-        default: "Sort by"
         popularity: "Popularity"
         name_a_z: "Name (A-Z)"
         name_z_a: "Name (Z-A)"
