@@ -33,7 +33,7 @@ RSpec.describe "items/show", type: :feature do
   it "does not show edit button for non-owner" do
     sign_in user
     visit item_path(item)
-    expect(page).not_to have_link(href: edit_item_url(item))
+    expect(page).not_to have_link(href: edit_item_url(item, locale: RSpec.configuration.locale))
   end
 
   it "shows edit button for group members, hides for others" do
@@ -42,10 +42,10 @@ RSpec.describe "items/show", type: :feature do
     group_item = create(:item, owning_group: group)
     sign_in member
     visit item_path(group_item)
-    expect(page).to have_link(href: edit_item_url(group_item))
+    expect(page).to have_link(href: edit_item_url(group_item, locale: RSpec.configuration.locale))
     sign_in user
     visit item_path(group_item)
-    expect(page).not_to have_link(href: edit_item_url(group_item))
+    expect(page).not_to have_link(href: edit_item_url(group_item, locale: RSpec.configuration.locale))
   end
 
   it "shows qr button for owner" do
@@ -255,20 +255,20 @@ RSpec.describe "items/show", type: :feature do
   it "displays the add to favorites button" do
     sign_in user
     visit item_path(item)
-    expect(page).to have_link(href: add_to_favorites_path(item))
+    expect(page).to have_link(href: add_to_favorites_path(item, locale: RSpec.configuration.locale))
   end
 
   it "displays the leave favorites button when item is already a favorite" do
     user.favorites << (item)
     sign_in user
     visit item_path(item)
-    expect(page).to have_link(href: leave_favorites_path(item))
+    expect(page).to have_link(href: leave_favorites_path(item, locale: RSpec.configuration.locale))
   end
 
   it "has a working add to favorites button" do
     sign_in user
     visit item_path(item)
-    find(:link, href: add_to_favorites_path(item)).click
+    find(:link, href: add_to_favorites_path(item, locale: RSpec.configuration.locale)).click
     expect(user.favorites.exists?(item.id)).to be(true)
   end
 
@@ -276,7 +276,7 @@ RSpec.describe "items/show", type: :feature do
     user.favorites << (item)
     sign_in user
     visit item_path(item)
-    find(:link, href: leave_favorites_path(item)).click
+    find(:link, href: leave_favorites_path(item, locale: RSpec.configuration.locale)).click
     expect(user.favorites.exists?(item.id)).to be(false)
   end
 end
