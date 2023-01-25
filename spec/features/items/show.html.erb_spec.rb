@@ -17,25 +17,6 @@ RSpec.describe "items/show", type: :feature do
     item_lent
   end
 
-  it "shows holder email for owner" do
-    sign_in owner
-    visit item_url(item_lent)
-    expect(page).to have_text I18n.t("views.show_item.lent_by")
-  end
-
-  it "does not show holder email for not owning user" do
-    sign_in user
-    visit item_url(item_lent)
-    expect(page).not_to have_text I18n.t("views.show_item.lent_by")
-  end
-
-  it "renders without rental start and duration set" do
-    sign_in user
-    an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
-    visit item_url(an_item)
-    expect(page).to have_text I18n.t("views.show_item.less_than_one_day")
-  end
-
   it "shows edit button for owner" do
     sign_in owner
     visit item_path(item)
@@ -277,6 +258,17 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_link(href: leave_favorites_path(item))
   end
 
+  it "does not display favorites button in owner view" do
+    sign_in owner
+    visit item_path(item)
+    expect(page).not_to have_link(href: add_to_favorites_path(item))
+    expect(page).not_to have_link(href: leave_favorites_path(item))
+    owner.favorites << (item)
+    visit item_path(item)
+    expect(page).not_to have_link(href: add_to_favorites_path(item))
+    expect(page).not_to have_link(href: leave_favorites_path(item))
+  end
+
   it "has a working add to favorites button" do
     sign_in user
     visit item_path(item)
@@ -290,5 +282,54 @@ RSpec.describe "items/show", type: :feature do
     visit item_path(item)
     find(:link, href: leave_favorites_path(item)).click
     expect(user.favorites.exists?(item.id)).to be(false)
+  end
+
+  it "shows holder email for owner" do
+    sign_in owner
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.lent_by")
+  end
+
+  it "does not show holder email for non-owner" do
+    sign_in user
+    visit item_url(item_lent)
+    expect(page).not_to have_text I18n.t("views.show_item.lent_by")
+  end
+
+  it "renders without rental start and duration set" do
+    sign_in user
+    an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
+    visit item_url(an_item)
+    expect(page).to have_text I18n.t("views.show_item.less_than_one_day")
+  end
+
+  it "shows correct maximum lending duration for non-owner" do
+    sign_in user
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_one_day")
+    day = 86_400
+    item_lent.update(rental_duration_sec: day)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.one_day")
+    two_days = 2 * day
+    item_lent.update(rental_duration_sec: two_days)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_days", days_amount: 3)
+    week = 7 * day
+    item_lent.update(rental_duration_sec: week)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.one_week")
+    three_weeks = 3 * week
+    item_lent.update(rental_duration_sec: three_weeks)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_weeks", weeks_amount: 4)
+    month = 4 * week
+    item_lent.update(rental_duration_sec: month)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.one_month")
+    five_months = 5 * month
+    item_lent.update(rental_duration_sec: five_months)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_months", months_amount: 6)
   end
 end

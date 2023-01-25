@@ -174,7 +174,7 @@ class Item < ApplicationRecord
   end
 
   def print_rental_duration
-    seconds = rental_duration_sec ? rental_duration_sec : 0
+    seconds = rental_duration_sec || 0
     if seconds < 7 * 86_400
       print_rental_duration_days(seconds)
     elsif seconds < 4 * (7 * 86_400)
