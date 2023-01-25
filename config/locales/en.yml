@@ -159,7 +159,6 @@ en:
       lend_permission_notice: "This permission is granted to owners automatically. You can select multiple groups by holding down CTRL."
       see_permission: "Groups with see permission"
       see_permission_notice: "This permission is granted to people with lend permission automatically. You can select multiple groups by holding down CTRL."
-      lend_until: "Lend Until"
       lent_until: "Lent Until"
       lent_by: "Lent By"
       not_lent: "Currently, not lent."

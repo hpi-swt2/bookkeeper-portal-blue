@@ -129,7 +129,6 @@ de:
       lend_permission_notice: "Besitzer erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
       see_permission: "Gruppen mit Ansichtsberechtigung"
       see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
-      lend_until: "Ausleihen bis"
       lent_until: "Verliehen bis"
       lent_by: "Ausgeliehen von"
       not_lent: "Aktuell nicht ausgeliehen."
