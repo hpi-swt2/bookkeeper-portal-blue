@@ -1,27 +1,24 @@
 require "rails_helper"
 
 describe "Translations", type: :feature do
+  let(:password) { 'password' }
+  let(:user) { create(:user, password: password) }
 
   it "displays correct title on dashboard in English by default" do
+    sign_in user
     visit dashboard_path
-    expect(page.title).to eq("Bookkeeper Blue")
+    expect(page).to have_content("Dashboard")
   end
 
-  context 'when local is set to :de' do
-    let(:local) { :en }
-
-    it "displays correct title on dashboard in German when requested" do
-      visit dashboard_path
-      expect(page.title).to eq I18n.t('views.landing_page.title')
-    end
+  it "displays correct title on dashboard in German when requested" do
+    sign_in user
+    visit dashboard_path({ locale: 'de' })
+    expect(page).to have_content("Übersicht")
   end
 
-  context 'when invalid local is set' do
-    let(:local) { :zh }
-
-    it "displays correct title on dashboard in English when an invalid locale is requested" do
-      visit dashboard_path
-      expect(page.title).to eq I18n.t('views.landing_page.title')
-    end
+  it "displays correct title on dashboard in English when an invalid locale is requested" do
+    sign_in user
+    visit dashboard_path({ locale: 'zh' })
+    expect(page).to have_content("Dashboard")
   end
 end

@@ -45,14 +45,10 @@ describe "Navigation Bar", type: :feature do
     expect(page).to have_link(href: profile_path(locale: RSpec.configuration.locale))
   end
 
-  context 'when local is set to :de' do
-    let(:local) { :de }
-
-    it "translates the navigation bar to German" do
-      sign_in user
-      visit root_path
-      expect(page).to have_content I18n.t('views.new_item.title')
-    end
+  it "translates the navigation bar to German" do
+    sign_in user
+    visit root_path({ locale: 'de' })
+    expect(page).to have_text("Neuer Gegenstand")
   end
 
   it "translates the navigation bar to English by default" do

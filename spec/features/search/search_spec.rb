@@ -12,13 +12,9 @@ describe "Search page", type: :feature do
     visit search_path
   end
 
-  context 'when local is set to :de' do
-    let(:local) { :de }
-
-    it "translates the close button to German" do
-      visit search_path
-      expect(page).to have_content I18n.t('defaults.close')
-    end
+  it "translates the close button to German" do
+    visit search_path({ locale: 'de' })
+    expect(page).to have_text("Schließen")
   end
 
   it "translates the close button to English by default" do
