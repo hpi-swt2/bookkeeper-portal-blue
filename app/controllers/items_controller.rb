@@ -135,6 +135,20 @@ class ItemsController < ApplicationController
     redirect_to item_url(@item)
   end
 
+  def add_to_favorites
+    @item = Item.find(params[:id])
+    @user = current_user
+    @user.favorites << (@item)
+    redirect_to item_url(@item), notice: t("views.show_item.enter_favorites")
+  end
+
+  def leave_favorites
+    @item = Item.find(params[:id])
+    @user = current_user
+    @user.favorites.delete(@item)
+    redirect_to item_url(@item), notice: t("views.show_item.leave_favorites")
+  end
+
   def request_lend
     @user = current_user
     @owner = @item.owning_user.nil? ? @item.owning_group.members[0] : @item.owning_user

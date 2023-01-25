@@ -70,26 +70,23 @@
   }
 
   .favoritesIcon {
-    font-size: 1.5em;
+    font-size: 2em;
     position: absolute;
     top: 0.225em;
     right: 0.25em;
     z-index: 100;
   }
 
+  #filledFavoritesIcon {
+      color: #ffd700;
+      font-variation-settings:
+              'FILL' 1
+  }
+
   #notFilledEditItemIcon {
     float: right;
     padding-right: 0.25em;
     vertical-align: middle;
-  }
-
-  #filledFavoritesIcon {
-    color: var(--secondary08);
-    font-variation-settings:
-      'FILL' 1,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 48
   }
 
   #buttons {
@@ -140,9 +137,7 @@
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
-          <!--only show filled icon if icon is on favorites-->
-          <!--span class="material-symbols-outlined favoritesIcon" id="filledFavoritesIcon">grade</span-->
-          <span class="material-symbols-outlined favoritesIcon" id="notFilledFavoritesIcon">grade</span>
+          <%= render "adaptive_favorites_button", current_user: current_user, item: @item %>
           <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block" if @item.image.attached?%>
         </div>
       </div>

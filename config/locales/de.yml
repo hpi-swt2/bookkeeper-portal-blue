@@ -144,13 +144,14 @@ de:
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
       show_waitlist: "Warteliste zeigen"
+      enter_favorites: "Auf die Merkliste gesetzt"
+      leave_favorites: "Von der Merkliste entfernt"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
       price_ct : "Preis in ct"
       return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
-      roles: "Rollen"
       email: "Email"
       edit_profile: "Profil bearbeiten"
       edit_profile_image: >
