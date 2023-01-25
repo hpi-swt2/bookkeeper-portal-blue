@@ -136,7 +136,7 @@
   <%= link_to :back do %>
     <span class="material-symbols-outlined" id="back-button">chevron_left</span>
   <% end %>
-  <% if (!current_user.nil? && @item.owning_user == current_user) %>
+  <% if !current_user.nil? && @item.owning_user == current_user %>
     <%= link_to edit_item_url(@item) do %>
       <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
     <% end %>
@@ -184,7 +184,7 @@
         <p class="subtitle"><%= t('views.show_item.rental_duration') %></p>
         <p class="body-1"><%= @item.print_rental_duration %></p>
 
-        <% if current_user == @item.owning_user %>
+        <% if !current_user.nil? && current_user.owned_items.include?(@item)%>
           <p class="subtitle"><%= t('views.show_item.lent_by') %></p>
           <p class="body-1">
             <% if !@item.holder.nil? %>
