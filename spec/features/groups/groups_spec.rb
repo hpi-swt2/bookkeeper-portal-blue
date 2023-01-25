@@ -35,6 +35,23 @@ RSpec.describe "Groups", type: :feature do
     expect(find_by_id('group-members')).not_to have_text(group.owners.first.name)
   end
 
+  it "allows owners to add members" do
+    user = create(:user)
+    sign_in group.owners.first
+    visit group_path(group)
+    select user.email, from: "user_id"
+    click_button "Add member"
+    expect(find_by_id('group-members')).to have_text(user.name)
+  end
+
+  it "does not allow members to add members" do
+    user = create(:user)
+    group.members.append(user)
+    sign_in user
+    visit group_path(group)
+    expect(page).not_to have_select("user_id")
+  end
+
   it "shows demote buttons if current user is owner" do
     sign_in group.owners.first
     visit group_path(group)
@@ -101,6 +118,7 @@ RSpec.describe "Groups", type: :feature do
 
   it "shows remove buttons if current user is owner" do
     owner = create(:max)
+    sign_in owner
     group.owners << owner
     visit group_path(group)
 
