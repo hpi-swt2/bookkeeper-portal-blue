@@ -152,6 +152,8 @@ en:
       less_than_days: "Less than %{days_amount} days"
       one_week: "One Week"
       less_than_weeks: "Less than %{weeks_amount} weeks"
+      one_month: "One Month"
+      less_than_months: "Less than %{months_amount} months"
       enter_waitlist: "Enter Waitlist"
       leave_waitlist: "Leave Waitlist"
       waitlist: "Waitlist"

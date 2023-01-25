@@ -122,6 +122,8 @@ de:
       less_than_days: "Weniger als %{days_amount} Tage"
       one_week: "Eine Woche"
       less_than_weeks: "Weniger als %{weeks_amount} Wochen"
+      one_month: "Ein Monat"
+      less_than_months: "Weniger als %{months_amount} Monate"
       enter_waitlist: "Auf die Warteliste"
       leave_waitlist: "Warteliste verlassen"
       waitlist: "Warteliste"
