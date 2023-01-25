@@ -12,6 +12,9 @@
   .subtitle{
      margin-bottom: 0px;
   }
+  .notice{
+    margin-bottom: 0px;
+  }
   .title{
     font-family: Roboto;
     font-style: normal;
@@ -35,9 +38,9 @@
     overflow:hidden;
     padding-bottom:100%;
     max-width: 25em;
-    max-height: 25em !important; 
+    max-height: 25em !important;
     padding-left: 0px;
-    padding-right: 0px;  
+    padding-right: 0px;
   }
   .image img{
     position:absolute;
@@ -93,7 +96,7 @@
   }
   .borderedInput {
     border: 1px solid #AAB0B3;
-    border-radius: 5px; 
+    border-radius: 5px;
     padding-left: 5px;
     width: 100%;
     margin-bottom: 8px
@@ -114,7 +117,7 @@
   #uploadBtn {
     margin-top: 8px;
   }
-  
+
   @media screen and (min-width: 480px) and (max-width: 767px) {
       .image {
         padding-bottom: 26em;
@@ -187,7 +190,7 @@ function readURL(input) {
         <div class="text-center col my-auto">
 
           <div class="image container-fluid rounded">
-            
+
             <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block", id: "itemImg" if @item.image.attached? %>
             <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
           </div>
@@ -215,24 +218,36 @@ function readURL(input) {
             <% if current_user.nil? %>
               <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
             <% else %>
-              <%= form.collection_select(:owner_id, [current_user]+@groups, 
+              <%= form.collection_select(:owner_id, [current_user]+@groups_with_current_user, 
                 Proc.new { | user_or_group | (user_or_group.is_a?(User) ? "user:" : "group:") + user_or_group.id.to_s},
                 Proc.new { | user_or_group | user_or_group.is_a?(User) ? user_or_group.email : user_or_group.name },
                 :selected => @owner_id) %>
             <% end %>
             </div>
 
+            <p class="subtitle"><%= t('views.show_item.lend_permission') %></p>
+            <p class="notice"><%= t('views.show_item.lend_permission_notice') %></p>
+            <div class="notBorderedInput">
+              <%= form.collection_select(:lend_group_ids, Group.all, :id, :name, {selected: @lend_group_ids}, {size: 5, multiple: true, class: "borderedInput body1"}) %>
+            </div>
+
+            <p class="subtitle"><%= t('views.show_item.see_permission') %></p>
+            <p class="notice"><%= t('views.show_item.see_permission_notice') %></p>
+            <div class="notBorderedInput">
+              <%= form.collection_select(:see_group_ids, Group.all, :id, :name, {selected: @see_group_ids}, {size: 5, multiple: true, class: "borderedInput body1"})%>
+            </div>
+
             <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
             <%= form.number_field :price_ct, class: "borderedInput body1" %>
 
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
-            <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %> 
+            <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
 
             <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
             <%= form.text_area :return_checklist, class: "borderedInput body1" %>
 
             <p class="caption">* <%= t('views.new_item.required_fields')%></p>
-          
+
             <%= form.submit class: "btn-primary" %>
         </div>
       </div>

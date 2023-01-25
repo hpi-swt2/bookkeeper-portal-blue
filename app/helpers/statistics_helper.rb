@@ -15,6 +15,11 @@ module StatisticsHelper
     (item.waitlist_length + 1)) / (item.age.nonzero? or 1)
   end
 
+  def statistics_sort_items_by_popularity(items, order = :desc)
+    sorted_items = items.sort_by { |item| statistics_item_popularity(item) }
+    order == :asc ? sorted_items : sorted_items.reverse
+  end
+
   private
 
   def item_lend_events(item)

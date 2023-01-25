@@ -46,4 +46,8 @@ class Notification < ApplicationRecord
   def respond_to_missing?(_method, _include_private = false)
     false
   end
+
+  def send_mail
+    NotificationMailer.notification(self).deliver_now
+  end
 end
