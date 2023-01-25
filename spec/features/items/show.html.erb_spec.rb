@@ -17,6 +17,18 @@ RSpec.describe "items/show", type: :feature do
     item_lent
   end
 
+  it "shows holder email for owner" do
+    sign_in owner
+    visit item_url(item_lent)
+    expect(page).to have_text(t"views.show_item.lent_by")
+  end
+
+  it "does not show holder email for not owning user" do
+    sign_in user
+    visit item_url(item_lent)
+    expect(page).not_to have_text(t"views.show_item.lent_by")
+  end
+
   it "renders without rental start and duration set" do
     sign_in user
     an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
