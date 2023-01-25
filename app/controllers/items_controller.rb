@@ -49,9 +49,9 @@ class ItemsController < ApplicationController
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
 
-    helpers.audit_create_item(@item)
-
-    create_create_response
+    if create_create_response
+      helpers.audit_create_item(@item)
+    end
   end
 
   # PATCH/PUT /items/1 or /items/1.json
@@ -243,15 +243,18 @@ class ItemsController < ApplicationController
   private
 
   def create_create_response
+    save_successful = @item.save
     respond_to do |format|
-      if @item.save
+      if save_successful
         format.html { redirect_to item_url(@item), notice: t("models.item.created") }
         format.json { render :show, status: :created, location: @item }
       else
+        @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
     end
+    save_successful
   end
 
   def create_add_to_waitlist_response
