@@ -83,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_21_122621) do
     t.datetime "updated_at", null: false
     t.integer "holder"
     t.integer "lend_status", default: 0
+    t.binary "image"
     t.index ["holder"], name: "index_items_on_holder"
   end
 

@@ -28,7 +28,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-secondary secondaryButton mb-3" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false">
+                <button class="btn btn-secondary secondaryButton mb-3" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false" id="filter">
                     <%= t 'views.search.filter_button' %> <i class="bi bi-sliders2-vertical"></i>
                 </button>
             </div>
@@ -36,7 +36,7 @@
                 <%= select_tag "order", options_for_select(@order_options, params[:order]), class: "form-select order-select", :onchange => "this.form.requestSubmit();" %>
             </div>
         </div>
-        <%= render "filter-modal" %>
+        <%= render "filter-modal", :locals => { :availability_options => @availability_options, :category_options => @category_options } %>
     <% end %>
 </div>
 
