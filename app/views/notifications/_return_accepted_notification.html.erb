@@ -25,13 +25,13 @@
         <p>
           <%= notification.description %>
           <div class="col-md-4">
-              <%= image_tag notification.item.image, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" if notification.item.image.attached? %>
+              <%= image_tag notification.item.image_url, class: "img-responsive rounded mx-auto d-block", style: "max-width: 13em" unless notification.item.image.nil? %>
           </div>
         </p>
       </div>
-      
-      <div class="modal-footer">    
-        <%if notification.active == true %>    
+
+      <div class="modal-footer">
+        <%if notification.active == true %>
         <%end%>
       </div>
     </div>

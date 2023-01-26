@@ -43,7 +43,9 @@ class ItemsController < ApplicationController
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params.merge!(permission_hash))
+    params = item_params.merge!(permission_hash)
+    params[:image] = params[:image].read unless params[:image].nil?
+    @item = Item.new(params)
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
 
