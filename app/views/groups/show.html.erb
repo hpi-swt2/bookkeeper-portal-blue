@@ -1,12 +1,16 @@
-<div class="d-flex justify-content-between">
+<div class="">
   <h1><%= @group.name %></h1>
 
   <% if current_user.owns_group? @group %>
     <% if (User.all - @group.members).length > 0 %>
-      <%= form_with url: url_for(action: 'add_member', controller: 'groups' ), class: "d-flex gap-3" do |form| %>
-          <%= form.collection_select(:user_id, User.all - @group.members, :id, :email) %>
-          <%= form.submit t('views.groups.add_member'), class: "btn-primary"%>
+
+      <%= form_with url: url_for(action: 'add_member', controller: 'groups' ) do |form| %>
+        <div class="input-group mb-3">
+          <%= form.collection_select(:user_id, User.all - @group.members, :id, :email, {}, {:class=>"form-select"}) %>
+          <%= form.submit t('views.groups.add_member'), class: "btn btn-primary"%>
+        </div>
       <% end %>
+
     <% else %>
       <p><%= t 'views.groups.no_users_to_add' %></p>
     <% end %>
