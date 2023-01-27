@@ -189,15 +189,14 @@ RSpec.describe "Groups", type: :feature do
   it "shows leave button if current user is member" do
     sign_in group.members.first
     visit group_path(group)
-
-    expect(page).to have_link("Leave group", href: group_leave_path(group))
+    expect(page).to have_link("Leave group", href: group_leave_path(group, locale: RSpec.configuration.locale))
   end
 
   it "does not show leave button if current user is not member" do
     sign_in create(:user)
     visit group_path(group)
 
-    expect(page).not_to have_link("Leave group", href: group_leave_path(group))
+    expect(page).not_to have_link("Leave group", href: group_leave_path(group, locale: RSpec.configuration.locale))
   end
 
   it "removes a user if they leave" do
