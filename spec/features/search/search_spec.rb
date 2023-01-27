@@ -9,6 +9,7 @@ describe "Search page", type: :feature do
     @item_alphabetical_first = create(:alphabetical_first_item)
     @item_alphabetical_second = create(:alphabetical_second_item)
     @item_lent = create(:lent_item)
+    @item_group = create(:item_owned_by_group)
 
     @audited_items = [
       create(:itemAudited0),
@@ -175,6 +176,16 @@ describe "Search page", type: :feature do
       click_button("submit")
       expect(page).to have_text(/#{@item_alphabetical_second.name}.*\n.*#{@item_alphabetical_first.name}/)
     end
+  end
+
+  it "shows only items belonging to the group" do
+    page.select "TestGroup", from: 'group'
+    click_button("submit")
+
+    expect(page).to have_text("MyName")
+    expect(page).not_to have_text(@item_book.name)
+    expect(page).not_to have_text(@item_beamer.name)
+    expect(page).not_to have_text(@item_whiteboard.name)
   end
 
   it "shows items sorted by popularity descending" do

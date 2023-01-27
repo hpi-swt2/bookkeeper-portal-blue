@@ -2,16 +2,11 @@ class SearchController < ApplicationController
   def index
     setup_variables
 
-    @search_term = params[:search]
-    @availability = params[:availability]
-    @category = params[:category]
-    order = params[:order]
-
     create_availability_filter
     create_category_filters
 
-    unsorted_results = helpers.search_for_items(@search_term, @filters, @numerical_filters)
-    sort_results(order, unsorted_results)
+    unsorted_results = helpers.search_for_items(params[:search], @filters, @numerical_filters, params[:group].to_i)
+    sort_results(params[:order], unsorted_results)
   end
 
   private
@@ -25,11 +20,21 @@ class SearchController < ApplicationController
     @order_options = [[t('views.search.order.popularity'), 0],
                       [t('views.search.order.name_a_z'), 1],
                       [t('views.search.order.name_z_a'), 2]]
+
+    @group_options = Group.select(:name).pluck(:name, :id)
+  end
+
+  def create_category_filters
+    @filters = {}
+
+    return if params[:category].blank?
+
+    @filters["category"] = params[:category]
   end
 
   def create_availability_filter
-    availability = @availability
     @numerical_filters = {}
+    availability = params[:availability]
 
     return if availability.blank? || availability.to_i > 1 || availability.to_i.negative?
 
@@ -40,14 +45,6 @@ class SearchController < ApplicationController
                                         else
                                           { "lower_bound" => 1, "upper_bound" => 5 }
                                         end
-  end
-
-  def create_category_filters
-    @filters = {}
-
-    return if @category.blank?
-
-    @filters["category"] = @category
   end
 
   def sort_results(order, unsorted_results)

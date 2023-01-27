@@ -102,6 +102,7 @@ de:
         available: "Verfügbar"
         unavailable: "Nicht verfügbar"
         category: "Kategorie"
+        group: "Verleihende Gruppe"
         results: "Ergebnisse anzeigen"
         all: "Alle Ergebnisse"
       qr_scanner_title: "QR Scanner"
