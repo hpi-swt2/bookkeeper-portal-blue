@@ -6,6 +6,7 @@ describe "Requests handling", type: :feature do
     owner = create(:max)
     borrower = create(:peter)
     item = create(:item, owning_user: owner)
+    item.users_with_direct_lend_permission << borrower
     sign_in borrower
     visit item_path(item)
     click_button('Lend')
@@ -17,6 +18,7 @@ describe "Requests handling", type: :feature do
     owner = create(:max)
     borrower = create(:peter)
     item = create(:item, owning_user: owner)
+    item.users_with_direct_lend_permission << borrower
     sign_in borrower
     visit item_path(item)
     click_button('Lend')
@@ -31,6 +33,7 @@ describe "Requests handling", type: :feature do
     owner = create(:max)
     borrower = create(:peter)
     item = create(:item, owning_user: owner)
+    item.users_with_direct_lend_permission << borrower
     sign_in borrower
     visit item_path(item)
     click_button('Lend')

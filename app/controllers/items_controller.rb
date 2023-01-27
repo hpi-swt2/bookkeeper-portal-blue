@@ -10,7 +10,11 @@ require "stringio"
 
 class ItemsController < ApplicationController
   before_action :set_item,
-                only: %i[ show edit update destroy request_return accept_return request_lend]
+                only: %i[ show edit update destroy add_to_waitlist leave_waitlist add_to_favorites leave_favorites
+                          start_lend abort_lend request_return accept_return deny_return request_lend]
+
+  before_action :set_lendeable, only: %i[ show ]
+  before_action :check_lendeable, only: %i[ request_lend add_to_waitlist ]
 
   # GET /items or /items.json
   def index
@@ -19,7 +23,6 @@ class ItemsController < ApplicationController
 
   # GET /items/1 or /items/1.json
   def show
-    @item = Item.find(params[:id])
     return unless @item.waitlist.nil?
 
     @item.waitlist = Waitlist.new
@@ -34,7 +37,6 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
-    @item = Item.find(params[:id])
     @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
     @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
@@ -118,7 +120,6 @@ class ItemsController < ApplicationController
   end
 
   def add_to_waitlist
-    @item = Item.find(params[:id])
     @user = current_user
 
     helpers.audit_add_to_waitlist(@item)
@@ -127,7 +128,6 @@ class ItemsController < ApplicationController
   end
 
   def leave_waitlist
-    @item = Item.find(params[:id])
     @user = current_user
     @item.remove_from_waitlist(@user)
     @item.save
@@ -138,14 +138,12 @@ class ItemsController < ApplicationController
   end
 
   def add_to_favorites
-    @item = Item.find(params[:id])
     @user = current_user
     @user.favorites << (@item)
     redirect_to item_url(@item), notice: t("views.show_item.enter_favorites")
   end
 
   def leave_favorites
-    @item = Item.find(params[:id])
     @user = current_user
     @user.favorites.delete(@item)
     redirect_to item_url(@item), notice: t("views.show_item.leave_favorites")
@@ -166,7 +164,6 @@ class ItemsController < ApplicationController
   end
 
   def start_lend
-    @item = Item.find(params[:id])
     @job = Job.find_by(item: @item)
     @job.destroy
     @holder = current_user.id
@@ -178,7 +175,6 @@ class ItemsController < ApplicationController
   end
 
   def abort_lend
-    @item = Item.find(params[:id])
     @job = Job.find_by(item: @item)
     @job.destroy
     @item.set_status_available
@@ -188,7 +184,6 @@ class ItemsController < ApplicationController
   end
 
   def request_return
-    @item = Item.find(params[:id])
     @item.set_status_pending_return
     @item.save
     helpers.audit_request_return(@item)
@@ -202,7 +197,6 @@ class ItemsController < ApplicationController
   end
 
   def accept_return
-    @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
@@ -218,7 +212,6 @@ class ItemsController < ApplicationController
   end
 
   def deny_return
-    @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
@@ -270,6 +263,15 @@ class ItemsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def set_lendeable
+    @lendeable = @item.users_with_lend_permission.include?(current_user)
+  end
+
+  def check_lendeable
+    set_lendeable
+    render file: 'public/403.html', status: :unauthorized unless @lendeable
   end
 
   # Only allow a list of trusted parameters through.
