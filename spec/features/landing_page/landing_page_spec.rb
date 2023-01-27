@@ -13,6 +13,6 @@ RSpec.describe "Landing Page", type: :feature do
     @user = create(:user)
     sign_in @user
     visit root_path
-    expect(page).to have_current_path(dashboard_path)
+    expect(page).to have_current_path(dashboard_path(locale: RSpec.configuration.locale))
   end
 end

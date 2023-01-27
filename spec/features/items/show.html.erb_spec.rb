@@ -17,23 +17,28 @@ RSpec.describe "items/show", type: :feature do
     item_lent
   end
 
-  it "renders without rental start and duration set" do
-    sign_in user
-    an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
-    visit item_url(an_item)
-    expect(page).to have_text(Time.now.getlocal.advance(days: 1).strftime('%d.%m.%Y'))
-  end
-
   it "shows edit button for owner" do
     sign_in owner
     visit item_path(item)
-    expect(page).to have_link(href: edit_item_url(item))
+    expect(page).to have_link(href: edit_item_url(item, locale: RSpec.configuration.locale))
   end
 
   it "does not show edit button for non-owner" do
     sign_in user
     visit item_path(item)
-    expect(page).not_to have_link(href: edit_item_url(item))
+    expect(page).not_to have_link(href: edit_item_url(item, locale: RSpec.configuration.locale))
+  end
+
+  it "shows edit button for group members, hides for others" do
+    group = create(:group)
+    member = group.owners[0]
+    group_item = create(:item, owning_group: group)
+    sign_in member
+    visit item_path(group_item)
+    expect(page).to have_link(href: edit_item_url(group_item, locale: RSpec.configuration.locale))
+    sign_in user
+    visit item_path(group_item)
+    expect(page).not_to have_link(href: edit_item_url(group_item, locale: RSpec.configuration.locale))
   end
 
   it "shows qr button for owner" do
@@ -48,6 +53,18 @@ RSpec.describe "items/show", type: :feature do
     expect(page).not_to have_link(text: /QR/)
   end
 
+  it "shows qr button for group members, hides for others" do
+    group = create(:group)
+    member = group.owners[0]
+    group_item = create(:item, owning_group: group)
+    sign_in member
+    visit item_path(group_item)
+    expect(page).to have_link(text: /QR/)
+    sign_in user
+    visit item_path(group_item)
+    expect(page).not_to have_link(text: /QR/)
+  end
+
   it "renders attributes" do
     sign_in user
     visit item_path(item)
@@ -55,6 +72,29 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text(item.category)
     expect(page).to have_text(item.location)
     expect(page).to have_text(item.description)
+    expect(page).to have_text(item.rental_duration_sec)
+  end
+
+  it "renders owning group name" do
+    group = create(:group)
+    group_item = create(:item, owning_group: group)
+    sign_in user
+    visit item_path(group_item)
+    expect(page).to have_text(group.name)
+    visit item_path(item)
+    expect(page).not_to have_text(group.name)
+  end
+
+  it "renders an image" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_css("main img")
+  end
+
+  it "renders an image with a data url" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_css('main img[src^="data:"]')
   end
 
   it "has lend button when item is available and not owner of item" do
@@ -169,6 +209,33 @@ RSpec.describe "items/show", type: :feature do
     expect(notification).not_to be_nil
   end
 
+  it "does not display price when 0 or nil" do
+    item_without_price = create(:item_without_price)
+    visit item_path(item_without_price)
+    expect(page).not_to have_text("Price")
+    item_price_zero = create(:item_price_zero)
+    visit item_path(item_price_zero)
+    expect(page).not_to have_text("Price")
+    visit item_path(item)
+    expect(page).to have_text(item.price_ct)
+  end
+
+  it "displays return checklist only if not empty" do
+    item_empty_return_checklist = create(:item_empty_return_checklist)
+    visit item_path(item_empty_return_checklist)
+    expect(page).not_to have_text("Return Checklist")
+
+    visit item_path(item)
+    expect(page).to have_text(item.return_checklist)
+  end
+
+  it "displays lent until if lent" do
+    visit item_path(item_lent)
+    expect(page).to have_text("Lent Until")
+    lent_until = (item_lent.rental_start + item_lent.rental_duration_sec).strftime('%d.%m.%Y')
+    expect(page).to have_text(lent_until)
+  end
+
   it "does not show button to display waitlist if empty" do
     sign_in user
     item.waitlist.users.clear
@@ -190,4 +257,103 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text("2. #{item.waitlist.users[1].name}")
   end
 
+  it "displays the add to favorites button" do
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_link(href: add_to_favorites_path(item, locale: RSpec.configuration.locale))
+  end
+
+  it "displays the leave favorites button when item is already a favorite" do
+    user.favorites << (item)
+    sign_in user
+    visit item_path(item)
+    expect(page).to have_link(href: leave_favorites_path(item, locale: RSpec.configuration.locale))
+  end
+
+  it "does not display favorites button in owner view" do
+    sign_in owner
+    visit item_path(item)
+    expect(page).not_to have_link(href: add_to_favorites_path(item))
+    expect(page).not_to have_link(href: leave_favorites_path(item))
+    owner.favorites << (item)
+    visit item_path(item)
+    expect(page).not_to have_link(href: add_to_favorites_path(item))
+    expect(page).not_to have_link(href: leave_favorites_path(item))
+  end
+
+  it "has a working add to favorites button" do
+    sign_in user
+    visit item_path(item)
+    find(:link, href: add_to_favorites_path(item, locale: RSpec.configuration.locale)).click
+    expect(user.favorites.exists?(item.id)).to be(true)
+  end
+
+  it "has a working leave favorites button" do
+    user.favorites << (item)
+    sign_in user
+    visit item_path(item)
+    find(:link, href: leave_favorites_path(item, locale: RSpec.configuration.locale)).click
+    expect(user.favorites.exists?(item.id)).to be(false)
+  end
+
+  it "shows holder email for owner" do
+    sign_in owner
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.lent_by")
+  end
+
+  it "does not show holder email for non-owner" do
+    sign_in user
+    visit item_url(item_lent)
+    expect(page).not_to have_text I18n.t("views.show_item.lent_by")
+  end
+
+  it "shows rental end when item lent" do
+    sign_in user
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.lent_until")
+  end
+
+  it "does not show rental end when item not lent" do
+    sign_in user
+    visit item_url(item)
+    expect(page).not_to have_text I18n.t("views.show_item.lent_until")
+  end
+
+  it "renders without rental start and duration set" do
+    sign_in user
+    an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
+    visit item_url(an_item)
+    expect(page).to have_text I18n.t("views.show_item.less_than_one_day")
+  end
+
+  it "shows correct maximum lending duration for non-owner" do
+    sign_in user
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_one_day")
+    day = 86_400
+    item_lent.update(rental_duration_sec: day)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.one_day")
+    two_days = 2 * day
+    item_lent.update(rental_duration_sec: two_days)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_days", days_amount: 3)
+    week = 7 * day
+    item_lent.update(rental_duration_sec: week)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.one_week")
+    three_weeks = 3 * week
+    item_lent.update(rental_duration_sec: three_weeks)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_weeks", weeks_amount: 4)
+    month = 4 * week
+    item_lent.update(rental_duration_sec: month)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.one_month")
+    five_months = 5 * month
+    item_lent.update(rental_duration_sec: five_months)
+    visit item_url(item_lent)
+    expect(page).to have_text I18n.t("views.show_item.less_than_months", months_amount: 6)
+  end
 end
