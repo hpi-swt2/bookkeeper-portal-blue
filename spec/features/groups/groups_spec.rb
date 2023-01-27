@@ -186,6 +186,28 @@ RSpec.describe "Groups", type: :feature do
     expect(oidc_user.groups).to include(Group.default_hpi)
   end
 
+  it "shows leave button if current user is member" do
+    sign_in group.members.first
+    visit group_path(group)
+    expect(page).to have_link("Leave group", href: group_leave_path(group, locale: RSpec.configuration.locale))
+  end
+
+  it "does not show leave button if current user is not member" do
+    sign_in create(:user)
+    visit group_path(group)
+
+    expect(page).not_to have_link("Leave group", href: group_leave_path(group, locale: RSpec.configuration.locale))
+  end
+
+  it "removes a user if they leave" do
+    user = group.members.first
+    sign_in user
+    visit group_path(group)
+    click_link "Leave group"
+
+    expect(group.members).not_to include(user)
+  end
+
   it "does not crash when the same user signs in again with OIDC" do
     oidc_user = create(:peter)
     OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
