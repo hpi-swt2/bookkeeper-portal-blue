@@ -15,7 +15,7 @@ RSpec.describe "Search", type: :helper do
     ]
 
     @audited_items.each_with_index do |item, index|
-      ((index + 1) * 10).times do | i |
+      ((index + 1) * 10).times do |i|
         create(:audit_event,
                item: item,
                event_type: :accept_lend,
@@ -23,7 +23,7 @@ RSpec.describe "Search", type: :helper do
         create(:audit_event,
                item: item,
                event_type: :accept_return,
-               created_at: Date.jd((index + 1) * i + (index+1)))
+               created_at: Date.jd(((index + 1) * i) + (index + 1)))
       end
     end
   end
