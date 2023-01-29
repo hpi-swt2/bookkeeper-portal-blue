@@ -92,6 +92,9 @@ de:
       removed_from_group:
         title: "Aus Gruppe entfernt"
         description: "Du wurdest aus der Gruppe \"%{group_name}\" entfernt."
+      pickupreminder:
+        title: "Abholungserinnerung"
+        description: "Du hast %{item} ausgeliehen. Bitte hole es bald ab."
       no_notifications: "Du hast noch keine Nachrichten erhalten"
     search:
       title: "Suche"

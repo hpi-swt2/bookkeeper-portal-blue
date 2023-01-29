@@ -144,6 +144,7 @@ class Item < ApplicationRecord
   def perform_pickup_check
     return unless status_pending_pickup?
 
+    PickupReminderNotification.create(item: self, receiver: holder, date: Time.zone.now, unread: true, active: true)
     job = Job.find_by(item: self)
     job.destroy
     reset_status
