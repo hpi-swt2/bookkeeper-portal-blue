@@ -1,6 +1,6 @@
 class GroupsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :set_group, only: %i[ remove]
+  before_action :set_group, only: %i[ remove add_member promote demote leave]
   before_action :check_owner, only: %i[ remove ]
 
   def show
@@ -22,8 +22,6 @@ class GroupsController < ApplicationController
   end
 
   def promote
-    @group = Group.find(params[:id])
-
     if @group.owners.include?(current_user)
       @user = User.find(params[:user_id])
       @user.to_owner_of! @group
@@ -33,8 +31,6 @@ class GroupsController < ApplicationController
   end
 
   def demote
-    @group = Group.find(params[:id])
-
     if @group.owners.include?(current_user)
       @user = User.find(params[:user_id])
       @user.to_member_of! @group
@@ -44,7 +40,6 @@ class GroupsController < ApplicationController
   end
 
   def remove
-    @group = Group.find(params[:id])
     @user = User.find(params[:user_id])
     if @group.members_without_ownership.include?(@user)
       @user.groups.delete(@group)
@@ -55,7 +50,6 @@ class GroupsController < ApplicationController
   end
 
   def leave
-    @group = Group.find(params[:id])
     @group.members.delete(current_user)
     redirect_to @group
   end
@@ -65,7 +59,6 @@ class GroupsController < ApplicationController
   end
 
   def add_member
-    @group = Group.find(params[:id])
     unless current_user.owns_group?(@group)
       return render file: 'public/403.html',
                     status: :unauthorized
