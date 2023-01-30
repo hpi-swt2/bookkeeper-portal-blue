@@ -1,6 +1,8 @@
 # class of a basic item.
 # rubocop:disable Metrics/ClassLength
 class Item < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   has_one :waitlist, dependent: :destroy
   has_many :audit_events, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
@@ -50,7 +52,7 @@ class Item < ApplicationRecord
   end
 
   def image_url
-    "/items/#{id}/image"
+    item_image_path(id: id)
   end
 
   def set_status_available
