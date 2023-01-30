@@ -53,6 +53,9 @@ gem "sassc-rails"
 # we should be able to remove this after upgrading to Ruby 3
 gem 'net-http'
 
+# Adding gem for Job queueing 
+gem 'sidekiq'
+
 # Use devise as an authentication solution [https://github.com/plataformatec/devise]
 gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3" # https://steve-condylios.medium.com/how-to-set-up-devise-for-rails-7-466619f6d627
 gem "devise-i18n" # https://github.com/tigrish/devise-i18n
