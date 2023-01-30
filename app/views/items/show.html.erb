@@ -205,6 +205,29 @@
             <% end %>
           <% end %>
         </p>
+
+        <% if @avg_lend_time != 0%>
+          <p class="subtitle"><%= t('views.show_item.avg_lend_time') %></p>
+          <p class="body-1">
+          <% if @avg_lend_time_day.round != 0%>
+            <%= @avg_lend_time_day.round %>
+            <%= t('amount.day', count: @avg_lend_time_day.round) %>
+          <% end %>
+          <% if @avg_lend_time_hour.round != 0%>
+            <%= @avg_lend_time_hour.round %>
+            <%= t('amount.hour', count: @avg_lend_time_hour.round) %>
+          <% end %>
+          <% if @avg_lend_time_min.round != 0%>
+            <%= @avg_lend_time_min.round %>
+            <%= t('amount.minute', count: @avg_lend_time_min.round) %>
+          <% end %>
+          <% if @avg_lend_time_sec.round != 0%>
+            <%= @avg_lend_time_sec.round %>
+            <%= t('amount.second', count: @avg_lend_time_sec.round) %>
+          <% end %>
+          </p>
+        <% end %>
+
         <div id="buttons">
           <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
           <div class="button">

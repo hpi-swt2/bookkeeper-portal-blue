@@ -240,4 +240,16 @@ RSpec.describe "Groups", type: :feature do
     visit profile_path
     expect(oidc_user.groups).to include(Group.default_hpi)
   end
+
+  it 'sorts the users in the groups view alphabetically by email' do
+    user2 = create(:user, email: 'c@d.com')
+    user3 = create(:user, email: 'x@y.com')
+    user1 = create(:user, email: 'a@b.com')
+
+    sign_in group.owners.first
+    visit group_path(group)
+    expect(find('#user_id option:nth-child(1)')).to have_content(user1.email)
+    expect(find('#user_id option:nth-child(2)')).to have_content(user2.email)
+    expect(find('#user_id option:nth-child(3)')).to have_content(user3.email)
+  end
 end
