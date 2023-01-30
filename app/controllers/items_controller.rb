@@ -144,7 +144,8 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
-    @request_notification.destroy
+    @request_notification.mark_as_inactive
+    @request_notification.set_accepted
     @accepted_notification = ReturnAcceptedNotification.new(active: false, unread: true, date: Time.zone.now,
                                                      item: @item, receiver: User.find(@item.holder), owner: @user)
     @accepted_notification.save
@@ -160,7 +161,7 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
-    @request_notification.destroy
+    @request_notification.mark_as_inactive
     @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
                                                             receiver: User.find(@item.holder),
                                                             date: Time.zone.now, active: false, unread: true)

@@ -76,7 +76,9 @@ de:
         declined: "Abgelehnt"
       return_request:
         title: "Gegenstand zurückgeben"
-        description: "%{receiver} möchte %{item} zurückgeben. Bitte beachte, dass der Gegenstand aus dem System entfernt wird, wenn du die Rückgabe ablehnst."
+        description: "%{receiver} möchte %{item} zurückgeben."
+        description_accepted: "%{receiver} hat %{item} zurückgegeben."
+        description_declined: "Du hast die Rückgabe von %{item} von %{receiver} abgelehnt."
       return_declined:
         title: "Rückgabe abgelehnt"
         description: "%{owner} hat die Rückgabe von %{item} abgelehnt. Dies könnte verschiedene Ursachen haben, z.B. Beschädigungen am Gegenstand. Setze dich am besten nochmal mit den Eigentümer des Gegenstandes in Kontakt."

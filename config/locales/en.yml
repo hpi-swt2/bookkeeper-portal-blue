@@ -107,7 +107,9 @@ en:
         declined: "Declined"
       return_request:
         title: "Return Item"
-        description: "%{receiver} wants to return your %{item}. Please note that the item will be removed from the system upon declining the return request."
+        description: "%{receiver} wants to return your %{item}."
+        description_accepted: "You have accepted %{receiver}'s return of %{item}"
+        description_declined: "You have denied %{receiver}'s return of %{item}"
       return_declined:
         title: "Return Declined"
         description: "%{owner} has declined the return of %{item}. The item might be damaged, please contact the owner of the item for more information."
