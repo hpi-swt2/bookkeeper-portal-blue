@@ -181,7 +181,12 @@
 
         <% if !@item.holder.nil? %>
           <p class="subtitle"><%= t('views.show_item.lent_until') %></p>
-          <p class="body-1"><%= @item.rental_end.strftime('%d.%m.%Y') %></p>
+            <% if @item.rental_duration_unit == 'Unlimited' %>
+              <p class="body-1"><%= t("views.show_item.unlimited") %>
+            <% else %>
+              <p class="body-1"><%= @item.rental_end.strftime('%d.%m.%Y') %>
+            <% end %>
+          </p>
         <% end %>
 
         <p class="subtitle"><%= t('views.show_item.maximum_lending_duration') %></p>

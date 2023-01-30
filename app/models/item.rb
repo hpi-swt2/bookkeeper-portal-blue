@@ -171,6 +171,7 @@ class Item < ApplicationRecord
   end
 
   def print_remaining_rental_duration
+    return I18n.t("views.show_item.unlimited") if rental_duration_unit == 'Unlimited'
     print_time_from_seconds(remaining_rental_duration)
   end
 
@@ -192,8 +193,10 @@ class Item < ApplicationRecord
       print_rental_duration_days(seconds)
     elsif seconds < 4 * (7 * 86_400)
       print_rental_duration_weeks(seconds)
-    else
+    elsif seconds < 100.years.to_i
       print_rental_duration_months(seconds)
+    else
+      I18n.t("views.show_item.unlimited")
     end
   end
 
