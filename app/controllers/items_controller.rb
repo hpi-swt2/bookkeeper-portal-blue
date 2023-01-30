@@ -276,11 +276,9 @@ class ItemsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_item
-    begin
-        @item = Item.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-        redirect_to dashboard_url, alert: t("models.item.not_found")
-    end
+    @item = Item.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to dashboard_url, alert: t("models.item.not_found")
   end
 
   def check_seeable
