@@ -374,5 +374,46 @@ RSpec.describe "items/show", type: :feature do
     visit item_url(item_lent)
     expect(page).to have_text I18n.t("views.show_item.less_than_months", months_amount: 6)
   end
+
+  it "shows average lend time statistic" do
+    item_with_audit = create(:itemAudited0)
+
+    create(:audit_event,
+           item: item_with_audit,
+           event_type: :accept_lend,
+           created_at: Date.jd(0))
+    create(:audit_event,
+           item: item_with_audit,
+           event_type: :accept_return,
+           created_at: Date.jd(1))
+    visit item_url(item_with_audit)
+    expect(page).to have_text I18n.t("views.show_item.avg_lend_time")
+    expect(page).to have_text "1 #{I18n.t('amount.day', count: 1)}"
+  end
+
+  it "doesn't shows average lend time statistic if it has never been lent" do
+    item_with_audit = create(:item)
+    visit item_url(item_with_audit)
+    expect(page).not_to have_text I18n.t("views.show_item.avg_lend_time")
+  end
+
+  it "shows only relevant timeunits for average lend time statistic" do
+    item_with_audit = create(:itemAudited0)
+
+    create(:audit_event,
+           item: item_with_audit,
+           event_type: :accept_lend,
+           created_at: Date.jd(0))
+    create(:audit_event,
+           item: item_with_audit,
+           event_type: :accept_return,
+           created_at: Date.jd(1))
+    visit item_url(item_with_audit)
+    expect(page).to have_text I18n.t("views.show_item.avg_lend_time")
+    expect(page).to have_text "1 #{I18n.t('amount.day', count: 1)}"
+    expect(page).not_to have_text I18n.t("amount.hour", count: 1)
+    expect(page).not_to have_text I18n.t("amount.minute", count: 1)
+    expect(page).not_to have_text I18n.t("amount.second", count: 1)
+  end
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers

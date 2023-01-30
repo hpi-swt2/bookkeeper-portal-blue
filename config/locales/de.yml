@@ -157,6 +157,7 @@ de:
       show_waitlist: "Warteliste zeigen"
       enter_favorites: "Auf die Merkliste gesetzt"
       leave_favorites: "Von der Merkliste entfernt"
+      avg_lend_time: "Durchschnittliche Ausleihdauer"
       desktop_edit_notice: "Halte STRG gedrückt, um mehrere Gruppen auszuwählen."
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
@@ -199,3 +200,16 @@ de:
   notification_mailer:
     notification:
       subject: "%{notification_name}"
+  amount:
+    second:
+      one: "Sekunde"
+      other: "Sekunden"
+    minute:
+      one: "Minute"
+      other: "Minuten"
+    hour:
+      one: "Stunde"
+      other: "Stunden"
+    day:
+      one: "Tag"
+      other: "Tage"
