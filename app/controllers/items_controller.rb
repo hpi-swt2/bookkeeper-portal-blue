@@ -112,7 +112,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: t("models.item.destroyed") }
+      format.html { redirect_to dashboard_url, notice: t("models.item.destroyed") }
       format.json { head :no_content }
     end
   end
@@ -269,7 +269,12 @@ class ItemsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_item
-    @item = Item.find(params[:id])
+    begin
+        @item = Item.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+        # format.html { redirect_to item_url, alert: "The item you looked for could not be found"}
+        format.html { redirect_to item_url(@item), alert: t("models.waitlist.failed_adding_to_waitlist") }
+    end
   end
 
   # Only allow a list of trusted parameters through.
