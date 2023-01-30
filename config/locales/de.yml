@@ -154,6 +154,7 @@ de:
       show_waitlist: "Warteliste zeigen"
       enter_favorites: "Auf die Merkliste gesetzt"
       leave_favorites: "Von der Merkliste entfernt"
+      delete_item_confirm: "Wirklich löschen?"
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
       price_ct : "Preis in ct"
