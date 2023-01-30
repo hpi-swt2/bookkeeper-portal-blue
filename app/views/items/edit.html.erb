@@ -218,7 +218,7 @@ function readURL(input) {
             <% if current_user.nil? %>
               <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
             <% else %>
-              <%= form.collection_select(:owner_id, [current_user]+@groups_with_current_user, 
+              <%= form.collection_select(:owner_id, [current_user]+@groups_with_current_user.sort_by(&:name),
                 Proc.new { | user_or_group | (user_or_group.is_a?(User) ? "user:" : "group:") + user_or_group.id.to_s},
                 Proc.new { | user_or_group | user_or_group.is_a?(User) ? user_or_group.email : user_or_group.name },
                 :selected => @owner_id) %>
