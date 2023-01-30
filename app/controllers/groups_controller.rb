@@ -67,7 +67,7 @@ class GroupsController < ApplicationController
     @user = User.find(params[:user_id])
     @group.members.append(@user) unless @group.members.include?(@user)
     @notification = AddedToGroupNotification.new(receiver: @user, date: Time.zone.now, group_name: @group.name,
-                                                 active: true, unread: true).save
+                                                 active: false, unread: true).save
     redirect_to @group
   end
 
