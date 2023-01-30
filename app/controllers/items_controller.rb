@@ -47,8 +47,15 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    Rails.logger.debug "Hier startet es"
+    Rails.logger.debug @item.inspect
+    @item = @item.becomes!(Item.valid_types[params[:item][:type]])
+    Rails.logger.debug @item.inspect
+    @item.assign_attributes(item_params)
+    @item.clear_subclass_fields
+    Rails.logger.debug @item.inspect
     respond_to do |format|
-      if @item.update(item_params)
+      if @item.save
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
         format.json { render :show, status: :ok, location: @item }
       else

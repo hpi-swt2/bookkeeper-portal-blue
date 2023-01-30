@@ -40,7 +40,7 @@ class Item < ApplicationRecord
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
 
   def self.valid_types
-    ["OtherItem", "BookItem", "GameItem", "MovieItem"]
+    { "OtherItem" => OtherItem, "BookItem" => BookItem, "GameItem" => GameItem, "MovieItem" => MovieItem }
   end
 
   def price_in_euro
@@ -104,8 +104,20 @@ class Item < ApplicationRecord
     set_status_available
   end
 
+  def custom_subclass_attributes
+    []
+  end
+
   def clear_subclass_fields
-    self.class.validators.filter{|v| v.is_a?(ActiveRecord::Validations::AbsenceValidator)}.each{|v| v.attributes.each{|a| self[a] = nil}}
+    filtered = self.class.validators.filter do |v|
+      v.is_a?(ActiveRecord::Validations::AbsenceValidator)
+    end
+
+    filtered.each do |v|
+      v.attributes.each do |a|
+        self[a] = nil
+      end
+    end
   end
 
   def add_to_waitlist(user)

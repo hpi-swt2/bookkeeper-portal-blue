@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :item do
     name { "MyName" }
-    category { "MyCategory" }
+    type { "OtherItem" }
     location { "MyLocation" }
     description { "MyDescription" }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -14,7 +14,7 @@ FactoryBot.define do
   end
   factory :item_owned_by_group, class: 'Item' do
     name { "MyName" }
-    category { "MyCategory" }
+    type { "OtherItem" }
     location { "MyLocation" }
     description { "MyDescription" }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -27,7 +27,7 @@ FactoryBot.define do
   end
   factory :pending, class: 'Item' do
     name { "MyName2" }
-    category { "MyCategory" }
+    type { "OtherItem" }
     location { "MyLocation" }
     description { "MyDescription" }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -41,6 +41,7 @@ FactoryBot.define do
   factory :lent, class: 'Item' do
     name { "MyName3" }
     category { "MyCategory" }
+    type { "OtherItem" }
     location { "MyLocation" }
     description { "MyDescription" }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -54,7 +55,7 @@ FactoryBot.define do
   end
   factory :pending_return, class: 'Item' do
     name { "MyName3" }
-    category { "MyCategory" }
+    type { "OtherItem" }
     location { "MyLocation" }
     description { "MyDescription" }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -68,7 +69,7 @@ FactoryBot.define do
   end
   factory :item_book, class: 'Item' do
     name { "Ruby on Rails by Example" }
-    category { "Books" }
+    type { "OtherItem" }
     location { "Epic Chair" }
     description { "Useful book for all who want to dive deeper" }
     image { nil }
@@ -81,7 +82,7 @@ FactoryBot.define do
   end
   factory :item_beamer, class: 'Item' do
     name { "Beamer" }
-    category { "Equipment" }
+    type { "OtherItem" }
     location { "Main building" }
     description { "Very small but powerful beamer to use during presentations. Also suitable for watching films." }
     image { nil }
@@ -94,8 +95,8 @@ FactoryBot.define do
   end
   factory :item_whiteboard, class: 'Item' do
     name { "Whiteboard" }
-    category { "Equipment" }
     location { "D-Space" }
+    type { "OtherItem" }
     description { "Standard Whiteboard with lots of space for innovative ideas." }
     image { nil }
     price_ct { 500 }
@@ -107,7 +108,7 @@ FactoryBot.define do
 
   factory :item_without_time, class: 'Item' do
     name { "Whiteboard" }
-    category { "Equipment" }
+    type { "OtherItem" }
     location { "D-Space" }
     description { "Standard Whiteboard with lots of space for innovative ideas." }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -121,7 +122,7 @@ FactoryBot.define do
   factory :itemAudited0, class: 'Item' do
     id { 42_420 }
     name { "AuditedItem0" }
-    category { "Books" }
+    type { "OtherItem" }
     location { "D-Space" }
     description { "An audited item" }
     image { nil }
@@ -134,7 +135,7 @@ FactoryBot.define do
   factory :itemAudited1, class: 'Item' do
     id { 42_421 }
     name { "AuditedItem1" }
-    category { "Books" }
+    type { "OtherItem" }
     location { "D-Space" }
     description { "An audited item" }
     image { nil }
@@ -147,7 +148,7 @@ FactoryBot.define do
   factory :itemAudited2, class: 'Item' do
     id { 42_422 }
     name { "AuditedItem2" }
-    category { "Books" }
+    type { "OtherItem" }
     location { "D-Space" }
     description { "An audited item" }
     image { nil }
@@ -159,7 +160,7 @@ FactoryBot.define do
 
   factory :available_item, class: 'Item' do
     name { "AvailableItem" }
-    category { "book" }
+    type { "OtherItem" }
     location { "D-Space" }
     description { "This item is available." }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -172,7 +173,7 @@ FactoryBot.define do
 
   factory :lent_item, class: 'Item' do
     name { "LentItem" }
-    category { "book" }
+    type { "OtherItem" }
     location { "D-Space" }
     description { "This item is lent." }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }

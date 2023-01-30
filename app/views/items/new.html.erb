@@ -239,7 +239,7 @@
 
             <div class="notBorderedInput">
             <p class="subtitle"><%= t('views.show_item.category') %>*</p>
-            <%= form.select :type, Item.valid_types.map{|type| [t("models.item.types.#{type.underscore}"), type]}, {}, {:onchange => "changeInput()"} %>
+            <%= form.select :type, Item.valid_types.keys.map{|type| [t("models.item.types.#{type.underscore}"), type]}, {}, {:onchange => "changeInput()"} %>
             </div>
 
             <div class="show_movie show_game show_book d-none">
