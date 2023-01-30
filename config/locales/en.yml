@@ -124,6 +124,9 @@ en:
         title: "Removed from group"
         description: "You have been removed from the group \"%{group_name}\"."
       no_notifications: "You have not received any notifications yet"
+      added_to_group:
+        title: "Added to group"
+        description: "You have been added to the group \"%{group_name}\"."
     search:
       title: "Search"
       filter_button: "Filter"
