@@ -9,12 +9,12 @@ require "stringio"
 # rubocop:disable Metrics/PerceivedComplexity
 
 class ItemsController < ApplicationController
-  before_action :set_item,
-                only: %i[ show edit update destroy add_to_waitlist leave_waitlist add_to_favorites leave_favorites
-                          start_lend abort_lend request_return accept_return deny_return request_lend]
+  before_action :set_item, except: %i[ index new create ]
 
   before_action :set_lendeable, only: %i[ show ]
   before_action :check_lendeable, only: %i[ request_lend add_to_waitlist ]
+
+  before_action :check_seeable, except: %i[ index new create ]
 
   # GET /items or /items.json
   def index
@@ -272,6 +272,10 @@ class ItemsController < ApplicationController
   def check_lendeable
     set_lendeable
     render file: 'public/403.html', status: :unauthorized unless @lendeable
+  end
+
+  def check_seeable
+    render file: 'public/403.html', status: :forbidden unless @item.users_with_see_permission.include?(current_user)
   end
 
   # Only allow a list of trusted parameters through.
