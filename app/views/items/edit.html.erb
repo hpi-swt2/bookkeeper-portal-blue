@@ -237,6 +237,7 @@ function readURL(input) {
               <div class="rentalDurationInput"><%= form.number_field :rental_duration, class: "borderedInput body1" %></div>
               <div class="rentalDurationInput">
                 <%= form.select :rental_duration_unit, [
+                  [t('views.edit_item.duration.unlimited'), 'Unlimited'],
                   [t('views.edit_item.duration.months'), 'Months'],
                   [t('views.edit_item.duration.weeks'), 'Weeks'],
                   [t('views.edit_item.duration.days'), 'Days'],

@@ -239,16 +239,18 @@ class ItemsController < ApplicationController
     hash = { rental_duration: rental_duration, rental_duration_unit: rental_duration_unit }
 
     case rental_duration_unit
+    when 'Unlimited'
+      hash.merge!({ rental_duration_sec: 100.years.to_i })
     when 'Months'
-      hash.merge!({ rental_duration_sec: rental_duration.months.to_s })
+      hash.merge!({ rental_duration_sec: rental_duration.months.to_i })
     when 'Weeks'
-      hash.merge!({ rental_duration_sec: rental_duration.week.to_s })
+      hash.merge!({ rental_duration_sec: rental_duration.week.to_i })
     when 'Days'
-      hash.merge!({ rental_duration_sec: rental_duration.day.to_s })
+      hash.merge!({ rental_duration_sec: rental_duration.day.to_i })
     when 'Hours'
-      hash.merge!({ rental_duration_sec: rental_duration.hour.to_s })
+      hash.merge!({ rental_duration_sec: rental_duration.hour.to_i })
     when 'Minutes'
-      hash.merge!({ rental_duration_sec: rental_duration.minute.to_s })
+      hash.merge!({ rental_duration_sec: rental_duration.minute.to_i })
     when 'Seconds'
       hash.merge!({ rental_duration_sec: rental_duration })
     end

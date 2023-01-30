@@ -109,6 +109,7 @@ de:
       price_ct : "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
       duration:
+        unlimited: "Unbegrenzt"
         months: "Monate"
         weeks: "Wochen"
         days: "Tage"
@@ -133,11 +134,13 @@ de:
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
       show_waitlist: "Warteliste zeigen"
+      unlimited: "Unbegrenzt"
     edit_item:
       rental_duration_sec: "Ausleihdauer"
       price_ct : "Preis in ct"
       return_checklist: "Rückgabe Checkliste"
       duration:
+        unlimited: "Unbegrenzt"
         months: "Monate"
         weeks: "Wochen"
         days: "Tage"

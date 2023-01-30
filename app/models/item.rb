@@ -36,10 +36,17 @@ class Item < ApplicationRecord
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   validates :rental_duration, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   validates :rental_duration_sec, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+  validate :rental_duration_cannot_be_greater_than_100_years
   enum :lend_status,
        { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
 
+  def rental_duration_cannot_be_greater_than_100_years
+    if rental_duration_sec > 100.years.to_i && rental_duration_unit != 'Unlimited'
+      errors.add(:rental_duration, "is greater than 100 years, please choose unlimited rental duration")
+    end
+  end
+  
   def price_in_euro
     unless price_ct.nil?
       ct = price_ct % 100

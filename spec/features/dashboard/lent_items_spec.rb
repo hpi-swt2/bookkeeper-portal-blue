@@ -42,6 +42,6 @@ RSpec.describe "Lent Items", type: :feature do
     visit dashboard_path
     expect(page).to have_content(item.name)
     expect(page).to have_content I18n.t('views.dashboard.lent_items.expired',
-                                        date: item.rental_end.strftime("%d.%m.%Y"))
+                                        date: item..strftime("%d.%m.%Y"))
   end
 end
