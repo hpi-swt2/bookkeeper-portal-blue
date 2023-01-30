@@ -37,4 +37,32 @@ RSpec.describe "items/show", type: :feature do
     expect(find('#item_owner_id option:nth-child(3)')).to have_content(group2.name)
     expect(find('#item_owner_id option:nth-child(4)')).to have_content(group3.name)
   end
+
+  it "displays lend permission selection in alphabetical order" do
+    group3 = create(:group, name: "C Group 3")
+    group1 = create(:group, name: "A Group 1")
+    group2 = create(:group, name: "B Group 2")
+
+    user = create(:user)
+    sign_in user
+    item = create(:item, owning_user: user)
+    visit edit_item_url(item)
+    expect(find('#item_lend_group_ids option:nth-child(1)')).to have_content(group1.name)
+    expect(find('#item_lend_group_ids option:nth-child(2)')).to have_content(group2.name)
+    expect(find('#item_lend_group_ids option:nth-child(3)')).to have_content(group3.name)
+  end
+
+  it "displays see permission selection in alphabetical order" do
+    group3 = create(:group, name: "C Group 3")
+    group1 = create(:group, name: "A Group 1")
+    group2 = create(:group, name: "B Group 2")
+
+    user = create(:user)
+    sign_in user
+    item = create(:item, owning_user: user)
+    visit edit_item_url(item)
+    expect(find('#item_see_group_ids option:nth-child(1)')).to have_content(group1.name)
+    expect(find('#item_see_group_ids option:nth-child(2)')).to have_content(group2.name)
+    expect(find('#item_see_group_ids option:nth-child(3)')).to have_content(group3.name)
+  end
 end

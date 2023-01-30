@@ -93,7 +93,6 @@ RSpec.describe "Profile", type: :feature do
     group1 = build(:group, name: "A Group 1")
     group2 = build(:group, name: "B Group 2")
 
-
     user.groups.append(group1)
     user.groups.append(group2)
     user.groups.append(group3)
