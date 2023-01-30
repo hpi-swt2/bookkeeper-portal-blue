@@ -6,7 +6,7 @@ class LendingAcceptedNotification < ApplicationRecord
   belongs_to :item
 
   def title
-    I18n.t "views.notifications.lending_accepted.title"
+    I18n.t "views.notifications.lending_accepted.title", item: item.name
   end
 
   def description
