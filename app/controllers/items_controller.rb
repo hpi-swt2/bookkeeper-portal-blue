@@ -271,7 +271,7 @@ class ItemsController < ApplicationController
 
   def check_lendable
     set_lendable
-    render file: 'public/403.html', status: :unauthorized unless @lendable
+    render file: 'public/403.html', status: :forbidden unless @lendable
   end
 
   # Only allow a list of trusted parameters through.
