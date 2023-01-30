@@ -50,10 +50,6 @@
     max-height: 25em !important;
   }
 
-  #back-button{
-    font-size: 35px;
-  }
-
   #locationIcon{
     font-size: 20px;
     vertical-align: text-top;
@@ -166,10 +162,6 @@ function readURL(input) {
 </script>
 
 <div>
-    <%= link_to @item do %>
-      <span class="material-symbols-outlined" id="back-button">chevron_left</span>
-    <% end %>
-
   <div>
   <%= form_with(model: @item) do |form| %>
 
