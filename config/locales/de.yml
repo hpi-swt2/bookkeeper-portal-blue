@@ -63,7 +63,7 @@ de:
       timestamp_Sunday: "Sonntag"
       lending_accepted:
         title: "Ausleihanfrage angenommen"
-        description: "%{owner} hat deine Anfrage zu %{item} angenommen. Du kannst es jetzt abholen"
+        description: "%{owner} hat deine Anfrage zu %{item} angenommen. Du kannst es jetzt abholen."
       lending_denied:
         title: "Ausleihanfrage abgelehnt"
         description: "%{owner} hat deine Anfrage zu %{item} abgelehnt."
