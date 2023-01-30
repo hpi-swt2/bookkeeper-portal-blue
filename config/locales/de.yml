@@ -62,37 +62,40 @@ de:
       timestamp_Saturday: "Samstag"
       timestamp_Sunday: "Sonntag"
       lending_accepted:
-        title: "Ausleihanfrage angenommen"
+        title: "Ausleihanfrage angenommen: %{item}"
         description: "%{owner} hat deine Anfrage zu %{item} angenommen. Du kannst es jetzt abholen"
       lending_denied:
-        title: "Ausleihanfrage abgelehnt"
+        title: "Ausleihanfrage abgelehnt: %{item}"
         description: "%{owner} hat deine Anfrage zu %{item} abgelehnt."
       lend_request:
-        title: "Ausleihanfrage"
+        title: "Ausleihanfrage: %{item}"
         description: "%{receiver} möchte %{item} von dir ausleihen."
         description_accepted: "%{receiver} hat %{item} von dir ausgeliehen."
         description_declined: "Du hast abgelehnt %{item} an %{receiver} auszuleihen"
         accepted: "Akzeptiert"
         declined: "Abgelehnt"
       return_request:
-        title: "Gegenstand zurückgeben"
+        title: "Gegenstand zurückgeben: %{item}"
         description: "%{receiver} möchte %{item} zurückgeben. Bitte beachte, dass der Gegenstand aus dem System entfernt wird, wenn du die Rückgabe ablehnst."
       return_declined:
-        title: "Rückgabe abgelehnt"
+        title: "Rückgabe abgelehnt: %{item}"
         description: "%{owner} hat die Rückgabe von %{item} abgelehnt. Dies könnte verschiedene Ursachen haben, z.B. Beschädigungen am Gegenstand. Setze dich am besten nochmal mit den Eigentümer des Gegenstandes in Kontakt."
       return_accepted:
-        title: "Rückgabe akzeptiert"
+        title: "Rückgabe akzeptiert: %{item}"
         description: "%{owner} hat die Rückgabe von %{item} akzeptiert. Du hast den Gegenstand also erfolgreich zurückgegeben."
       added_to_waitlist:
-        title: "Zur Warteliste hinzugefügt"
+        title: "Zur Warteliste hinzugefügt: %{item}"
         description: "Du wurdest an Position %{position} zur Warteliste für %{item} hinzugefügt."
       move_up_on_waitlist:
-        title: "Auf Warteliste aufgerückt"
+        title: "Auf Warteliste aufgerückt: %{item}"
         description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
       removed_from_group:
         title: "Aus Gruppe entfernt"
         description: "Du wurdest aus der Gruppe \"%{group_name}\" entfernt."
       no_notifications: "Du hast noch keine Nachrichten erhalten"
+      added_to_group:
+        title: "Zu Gruppe hinzugefügt"
+        description: "Du wurdest zur Gruppe \"%{group_name}\" hinzugefügt."
     search:
       title: "Suche"
       filter_button: "Filter"
@@ -127,9 +130,9 @@ de:
       price: "Preis"
       maximum_lending_duration: "Maximale Ausleihdauer"
       lend_permission: "Gruppen mit Ausleihberechtigung"
-      lend_permission_notice: "Besitzer erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
+      lend_permission_notice: "Besitzer erhalten diese Berechtigung automatisch."
       see_permission: "Gruppen mit Ansichtsberechtigung"
-      see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch. Halten Sie STRG gedrückt, um mehrere Gruppen auswählen."
+      see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch."
       lent_until: "Verliehen bis"
       lent_by: "Ausgeliehen von"
       not_lent: "Aktuell nicht ausgeliehen."
@@ -155,6 +158,8 @@ de:
       enter_favorites: "Auf die Merkliste gesetzt"
       leave_favorites: "Von der Merkliste entfernt"
       delete_item_confirm: "Wirklich löschen?"
+      avg_lend_time: "Durchschnittliche Ausleihdauer"
+      desktop_edit_notice: "Halte STRG gedrückt, um mehrere Gruppen auszuwählen."
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
       price_ct : "Preis in ct"
@@ -197,3 +202,16 @@ de:
   notification_mailer:
     notification:
       subject: "%{notification_name}"
+  amount:
+    second:
+      one: "Sekunde"
+      other: "Sekunden"
+    minute:
+      one: "Minute"
+      other: "Minuten"
+    hour:
+      one: "Stunde"
+      other: "Stunden"
+    day:
+      one: "Tag"
+      other: "Tage"

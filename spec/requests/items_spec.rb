@@ -13,6 +13,13 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/items", type: :request do
+
+  before do
+    @user = create(:user)
+    @group = create(:group, members: [@user])
+    sign_in @user
+  end
+
   # This should return the minimal set of attributes required to create a valid
   # Item. As you add validations to Item, be sure to
   # adjust the attributes here as well.
@@ -22,7 +29,7 @@ RSpec.describe "/items", type: :request do
       location: "Test",
       category: "Test",
       description: "Test",
-      owning_user: create(:user),
+      owning_user: @user,
       groups_with_lend_permission: [create(:group)],
       groups_with_see_permission: [create(:group)]
     }
@@ -34,7 +41,7 @@ RSpec.describe "/items", type: :request do
       location: "Test",
       category: "Test",
       description: "Test",
-      owner_id: "user:#{create(:user).id}",
+      owner_id: "user:#{@user.id}",
       lend_group_ids: [create(:group).id],
       see_group_ids: [create(:group).id]
     }
@@ -42,18 +49,19 @@ RSpec.describe "/items", type: :request do
 
   let(:valid_request_attributes_group) do
     {
-      name: "Test",
+      name: "Test Group",
       location: "Test",
       category: "Test",
       description: "Test",
-      owner_id: "group:#{create(:group).id}",
+      owner_id: "group:#{@group.id}",
       lend_group_ids: [create(:group).id],
       see_group_ids: [create(:group).id]
     }
   end
 
   let(:invalid_attributes) do
-    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt", lend_group_ids: [], see_group_ids: [] }
+    { name: "Test Invalid", category: "Test", description: "Test", price_ct: "NotAnInt", lend_group_ids: [],
+      see_group_ids: [] }
   end
 
   describe "GET /index" do
@@ -66,7 +74,7 @@ RSpec.describe "/items", type: :request do
 
   describe "GET /show" do
     it "renders a successful response" do
-      item = create(:item)
+      item = create(:item, owning_user: @user)
       item.waitlist = create(:waitlist_with_item)
       get item_url(item)
       expect(response).to be_successful
@@ -83,6 +91,7 @@ RSpec.describe "/items", type: :request do
   describe "GET /edit" do
     it "renders a successful response" do
       item = Item.create! valid_attributes
+
       get edit_item_url(item)
       expect(response).to be_successful
     end

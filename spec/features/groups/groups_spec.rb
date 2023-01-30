@@ -165,6 +165,19 @@ RSpec.describe "Groups", type: :feature do
     expect(notification.description).to include(group.name)
   end
 
+  it "creates a notification when a user is added to a group" do
+    user = create(:user)
+    sign_in group.owners.first
+    visit group_path(group)
+    select user.email, from: "user_id"
+    click_button "Add member"
+    expect(find_by_id('group-members')).to have_text(user.name)
+    expect(Notification.count).to eq(1)
+    notification = Notification.first
+    expect(notification.receiver).to eq(user)
+    expect(notification.description).to include(group.name)
+  end
+
   it "does not add normal users to the HPI group" do
     user = create(:user)
     sign_in user
@@ -226,5 +239,17 @@ RSpec.describe "Groups", type: :feature do
     find_by_id('openid_connect-signin').click
     visit profile_path
     expect(oidc_user.groups).to include(Group.default_hpi)
+  end
+
+  it 'sorts the users in the groups view alphabetically by email' do
+    user2 = create(:user, email: 'c@d.com')
+    user3 = create(:user, email: 'x@y.com')
+    user1 = create(:user, email: 'a@b.com')
+
+    sign_in group.owners.first
+    visit group_path(group)
+    expect(find('#user_id option:nth-child(1)')).to have_content(user1.email)
+    expect(find('#user_id option:nth-child(2)')).to have_content(user2.email)
+    expect(find('#user_id option:nth-child(3)')).to have_content(user3.email)
   end
 end

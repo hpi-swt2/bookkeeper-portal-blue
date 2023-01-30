@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :items
+  get 'items/:id/image', to: 'items#image', as: 'item_image'
   get 'dashboard', to: 'dashboard#index'
   get 'search', to: 'search#index'
   get 'notifications', to: 'notifications#index'
