@@ -1,46 +1,54 @@
-<div class="d-flex justify-content-between">
-  <h1><%= @group.name %></h1>
+<h1><%= @group.name %></h1>
 
-  <% if current_user.owns_group? @group %>
-    <% if (User.all - @group.members).length > 0 %>
-      <%= form_with url: url_for(action: 'add_member', controller: 'groups' ), class: "d-flex gap-3" do |form| %>
-          <%= form.collection_select(:user_id, User.all - @group.members, :id, :email) %>
-          <%= form.submit t('views.groups.add_member'), class: "btn-primary"%>
-      <% end %>
-    <% else %>
-      <p><%= t 'views.groups.no_users_to_add' %></p>
+<% if current_user.owns_group? @group %>
+  <% if (User.all - @group.members).length > 0 %>
+
+    <%= form_with url: url_for(action: 'add_member', controller: 'groups') do |form| %>
+      <div class="input-group mb-3">
+        <%= form.collection_select(:user_id, User.all - @group.members, :id, :email, {}, { :class => "form-select" }) %>
+        <%= form.submit t('views.groups.add_member'), class: "btn btn-primary" %>
+      </div>
     <% end %>
+
+  <% else %>
+    <p><%= t 'views.groups.no_users_to_add' %></p>
   <% end %>
-</div>
+<% end %>
+
+<% if @group.members.include?(current_user) %>
+    <%= link_to group_leave_path(@group), class: "btn btn-primary mb-3", data: {turbo_method: :delete} do %>
+      <i class="bi bi-door-open-fill"></i><%= t 'views.groups.leave' %>
+    <% end %>
+<% end %>
 
 
 <h2><%= t 'views.groups.owners' %></h2>
 <ul id="group-owners">
-<% @group.owners.each do |user| %>
+  <% @group.owners.each do |user| %>
     <li>
-        <%= user.name %>
-        <% if @group.owners.include?(current_user) %>
-            <%= link_to group_demote_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
-                <i class="bi bi-award-fill"></i><%= t 'views.groups.demote' %>
-            <% end %>
+      <%= user.name %>
+      <% if @group.owners.include?(current_user) %>
+        <%= link_to group_demote_path(@group, user), class: "badge rounded-pill text-bg-primary", data: { turbo_method: :post } do %>
+          <i class="bi bi-award-fill"></i><%= t 'views.groups.demote' %>
         <% end %>
+      <% end %>
     </li>
-<% end %>
+  <% end %>
 </ul>
 
 <h2><%= t 'views.groups.members' %></h2>
 <ul id="group-members">
-<% @group.members_without_ownership.each do |user| %>
+  <% @group.members_without_ownership.each do |user| %>
     <li>
-        <%= user.name %>
-        <% if @group.owners.include?(current_user) %>
-            <%= link_to group_promote_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
-                <i class="bi bi-award"></i><%= t 'views.groups.promote' %>
-            <% end %>
-        <%= link_to group_remove_path(@group, user), class: "badge rounded-pill text-bg-primary", data: {turbo_method: :post} do %>
+      <%= user.name %>
+      <% if @group.owners.include?(current_user) %>
+        <%= link_to group_promote_path(@group, user), class: "badge rounded-pill text-bg-primary", data: { turbo_method: :post } do %>
+          <i class="bi bi-award"></i><%= t 'views.groups.promote' %>
+        <% end %>
+        <%= link_to group_remove_path(@group, user), class: "badge rounded-pill text-bg-primary", data: { turbo_method: :post } do %>
           <i class="bi bi-trash"></i><%= t 'views.groups.remove' %>
         <% end %>
-        <% end %>
+      <% end %>
     </li>
-<% end %>
+  <% end %>
 </ul>

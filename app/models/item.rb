@@ -1,7 +1,6 @@
 # class of a basic item.
 # rubocop:disable Metrics/ClassLength
 class Item < ApplicationRecord
-  has_one_attached :image
   has_one :waitlist, dependent: :destroy
   has_many :audit_events, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
@@ -29,6 +28,8 @@ class Item < ApplicationRecord
   has_one :owning_user, through: :ownership_permission, source: :user_or_group, source_type: 'User'
   has_one :owning_group, through: :ownership_permission, source: :user_or_group, source_type: 'Group'
 
+  # belongs_to :holder, class_name: 'User', foreign_key: "holder", inverse_of: :lent_items, optional: true
+
   validates :name, presence: true
   validates :category, presence: true
   validates :location, presence: true
@@ -46,6 +47,10 @@ class Item < ApplicationRecord
       return euro, ct
     end
     [0, 0]
+  end
+
+  def image_url
+    "data:application/octet-stream;base64,#{Base64.strict_encode64(image)}"
   end
 
   def set_status_available
@@ -171,6 +176,43 @@ class Item < ApplicationRecord
     end
   end
 
+  def print_rental_duration
+    seconds = rental_duration_sec || 0
+    if seconds < 7 * 86_400
+      print_rental_duration_days(seconds)
+    elsif seconds < 4 * (7 * 86_400)
+      print_rental_duration_weeks(seconds)
+    else
+      print_rental_duration_months(seconds)
+    end
+  end
+
+  def print_rental_duration_days(seconds)
+    if seconds < 86_400
+      I18n.t "views.show_item.less_than_one_day" if seconds < 86_400
+    elsif seconds == 86_400
+      I18n.t "views.show_item.one_day"
+    else
+      I18n.t("views.show_item.less_than_days", days_amount: (seconds / 86_400) + 1)
+    end
+  end
+
+  def print_rental_duration_weeks(seconds)
+    if seconds == 7 * 86_400
+      I18n.t "views.show_item.one_week"
+    else
+      I18n.t("views.show_item.less_than_weeks", weeks_amount: (seconds / (7 * 86_400)) + 1)
+    end
+  end
+
+  def print_rental_duration_months(seconds)
+    if seconds == 4 * 7 * 86_400
+      I18n.t "views.show_item.one_month"
+    else
+      I18n.t("views.show_item.less_than_months", months_amount: (seconds / (4 * 7 * 86_400)) + 1)
+    end
+  end
+
   def progress_lent_time
     return 100 if rental_start.nil? || rental_duration_sec.nil? || rental_duration_sec.zero?
 
@@ -194,4 +236,5 @@ class Item < ApplicationRecord
     waitlist.users.length
   end
 end
+
 # rubocop:enable Metrics/ClassLength

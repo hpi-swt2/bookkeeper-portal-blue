@@ -27,7 +27,7 @@
 
   <p>
     <strong>Image:</strong>
-    <%= image_tag(item.image, class: "max-width300px") if item.image.attached? %>
+    <%= image_tag(item.image_url, class: "max-width300px") unless item.image.nil? %>
   </p>
 
   <p>
