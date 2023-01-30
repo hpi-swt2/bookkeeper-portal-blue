@@ -58,10 +58,10 @@ en:
         no_lent_items: "Currently, you have no lent items."
         expired: "expired on %{date}"
         today: "today"
-        days: 
+        days:
           one: "%{count} day left"
           other: "%{count} days left"
-        weeks: 
+        weeks:
           one: "%{count} week left"
           other: "%{count} weeks left"
       offered_items:
@@ -124,12 +124,26 @@ en:
         title: "Removed from group"
         description: "You have been removed from the group \"%{group_name}\"."
       no_notifications: "You have not received any notifications yet"
+      added_to_group:
+        title: "Added to group"
+        description: "You have been added to the group \"%{group_name}\"."
     search:
       title: "Search"
       filter_button: "Filter"
       filter_modal:
         title: "Filter"
+        availability: "Availability"
+        available: "Available"
+        unavailable: "Unavailable"
+        category: "Category"
+        group: "Lending group"
+        results: "Show results"
+        all: "All"
       qr_scanner_title: "QR Scanner"
+      order:
+        popularity: "Popularity"
+        name_a_z: "Name (A-Z)"
+        name_z_a: "Name (Z-A)"
     home:
       title: "Home"
     new_item:
@@ -151,7 +165,22 @@ en:
       category: "Category"
       description: "Description"
       owner: "Owner"
-      lend_until: "Lend Until"
+      price: "Price"
+      maximum_lending_duration: "Maximum Lending Duration"
+      lend_permission: "Groups with lend permission"
+      lend_permission_notice: "This permission is granted to owners automatically."
+      see_permission: "Groups with see permission"
+      see_permission_notice: "This permission is granted to people with lend permission automatically."
+      lent_until: "Lent Until"
+      lent_by: "Lent By"
+      not_lent: "Currently, not lent."
+      less_than_one_day: "Less than one day"
+      one_day: "One day"
+      less_than_days: "Less than %{days_amount} days"
+      one_week: "One Week"
+      less_than_weeks: "Less than %{weeks_amount} weeks"
+      one_month: "One Month"
+      less_than_months: "Less than %{months_amount} months"
       enter_waitlist: "Enter Waitlist"
       leave_waitlist: "Leave Waitlist"
       waitlist: "Waitlist"
@@ -159,12 +188,15 @@ en:
       waitlist_position: "You are at Position %{position} of the Waitlist."
       lend: "Lend"
       return: "Return"
-      qr_button: "Download QR-Code"
+      qr_button: "Show QR-Code"
       pending_lend_request: "Waiting for lend approval"
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
       show_waitlist: "Show waitlist"
       unlimited: "Unlimited"
+      enter_favorites: "Added to favorites"
+      leave_favorites: "Removed from favorites"
+      desktop_edit_notice: "You can select multiple groups by holding down CTRL."
     edit_item:
       rental_duration_sec: "Rental Duration"
       price_ct : "Price in Cent"
@@ -178,7 +210,6 @@ en:
         seconds: "Seconds"
     profile:
       title: "Profile"
-      roles: "Roles"
       email: "Email"
       edit_profile: "Edit Profile"
       groups: "Groups"
@@ -186,9 +217,12 @@ en:
     groups:
       owners: "Owners"
       members: "Members"
+      add_member: "Add member"
+      no_users_to_add: "All users are already in this group. You are very popular!"
       promote: "Make owner"
       demote: "Remove owner"
       remove: "Remove from group"
+      leave: "Leave group"
     sessions:
       sign_in_with_password: "Sign in with password"
   models:
@@ -206,3 +240,6 @@ en:
   helpers:
     submit:
       update: "Update Item"
+  notification_mailer:
+    notification:
+      subject: "%{notification_name}"

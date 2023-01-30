@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
 
+  # has_many :lent_items, class_name: "Item", dependent: :nullify
+
   has_many :permissions, as: :user_or_group, dependent: :destroy
   has_many :see_permissions, class_name: 'SeePermission', as: :user_or_group, dependent: :destroy
   has_many :lend_permissions, class_name: 'LendPermission', as: :user_or_group, dependent: :destroy
@@ -89,5 +91,9 @@ class User < ApplicationRecord
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
     end
+  end
+
+  def owns_group?(group)
+    owned_groups.include?(group)
   end
 end

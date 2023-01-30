@@ -13,7 +13,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def success
     sign_in_and_redirect @user
     set_flash_message(:notice, :success, kind: "OpenID Connect") if is_navigational_format?
-    Group.default_hpi.members << @user
+    @user.to_member_of!(Group.default_hpi)
   end
 
   def failure

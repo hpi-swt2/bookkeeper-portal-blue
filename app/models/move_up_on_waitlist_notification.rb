@@ -4,6 +4,8 @@ class MoveUpOnWaitlistNotification < ApplicationRecord
 
   belongs_to :item
 
+  after_create :check_position
+
   def title
     I18n.t("views.notifications.move_up_on_waitlist.title")
   end
@@ -11,5 +13,11 @@ class MoveUpOnWaitlistNotification < ApplicationRecord
   def description
     I18n.t("views.notifications.move_up_on_waitlist.description", position: item.waitlist.position(receiver) + 1,
                                                                   item: item.name)
+  end
+
+  def check_position
+    return unless item.waitlist.position(receiver).zero?
+
+    send_mail
   end
 end

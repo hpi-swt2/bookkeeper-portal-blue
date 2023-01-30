@@ -35,12 +35,30 @@ RSpec.describe "Groups", type: :feature do
     expect(find_by_id('group-members')).not_to have_text(group.owners.first.name)
   end
 
+  it "allows owners to add members" do
+    user = create(:user)
+    sign_in group.owners.first
+    visit group_path(group)
+    select user.email, from: "user_id"
+    click_button "Add member"
+    expect(find_by_id('group-members')).to have_text(user.name)
+  end
+
+  it "does not allow members to add members" do
+    user = create(:user)
+    group.members.append(user)
+    sign_in user
+    visit group_path(group)
+    expect(page).not_to have_select("user_id")
+  end
+
   it "shows demote buttons if current user is owner" do
     sign_in group.owners.first
     visit group_path(group)
 
     group.owners.each do |owner|
-      expect(page).to have_link("Remove owner", href: group_demote_path(group, owner))
+      expect(page).to have_link("Remove owner",
+                                href: group_demote_path(group, owner, locale: RSpec.configuration.locale))
     end
   end
 
@@ -50,7 +68,8 @@ RSpec.describe "Groups", type: :feature do
     visit group_path(group)
 
     group.members_without_ownership.each do |member|
-      expect(page).to have_link("Make owner", href: group_promote_path(group, member))
+      expect(page).to have_link("Make owner",
+                                href: group_promote_path(group, member, locale: RSpec.configuration.locale))
     end
   end
 
@@ -78,7 +97,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Make owner", href: group_promote_path(group, member)).click
+    find(:link, "Make owner", href: group_promote_path(group, member, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -91,7 +110,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove owner", href: group_demote_path(group, owner)).click
+    find(:link, "Remove owner", href: group_demote_path(group, owner, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -101,6 +120,7 @@ RSpec.describe "Groups", type: :feature do
 
   it "shows remove buttons if current user is owner" do
     owner = create(:max)
+    sign_in owner
     group.owners << owner
     visit group_path(group)
 
@@ -124,7 +144,7 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+    find(:link, "Remove from group", href: group_remove_path(group, member, locale: RSpec.configuration.locale)).click
 
     group.reload
 
@@ -137,11 +157,24 @@ RSpec.describe "Groups", type: :feature do
     sign_in group.owners.first
     visit group_path(group)
 
-    find(:link, "Remove from group", href: group_remove_path(group, member)).click
+    find(:link, "Remove from group", href: group_remove_path(group, member, locale: RSpec.configuration.locale)).click
 
     expect(Notification.count).to eq(1)
     notification = Notification.first
     expect(notification.receiver).to eq(member)
+    expect(notification.description).to include(group.name)
+  end
+
+  it "creates a notification when a user is added to a group" do
+    user = create(:user)
+    sign_in group.owners.first
+    visit group_path(group)
+    select user.email, from: "user_id"
+    click_button "Add member"
+    expect(find_by_id('group-members')).to have_text(user.name)
+    expect(Notification.count).to eq(1)
+    notification = Notification.first
+    expect(notification.receiver).to eq(user)
     expect(notification.description).to include(group.name)
   end
 
@@ -166,4 +199,57 @@ RSpec.describe "Groups", type: :feature do
     expect(oidc_user.groups).to include(Group.default_hpi)
   end
 
+  it "shows leave button if current user is member" do
+    sign_in group.members.first
+    visit group_path(group)
+    expect(page).to have_link("Leave group", href: group_leave_path(group, locale: RSpec.configuration.locale))
+  end
+
+  it "does not show leave button if current user is not member" do
+    sign_in create(:user)
+    visit group_path(group)
+
+    expect(page).not_to have_link("Leave group", href: group_leave_path(group, locale: RSpec.configuration.locale))
+  end
+
+  it "removes a user if they leave" do
+    user = group.members.first
+    sign_in user
+    visit group_path(group)
+    click_link "Leave group"
+
+    expect(group.members).not_to include(user)
+  end
+
+  it "does not crash when the same user signs in again with OIDC" do
+    oidc_user = create(:peter)
+    OmniAuth.config.mock_auth[:openid_connect] = OmniAuth::AuthHash.new(
+      provider: "openid_connect",
+      uid: "peter.lustig",
+      info: {
+        email: oidc_user.email
+      }
+    )
+
+    visit new_user_session_path
+    find_by_id('openid_connect-signin').click
+    visit profile_path
+    click_on('logout')
+    visit new_user_session_path
+    find_by_id('openid_connect-signin').click
+    visit profile_path
+    expect(oidc_user.groups).to include(Group.default_hpi)
+  end
+
+  it 'sorts the users in the groups view alphabetically by email' do
+    user2 = create(:user, email: 'c@d.com')
+    user3 = create(:user, email: 'x@y.com')
+    user1 = create(:user, email: 'a@b.com')
+
+    sign_in group.owners.first
+    visit group_path(group)
+    expect(find('#user_id option:nth-child(1)')).to have_content(user1.email)
+    expect(find('#user_id option:nth-child(2)')).to have_content(user2.email)
+    expect(find('#user_id option:nth-child(3)')).to have_content(user3.email)
+  end
 end

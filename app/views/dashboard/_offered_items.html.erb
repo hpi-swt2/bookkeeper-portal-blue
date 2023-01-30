@@ -3,7 +3,6 @@
   <% if items.empty? %>
     <p class="body-1"><%= t 'views.dashboard.offered_items.nothing_offered' %></p>
   <% else %>
-    <div class="container">
       <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-4">
         <% items.each do |item| %>
           <div>
@@ -21,6 +20,5 @@
           </div>
         <% end %>
       </div>
-    </div>
   <% end %>
 </div>

@@ -2,8 +2,8 @@
     <div class="card itemcard">
         <div class="card-body">
             <div class="image">
-              <% if item.image.attached? %>
-                <%= image_tag(item.image, class: "card-img-top") %>
+              <% unless item.image.nil? %>
+                <%= image_tag(item.image_url, class: "card-img-top") %>
               <% else %>
                 <%= image_tag("image_default.svg", class: "card-img-top filter-gray") %>
               <% end %>

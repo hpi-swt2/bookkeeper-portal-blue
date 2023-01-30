@@ -18,18 +18,25 @@
     <%= render "qr-scanner" %>
     <%= form_tag(search_path, method: :get) do %>
         <div class="input-group mb-3">
-            <%= text_field_tag :search, params[:search], class: "form-control outline-missing-right", placeholder: t('views.search.title') %>
-            <button type="submit" id="submit" class="btn btn-outline-secondary outline-missing-left outline-missing-right">
+            <%= text_field_tag :search, params[:search], class: "mt-2 form-control outline-missing-right", placeholder: t('views.search.title') %>
+            <button type="submit" id="submit" class="btn mt-2 btn-outline-secondary outline-missing-left outline-missing-right">
                 <i class="bi bi-search"></i>
             </button>
-            <button type="button" class="btn btn-outline-secondary outline-missing-left" data-bs-toggle="modal" data-bs-target="#qrscanner" data-action="click->qrscanner#open">
+            <button type="button" class="btn mt-2 btn-outline-secondary outline-missing-left" data-bs-toggle="modal" data-bs-target="#qrscanner" data-action="click->qrscanner#open">
                 <i class="bi bi-qr-code-scan"></i>
             </button>
         </div>
-        <button class="btn btn-secondary secondaryButton mb-3" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false">
-            <%= t 'views.search.filter_button' %> <i class="bi bi-sliders2-vertical"></i>
-        </button>
-        <%= render "filter-modal" %>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-secondary secondaryButton mb-3" type="button" data-bs-toggle="modal" data-bs-target="#filter-modal" aria-expanded="false" id="filter">
+                    <%= t 'views.search.filter_button' %> <i class="bi bi-sliders2-vertical"></i>
+                </button>
+            </div>
+            <div class="col">
+                <%= select_tag "order", options_for_select(@order_options, params[:order]), class: "form-select order-select", :onchange => "this.form.requestSubmit();" %>
+            </div>
+        </div>
+        <%= render "filter-modal", :locals => { :availability_options => @availability_options, :category_options => @category_options, :group_options => @group_options } %>
     <% end %>
 </div>
 

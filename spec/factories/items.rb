@@ -54,7 +54,7 @@ FactoryBot.define do
     rental_duration { 1 }
     rental_duration_unit { 'Seconds' }
     rental_duration_sec { 1 }
-    rental_start { "2022-11-18 15:32:07" }
+    rental_start { "git2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
     lend_status { :lent }
     owning_user { create(:user) }
@@ -120,7 +120,6 @@ FactoryBot.define do
     return_checklist { "Clean the whiteboard." }
     owning_user { create(:user) }
   end
-
   factory :item_without_time, class: 'Item' do
     name { "Whiteboard" }
     category { "Equipment" }
@@ -135,7 +134,42 @@ FactoryBot.define do
     return_checklist { "Clean the whiteboard." }
     owning_user { create(:user) }
   end
-
+  factory :item_without_price, class: 'Item' do
+    name { "Whiteboard" }
+    category { "Equipment" }
+    location { "D-Space" }
+    description { "Standard Whiteboard with lots of space for innovative ideas." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { nil }
+    rental_duration_sec { nil }
+    rental_start { nil }
+    return_checklist { "Clean the whiteboard." }
+    owning_user { create(:user) }
+  end
+  factory :item_price_zero, class: 'Item' do
+    name { "Whiteboard" }
+    category { "Equipment" }
+    location { "D-Space" }
+    description { "Standard Whiteboard with lots of space for innovative ideas." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 0 }
+    rental_duration_sec { nil }
+    rental_start { nil }
+    return_checklist { "Clean the whiteboard." }
+    owning_user { create(:user) }
+  end
+  factory :item_empty_return_checklist, class: 'Item' do
+    name { "Whiteboard" }
+    category { "Equipment" }
+    location { "D-Space" }
+    description { "Standard Whiteboard with lots of space for innovative ideas." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 987 }
+    rental_duration_sec { nil }
+    rental_start { nil }
+    return_checklist { "" }
+    owning_user { create(:user) }
+  end
   factory :itemAudited0, class: 'Item' do
     id { 42_420 }
     name { "AuditedItem0" }
@@ -150,7 +184,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :itemAudited1, class: 'Item' do
     id { 42_421 }
     name { "AuditedItem1" }
@@ -165,7 +198,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :itemAudited2, class: 'Item' do
     id { 42_422 }
     name { "AuditedItem2" }
@@ -180,7 +212,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :available_item, class: 'Item' do
     name { "AvailableItem" }
     category { "book" }
@@ -195,7 +226,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { create(:user) }
   end
-
   factory :lent_item, class: 'Item' do
     name { "LentItem" }
     category { "book" }
@@ -205,6 +235,32 @@ FactoryBot.define do
     price_ct { 500 }
     rental_duration { 100 }
     rental_duration_unit { 'Seconds' }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :lent }
+    owning_user { create(:user) }
+  end
+
+  factory :alphabetical_first_item, class: 'Item' do
+    name { "Aalphabetical" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This alphabetically the first." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
+    rental_duration_sec { 100 }
+    rental_start { nil }
+    lend_status { :lent }
+    owning_user { create(:user) }
+  end
+
+  factory :alphabetical_second_item, class: 'Item' do
+    name { "Balphabetical" }
+    category { "book" }
+    location { "D-Space" }
+    description { "This alphabetically the second." }
+    image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
+    price_ct { 500 }
     rental_duration_sec { 100 }
     rental_start { nil }
     lend_status { :lent }
