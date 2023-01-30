@@ -42,6 +42,7 @@ class Item < ApplicationRecord
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
 
   def rental_duration_cannot_be_greater_than_100_years
+    return if rental_duration_sec.nil?
     if rental_duration_sec > 100.years.to_i && rental_duration_unit != 'Unlimited'
       errors.add(:rental_duration, "is greater than 100 years, please choose unlimited rental duration")
     end

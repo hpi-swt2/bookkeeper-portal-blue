@@ -144,6 +144,8 @@ FactoryBot.define do
     description { "An audited item" }
     image { nil }
     price_ct { 42 }
+    rental_duration { 42 }
+    rental_duration_unit { 'Seconds' }
     rental_duration_sec { 42 }
     lend_status { :available }
     owning_user { create(:user) }
@@ -157,6 +159,8 @@ FactoryBot.define do
     description { "An audited item" }
     image { nil }
     price_ct { 42 }
+    rental_duration { 42 }
+    rental_duration_unit { 'Seconds' }
     rental_duration_sec { 42 }
     lend_status { :available }
     owning_user { create(:user) }
@@ -170,6 +174,8 @@ FactoryBot.define do
     description { "An audited item" }
     image { nil }
     price_ct { 42 }
+    rental_duration { 42 }
+    rental_duration_unit { 'Seconds' }
     rental_duration_sec { 42 }
     lend_status { :available }
     owning_user { create(:user) }
@@ -182,6 +188,8 @@ FactoryBot.define do
     description { "This item is available." }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
     price_ct { 500 }
+    rental_duration { 100 }
+    rental_duration_unit { 'Seconds' }
     rental_duration_sec { 100 }
     rental_start { nil }
     lend_status { :available }
@@ -195,6 +203,8 @@ FactoryBot.define do
     description { "This item is lent." }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
     price_ct { 500 }
+    rental_duration { 100 }
+    rental_duration_unit { 'Seconds' }
     rental_duration_sec { 100 }
     rental_start { nil }
     lend_status { :lent }
