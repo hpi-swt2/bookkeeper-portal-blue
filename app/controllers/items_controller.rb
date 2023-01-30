@@ -243,6 +243,10 @@ class ItemsController < ApplicationController
     send_data pdf.render, disposition: "attachment", type: "application/pdf"
   end
 
+  def image
+    send_data @item.image
+  end
+
   private
 
   def create_create_response
