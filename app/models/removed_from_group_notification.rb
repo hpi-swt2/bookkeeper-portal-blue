@@ -1,4 +1,3 @@
-# class of a basic return declined notification.
 class RemovedFromGroupNotification < ApplicationRecord
   acts_as :notification
 
