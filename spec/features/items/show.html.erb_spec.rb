@@ -6,19 +6,23 @@ RSpec.describe "items/show", type: :feature do
   let(:user) { create(:user) }
   let(:borrower) { create(:user) }
   let(:user_only_see_permissions) { create(:user) }
+  let(:lend_group) do
+    lend_group = create(:group)
+    lend_group.members << user
+    lend_group.members << borrower
+    lend_group
+  end
   let(:item) do
     item = create(:item, owning_user: owner, users_with_direct_see_permission: [user_only_see_permissions])
-    item.waitlist = create(:waitlist_with_item)
-    item.waitlist.item = item
-    item.users_with_direct_lend_permission << user
+    item.waitlist = create(:waitlist, item: item)
+    item.groups_with_lend_permission << lend_group
     item
   end
   let(:item_lent) do
-    item_lent = create(:lent, owning_user: owner, holder: borrower.id, users_with_direct_lend_permission: [borrower],
+    item_lent = create(:lent, owning_user: owner, holder: borrower.id,
                               users_with_direct_see_permission: [user_only_see_permissions])
-    item_lent.waitlist = create(:waitlist_with_item)
-    item_lent.waitlist.item = item_lent
-    item_lent.users_with_direct_lend_permission << user
+    item_lent.waitlist = create(:waitlist, item: item_lent)
+    item_lent.groups_with_lend_permission << lend_group
     item_lent
   end
   let(:item_private) do

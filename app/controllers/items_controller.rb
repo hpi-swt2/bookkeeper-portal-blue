@@ -11,8 +11,8 @@ require "stringio"
 class ItemsController < ApplicationController
   before_action :set_item, except: %i[ index new create ]
 
-  before_action :set_lendeable, only: %i[ show ]
-  before_action :check_lendeable, only: %i[ request_lend add_to_waitlist ]
+  before_action :set_lendable, only: %i[ show ]
+  before_action :check_lendable, only: %i[ request_lend add_to_waitlist ]
 
   before_action :check_seeable, except: %i[ index new create ]
   before_action :set_groups_with_current_user, only: %i[ new edit create update ]
@@ -266,15 +266,6 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def set_lendeable
-    @lendeable = @item.users_with_lend_permission.include?(current_user)
-  end
-
-  def check_lendeable
-    set_lendeable
-    render file: 'public/403.html', status: :unauthorized unless @lendeable
-  end
-
   def check_seeable
     seeable = @item.users_with_see_permission.include?(current_user) || @item.holder == current_user.id
     render file: 'public/403.html', status: :forbidden unless seeable
@@ -282,6 +273,15 @@ class ItemsController < ApplicationController
 
   def set_groups_with_current_user
     @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
+  end
+
+  def set_lendable
+    @lendable = @item.users_with_lend_permission.include?(current_user)
+  end
+
+  def check_lendable
+    set_lendable
+    render file: 'public/403.html', status: :forbidden unless @lendable
   end
 
   # Only allow a list of trusted parameters through.
