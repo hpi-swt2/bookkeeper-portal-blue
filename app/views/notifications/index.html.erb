@@ -9,13 +9,11 @@
   <div id="notifications">
     <% @active_dates.each do |(date, notifications)| %>
       <% notifications.each do |notification| %>
-        <div class="container notification">
           <div class="row ">
             <div class="align-self-center">
               <%= render_if_exists notification.custom_partial, notification: notification %>
             </div>
           </div>
-        </div>
       <%end%>
     <%end%>
     <h2>
@@ -23,13 +21,11 @@
     </h2>
     <% @inactive_dates.each do |(date, notifications)| %>
       <% notifications.each do |notification| %>
-        <div class="container notification">
-          <div class="row ">
+          <div class="row">
             <div class="align-self-center">
               <%= render_if_exists notification.custom_partial, notification: notification %>
             </div>
           </div>
-        </div>
       <%end%>
     <%end%>
   <%end%>
