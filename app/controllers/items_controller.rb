@@ -9,7 +9,7 @@ require "stringio"
 # rubocop:disable Metrics/PerceivedComplexity
 
 class ItemsController < ApplicationController
-  before_action :set_item, except: %i[ index new create image ]
+  before_action :set_item, except: %i[ index new create ]
 
   before_action :set_lendable, only: %i[ show ]
   before_action :check_lendable, only: %i[ request_lend add_to_waitlist ]
