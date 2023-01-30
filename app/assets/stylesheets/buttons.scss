@@ -1,67 +1,69 @@
-@import 'text';
+@import "text";
 
 .btn {
-    @include subtitle($color: false);
-    /* min-width: 167px; */
+  @include subtitle($color: false);
+  /* min-width: 167px; */
 }
 
-.btn-primary{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    font-size: 18px;
-    line-height: 21px;
-    text-align: center;
-    color: white;
-    background-color: $Primary06;
-    border-radius: 5px;
-    border-color: transparent;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 11px;
-    padding-right: 11px;
+.btn-primary {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: white;
+  background-color: $Primary06;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: transparent;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 11px;
+  padding-right: 11px;
 }
 
-.btn-secondary{
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    font-size: 18px;
-    line-height: 21px;
-    text-align: center;
-    color: white;
-    background-color: $Grey10;
-    border-radius: 5px;
-    border-color: transparent;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 11px;
-    padding-right: 11px;
+.btn-secondary {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 18px;
+  line-height: 21px;
+  text-align: center;
+  color: white;
+  background-color: $Grey10;
+  border-radius: 5px;
+  border-width: 2px;
+  border-color: transparent;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 11px;
+  padding-right: 11px;
 }
 
-.outline-missing-left{
-    border-left: none;
+.outline-missing-left {
+  border-left: none;
 }
 
-.outline-missing-right{
-    border-right: none;
+.outline-missing-right {
+  border-right: none;
 }
 
-.btn-notification{
-    @extend .btn-primary;
-    background-color: #dddfe0 !important;
-    border:  #dddfe0 !important;
-    color: black !important;
-    margin: 5px;
-    width: 100%;
+.btn-notification {
+  @extend .btn-primary;
+  background-color: #dddfe0 !important;
+  border: #dddfe0 !important;
+  color: black !important;
+  margin: 5px;
+  width: 100%;
 }
 
-.align-center{
-    justify-content: center;
+.align-center {
+  justify-content: center;
 }
 
-.btn-full-width{
-    width: 100%;
+.btn-full-width {
+  width: 100%;
 }
