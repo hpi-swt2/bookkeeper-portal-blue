@@ -1,3 +1,4 @@
+# class of a removed from group notification
 class RemovedFromGroupNotification < ApplicationRecord
   acts_as :notification
 

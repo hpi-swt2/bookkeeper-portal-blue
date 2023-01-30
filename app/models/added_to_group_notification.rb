@@ -1,3 +1,4 @@
+# class of a added to group notification
 class AddedToGroupNotification < ApplicationRecord
   acts_as :notification
 
