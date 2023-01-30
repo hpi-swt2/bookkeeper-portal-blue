@@ -93,6 +93,9 @@ de:
         title: "Aus Gruppe entfernt"
         description: "Du wurdest aus der Gruppe \"%{group_name}\" entfernt."
       no_notifications: "Du hast noch keine Nachrichten erhalten"
+      added_to_group:
+        title: "Zu Gruppe hinzugefügt"
+        description: "Du wurdest zur Gruppe \"%{group_name}\" hinzugefügt."
     search:
       title: "Suche"
       filter_button: "Filter"

@@ -1,5 +1,5 @@
 # class of a basic return declined notification.
-class RemovedFromGroupNotification < ApplicationRecord
+class AddedToGroupNotification < ApplicationRecord
   acts_as :notification
 
   validates :receiver, presence: true
@@ -9,10 +9,10 @@ class RemovedFromGroupNotification < ApplicationRecord
   after_create :send_mail
 
   def title
-    I18n.t "views.notifications.removed_from_group.title"
+    I18n.t "views.notifications.added_to_group.title"
   end
 
   def description
-    I18n.t "views.notifications.removed_from_group.description", group_name: group_name
+    I18n.t "views.notifications.added_to_group.description", group_name: group_name
   end
 end
