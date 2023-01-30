@@ -54,8 +54,12 @@
     background-color: #dddfe0 !important;
     border:  #dddfe0 !important;
     color: black !important;
-    margin: 5px;
+    margin: 5px 0;
     width: 100%;
+}
+
+.align-center{
+    justify-content: center;
 }
 
 .btn-full-width{

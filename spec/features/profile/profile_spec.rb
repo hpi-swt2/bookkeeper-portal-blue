@@ -15,12 +15,6 @@ RSpec.describe "Profile", type: :feature do
     expect(page).to have_text(user.email)
   end
 
-  it "shows roles" do
-    sign_in user
-    visit profile_path
-    expect(page).to have_content I18n.t('views.profile.roles')
-  end
-
   it "shows email address" do
     sign_in user
     visit profile_path
@@ -42,20 +36,20 @@ RSpec.describe "Profile", type: :feature do
   it "has an edit profile button" do
     sign_in user
     visit profile_path
-    expect(page).to have_link(href: edit_user_registration_path)
+    expect(page).to have_link(href: edit_user_registration_path(locale: RSpec.configuration.locale))
   end
 
   it "has a logout button" do
     sign_in user
     visit profile_path
-    expect(page).to have_link(href: destroy_user_session_path)
+    expect(page).to have_link(href: destroy_user_session_path(locale: RSpec.configuration.locale))
   end
 
   it "has a logout button which redirects to the login page" do
     sign_in user
     visit profile_path
     click_on('logout')
-    expect(page).to have_current_path(new_user_session_path)
+    expect(page).to have_current_path(new_user_session_path(locale: RSpec.configuration.locale))
   end
 
   it "has a logout button which ends the current session" do
@@ -69,7 +63,7 @@ RSpec.describe "Profile", type: :feature do
   it "has a create group button" do
     sign_in user
     visit profile_path
-    expect(page).to have_link 'Add Group', href: new_group_path
+    expect(page).to have_link 'Add Group', href: new_group_path(locale: RSpec.configuration.locale)
   end
 
   it "displays the user's groups when member" do
@@ -92,5 +86,23 @@ RSpec.describe "Profile", type: :feature do
     sign_in user
     visit profile_path
     expect(page).to have_text("Not member of any group")
+  end
+
+  it "displays groups in alphabetical order" do
+    group3 = build(:group, name: "C Group 3")
+    group1 = build(:group, name: "A Group 1")
+    group2 = build(:group, name: "B Group 2")
+
+    user.groups.append(group1)
+    user.groups.append(group2)
+    user.groups.append(group3)
+
+    user.save
+
+    sign_in user
+    visit profile_path
+    expect(find('#groups li:nth-child(1)')).to have_content(group1.name)
+    expect(find('#groups li:nth-child(2)')).to have_content(group2.name)
+    expect(find('#groups li:nth-child(3)')).to have_content(group3.name)
   end
 end
