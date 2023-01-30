@@ -272,8 +272,7 @@ class ItemsController < ApplicationController
     begin
         @item = Item.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-        # format.html { redirect_to item_url, alert: "The item you looked for could not be found"}
-        format.html { redirect_to item_url(@item), alert: t("models.waitlist.failed_adding_to_waitlist") }
+        redirect_to dashboard_url, alert: t("models.item.not_found")
     end
   end
 
