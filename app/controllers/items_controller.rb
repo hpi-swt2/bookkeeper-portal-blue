@@ -38,6 +38,7 @@ class ItemsController < ApplicationController
     @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
     set_groups_with_current_user
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
+    @lend_group_ids -= [@item.owning_group.id] unless @item.owning_group.nil?
     @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
 
@@ -71,6 +72,18 @@ class ItemsController < ApplicationController
   # Due to the way we handle permissions, `@item.update` can't be used to update them
   # This method applies all "simple" updates with the usual `@item.update` and then handles the permissions separately
   def update_with_permissions
+    # If a new owning group should be set for the item, the group must be removed from the lend & see permissions before
+    # These permissions will be automatically granted to owners and the unique constraint would fail otherwise
+    if !item_params["owning_group"].nil? && item_params["owning_group"] != @item.owning_group
+      @item.groups_with_lend_permission.delete(
+        @item.groups_with_lend_permission.where(groups: { id: item_params["owning_group"].id })
+      )
+      @item.groups_with_see_permission.delete(
+        @item.groups_with_see_permission.where(groups: { id: item_params["owning_group"].id })
+      )
+    end
+
+    # Update all properties despite the permissions
     false if @item.update(item_params)
 
     lend_group_ids =
@@ -87,16 +100,26 @@ class ItemsController < ApplicationController
         params.require(:item)[:see_group_ids].compact_blank!
       end
 
-    see_group_ids -= lend_group_ids
-
+    # Reset all permissions to avoid unique constraint failures or permissions not being removed
     if @item.owning_group.nil?
       @item.groups_with_lend_permission.delete_all
       @item.groups_with_see_permission.delete_all
     else
-      @item.groups_with_lend_permission.delete_if { |group| group != @item.owning_group }
-      @item.groups_with_see_permission.delete_if { |group| group != @item.owning_group }
+      @item.groups_with_lend_permission.delete(
+        @item.groups_with_lend_permission.where.not(groups: { id: item_params["owning_group"].id })
+      )
+      @item.groups_with_see_permission.delete(
+        @item.groups_with_see_permission.where.not(groups: { id: item_params["owning_group"].id })
+      )
+
+      lend_group_ids -= [@item.owning_group.id.to_s]
+      see_group_ids -= [@item.owning_group.id.to_s]
     end
 
+    # "see" permission is automatically included in "lend" permission
+    see_group_ids -= lend_group_ids
+
+    # Assign new permissions
     lend_group_ids.each do |group_id|
       @item.groups_with_lend_permission << Group.find(group_id)
     end
