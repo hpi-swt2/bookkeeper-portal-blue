@@ -1,19 +1,25 @@
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe "items/show", type: :feature do
   let(:owner) { create(:user) }
   let(:user) { create(:user) }
   let(:borrower) { create(:user) }
+  let(:lend_group) do
+    lend_group = create(:group)
+    lend_group.members << user
+    lend_group
+  end
   let(:item) do
     item = create(:item, owning_user: owner)
-    item.waitlist = create(:waitlist_with_item)
-    item.waitlist.item = item
+    item.waitlist = create(:waitlist, item: item)
+    item.groups_with_lend_permission << lend_group
     item
   end
   let(:item_lent) do
     item_lent = create(:lent, owning_user: owner, holder: borrower.id)
-    item_lent.waitlist = create(:waitlist_with_item)
-    item_lent.waitlist.item = item_lent
+    item_lent.waitlist = create(:waitlist, item: item_lent)
+    item_lent.groups_with_lend_permission << lend_group
     item_lent
   end
 
@@ -97,10 +103,16 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_css('main img[src^="data:"]')
   end
 
-  it "has lend button when item is available and not owner of item" do
+  it "has lend button when item is available and user has lend permission and not owner of item" do
     sign_in user
     visit item_path(item)
     expect(page).to have_button("Lend")
+  end
+
+  it "has disabled lend button when item is available and user has no lend permission and not owner of item" do
+    sign_in create(:user)
+    visit item_path(item)
+    expect(page).to have_button("Lend", disabled: true)
   end
 
   it "has pending lend request button when item is lent but not approved" do
@@ -127,7 +139,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in borrower
     visit item_path(item_lent)
     find(:button, "Return").click
-    expect(page).to have_button("Waiting for return approval", disabled: true)
+    expect(page).to have_button("Waiting for return approval", disabled: true, class: "btn-secondary")
   end
 
   it "creates audit event when requesting for returning" do
@@ -138,10 +150,16 @@ RSpec.describe "items/show", type: :feature do
                             triggering_user: borrower).count).to be(1)
   end
 
-  it "has enter waitlist button when not on list and item not available" do
+  it "has enter waitlist button when user has lend permission and is not on list and item not available" do
     sign_in user
     visit item_path(item_lent)
     expect(page).to have_button("Enter Waitlist")
+  end
+
+  it "has disabled enter waitlist button when user has no lend permission and is not on list and item not available" do
+    sign_in create(:user)
+    visit item_path(item_lent)
+    expect(page).to have_button("Enter Waitlist", disabled: true, class: "btn-secondary")
   end
 
   it "does not have an adaptive lend button when owner of item" do
@@ -357,3 +375,4 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text I18n.t("views.show_item.less_than_months", months_amount: 6)
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
