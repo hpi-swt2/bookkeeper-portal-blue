@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :ownerships, class_name: 'Ownership', dependent: :destroy
   has_many :owned_groups, through: :ownerships, source: :group
 
+  # has_many :lent_items, class_name: "Item", dependent: :nullify
+
   has_many :permissions, as: :user_or_group, dependent: :destroy
   has_many :see_permissions, class_name: 'SeePermission', as: :user_or_group, dependent: :destroy
   has_many :lend_permissions, class_name: 'LendPermission', as: :user_or_group, dependent: :destroy
@@ -72,11 +74,11 @@ class User < ApplicationRecord
   end
 
   def visible_items
-    directly_visible_items + indirectly_visible_items
+    directly_visible_items + indirectly_visible_items + lendable_items
   end
 
   def lendable_items
-    directly_lendable_items + indirectly_lendable_items
+    directly_lendable_items + indirectly_lendable_items + owned_items
   end
 
   def owned_items
