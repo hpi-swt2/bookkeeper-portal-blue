@@ -134,6 +134,9 @@
     <%= link_to edit_item_url(@item) do %>
         <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
     <% end %>
+    <%= link_to item_path(@item), data: {turbo_method: :delete, turbo_confirm: "Are you sure"} do %>
+        <span class="material-symbols-outlined deleteItemIcon" id="notFilledDeleteItemIcon">delete</span>
+    <% end %>
   <% end %>
   
   <div class="container">
