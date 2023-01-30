@@ -43,11 +43,12 @@ class Item < ApplicationRecord
 
   def rental_duration_cannot_be_greater_than_100_years
     return if rental_duration_sec.nil?
-    if rental_duration_sec > 100.years.to_i && rental_duration_unit != 'Unlimited'
-      errors.add(:rental_duration, "is greater than 100 years, please choose unlimited rental duration")
-    end
+
+    return unless rental_duration_sec > 100.years.to_i && rental_duration_unit != 'Unlimited'
+
+    errors.add(:rental_duration, "is greater than 100 years, please choose unlimited rental duration")
   end
-  
+
   def price_in_euro
     unless price_ct.nil?
       ct = price_ct % 100
