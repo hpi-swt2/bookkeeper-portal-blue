@@ -87,4 +87,22 @@ RSpec.describe "Profile", type: :feature do
     visit profile_path
     expect(page).to have_text("Not member of any group")
   end
+
+  it "displays groups in alphabetical order" do
+    group3 = build(:group, name: "C Group 3")
+    group1 = build(:group, name: "A Group 1")
+    group2 = build(:group, name: "B Group 2")
+
+    user.groups.append(group1)
+    user.groups.append(group2)
+    user.groups.append(group3)
+
+    user.save
+
+    sign_in user
+    visit profile_path
+    expect(find('#groups li:nth-child(1)')).to have_content(group1.name)
+    expect(find('#groups li:nth-child(2)')).to have_content(group2.name)
+    expect(find('#groups li:nth-child(3)')).to have_content(group3.name)
+  end
 end
