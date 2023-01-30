@@ -8,15 +8,17 @@ module SearchHelper
   #
   # filter_numerical: filter search by numerial range in the form:
   # {"search_name" => {"lower_bound" => 8, "upper_bound" => 10}, ...}
-  def search_for_items(search_term, filter_category = {}, filter_numerical = {}, group = 0)
+  def search_for_items(user, search_term, filter_category = {}, filter_numerical = {}, group = 0)
     partial_matching_clause = create_partial_matching_clause(search_term)
     categorial_attribute_clause = create_mutiple_attribute_clause(filter_category, relevant_categorial_attribute,
                                                                   :generate_equals_clause)
     numerical_attribute_clause = create_mutiple_attribute_clause(filter_numerical, relevant_numerical_attribute,
                                                                  :generate_range_clause)
-    partial_matching_clause.and(categorial_attribute_clause)
-                           .and(numerical_attribute_clause)
-                           .and(filter_group(group))
+    Item.where(id: user.visible_items)
+        .and(partial_matching_clause)
+        .and(categorial_attribute_clause)
+        .and(numerical_attribute_clause)
+        .and(filter_group(group))
   end
 
   private
