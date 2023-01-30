@@ -234,12 +234,14 @@
 
             <p class="subtitle"><%= t('views.show_item.lend_permission') %></p>
             <p class="notice"><%= t('views.show_item.lend_permission_notice') %></p>
+            <p class="notice d-none d-mouse-touchpad"><%= t('views.show_item.desktop_edit_notice') %></p>
             <div class="notBorderedInput">
               <%= form.collection_select(:lend_group_ids, Group.all, :id, :name, {}, {size: 5, multiple: true, class: "borderedInput body1"})%>
             </div>
 
             <p class="subtitle"><%= t('views.show_item.see_permission') %></p>
             <p class="notice"><%= t('views.show_item.see_permission_notice') %></p>
+            <p class="notice d-none d-mouse-touchpad"><%= t('views.show_item.desktop_edit_notice') %></p>
             <div class="notBorderedInput">
               <%= form.collection_select(:see_group_ids, Group.all, :id, :name, {}, {size: 5, multiple: true, class: "borderedInput body1"})%>
             </div>
