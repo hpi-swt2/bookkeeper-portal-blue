@@ -97,6 +97,7 @@
 
     .button {
         display: inline-block;
+        margin-bottom: 10px;
     }
 
     @media screen and (min-width: 480px) and (max-width: 767px) {
@@ -228,7 +229,7 @@
           </p>
         <% end %>
 
-        <div id="buttons">
+        <div id="buttons" class="d-flex align-items-start flex-column">
           <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
           <div class="button">
             <% if @item.waitlist.users.size != 0 %>
@@ -237,8 +238,9 @@
           </div>
           <div class="button">
             <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
-              <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn-primary" %>
-            <% end %></div>
+              <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary" %>
+            <% end %>
+          </div>
         </div>
       </div>
       <br><br><br>
