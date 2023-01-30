@@ -210,6 +210,7 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+      not_found: "The Item you looked for could not be found!"
     waitlist:
       added_to_waitlist: "Added to Waitlist at Position %{position}."
       failed_adding_to_waitlist: "Not added to Waitlist."

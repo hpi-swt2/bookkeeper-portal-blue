@@ -183,6 +183,7 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+      not_found: "Das gesuchte Item konnte nicht gefunden werden!"
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
