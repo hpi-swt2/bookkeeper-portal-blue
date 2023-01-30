@@ -142,12 +142,12 @@ RSpec.describe "Search", type: :helper do
     end
   end
 
-  it "puts calculates the average lend time correctly" do
+  it "calculates the average lend time correctly" do
     calc_avg_lend_time = helper.statistics_item_lend_time(@audited_items[0])
     expect(calc_avg_lend_time).to eq(1.day)
   end
 
-  it "puts calculates the average lend time of a never borrowed before item correctly" do
+  it "calculates the average lend time of a never borrowed before item correctly" do
     calc_avg_lend_time = helper.statistics_item_lend_time(@item_book)
     expect(calc_avg_lend_time).to eq(0.seconds)
   end
