@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
     @avg_lend_time_min, @avg_lend_time_sec = @avg_lend_time.divmod(60)
     @avg_lend_time_hour, @avg_lend_time_min = @avg_lend_time_min.divmod(60)
     @avg_lend_time_day, @avg_lend_time_hour = @avg_lend_time_hour.divmod(24)
-    
+
     return unless @item.waitlist.nil?
 
     @item.waitlist = Waitlist.new
