@@ -74,11 +74,11 @@ class User < ApplicationRecord
   end
 
   def visible_items
-    directly_visible_items + indirectly_visible_items
+    directly_visible_items + indirectly_visible_items + lendable_items
   end
 
   def lendable_items
-    directly_lendable_items + indirectly_lendable_items
+    directly_lendable_items + indirectly_lendable_items + owned_items
   end
 
   def owned_items

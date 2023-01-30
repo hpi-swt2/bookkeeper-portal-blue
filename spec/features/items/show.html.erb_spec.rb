@@ -5,22 +5,29 @@ RSpec.describe "items/show", type: :feature do
   let(:owner) { create(:user) }
   let(:user) { create(:user) }
   let(:borrower) { create(:user) }
+  let(:user_only_see_permissions) { create(:user) }
   let(:lend_group) do
     lend_group = create(:group)
     lend_group.members << user
+    lend_group.members << borrower
     lend_group
   end
   let(:item) do
-    item = create(:item, owning_user: owner)
+    item = create(:item, owning_user: owner, users_with_direct_see_permission: [user_only_see_permissions])
     item.waitlist = create(:waitlist, item: item)
     item.groups_with_lend_permission << lend_group
     item
   end
   let(:item_lent) do
-    item_lent = create(:lent, owning_user: owner, holder: borrower.id)
+    item_lent = create(:lent, owning_user: owner, holder: borrower.id,
+                              users_with_direct_see_permission: [user_only_see_permissions])
     item_lent.waitlist = create(:waitlist, item: item_lent)
     item_lent.groups_with_lend_permission << lend_group
     item_lent
+  end
+  let(:item_private) do
+    item_private = create(:item, owning_user: owner)
+    item_private
   end
 
   it "shows edit button for owner" do
@@ -83,7 +90,7 @@ RSpec.describe "items/show", type: :feature do
 
   it "renders owning group name" do
     group = create(:group)
-    group_item = create(:item, owning_group: group)
+    group_item = create(:item, owning_group: group, users_with_direct_see_permission: [user])
     sign_in user
     visit item_path(group_item)
     expect(page).to have_text(group.name)
@@ -110,7 +117,7 @@ RSpec.describe "items/show", type: :feature do
   end
 
   it "has disabled lend button when item is available and user has no lend permission and not owner of item" do
-    sign_in create(:user)
+    sign_in user_only_see_permissions
     visit item_path(item)
     expect(page).to have_button("Lend", disabled: true)
   end
@@ -157,7 +164,7 @@ RSpec.describe "items/show", type: :feature do
   end
 
   it "has disabled enter waitlist button when user has no lend permission and is not on list and item not available" do
-    sign_in create(:user)
+    sign_in user_only_see_permissions
     visit item_path(item_lent)
     expect(page).to have_button("Enter Waitlist", disabled: true, class: "btn-secondary")
   end
@@ -219,6 +226,7 @@ RSpec.describe "items/show", type: :feature do
   end
 
   it "creates move up on waitlist notification when removing user from waitlist" do
+    item_lent.users_with_direct_lend_permission << item_lent.waitlist.users[0]
     sign_in item_lent.waitlist.users[0]
     visit item_path(item_lent)
     find(:button, "Leave Waitlist").click
@@ -228,26 +236,32 @@ RSpec.describe "items/show", type: :feature do
   end
 
   it "does not display price when 0 or nil" do
-    item_without_price = create(:item_without_price)
+    user = create(:user)
+    item_without_price = create(:item_without_price, users_with_direct_see_permission: [user])
+    sign_in user
     visit item_path(item_without_price)
     expect(page).not_to have_text("Price")
-    item_price_zero = create(:item_price_zero)
+    item_price_zero = create(:item_price_zero, users_with_direct_see_permission: [user])
     visit item_path(item_price_zero)
     expect(page).not_to have_text("Price")
+    item.users_with_direct_see_permission << user
     visit item_path(item)
     expect(page).to have_text(item.price_ct)
   end
 
   it "displays return checklist only if not empty" do
     item_empty_return_checklist = create(:item_empty_return_checklist)
+    sign_in item_empty_return_checklist.owning_user
     visit item_path(item_empty_return_checklist)
     expect(page).not_to have_text("Return Checklist")
 
+    sign_in user
     visit item_path(item)
     expect(page).to have_text(item.return_checklist)
   end
 
   it "displays lent until if lent" do
+    sign_in borrower
     visit item_path(item_lent)
     expect(page).to have_text("Lent Until")
     lent_until = (item_lent.rental_start + item_lent.rental_duration_sec).strftime('%d.%m.%Y')
@@ -340,7 +354,7 @@ RSpec.describe "items/show", type: :feature do
 
   it "renders without rental start and duration set" do
     sign_in user
-    an_item = create(:item_without_time, waitlist: create(:waitlist_with_item))
+    an_item = create(:item_without_time, waitlist: create(:waitlist_with_item), owning_user: user)
     visit item_url(an_item)
     expect(page).to have_text I18n.t("views.show_item.less_than_one_day")
   end
@@ -375,8 +389,15 @@ RSpec.describe "items/show", type: :feature do
     expect(page).to have_text I18n.t("views.show_item.less_than_months", months_amount: 6)
   end
 
+  it "shows unauthorized if user does not have see permissions" do
+    sign_in user
+    visit item_url(item_private)
+    expect(page.status_code).to eq(403)
+  end
+
   it "shows average lend time statistic" do
-    item_with_audit = create(:itemAudited0)
+    item_with_audit = create(:itemAudited0, owning_user: owner)
+    sign_in owner
 
     create(:audit_event,
            item: item_with_audit,
@@ -392,13 +413,15 @@ RSpec.describe "items/show", type: :feature do
   end
 
   it "doesn't shows average lend time statistic if it has never been lent" do
-    item_with_audit = create(:item)
+    item_with_audit = create(:item, owning_user: owner)
+    sign_in owner
     visit item_url(item_with_audit)
     expect(page).not_to have_text I18n.t("views.show_item.avg_lend_time")
   end
 
   it "shows only relevant timeunits for average lend time statistic" do
-    item_with_audit = create(:itemAudited0)
+    item_with_audit = create(:itemAudited0, owning_user: owner)
+    sign_in owner
 
     create(:audit_event,
            item: item_with_audit,

@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Requests handling", type: :feature do
   let(:owner) { create(:max) }
   let(:borrower) { create(:peter) }
-  let(:item) { create(:item, owning_user: owner) }
+  let(:item) { create(:item, owning_user: owner, users_with_direct_lend_permission: [borrower]) }
   let(:lend_group) do
     lend_group = create(:group)
     lend_group

@@ -9,16 +9,19 @@ require "stringio"
 # rubocop:disable Metrics/PerceivedComplexity
 
 class ItemsController < ApplicationController
-  before_action :set_item,
-                only: %i[ show edit update destroy add_to_waitlist leave_waitlist add_to_favorites leave_favorites
-                          start_lend abort_lend request_return accept_return deny_return request_lend]
+  before_action :set_item, except: %i[ index new create ]
 
   before_action :set_lendable, only: %i[ show ]
   before_action :check_lendable, only: %i[ request_lend add_to_waitlist ]
 
+  before_action :check_seeable, except: %i[ index new create ]
+  before_action :set_groups_with_current_user, only: %i[ new edit create update ]
+
   # GET /items or /items.json
   def index
-    @items = Item.all
+    return redirect_to root_url if current_user.nil?
+
+    @items = current_user.visible_items
   end
 
   # GET /items/1 or /items/1.json
@@ -39,13 +42,11 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
-    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
   end
 
   # GET /items/1/edit
   def edit
     @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
-    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
     @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
@@ -55,6 +56,8 @@ class ItemsController < ApplicationController
     params = item_params.merge!(permission_hash)
     params[:image] = params[:image].read unless params[:image].nil?
     @item = Item.new(params)
+    return render file: "public/422.html", status: :unprocessable_entity unless @item.valid?
+
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
 
@@ -270,6 +273,15 @@ class ItemsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])
+  end
+
+  def check_seeable
+    seeable = @item.users_with_see_permission.include?(current_user) || @item.holder == current_user.id
+    render file: 'public/403.html', status: :forbidden unless seeable
+  end
+
+  def set_groups_with_current_user
+    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
   end
 
   def set_lendable
