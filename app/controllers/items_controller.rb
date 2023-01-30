@@ -276,7 +276,8 @@ class ItemsController < ApplicationController
   end
 
   def check_seeable
-    render file: 'public/403.html', status: :forbidden unless @item.users_with_see_permission.include?(current_user)
+    seeable = @item.users_with_see_permission.include?(current_user) || @item.holder == current_user.id
+    render file: 'public/403.html', status: :forbidden unless seeable
   end
 
   def set_groups_with_current_user
