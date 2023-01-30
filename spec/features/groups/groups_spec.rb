@@ -165,6 +165,19 @@ RSpec.describe "Groups", type: :feature do
     expect(notification.description).to include(group.name)
   end
 
+  it "creates a notification when a user is added to a group" do
+    user = create(:user)
+    sign_in group.owners.first
+    visit group_path(group)
+    select user.email, from: "user_id"
+    click_button "Add member"
+    expect(find_by_id('group-members')).to have_text(user.name)
+    expect(Notification.count).to eq(1)
+    notification = Notification.first
+    expect(notification.receiver).to eq(user)
+    expect(notification.description).to include(group.name)
+  end
+
   it "does not add normal users to the HPI group" do
     user = create(:user)
     sign_in user
