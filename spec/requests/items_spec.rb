@@ -34,7 +34,19 @@ RSpec.describe "/items", type: :request do
       location: "Test",
       category: "Test",
       description: "Test",
-      owner_id: create(:user).id,
+      owner_id: "user:#{create(:user).id}",
+      lend_group_ids: [create(:group).id],
+      see_group_ids: [create(:group).id]
+    }
+  end
+
+  let(:valid_request_attributes_group) do
+    {
+      name: "Test",
+      location: "Test",
+      category: "Test",
+      description: "Test",
+      owner_id: "group:#{create(:group).id}",
       lend_group_ids: [create(:group).id],
       see_group_ids: [create(:group).id]
     }
@@ -84,9 +96,15 @@ RSpec.describe "/items", type: :request do
         end.to change(Item, :count).by(1)
       end
 
+      it "creates a new item owned by a group" do
+        expect do
+          post items_url, params: { item: valid_request_attributes_group }
+        end.to change(Item, :count).by(1)
+      end
+
       it "redirects to the created item" do
         post items_url, params: { item: valid_request_attributes }
-        expect(response).to redirect_to(item_url(Item.last))
+        expect(response).to redirect_to(item_url(Item.last, locale: RSpec.configuration.locale))
       end
 
       it "creates an audit event" do
@@ -137,7 +155,7 @@ RSpec.describe "/items", type: :request do
         item = Item.create! valid_attributes
         patch item_url(item), params: { item: new_attributes }
         item.reload
-        expect(response).to redirect_to(item_url(item))
+        expect(response).to redirect_to(item_url(item, locale: RSpec.configuration.locale))
       end
 
       it "updates the groups with see and lend permissions accordingly" do
@@ -179,7 +197,7 @@ RSpec.describe "/items", type: :request do
     it "redirects to the items list" do
       item = Item.create! valid_attributes
       delete item_url(item)
-      expect(response).to redirect_to(items_url)
+      expect(response).to redirect_to(items_url(locale: RSpec.configuration.locale))
     end
   end
 end

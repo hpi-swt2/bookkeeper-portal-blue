@@ -8,18 +8,25 @@ module SearchHelper
   #
   # filter_numerical: filter search by numerial range in the form:
   # {"search_name" => {"lower_bound" => 8, "upper_bound" => 10}, ...}
-  def search_for_items(search_term, filter_category = {}, filter_numerical = {})
-    return Item.all if search_term.blank?
-
+  def search_for_items(search_term, filter_category = {}, filter_numerical = {}, group = 0)
     partial_matching_clause = create_partial_matching_clause(search_term)
     categorial_attribute_clause = create_mutiple_attribute_clause(filter_category, relevant_categorial_attribute,
                                                                   :generate_equals_clause)
     numerical_attribute_clause = create_mutiple_attribute_clause(filter_numerical, relevant_numerical_attribute,
                                                                  :generate_range_clause)
-    partial_matching_clause.and(categorial_attribute_clause).and(numerical_attribute_clause).order(lend_status: :asc)
+    partial_matching_clause.and(categorial_attribute_clause)
+                           .and(numerical_attribute_clause)
+                           .and(filter_group(group))
   end
 
   private
+
+  def filter_group(group)
+    return Item.all if group.zero?
+
+    items = Group.find(group).owned_items.ids
+    items.blank? ? Item.where("0 = 1") : Item.where(id: items)
+  end
 
   # CREATE CLAUSE FOR PARTIAL MATCHING
 
@@ -35,6 +42,8 @@ module SearchHelper
   end
 
   def create_partial_matching_clause(search_term)
+    return Item.all if search_term.blank?
+
     search_terms = search_term.split
     clauses = search_terms.map { |term| create_partial_matching_one_search_term(term) }
     clauses.inject { |joined, current| joined.and(current) }
@@ -78,6 +87,6 @@ module SearchHelper
   end
 
   def relevant_numerical_attribute
-    %w[price_ct]
+    %w[price_ct lend_status]
   end
 end

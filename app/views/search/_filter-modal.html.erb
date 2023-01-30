@@ -6,13 +6,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="input-group">
-                    <%= select_tag "filter_property", raw("<option>Title</option><option>Author</option><option>Release</option>"), class: "form-select" %> <%# https://apidock.com/rails/ActionView/Helpers/FormTagHelper/select_tag %>
-                    <%= text_field_tag :filter_value, params[:filter_value], class: "form-control" %>
-                </div>
+                <h4 class="subtitle mt-2"><%= t 'views.search.filter_modal.availability' %></h4>
+                <%= select_tag "availability", options_for_select(@availability_options, params[:availability]), class: "form-select", include_blank: t('views.search.filter_modal.all') %>
+                <h4 class="subtitle mt-2"><%= t 'views.search.filter_modal.category' %></h4>
+                <%= select_tag "category", options_for_select(@category_options, params[:category]), class: "form-select", include_blank: t('views.search.filter_modal.all') %>
+                <h4 class="subtitle mt-2"><%= t 'views.search.filter_modal.group' %></h4>
+                <%= select_tag "group", options_for_select(@group_options, params[:group]), class: "form-select", include_blank: t('views.search.filter_modal.all') %>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary secondaryButton" data-bs-dismiss="modal"><%= t 'defaults.close' %></button>
+            <div class="modal-footer align-center">
+                <button class="btn btn-secondary secondaryButton" data-bs-dismiss="modal" type="submit"><%= t 'views.search.filter_modal.results' %></button>
             </div>
         </div>
     </div>

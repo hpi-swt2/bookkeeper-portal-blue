@@ -225,18 +225,23 @@
           <% if current_user.nil? %>
             <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
           <% else %>
-            <%= form.collection_select(:owner_id, [current_user], :id, :email, :selected => current_user.id) %>
+            <%= form.collection_select(:owner_id, [current_user]+@groups_with_current_user, 
+              Proc.new { | user_or_group | (user_or_group.is_a?(User) ? "user:" : "group:") + user_or_group.id.to_s},
+              Proc.new { | user_or_group | user_or_group.is_a?(User) ? user_or_group.email : user_or_group.name },
+              :selected => "user:#{current_user.id}") %>
           <% end %>
         </div>
 
             <p class="subtitle"><%= t('views.show_item.lend_permission') %></p>
             <p class="notice"><%= t('views.show_item.lend_permission_notice') %></p>
+            <p class="notice d-none d-mouse-touchpad"><%= t('views.show_item.desktop_edit_notice') %></p>
             <div class="notBorderedInput">
               <%= form.collection_select(:lend_group_ids, Group.all, :id, :name, {}, {size: 5, multiple: true, class: "borderedInput body1"})%>
             </div>
 
             <p class="subtitle"><%= t('views.show_item.see_permission') %></p>
             <p class="notice"><%= t('views.show_item.see_permission_notice') %></p>
+            <p class="notice d-none d-mouse-touchpad"><%= t('views.show_item.desktop_edit_notice') %></p>
             <div class="notBorderedInput">
               <%= form.collection_select(:see_group_ids, Group.all, :id, :name, {}, {size: 5, multiple: true, class: "borderedInput body1"})%>
             </div>

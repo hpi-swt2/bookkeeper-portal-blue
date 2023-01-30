@@ -191,7 +191,7 @@ function readURL(input) {
 
           <div class="image container-fluid rounded">
 
-            <%= image_tag @item.image, class: "img img-responsive img-fluid rounded mx-auto d-block", id: "itemImg" if @item.image.attached? %>
+            <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block", id: "itemImg" unless @item.image.nil? %>
             <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
           </div>
           <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
@@ -215,17 +215,26 @@ function readURL(input) {
 
             <p class="subtitle"><%= t('views.show_item.owner')%>*</p>
             <div class="notBorderedInput">
-              <%= form.collection_select(:owner_id, User.all, :id, :email, :include_blank => true, :selected => @owner_id)%>
+            <% if current_user.nil? %>
+              <%= form.collection_select(:owner_id, [], :id, :email, :include_blank => true) %>
+            <% else %>
+              <%= form.collection_select(:owner_id, [current_user]+@groups_with_current_user, 
+                Proc.new { | user_or_group | (user_or_group.is_a?(User) ? "user:" : "group:") + user_or_group.id.to_s},
+                Proc.new { | user_or_group | user_or_group.is_a?(User) ? user_or_group.email : user_or_group.name },
+                :selected => @owner_id) %>
+            <% end %>
             </div>
 
             <p class="subtitle"><%= t('views.show_item.lend_permission') %></p>
             <p class="notice"><%= t('views.show_item.lend_permission_notice') %></p>
+            <p class="notice d-none d-mouse-touchpad"><%= t('views.show_item.desktop_edit_notice') %></p>
             <div class="notBorderedInput">
               <%= form.collection_select(:lend_group_ids, Group.all, :id, :name, {selected: @lend_group_ids}, {size: 5, multiple: true, class: "borderedInput body1"}) %>
             </div>
 
             <p class="subtitle"><%= t('views.show_item.see_permission') %></p>
             <p class="notice"><%= t('views.show_item.see_permission_notice') %></p>
+            <p class="notice d-none d-mouse-touchpad"><%= t('views.show_item.desktop_edit_notice') %></p>
             <div class="notBorderedInput">
               <%= form.collection_select(:see_group_ids, Group.all, :id, :name, {selected: @see_group_ids}, {size: 5, multiple: true, class: "borderedInput body1"})%>
             </div>

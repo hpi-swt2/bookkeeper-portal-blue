@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   resources :users
   post 'add_to_waitlist/:id', to: 'items#add_to_waitlist', as: 'add_to_waitlist'
   post 'leave_waitlist/:id', to: 'items#leave_waitlist', as: 'leave_waitlist'
+  get 'add_to_favorites/:id', to: 'items#add_to_favorites', as: 'add_to_favorites'
+  get 'leave_favorites/:id', to: 'items#leave_favorites', as: 'leave_favorites'
   post 'request_return/:id', to: 'items#request_return', as: 'request_return'
   post 'accept_return/:id', to: 'items#accept_return', as: 'accept_return'
   post 'deny_return/:id', to: 'items#deny_return', as: 'deny_return'
@@ -32,6 +34,7 @@ Rails.application.routes.draw do
   post 'groups/:id/promote/:user_id', to: 'groups#promote', as: 'group_promote'
   post 'groups/:id/demote/:user_id', to: 'groups#demote', as: 'group_demote'
   post 'groups/:id/remove/:user_id', to: 'groups#remove', as: 'group_remove'
+  delete 'groups/:id/leave', to: 'groups#leave', as: 'group_leave'
   # Defines the root path route ("/")
   root "landing_page#index"
 end
