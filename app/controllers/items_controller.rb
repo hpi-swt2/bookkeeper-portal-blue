@@ -313,10 +313,6 @@ class ItemsController < ApplicationController
     render file: 'public/403.html', status: :forbidden unless seeable
   end
 
-  def set_groups_with_current_user
-    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
-  end
-
   def set_lendable
     @lendable = @item.users_with_lend_permission.include?(current_user)
   end
