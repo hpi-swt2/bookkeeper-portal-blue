@@ -5,7 +5,7 @@ class AddedToWaitlistNotification < ApplicationRecord
   belongs_to :item
 
   def title
-    I18n.t "views.notifications.added_to_waitlist.title",  item: item.name
+    I18n.t "views.notifications.added_to_waitlist.title", item: item.name
   end
 
   def description
