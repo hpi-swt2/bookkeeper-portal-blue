@@ -10,7 +10,7 @@ require "stringio"
 
 class ItemsController < ApplicationController
   before_action :set_item,
-                only: %i[ show edit update destroy request_return accept_return request_lend]
+                only: %i[ show edit update destroy request_return accept_return request_lend image]
 
   # GET /items or /items.json
   def index
@@ -238,6 +238,10 @@ class ItemsController < ApplicationController
     pdf = Prawn::Document.new(page_size: "A4")
     pdf.image dummy_png_file, position: :center
     send_data pdf.render, disposition: "attachment", type: "application/pdf"
+  end
+
+  def image
+    send_data @item.image
   end
 
   private

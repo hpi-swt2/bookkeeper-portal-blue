@@ -50,7 +50,7 @@ class Item < ApplicationRecord
   end
 
   def image_url
-    "data:application/octet-stream;base64,#{Base64.strict_encode64(image)}"
+    "/items/#{id}/image"
   end
 
   def set_status_available
