@@ -20,7 +20,7 @@ RSpec.describe "/items", type: :request do
     {
       name: "Test",
       location: "Test",
-      category: "Test",
+      type: "OtherItem",
       description: "Test",
       owning_user: create(:user),
       groups_with_lend_permission: [create(:group)],
@@ -32,7 +32,7 @@ RSpec.describe "/items", type: :request do
     {
       name: "Test",
       location: "Test",
-      category: "Test",
+      type: "OtherItem",
       description: "Test",
       owner_id: "user:#{create(:user).id}",
       lend_group_ids: [create(:group).id],
@@ -44,7 +44,7 @@ RSpec.describe "/items", type: :request do
     {
       name: "Test",
       location: "Test",
-      category: "Test",
+      type: "OtherItem",
       description: "Test",
       owner_id: "group:#{create(:group).id}",
       lend_group_ids: [create(:group).id],
@@ -53,7 +53,7 @@ RSpec.describe "/items", type: :request do
   end
 
   let(:invalid_attributes) do
-    { name: "Test", category: "Test", description: "Test", price_ct: "NotAnInt", lend_group_ids: [], see_group_ids: [] }
+    { name: "Test", description: "Test", price_ct: "NotAnInt", lend_group_ids: [], see_group_ids: [] }
   end
 
   describe "GET /index" do
@@ -138,6 +138,7 @@ RSpec.describe "/items", type: :request do
         {
           description: "NewDescription",
           location: "NewLocation",
+          type: "OtherItem",
           see_group_ids: [ create(:group).id ],
           lend_group_ids: [ create(:group).id ]
         }
@@ -172,7 +173,7 @@ RSpec.describe "/items", type: :request do
 
     context "with invalid parameters" do
       let(:new_attributes) do
-        { description: 0, price_ct: "NotAnInteger" }
+        { type: "OtherItem", description: 0, price_ct: "NotAnInteger" }
       end
 
       it "does not update the requested item" do

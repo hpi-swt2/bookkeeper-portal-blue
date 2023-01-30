@@ -69,7 +69,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     visit item_path(item)
     expect(page).to have_text(item.name)
-    expect(page).to have_text(item.category)
+    expect(page).to have_text(I18n.t("models.item.types.#{item.type.underscore}"))
     expect(page).to have_text(item.location)
     expect(page).to have_text(item.description)
     expect(page).to have_text(item.rental_duration_sec)
