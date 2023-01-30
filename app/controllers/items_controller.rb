@@ -13,8 +13,8 @@ class ItemsController < ApplicationController
                 only: %i[ show edit update destroy add_to_waitlist leave_waitlist add_to_favorites leave_favorites
                           start_lend abort_lend request_return accept_return deny_return request_lend]
 
-  before_action :set_lendeable, only: %i[ show ]
-  before_action :check_lendeable, only: %i[ request_lend add_to_waitlist ]
+  before_action :set_lendable, only: %i[ show ]
+  before_action :check_lendable, only: %i[ request_lend add_to_waitlist ]
 
   # GET /items or /items.json
   def index
@@ -265,13 +265,13 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  def set_lendeable
-    @lendeable = @item.users_with_lend_permission.include?(current_user)
+  def set_lendable
+    @lendable = @item.users_with_lend_permission.include?(current_user)
   end
 
-  def check_lendeable
-    set_lendeable
-    render file: 'public/403.html', status: :unauthorized unless @lendeable
+  def check_lendable
+    set_lendable
+    render file: 'public/403.html', status: :unauthorized unless @lendable
   end
 
   # Only allow a list of trusted parameters through.
