@@ -9,7 +9,7 @@ RSpec.describe NotificationMailer, type: :mailer do
     let(:mail) { described_class.notification(@notification) }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Lend Request")
+      expect(mail.subject).to include("Lend Request")
       expect(mail.to).to eq([@notification.receiver.email])
       expect(mail.from).to eq(["bookkeeperblue.notification@gmail.com"])
     end

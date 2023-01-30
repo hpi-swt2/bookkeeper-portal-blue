@@ -10,7 +10,7 @@ class LendRequestNotification < ApplicationRecord
   after_create :send_mail
 
   def title
-    I18n.t "views.notifications.lend_request.title"
+    I18n.t "views.notifications.lend_request.title", item: item.name
   end
 
   def set_accepted

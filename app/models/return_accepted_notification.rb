@@ -9,7 +9,7 @@ class ReturnAcceptedNotification < ApplicationRecord
   validates :date, presence: true
 
   def title
-    I18n.t "views.notifications.return_accepted.title"
+    I18n.t "views.notifications.return_accepted.title", item: item.name
   end
 
   def description
