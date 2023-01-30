@@ -26,6 +26,13 @@ class ItemsController < ApplicationController
 
   # GET /items/1 or /items/1.json
   def show
+    @item = Item.find(params[:id])
+
+    @avg_lend_time = helpers.statistics_item_lend_time(@item)
+    @avg_lend_time_min, @avg_lend_time_sec = @avg_lend_time.divmod(60)
+    @avg_lend_time_hour, @avg_lend_time_min = @avg_lend_time_min.divmod(60)
+    @avg_lend_time_day, @avg_lend_time_hour = @avg_lend_time_hour.divmod(24)
+
     return unless @item.waitlist.nil?
 
     @item.waitlist = Waitlist.new

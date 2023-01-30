@@ -16,13 +16,15 @@ RSpec.describe "Search", type: :helper do
     ]
 
     @audited_items.each_with_index do |item, index|
-      ((index + 1) * 10).times do
+      ((index + 1) * 10).times do |i|
         create(:audit_event,
                item: item,
-               event_type: :accept_lend)
+               event_type: :accept_lend,
+               created_at: Date.jd((index + 1) * i))
         create(:audit_event,
                item: item,
-               event_type: :accept_return)
+               event_type: :accept_return,
+               created_at: Date.jd(((index + 1) * i) + (index + 1)))
       end
     end
   end
@@ -139,5 +141,15 @@ RSpec.describe "Search", type: :helper do
       expect(desc_item).to be == @audited_items[@audited_items.length - index - 1]
       expect(asc_item).to be == @audited_items[index]
     end
+  end
+
+  it "calculates the average lend time correctly" do
+    calc_avg_lend_time = helper.statistics_item_lend_time(@audited_items[0])
+    expect(calc_avg_lend_time).to eq(1.day)
+  end
+
+  it "calculates the average lend time of a never borrowed before item correctly" do
+    calc_avg_lend_time = helper.statistics_item_lend_time(@item_book)
+    expect(calc_avg_lend_time).to eq(0.seconds)
   end
 end

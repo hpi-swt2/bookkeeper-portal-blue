@@ -187,6 +187,7 @@ en:
       show_waitlist: "Show waitlist"
       enter_favorites: "Added to favorites"
       leave_favorites: "Removed from favorites"
+      avg_lend_time: "Average lend time"
       desktop_edit_notice: "You can select multiple groups by holding down CTRL."
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
@@ -226,3 +227,16 @@ en:
   notification_mailer:
     notification:
       subject: "%{notification_name}"
+  amount:
+    second:
+      one: "second"
+      other: "seconds"
+    minute:
+      one: "minute"
+      other: "minutes"
+    hour:
+      one: "hour"
+      other: "hours"
+    day:
+      one: "day"
+      other: "days"
