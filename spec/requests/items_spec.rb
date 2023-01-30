@@ -206,7 +206,7 @@ RSpec.describe "/items", type: :request do
     it "redirects to the items list" do
       item = Item.create! valid_attributes
       delete item_url(item)
-      expect(response).to redirect_to(items_url(locale: RSpec.configuration.locale))
+      expect(response).to redirect_to(dashboard_url(locale: RSpec.configuration.locale))
     end
   end
 end
