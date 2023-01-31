@@ -124,7 +124,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: t("models.item.destroyed") }
+      format.html { redirect_to dashboard_url, notice: t("models.item.destroyed") }
       format.json { head :no_content }
     end
   end
@@ -277,6 +277,8 @@ class ItemsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to dashboard_url, alert: t("models.item.not_found")
   end
 
   def check_seeable
