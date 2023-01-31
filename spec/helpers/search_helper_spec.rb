@@ -66,21 +66,21 @@ RSpec.describe "Search", type: :helper do
     expect(results).not_to include(@item_beamer)
   end
 
-  it "Searches correctly for attribute 'category'" do
-    results = search_for_items(@item_book.name, { "category" => "Books" })
+  it "Searches correctly for attribute 'type'" do
+    results = search_for_items(@item_book.name, { "type" => "BookItem" })
     expect(results).to include(@item_book)
     expect(results).not_to include(@item_beamer)
   end
 
-  it "Searches correctly for attribute 'category' exluding an item with a matching search term" do
-    results = search_for_items("o", { "category" => "Equipment" })
+  it "Searches correctly for attribute 'type' exluding an item with a matching search term" do
+    results = search_for_items("o", { "type" => "OtherItem" })
     expect(results).not_to include(@item_book)
     expect(results).to include(@item_beamer)
     expect(results).to include(@item_whiteboard)
   end
 
-  it "Searches correctly for attribute 'category' exluding everything" do
-    results = search_for_items("o", { "category" => "wubciubciubw" })
+  it "Searches correctly for attribute 'type' exluding everything" do
+    results = search_for_items("o", { "type" => "wubciubciubw" })
     expect(results).not_to include(@item_book)
     expect(results).not_to include(@item_beamer)
     expect(results).not_to include(@item_whiteboard)
@@ -108,7 +108,7 @@ RSpec.describe "Search", type: :helper do
   end
 
   it "Searches correctly for numerical attribute and categorical attribute" do
-    results = search_for_items("o", { "category" => "Equipment" },
+    results = search_for_items("o", { "type" => "OtherItem" },
                                { "price_ct" => { "lower_bound" => 500, "upper_bound" => 10_000 } })
     expect(results).not_to include(@item_book)
     expect(results).not_to include(@item_beamer)

@@ -83,7 +83,7 @@ module SearchHelper
   end
 
   def relevant_categorial_attribute
-    %w[category]
+    %w[type]
   end
 
   def relevant_numerical_attribute

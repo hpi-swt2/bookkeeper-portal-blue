@@ -69,7 +69,7 @@ FactoryBot.define do
   end
   factory :item_book, class: 'Item' do
     name { "Ruby on Rails by Example" }
-    type { "OtherItem" }
+    type { "BookItem" }
     location { "Epic Chair" }
     description { "Useful book for all who want to dive deeper" }
     image { nil }
@@ -216,7 +216,7 @@ FactoryBot.define do
 
   factory :alphabetical_first_item, class: 'Item' do
     name { "Aalphabetical" }
-    category { "book" }
+    type { "BookItem" }
     location { "D-Space" }
     description { "This alphabetically the first." }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -229,7 +229,7 @@ FactoryBot.define do
 
   factory :alphabetical_second_item, class: 'Item' do
     name { "Balphabetical" }
-    category { "book" }
+    type { "BookItem" }
     location { "D-Space" }
     description { "This alphabetically the second." }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
