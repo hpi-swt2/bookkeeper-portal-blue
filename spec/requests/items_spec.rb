@@ -60,7 +60,7 @@ RSpec.describe "/items", type: :request do
   end
 
   let(:invalid_attributes) do
-    { name: "Test Invalid", type: "Test", description: "Test", price_ct: "NotAnInt", lend_group_ids: [],
+    { name: "Test Invalid", description: "Test", price_ct: "NotAnInt", lend_group_ids: [],
       see_group_ids: [] }
   end
 
