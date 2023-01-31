@@ -122,11 +122,11 @@ en:
         description: "You have been moved up to Position %{position} on Waitlist for %{item}."
       removed_from_group:
         title: "Removed from group"
-        description: "You have been removed from the group \"%{group_name}\"."
+        description: 'You have been removed from the group "%{group_name}".'
       no_notifications: "You have not received any notifications yet"
       added_to_group:
         title: "Added to group"
-        description: "You have been added to the group \"%{group_name}\"."
+        description: 'You have been added to the group "%{group_name}".'
     search:
       title: "Search"
       filter_button: "Filter"
@@ -151,7 +151,7 @@ en:
       item_name: "Item Name"
       location: "Location"
       required_fields: "required fields"
-      price_ct : "Price in Cent"
+      price_ct: "Price in Cent"
     show_item:
       author: "Author"
       category: "Category"
@@ -195,7 +195,7 @@ en:
       desktop_edit_notice: "You can select multiple groups by holding down CTRL."
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
-      price_ct : "Price in Cent"
+      price_ct: "Price in Cent"
     profile:
       title: "Profile"
       email: "Email"
@@ -224,6 +224,7 @@ en:
         movie_item: "Movie"
         game_item: "Game"
         book_item: "Book"
+        office_item: "Office Equipment"
     waitlist:
       added_to_waitlist: "Added to Waitlist at Position %{position}."
       failed_adding_to_waitlist: "Not added to Waitlist."

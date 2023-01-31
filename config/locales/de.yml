@@ -95,11 +95,11 @@ de:
         description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
       removed_from_group:
         title: "Aus Gruppe entfernt"
-        description: "Du wurdest aus der Gruppe \"%{group_name}\" entfernt."
+        description: 'Du wurdest aus der Gruppe "%{group_name}" entfernt.'
       no_notifications: "Du hast noch keine Nachrichten erhalten"
       added_to_group:
         title: "Zu Gruppe hinzugefügt"
-        description: "Du wurdest zur Gruppe \"%{group_name}\" hinzugefügt."
+        description: 'Du wurdest zur Gruppe "%{group_name}" hinzugefügt.'
     search:
       title: "Suche"
       filter_button: "Filter"
@@ -124,7 +124,7 @@ de:
       item_name: "Name des Gegenstands"
       location: "Standort"
       required_fields: "erforderliche Felder"
-      price_ct : "Preis in Cent"
+      price_ct: "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
     show_item:
       author: "Autor"
@@ -169,7 +169,7 @@ de:
       desktop_edit_notice: "Halte STRG gedrückt, um mehrere Gruppen auszuwählen."
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
-      price_ct : "Preis in ct"
+      price_ct: "Preis in ct"
       return_checklist: "Rückgabe Checkliste"
     profile:
       title: "Profil"
@@ -201,6 +201,7 @@ de:
         movie_item: "Film"
         game_item: "Spiel"
         book_item: "Buch"
+        office_item: "Büroausstattung"
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."

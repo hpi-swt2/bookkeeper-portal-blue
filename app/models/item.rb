@@ -39,7 +39,8 @@ class Item < ApplicationRecord
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
 
   def self.valid_types
-    { "BookItem" => BookItem, "GameItem" => GameItem, "MovieItem" => MovieItem, "OtherItem" => OtherItem }
+    { "BookItem" => BookItem, "GameItem" => GameItem, "MovieItem" => MovieItem, "OfficeItem" => OfficeItem,
+      "OtherItem" => OtherItem }
   end
 
   def price_in_euro
