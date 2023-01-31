@@ -15,7 +15,7 @@ class SearchController < ApplicationController
     @availability_options = [[t('views.search.filter_modal.available'), 0],
                              [t('views.search.filter_modal.unavailable'), 1]]
 
-    @category_options = Item.select(:type).distinct.pluck(:type)
+    @category_options = Item.valid_types.keys.map { |type| [t("models.item.types.#{type.underscore}"), type] }
 
     @order_options = [[t('views.search.order.popularity'), 0],
                       [t('views.search.order.name_a_z'), 1],
