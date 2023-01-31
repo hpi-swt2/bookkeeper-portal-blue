@@ -169,12 +169,18 @@
             <span class="material-symbols-outlined" id="locationIcon">
               location_on</span>
             <%= @item.location %></p>
+            <br>
+          </div>
+    
 
-          <br>
-        </div>
+        <p class="subtitle"><%= t('views.show_item.category')%></p>
+        <p class="body-1"><%= t("models.item.types.#{@item.type.underscore}") %></p>
 
-        <p class="subtitle"><%= t('views.show_item.category') %></p>
-        <p class="body-1"><%= @item.category %></p>
+        <% @item.custom_subclass_attributes.each do |title, value| %>
+          <p class="subtitle"><%= t("views.show_item.#{title}")%></p>
+          <p class="body-1"><%= @item[title] %></p>
+        <% end %>
+
         <% if !@item.description.blank? %>
           <p class="subtitle"><%= t('views.show_item.description') %></p>
           <p class="body-1"><%= @item.description %></p>

@@ -122,11 +122,11 @@ en:
         description: "You have been moved up to Position %{position} on Waitlist for %{item}."
       removed_from_group:
         title: "Removed from group"
-        description: "You have been removed from the group \"%{group_name}\"."
+        description: 'You have been removed from the group "%{group_name}".'
       no_notifications: "You have not received any notifications yet"
       added_to_group:
         title: "Added to group"
-        description: "You have been added to the group \"%{group_name}\"."
+        description: 'You have been added to the group "%{group_name}".'
     search:
       title: "Search"
       filter_button: "Filter"
@@ -151,7 +151,7 @@ en:
       item_name: "Item Name"
       location: "Location"
       required_fields: "required fields"
-      price_ct : "Price in Cent"
+      price_ct: "Price in Cent"
     show_item:
       author: "Author"
       category: "Category"
@@ -185,6 +185,11 @@ en:
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
       show_waitlist: "Show waitlist"
+      title: "Title"
+      genre: "Genre"
+      movie_duration: "Movie Duration"
+      page_count: "Page Count"
+      player_count: "Player Count"
       enter_favorites: "Added to favorites"
       leave_favorites: "Removed from favorites"
       delete_item_confirm: "Are you sure?"
@@ -192,7 +197,7 @@ en:
       desktop_edit_notice: "You can select multiple groups by holding down CTRL."
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
-      price_ct : "Price in Cent"
+      price_ct: "Price in Cent"
     profile:
       title: "Profile"
       email: "Email"
@@ -216,6 +221,12 @@ en:
       created: "Item was successfully created."
       updated: "Item was successfully updated."
       destroyed: "Item was successfully destroyed."
+      types:
+        other_item: "Other"
+        movie_item: "Movie"
+        game_item: "Game"
+        book_item: "Book"
+        office_item: "Office Equipment"
       not_found: "The Item you looked for could not be found!"
     waitlist:
       added_to_waitlist: "Added to Waitlist at Position %{position}."
