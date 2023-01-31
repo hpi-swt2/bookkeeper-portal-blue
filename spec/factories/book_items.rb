@@ -9,7 +9,7 @@ FactoryBot.define do
     rental_start { "2022-11-18 15:32:07" }
     return_checklist { "MyChecklist" }
     lend_status { :available }
-    owning_user { create(:user) }
+    owning_user { build(:user) }
     type { "BookItem" }
     title { "Einfacher geht's nicht!" }
     author { "Marcell D'Avis" }
