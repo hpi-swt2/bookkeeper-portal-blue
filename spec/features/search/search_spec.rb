@@ -2,19 +2,20 @@ require "rails_helper"
 
 describe "Search page", type: :feature do
   before do
-    @item_book = create(:item_book)
-    @item_beamer = create(:item_beamer)
-    @item_whiteboard = create(:item_whiteboard)
-    @item_available = create(:available_item)
-    @item_alphabetical_first = create(:alphabetical_first_item)
-    @item_alphabetical_second = create(:alphabetical_second_item)
-    @item_lent = create(:lent_item)
-    @item_group = create(:item_owned_by_group)
+    @owner = create(:user)
+    @item_book = create(:item_book, owning_user: @owner)
+    @item_beamer = create(:item_beamer, owning_user: @owner)
+    @item_whiteboard = create(:item_whiteboard, owning_user: @owner)
+    @item_available = create(:available_item, owning_user: @owner)
+    @item_alphabetical_first = create(:alphabetical_first_item, owning_user: @owner)
+    @item_alphabetical_second = create(:alphabetical_second_item, owning_user: @owner)
+    @item_lent = create(:lent_item, owning_user: @owner)
+    @item_group = create(:item_owned_by_group, users_with_direct_see_permission: [@owner])
 
     @audited_items = [
-      create(:itemAudited0),
-      create(:itemAudited1),
-      create(:itemAudited2)
+      create(:itemAudited0, owning_user: @owner),
+      create(:itemAudited1, owning_user: @owner),
+      create(:itemAudited2, owning_user: @owner)
     ]
 
     @audited_items.each_with_index do |item, index|
@@ -28,6 +29,7 @@ describe "Search page", type: :feature do
       end
     end
 
+    sign_in @owner
     visit search_path
   end
 

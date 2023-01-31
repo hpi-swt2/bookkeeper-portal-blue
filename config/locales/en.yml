@@ -93,32 +93,32 @@ en:
       timestamp_Saturday: "Saturday"
       timestamp_Sunday: "Sunday"
       lending_accepted:
-        title: "Lending Accepted"
-        description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
+        title: "Lending Accepted: %{item}"
+        description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now."
       lending_denied:
-        title: "Lending Denied"
+        title: "Lending Denied: %{item}"
         description: "%{owner} has denied your request to borrow %{item}."
       lend_request:
-        title: "Lend Request"
+        title: "Lend Request: %{item}"
         description: "%{receiver} wants to borrow your %{item}."
         description_accepted: "You have lent %{item} to %{receiver}"
         description_declined: "You have declined to lent %{item} to %{receiver}"
         accepted: "Accepted"
         declined: "Declined"
       return_request:
-        title: "Return Item"
+        title: "Return Item: %{item}"
         description: "%{receiver} wants to return your %{item}. Please note that the item will be removed from the system upon declining the return request."
       return_declined:
-        title: "Return Declined"
+        title: "Return Declined: %{item}"
         description: "%{owner} has declined the return of %{item}. The item might be damaged, please contact the owner of the item for more information."
       return_accepted:
-        title: "Return Accepted"
+        title: "Return Accepted: %{item}"
         description: "%{owner} has accepted the return of %{item}. You successfully returned the item."
       added_to_waitlist:
-        title: "Added to Waitlist"
+        title: "Added to Waitlist: %{item}"
         description: "You have been added to Waitlist of %{item} at Position %{position}."
       move_up_on_waitlist:
-        title: "Moved up on Waitlist"
+        title: "Moved up on Waitlist: %{item}"
         description: "You have been moved up to Position %{position} on Waitlist for %{item}."
       removed_from_group:
         title: "Removed from group"
@@ -192,6 +192,8 @@ en:
       player_count: "Player Count"
       enter_favorites: "Added to favorites"
       leave_favorites: "Removed from favorites"
+      delete_item_confirm: "Are you sure?"
+      avg_lend_time: "Average lend time"
       desktop_edit_notice: "You can select multiple groups by holding down CTRL."
     edit_item:
       rental_duration_sec: "Rental Duration (seconds)"
@@ -225,6 +227,7 @@ en:
         game_item: "Game"
         book_item: "Book"
         office_item: "Office Equipment"
+      not_found: "The Item you looked for could not be found!"
     waitlist:
       added_to_waitlist: "Added to Waitlist at Position %{position}."
       failed_adding_to_waitlist: "Not added to Waitlist."
@@ -237,3 +240,16 @@ en:
   notification_mailer:
     notification:
       subject: "%{notification_name}"
+  amount:
+    second:
+      one: "second"
+      other: "seconds"
+    minute:
+      one: "minute"
+      other: "minutes"
+    hour:
+      one: "hour"
+      other: "hours"
+    day:
+      one: "day"
+      other: "days"

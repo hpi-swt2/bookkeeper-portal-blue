@@ -54,10 +54,6 @@
         max-height: 25em !important;
     }
 
-    #back-button {
-        font-size: 35px;
-    }
-
     #locationIcon {
         font-size: 20px;
         vertical-align: text-top;
@@ -89,7 +85,7 @@
         font-variation-settings: 'FILL' 1
     }
 
-    #notFilledEditItemIcon {
+    .ownerFunctionIcons {
         float: right;
         padding-right: 0.25em;
         vertical-align: middle;
@@ -129,13 +125,14 @@
 </style>
 
 <div>
-
-  <%= link_to :back do %>
-    <span class="material-symbols-outlined" id="back-button">chevron_left</span>
-  <% end %>
   <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
+    <% if @item.holder.nil? %>
+      <%= link_to item_path(@item), data: {turbo_method: :delete, turbo_confirm: t("views.show_item.delete_item_confirm")} do %>
+          <span class="material-symbols-outlined ownerFunctionIcons">delete</span>
+      <% end %>
+    <% end %>
     <%= link_to edit_item_url(@item) do %>
-      <span class="material-symbols-outlined editItemIcon" id="notFilledEditItemIcon">edit</span>
+      <span class="material-symbols-outlined ownerFunctionIcons">edit</span>
     <% end %>
   <% end %>
 
@@ -219,6 +216,29 @@
             <% end %>
           <% end %>
         </p>
+
+        <% if @avg_lend_time != 0%>
+          <p class="subtitle"><%= t('views.show_item.avg_lend_time') %></p>
+          <p class="body-1">
+          <% if @avg_lend_time_day.round != 0%>
+            <%= @avg_lend_time_day.round %>
+            <%= t('amount.day', count: @avg_lend_time_day.round) %>
+          <% end %>
+          <% if @avg_lend_time_hour.round != 0%>
+            <%= @avg_lend_time_hour.round %>
+            <%= t('amount.hour', count: @avg_lend_time_hour.round) %>
+          <% end %>
+          <% if @avg_lend_time_min.round != 0%>
+            <%= @avg_lend_time_min.round %>
+            <%= t('amount.minute', count: @avg_lend_time_min.round) %>
+          <% end %>
+          <% if @avg_lend_time_sec.round != 0%>
+            <%= @avg_lend_time_sec.round %>
+            <%= t('amount.second', count: @avg_lend_time_sec.round) %>
+          <% end %>
+          </p>
+        <% end %>
+
         <div id="buttons">
           <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
           <div class="button">

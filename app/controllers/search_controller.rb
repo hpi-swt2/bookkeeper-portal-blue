@@ -5,7 +5,8 @@ class SearchController < ApplicationController
     create_availability_filter
     create_category_filters
 
-    unsorted_results = helpers.search_for_items(params[:search], @filters, @numerical_filters, params[:group].to_i)
+    unsorted_results = helpers.search_for_items(current_user, params[:search], @filters, @numerical_filters,
+                                                params[:group].to_i)
     sort_results(params[:order], unsorted_results)
   end
 

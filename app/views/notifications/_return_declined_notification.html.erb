@@ -1,7 +1,7 @@
 <button type="button" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important"
         class="btn btn-notification" data-bs-toggle="modal" data-bs-target="#<%="notificationModal#{notification.id}"%>">
   <div class="notification">
-    <h2 class="subtitle">
+    <h2 class="subtitle  text-truncate">
       <%= notification.title %>
     </h2>
     <p class="body-1">
