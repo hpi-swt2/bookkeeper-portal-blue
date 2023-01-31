@@ -317,7 +317,7 @@ class ItemsController < ApplicationController
       hash.merge!({ rental_duration_sec: rental_duration })
     end
   end
-  
+
   def permission_hash
     lend_group_ids = params.require(:item)[:lend_group_ids].compact_blank!
     see_group_ids = params.require(:item)[:see_group_ids].compact_blank!

@@ -33,6 +33,7 @@ de:
         weeks:
           one: "noch %{count} Woche"
           other: "noch %{count} Wochen"
+        unlimited: "Unbegrenzt"
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
         nothing_offered: "Aktuell hast du keine angebotenen Artikel."

@@ -64,6 +64,7 @@ en:
         weeks:
           one: "%{count} week left"
           other: "%{count} weeks left"
+        unlimited: "Unlimited"
       offered_items:
         title: "OFFERED ITEMS"
         nothing_offered: "Currently, you have no offered items."
