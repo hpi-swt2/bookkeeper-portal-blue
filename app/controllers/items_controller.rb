@@ -302,7 +302,7 @@ class ItemsController < ApplicationController
 
     case rental_duration_unit
     when 'Unlimited'
-      hash.merge!({ rental_duration_sec: 100.years.to_i })
+      hash.merge!({ rental_duration_sec: 60.years.to_i })
     when 'Months'
       hash.merge!({ rental_duration_sec: rental_duration.months.to_i })
     when 'Weeks'

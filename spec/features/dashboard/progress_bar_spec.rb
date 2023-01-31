@@ -70,7 +70,8 @@ RSpec.describe "Progress Bar under Lent items", type: :feature do
   it "displays the progess as 0 if the rental duration is unlimited" do
     @owner = create(:user)
     @user = create(:user)
-    item = create(:item, owning_user: @owner, holder: @user.id, rental_duration_sec: 100.years.to_i)
+    item = create(:item, owning_user: @owner, holder: @user.id, rental_duration_unit: 'Unlimited',
+                         rental_duration_sec: 60.years.to_i)
     sign_in @user
     visit dashboard_path
     expect(page).to have_content(item.name)

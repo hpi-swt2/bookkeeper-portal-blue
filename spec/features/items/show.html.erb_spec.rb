@@ -355,7 +355,7 @@ RSpec.describe "items/show", type: :feature do
     item_lent.update(rental_duration_sec: five_months)
     visit item_url(item_lent)
     expect(page).to have_text I18n.t("views.show_item.less_than_months", months_amount: 6)
-    unlimited = 100.years.to_i
+    unlimited = 60.years.to_i
     item_lent.update(rental_duration_unit: 'Unlimited', rental_duration_sec: unlimited)
     visit item_url(item_lent)
     expect(page).to have_text I18n.t("views.show_item.unlimited")
