@@ -67,15 +67,6 @@
         color: var(--grey04);
     }
 
-    .btn-primary {
-        text-decoration: none;
-        display: inline;
-    }
-
-    .btn-secondary {
-        display: inline;
-    }
-
     .favoritesIcon {
         font-size: 2em;
         position: absolute;
@@ -222,7 +213,7 @@
           </div>
           <div class="button">
             <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
-              <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn-primary" %>
+              <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary" %>
             <% end %></div>
         </div>
       </div>
