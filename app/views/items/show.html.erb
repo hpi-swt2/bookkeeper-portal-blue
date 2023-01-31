@@ -54,10 +54,6 @@
         max-height: 25em !important;
     }
 
-    #back-button {
-        font-size: 35px;
-    }
-
     #locationIcon {
         font-size: 20px;
         vertical-align: text-top;
@@ -129,10 +125,6 @@
 </style>
 
 <div>
-
-  <%= link_to :back do %>
-    <span class="material-symbols-outlined" id="back-button">chevron_left</span>
-  <% end %>
   <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
     <% if @item.holder.nil? %>
       <%= link_to item_path(@item), data: {turbo_method: :delete, turbo_confirm: t("views.show_item.delete_item_confirm")} do %>

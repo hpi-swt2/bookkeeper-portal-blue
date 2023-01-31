@@ -94,7 +94,7 @@ en:
       timestamp_Sunday: "Sunday"
       lending_accepted:
         title: "Lending Accepted: %{item}"
-        description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now"
+        description: "%{owner} has accepted your request to borrow %{item}. You can pick it up now."
       lending_denied:
         title: "Lending Denied: %{item}"
         description: "%{owner} has denied your request to borrow %{item}."

@@ -50,10 +50,6 @@
     max-height: 25em !important;
   }
 
-  #back-button{
-    font-size: 35px;
-  }
-
   #locationIcon{
     font-size: 20px;
     vertical-align: text-top;
@@ -166,10 +162,6 @@ function readURL(input) {
 </script>
 
 <div>
-    <%= link_to @item do %>
-      <span class="material-symbols-outlined" id="back-button">chevron_left</span>
-    <% end %>
-
   <div>
   <%= form_with(model: @item) do |form| %>
 
@@ -240,10 +232,10 @@ function readURL(input) {
             </div>
 
             <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
-            <%= form.number_field :price_ct, class: "borderedInput body1" %>
+            <%= form.number_field :price_ct, min: 0, class: "borderedInput body1", oninput: "validity.valid||(value='');" %>
 
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
-            <%= form.number_field :rental_duration_sec, class: "borderedInput body1" %>
+            <%= form.number_field :rental_duration_sec, min: 0, class: "borderedInput body1", oninput: "validity.valid||(value='');" %>
 
             <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
             <%= form.text_area :return_checklist, class: "borderedInput body1" %>
