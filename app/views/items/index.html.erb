@@ -4,6 +4,7 @@
 
 <div id="items">
   <% @items.each do |item| %>
+    <% item = item.becomes(Item)%>
     <%= render item %>
     <p>
       <%= link_to "Show this item", item %>

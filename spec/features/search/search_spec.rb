@@ -95,10 +95,10 @@ describe "Search page", type: :feature do
     expect(page).to have_text(@item_whiteboard.name)
   end
 
-  it "shows only the items with the correct category" do
+  it "shows only the items with the correct type" do
     page.fill_in "search", with: "b"
     click_button("filter")
-    select(@item_book.category, from: "category").select_option
+    select(I18n.t("models.item.types.#{@item_book.type.underscore}"), from: "type").select_option
     click_button("submit")
 
     expect(page).to have_text(@item_book.name)
@@ -128,7 +128,7 @@ describe "Search page", type: :feature do
 
   it "applies both filters" do
     select("Unavailable", from: "availability").select_option
-    select(@item_book.category, from: "category").select_option
+    select(I18n.t("models.item.types.#{@item_book.type.underscore}"), from: "type").select_option
     click_button("submit")
 
     expect(page).to have_text(@item_book.name)
@@ -137,7 +137,7 @@ describe "Search page", type: :feature do
   end
 
   it "keeps the filter selected" do
-    select(@item_beamer.category, from: "category").select_option
+    select(I18n.t("models.item.types.#{@item_beamer.type.underscore}"), from: "type").select_option
     select("Unavailable", from: "availability").select_option
 
     click_button("submit")
@@ -151,9 +151,9 @@ describe "Search page", type: :feature do
   it "shows all available categories" do
     click_button("filter")
 
-    expect(page).to have_text(@item_book.category)
-    expect(page).to have_text(@item_beamer.category)
-    expect(page).to have_text(@item_whiteboard.category)
+    expect(page).to have_text(I18n.t("models.item.types.#{@item_book.type.underscore}"))
+    expect(page).to have_text(I18n.t("models.item.types.#{@item_beamer.type.underscore}"))
+    expect(page).to have_text(I18n.t("models.item.types.#{@item_whiteboard.type.underscore}"))
   end
 
   it "shows available items first" do
