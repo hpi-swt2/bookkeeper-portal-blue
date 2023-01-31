@@ -7,7 +7,7 @@ class MoveUpOnWaitlistNotification < ApplicationRecord
   after_create :check_position
 
   def title
-    I18n.t("views.notifications.move_up_on_waitlist.title")
+    I18n.t "views.notifications.move_up_on_waitlist.title", item: item.name
   end
 
   def description
