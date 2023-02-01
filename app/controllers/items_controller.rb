@@ -201,7 +201,7 @@ class ItemsController < ApplicationController
     helpers.audit_request_return(@item)
     notified_user = @item.owning_user.nil? ? @item.owning_group.members[0] : @item.owning_user
     @notification = ReturnRequestNotification.new(receiver: notified_user, date: Time.zone.now,
-                                                    item: @item, borrower: current_user, active: true, unread: true)
+                                                  item: @item, borrower: current_user, active: true, unread: true)
     @notification.save
     redirect_to item_url(@item)
   end

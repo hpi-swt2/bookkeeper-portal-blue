@@ -60,25 +60,20 @@ class NotificationsController < ApplicationController
 
   def accept_return
     @notification = Notification.find(params[:id])
-    @notification.mark_as_read
-    @notification.mark_as_inactive
-    @notification.set_accepted
-    @notification.save
+    prepare_return_notification
     @item = @notification.item
     @holder = User.find(@item.holder)
     ReturnAcceptedNotification.create(item: @item, receiver: @holder, date: Time.zone.now,
                                       active: false, unread: true)
     @item.accept_return
     @item.save
+    helpers.audit_accept_return(@item)
     redirect_to notifications_path
   end
 
   def decline_return
     @notification = Notification.find(params[:id])
-    @notification.mark_as_read
-    @notification.mark_as_inactive
-    @notification.set_denied
-    @notification.save
+    prepare_return_notification(accepted: false)
     @item = @notification.item
     @holder = User.find(@item.holder)
     ReturnDeclinedNotification.create(item: @item, receiver: @holder, date: Time.zone.now,
@@ -100,5 +95,16 @@ class NotificationsController < ApplicationController
     @item.update(holder: @notification.borrower.id)
     @item.save
     helpers.audit_accept_lend(@item)
+  end
+
+  def prepare_return_notification(accepted: true)
+    @notification.mark_as_read
+    @notification.mark_as_inactive
+    if accepted
+      @notification.set_accepted
+    else
+      @notification.set_denied
+    end
+    @notification.save
   end
 end
