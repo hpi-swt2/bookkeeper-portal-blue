@@ -48,6 +48,10 @@ gem "bootstrap", "~> 5.2.2"
 # Use Sass to process CSS
 gem "sassc-rails"
 
+gem "rails-i18n"
+
+gem 'flag-icons-rails'
+
 # Adding this removes some warnings caused by double-loading of the net-protocol library
 # (see https://github.com/ruby/net-imap/issues/16)
 # we should be able to remove this after upgrading to Ruby 3
@@ -92,6 +96,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 
+  gem "letter_opener"
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
 

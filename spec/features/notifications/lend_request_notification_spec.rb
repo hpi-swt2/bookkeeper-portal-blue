@@ -1,16 +1,26 @@
 require "rails_helper"
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe "Lend Request Notifications", type: :feature do
   let(:password) { 'password' }
   let(:user) { create(:user, password: password) }
   let(:owner) { create(:max) }
   let(:borrower) { create(:peter) }
   let(:item) { create(:item, owning_user: user) }
+  let(:lend_group) do
+    lend_group = create(:group)
+    lend_group.members << borrower
+    lend_group
+  end
 
   before do
     sign_in user
     @notification = build(:lend_request_notification, receiver: user, item: item, borrower: borrower, active: true)
     @notification.save
+  end
+
+  it "sends an email after creation" do
+    expect(ActionMailer::Base.deliveries.last.to).to eq [user.email]
   end
 
   it "has accept and decline buttons" do
@@ -55,6 +65,7 @@ describe "Lend Request Notifications", type: :feature do
 
   it "user gets notified someone wants to lend his/her item" do
     item = create(:item, owning_user: owner)
+    item.groups_with_lend_permission << lend_group
     sign_in borrower
     visit item_path(item)
     click_button('Lend')
@@ -109,3 +120,4 @@ describe "Lend Request Notifications", type: :feature do
     expect(@notification.unread).to be false
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

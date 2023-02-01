@@ -6,11 +6,11 @@ class LendingAcceptedNotification < ApplicationRecord
   belongs_to :item
 
   def title
-    I18n.t "views.notifications.lending_accepted.title"
+    I18n.t "views.notifications.lending_accepted.title", item: item.name
   end
 
   def description
-    owner = item.owning_user
+    owner = item.owning_user.nil? ? item.owning_group : item.owning_user
     I18n.t "views.notifications.lending_accepted.description", owner: owner.name, item: item.name
   end
 end

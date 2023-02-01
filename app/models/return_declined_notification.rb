@@ -9,7 +9,7 @@ class ReturnDeclinedNotification < ApplicationRecord
   validates :date, presence: true
 
   def title
-    I18n.t "views.notifications.return_declined.title"
+    I18n.t "views.notifications.return_declined.title", item: item_name
   end
 
   def description

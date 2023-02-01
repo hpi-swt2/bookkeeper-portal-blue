@@ -7,6 +7,8 @@ RSpec.describe "items/edit", type: :view do
 
   before do
     assign(:item, item)
+    # https://stackoverflow.com/a/54700034/11057370
+    allow(view).to receive(:current_user)
   end
 
   it "renders the edit item form" do
@@ -16,7 +18,7 @@ RSpec.describe "items/edit", type: :view do
 
       assert_select "input[name=?]", "item[name]"
 
-      assert_select "input[name=?]", "item[category]"
+      assert_select "select[name=?]", "item[type]"
 
       assert_select "input[name=?]", "item[location]"
 
