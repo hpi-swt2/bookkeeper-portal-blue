@@ -96,8 +96,11 @@
     width: 100%;
     margin-bottom: 8px
   }
-  .locationInput {
-    width: 90%;
+  .field_with_errors {
+    width: 100%;
+  }
+  .field_with_errors input {
+    border: 2px solid red;
   }
   .btn-primary {
     margin-bottom: 8px;
@@ -204,8 +207,7 @@
 
     <% if @item.errors.any? %>
       <div style="color: red">
-        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
-
+        <h2><%= t("views.new_item.error", count: @item.errors.count) %></h2>
         <ul>
           <% @item.errors.each do |error| %>
             <li><%= error.full_message %></li>
@@ -228,18 +230,14 @@
         <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
 
       </div>
-
-
         <div class="col">
           <div>
-            <p class="title">
+            <div class="title">
               <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name') + "*" %>
-            </p>
-            <div class="row">
-              <p class="body1" id="location">
-                <span class="material-symbols-outlined" id="locationIcon">location_on</span>
-                <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location') + "*" %>
-              </p>
+            </div>
+            <div class="d-flex gap-2">
+              <span class="material-symbols-outlined" id="locationIcon">location_on</span>
+              <%= form.text_field :location, class: "borderedInput", placeholder: t('views.new_item.location') + "*" %>
             </div>
 
             <div class="notBorderedInput">

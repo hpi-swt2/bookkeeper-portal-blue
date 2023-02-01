@@ -126,6 +126,7 @@ de:
       required_fields: "erforderliche Felder"
       price_ct: "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
+      error: "%{count} Fehler verhinderte(n) das Speichern des Gegenstandes:"
     show_item:
       author: "Autor"
       category: "Kategorie"
