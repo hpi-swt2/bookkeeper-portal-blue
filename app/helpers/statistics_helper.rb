@@ -20,6 +20,12 @@ module StatisticsHelper
     order == :asc ? sorted_items : sorted_items.reverse
   end
 
+  def statistics_item_lend_time(item)
+    lend_events = item_lend_events(item)
+    return_events = item_return_events(item)
+    average_lend_duration(lend_events, return_events)
+  end
+
   private
 
   def item_lend_events(item)

@@ -10,7 +10,7 @@ class ReturnRequestNotification < ApplicationRecord
   after_create :send_mail
 
   def title
-    I18n.t "views.notifications.return_request.title"
+    I18n.t "views.notifications.return_request.title", item: item.name
   end
 
   def description

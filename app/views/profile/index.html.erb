@@ -46,8 +46,8 @@
 <% if @user.groups.empty? %>
   <p class="body-1"> <%= t 'views.profile.no_groups' %></p>
 <% else %>
-  <ul>
-    <% @user.groups.each do |group| %>
+  <ul id="groups">
+    <% @user.groups.sort_by(&:name).each do |group| %>
       <li><%= link_to group.name, group %></li>
     <% end %>
   </ul>
