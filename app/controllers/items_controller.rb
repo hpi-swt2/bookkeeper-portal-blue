@@ -56,18 +56,20 @@ class ItemsController < ApplicationController
     params = item_params.merge!(permission_hash)
     params[:image] = params[:image].read unless params[:image].nil?
     @item = Item.new(params)
+    @item.clear_subclass_fields
     return render file: "public/422.html", status: :unprocessable_entity unless @item.valid?
 
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
-
-    helpers.audit_create_item(@item)
 
     create_create_response
   end
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    @item = @item.becomes!(Item.valid_types[params[:item][:type]])
+    @item.assign_attributes(item_params)
+    @item.clear_subclass_fields
     respond_to do |format|
       if update_with_permissions
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
@@ -82,7 +84,7 @@ class ItemsController < ApplicationController
   # Due to the way we handle permissions, `@item.update` can't be used to update them
   # This method applies all "simple" updates with the usual `@item.update` and then handles the permissions separately
   def update_with_permissions
-    false if @item.update(item_params)
+    false if @item.save
 
     lend_group_ids =
       if params.require(:item)[:lend_group_ids].nil?
@@ -252,6 +254,7 @@ class ItemsController < ApplicationController
   def create_create_response
     respond_to do |format|
       if @item.save
+        helpers.audit_create_item(@item)
         format.html { redirect_to item_url(@item), notice: t("models.item.created") }
         format.json { render :show, status: :created, location: @item }
       else
@@ -302,7 +305,8 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
+                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status, :type, :title,
+                                 :genre, :movie_duration, :author, :page_count, :player_count)
           .merge!(owner_hash)
   end
 
