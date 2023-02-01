@@ -33,11 +33,6 @@ RSpec.describe Item, type: :model do
     expect(item).not_to be_valid
   end
 
-  it "is not valid without category" do
-    item = described_class.new(name: "Test", location: "Test", description: "Test", owning_user: @user)
-    expect(item).not_to be_valid
-  end
-
   it "is not valid without location" do
     item = described_class.new(name: "Test", category: "Test", description: "Test", owning_user: @user)
     expect(item).not_to be_valid

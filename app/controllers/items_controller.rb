@@ -9,17 +9,30 @@ require "stringio"
 # rubocop:disable Metrics/PerceivedComplexity
 
 class ItemsController < ApplicationController
-  before_action :set_item,
-                only: %i[ show edit update destroy request_return accept_return request_lend]
+  before_action :set_item, except: %i[ index new create ]
+
+  before_action :set_lendable, only: %i[ show ]
+  before_action :check_lendable, only: %i[ request_lend add_to_waitlist ]
+
+  before_action :check_seeable, except: %i[ index new create ]
+  before_action :set_groups_with_current_user, only: %i[ new edit create update ]
 
   # GET /items or /items.json
   def index
-    @items = Item.all
+    return redirect_to root_url if current_user.nil?
+
+    @items = current_user.visible_items
   end
 
   # GET /items/1 or /items/1.json
   def show
     @item = Item.find(params[:id])
+
+    @avg_lend_time = helpers.statistics_item_lend_time(@item)
+    @avg_lend_time_min, @avg_lend_time_sec = @avg_lend_time.divmod(60)
+    @avg_lend_time_hour, @avg_lend_time_min = @avg_lend_time_min.divmod(60)
+    @avg_lend_time_day, @avg_lend_time_hour = @avg_lend_time_hour.divmod(24)
+
     return unless @item.waitlist.nil?
 
     @item.waitlist = Waitlist.new
@@ -29,31 +42,34 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
-    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
   end
 
   # GET /items/1/edit
   def edit
-    @item = Item.find(params[:id])
     @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
-    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
     @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
 
   # POST /items or /items.json
   def create
-    @item = Item.new(item_params.merge!(permission_hash))
+    params = item_params.merge!(permission_hash)
+    params[:image] = params[:image].read unless params[:image].nil?
+    @item = Item.new(params)
+    @item.clear_subclass_fields
+    return render file: "public/422.html", status: :unprocessable_entity unless @item.valid?
+
     @item.waitlist = Waitlist.new
     @item.set_status_lent unless @item.holder.nil?
-
-    helpers.audit_create_item(@item)
 
     create_create_response
   end
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    @item = @item.becomes!(Item.valid_types[params[:item][:type]])
+    @item.assign_attributes(item_params)
+    @item.clear_subclass_fields
     respond_to do |format|
       if update_with_permissions
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
@@ -68,7 +84,7 @@ class ItemsController < ApplicationController
   # Due to the way we handle permissions, `@item.update` can't be used to update them
   # This method applies all "simple" updates with the usual `@item.update` and then handles the permissions separately
   def update_with_permissions
-    false if @item.update(item_params)
+    false if @item.save
 
     lend_group_ids =
       if params.require(:item)[:lend_group_ids].nil?
@@ -110,13 +126,12 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: t("models.item.destroyed") }
+      format.html { redirect_to dashboard_url, notice: t("models.item.destroyed") }
       format.json { head :no_content }
     end
   end
 
   def add_to_waitlist
-    @item = Item.find(params[:id])
     @user = current_user
 
     helpers.audit_add_to_waitlist(@item)
@@ -125,7 +140,6 @@ class ItemsController < ApplicationController
   end
 
   def leave_waitlist
-    @item = Item.find(params[:id])
     @user = current_user
     @item.remove_from_waitlist(@user)
     @item.save
@@ -136,14 +150,12 @@ class ItemsController < ApplicationController
   end
 
   def add_to_favorites
-    @item = Item.find(params[:id])
     @user = current_user
     @user.favorites << (@item)
     redirect_to item_url(@item), notice: t("views.show_item.enter_favorites")
   end
 
   def leave_favorites
-    @item = Item.find(params[:id])
     @user = current_user
     @user.favorites.delete(@item)
     redirect_to item_url(@item), notice: t("views.show_item.leave_favorites")
@@ -164,7 +176,6 @@ class ItemsController < ApplicationController
   end
 
   def start_lend
-    @item = Item.find(params[:id])
     @job = Job.find_by(item: @item)
     @job.destroy
     @holder = current_user.id
@@ -176,7 +187,6 @@ class ItemsController < ApplicationController
   end
 
   def abort_lend
-    @item = Item.find(params[:id])
     @job = Job.find_by(item: @item)
     @job.destroy
     @item.set_status_available
@@ -186,7 +196,6 @@ class ItemsController < ApplicationController
   end
 
   def request_return
-    @item = Item.find(params[:id])
     @item.set_status_pending_return
     @item.save
     helpers.audit_request_return(@item)
@@ -200,7 +209,6 @@ class ItemsController < ApplicationController
   end
 
   def accept_return
-    @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
@@ -216,7 +224,6 @@ class ItemsController < ApplicationController
   end
 
   def deny_return
-    @item = Item.find(params[:id])
     @user = current_user
     @request_notification = ReturnRequestNotification.find_by(item: @item)
     @request_notification.destroy
@@ -238,11 +245,16 @@ class ItemsController < ApplicationController
     send_data pdf.render, disposition: "attachment", type: "application/pdf"
   end
 
+  def image
+    send_data @item.image
+  end
+
   private
 
   def create_create_response
     respond_to do |format|
       if @item.save
+        helpers.audit_create_item(@item)
         format.html { redirect_to item_url(@item), notice: t("models.item.created") }
         format.json { render :show, status: :created, location: @item }
       else
@@ -268,12 +280,33 @@ class ItemsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to dashboard_url, alert: t("models.item.not_found")
+  end
+
+  def check_seeable
+    seeable = @item.users_with_see_permission.include?(current_user) || @item.holder == current_user.id
+    render file: 'public/403.html', status: :forbidden unless seeable
+  end
+
+  def set_groups_with_current_user
+    @groups_with_current_user = Group.all.filter { |group| group.members.include? current_user }
+  end
+
+  def set_lendable
+    @lendable = @item.users_with_lend_permission.include?(current_user)
+  end
+
+  def check_lendable
+    set_lendable
+    render file: 'public/403.html', status: :forbidden unless @lendable
   end
 
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
+                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status, :type, :title,
+                                 :genre, :movie_duration, :author, :page_count, :player_count)
           .merge!(owner_hash)
   end
 
