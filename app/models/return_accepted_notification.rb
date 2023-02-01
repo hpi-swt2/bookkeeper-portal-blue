@@ -16,3 +16,5 @@ class ReturnAcceptedNotification < ApplicationRecord
     I18n.t "views.notifications.return_accepted.description", owner: owner.name, item: item.name
   end
 end
+
+

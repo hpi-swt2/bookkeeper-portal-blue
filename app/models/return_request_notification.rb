@@ -12,6 +12,10 @@ class ReturnRequestNotification < ApplicationRecord
     update(accepted: true)
   end
 
+  def set_denied
+    update(accepted: false)
+  end
+
   def title
     I18n.t "views.notifications.return_request.title"
   end

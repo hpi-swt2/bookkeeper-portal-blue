@@ -33,7 +33,7 @@ class NotificationsController < ApplicationController
     redirect_to notifications_path
   end
 
-  def accept
+  def accept_lend
     @notification = Notification.find(params[:id])
     @notification.mark_as_read
     @notification.mark_as_inactive
@@ -45,7 +45,7 @@ class NotificationsController < ApplicationController
     redirect_to notifications_path
   end
 
-  def decline
+  def decline_lend
     @notification = Notification.find(params[:id])
     @notification.mark_as_read
     @notification.mark_as_inactive
@@ -55,6 +55,34 @@ class NotificationsController < ApplicationController
     @item.save
     LendingDeniedNotification.create(item: @item, receiver: @notification.borrower, date: Time.zone.now,
                                      active: false, unread: true)
+    redirect_to notifications_path
+  end
+
+  def accept_return
+    @notification = Notification.find(params[:id])
+    @notification.mark_as_read
+    @notification.mark_as_inactive
+    @notification.set_accepted
+    holder = @notification.item.holder
+    @item = @notification.item
+    ReturnAcceptedNotification.create(item: @item, receiver: holder, date: Time.zone.now,
+                                      active: false, unread: true)
+    @item.accept_return
+    @item.save
+    redirect_to notifications_path
+  end
+
+  def decline_return
+    @notification = Notification.find(params[:id])
+    @notification.mark_as_read
+    @notification.mark_as_inactive
+    @notification.set_denied
+    @item = Item.find(@notification.item_id)
+    @holder = @item.holder
+    ReturnDeclinedNotification.create(item: @item, receiver: @holder, date: Time.zone.now,
+                                    active: false, unread: true)
+    @item.deny_return
+    @item.save
     redirect_to notifications_path
   end
 
