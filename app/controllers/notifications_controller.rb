@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
   def fetch_active_notification
     @active_notifications = Notification.where(active: true, receiver_id: current_user.id)
     @active_dates = @active_notifications.group_by do |notification|
-      notification.date.strftime('%y%m%d')
+      notification.date.strftime('%y%m%d%H%M%S')
     end
     @active_dates = @active_dates.sort_by { |date, _| date }.reverse
   end
@@ -16,7 +16,7 @@ class NotificationsController < ApplicationController
   def fetch_inactive_notifications
     @inactive_notifications = Notification.where(active: false, receiver_id: current_user.id)
     @inactive_dates = @inactive_notifications.group_by do |notification|
-      notification.date.strftime('%y%m%d')
+      notification.date.strftime('%y%m%d%H%M%S')
     end
     @inactive_dates = @inactive_dates.sort_by { |date, _| date }.reverse
   end
