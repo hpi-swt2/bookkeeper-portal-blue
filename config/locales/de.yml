@@ -1,4 +1,8 @@
 de:
+  errors:
+    messages:
+      blank: "darf nicht freigelassen werden"
+      present: "darf nicht ausgefüllt sein"
   defaults:
     delete: "Löschen"
     close: "Schließen"
@@ -63,7 +67,7 @@ de:
       timestamp_Sunday: "Sonntag"
       lending_accepted:
         title: "Ausleihanfrage angenommen: %{item}"
-        description: "%{owner} hat deine Anfrage zu %{item} angenommen. Du kannst es jetzt abholen"
+        description: "%{owner} hat deine Anfrage zu %{item} angenommen. Du kannst es jetzt abholen."
       lending_denied:
         title: "Ausleihanfrage abgelehnt: %{item}"
         description: "%{owner} hat deine Anfrage zu %{item} abgelehnt."
@@ -71,7 +75,7 @@ de:
         title: "Ausleihanfrage: %{item}"
         description: "%{receiver} möchte %{item} von dir ausleihen."
         description_accepted: "%{receiver} hat %{item} von dir ausgeliehen."
-        description_declined: "Du hast abgelehnt %{item} an %{receiver} auszuleihen"
+        description_declined: "Du hast es abgelehnt, %{item} an %{receiver} auszuleihen."
         accepted: "Akzeptiert"
         declined: "Abgelehnt"
       return_request:
@@ -91,11 +95,11 @@ de:
         description: "Du bist auf Position %{position} der Warteliste für %{item} aufgerückt."
       removed_from_group:
         title: "Aus Gruppe entfernt"
-        description: "Du wurdest aus der Gruppe \"%{group_name}\" entfernt."
+        description: 'Du wurdest aus der Gruppe "%{group_name}" entfernt.'
       no_notifications: "Du hast noch keine Nachrichten erhalten"
       added_to_group:
         title: "Zu Gruppe hinzugefügt"
-        description: "Du wurdest zur Gruppe \"%{group_name}\" hinzugefügt."
+        description: 'Du wurdest zur Gruppe "%{group_name}" hinzugefügt.'
     search:
       title: "Suche"
       filter_button: "Filter"
@@ -120,7 +124,7 @@ de:
       item_name: "Name des Gegenstands"
       location: "Standort"
       required_fields: "erforderliche Felder"
-      price_ct : "Preis in Cent"
+      price_ct: "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
       error: "%{count} Fehler verhinderte(n) das Speichern des Gegenstandes:"
     show_item:
@@ -136,7 +140,7 @@ de:
       see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch."
       lent_until: "Verliehen bis"
       lent_by: "Ausgeliehen von"
-      not_lent: "Aktuell nicht ausgeliehen."
+      not_lent: "Aktuell nicht ausgeliehen"
       less_than_one_day: "Weniger als ein Tag"
       one_day: "Ein Tag"
       less_than_days: "Weniger als %{days_amount} Tage"
@@ -148,22 +152,28 @@ de:
       leave_waitlist: "Warteliste verlassen"
       waitlist: "Warteliste"
       users_waiting: "%{amount} Nutzer warten auf dieses Objekt."
-      waitlist_position: "Sie stehen an Position %{position} der Warteliste."
+      waitlist_position: "Du stehst an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
-      qr_button: "QR-Code Anzeigen"
+      qr_button: "QR-Code anzeigen"
       pending_lend_request: "Warten auf Ausleihbestätigung"
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
       show_waitlist: "Warteliste zeigen"
+      title: "Titel"
+      genre: "Genre"
+      movie_duration: "Filmlänge"
+      page_count: "Seitenzahl"
+      player_count: "Spieleranzahl"
       enter_favorites: "Auf die Merkliste gesetzt"
       leave_favorites: "Von der Merkliste entfernt"
+      delete_item_confirm: "Wirklich löschen?"
       avg_lend_time: "Durchschnittliche Ausleihdauer"
       desktop_edit_notice: "Halte STRG gedrückt, um mehrere Gruppen auszuwählen."
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
-      price_ct : "Preis in ct"
-      return_checklist: "Rückgabe Checkliste"
+      price_ct: "Preis in Cent"
+      return_checklist: "Rückgabecheckliste"
     profile:
       title: "Profil"
       email: "Email"
@@ -189,6 +199,13 @@ de:
       created: "Gegenstand wurde erfolgreich erstellt."
       updated: "Gegenstand wurde erfolgreich verändert."
       destroyed: "Gegenstand wurde erfolgreich entfernt."
+      types:
+        other_item: "Sonstiges"
+        movie_item: "Film"
+        game_item: "Spiel"
+        book_item: "Buch"
+        office_item: "Büroausstattung"
+      not_found: "Der gesuchte Gegenstand konnte nicht gefunden werden!"
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
@@ -197,7 +214,7 @@ de:
       name: "Gruppenname"
   helpers:
     submit:
-      update: "Gegendstand ändern"
+      update: "Gegenstand ändern"
   notification_mailer:
     notification:
       subject: "%{notification_name}"

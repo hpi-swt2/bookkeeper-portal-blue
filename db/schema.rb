@@ -89,6 +89,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
     t.datetime "updated_at", null: false
     t.integer "holder"
     t.integer "lend_status", default: 0
+    t.integer "job_id"
+    t.string "type", default: "OtherItem"
+    t.string "title"
+    t.string "author"
+    t.string "genre"
+    t.integer "page_count"
+    t.integer "movie_duration"
+    t.integer "player_count"
     t.binary "image"
     t.index ["holder"], name: "index_items_on_holder"
   end

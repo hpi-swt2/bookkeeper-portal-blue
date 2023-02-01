@@ -57,6 +57,7 @@ class ItemsController < ApplicationController
     params = item_params.merge!(permission_hash)
     params[:image] = params[:image].read unless params[:image].nil?
     @item = Item.new(params)
+    @item.clear_subclass_fields
     if @item.valid?
       @item.waitlist = Waitlist.new
       @item.set_status_lent unless @item.holder.nil?
@@ -77,6 +78,9 @@ class ItemsController < ApplicationController
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    @item = @item.becomes!(Item.valid_types[params[:item][:type]])
+    @item.assign_attributes(item_params)
+    @item.clear_subclass_fields
     respond_to do |format|
       if update_with_permissions
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
@@ -155,7 +159,7 @@ class ItemsController < ApplicationController
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to items_url, notice: t("models.item.destroyed") }
+      format.html { redirect_to dashboard_url, notice: t("models.item.destroyed") }
       format.json { head :no_content }
     end
   end
@@ -296,6 +300,8 @@ class ItemsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_item
     @item = Item.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to dashboard_url, alert: t("models.item.not_found")
   end
 
   def check_seeable
@@ -319,7 +325,8 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
+                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status, :type, :title,
+                                 :genre, :movie_duration, :author, :page_count, :player_count)
           .merge!(owner_hash)
   end
 
