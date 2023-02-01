@@ -75,7 +75,7 @@ de:
         title: "Ausleihanfrage: %{item}"
         description: "%{receiver} möchte %{item} von dir ausleihen."
         description_accepted: "%{receiver} hat %{item} von dir ausgeliehen."
-        description_declined: "Du hast abgelehnt, %{item} an %{receiver} auszuleihen."
+        description_declined: "Du hast es abgelehnt, %{item} an %{receiver} auszuleihen."
         accepted: "Akzeptiert"
         declined: "Abgelehnt"
       return_request:
