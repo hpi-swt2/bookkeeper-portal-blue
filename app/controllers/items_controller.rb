@@ -131,45 +131,10 @@ class ItemsController < ApplicationController
     @item.save
 
     helpers.audit_request_return(@item)
-
-    unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(receiver: @item.owning_user, date: Time.zone.now,
+    @notification = ReturnRequestNotification.new(receiver: @item.owning_user, date: Time.zone.now,
                                                     item: @item, borrower: current_user, active: true, unread: true)
-      @notification.save
-    end
+    @notification.save
     redirect_to item_url(@item)
-  end
-
-  def accept_return
-    @item = Item.find(params[:id])
-    @user = current_user
-    @request_notification = ReturnRequestNotification.find_by(item: @item)
-    @request_notification.mark_as_inactive
-    @request_notification.set_accepted
-    @accepted_notification = ReturnAcceptedNotification.new(active: false, unread: true, date: Time.zone.now,
-                                                     item: @item, receiver: User.find(@item.holder), owner: @user)
-    @accepted_notification.save
-    @item.accept_return
-    @item.save
-
-    helpers.audit_accept_return(@item)
-
-    redirect_to item_url(@item)
-  end
-
-  def deny_return
-    @item = Item.find(params[:id])
-    @user = current_user
-    @request_notification = ReturnRequestNotification.find_by(item: @item)
-    @request_notification.mark_as_inactive
-    @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
-                                                            receiver: User.find(@item.holder),
-                                                            date: Time.zone.now, active: false, unread: true)
-    @declined_notification.save
-    @item.lend_status = :lent
-    @item.save
-
-    redirect_to notifications_path
   end
 
   def generate_qrcode

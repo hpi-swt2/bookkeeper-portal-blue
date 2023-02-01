@@ -63,9 +63,10 @@ class NotificationsController < ApplicationController
     @notification.mark_as_read
     @notification.mark_as_inactive
     @notification.set_accepted
-    holder = @notification.item.holder
+    @notification.save
     @item = @notification.item
-    ReturnAcceptedNotification.create(item: @item, receiver: holder, date: Time.zone.now,
+    @holder = User.find(@item.holder)
+    ReturnAcceptedNotification.create(item: @item, receiver: @holder, date: Time.zone.now,
                                       active: false, unread: true)
     @item.accept_return
     @item.save
@@ -77,10 +78,11 @@ class NotificationsController < ApplicationController
     @notification.mark_as_read
     @notification.mark_as_inactive
     @notification.set_denied
-    @item = Item.find(@notification.item_id)
-    @holder = @item.holder
+    @notification.save
+    @item = @notification.item
+    @holder = User.find(@item.holder)
     ReturnDeclinedNotification.create(item: @item, receiver: @holder, date: Time.zone.now,
-                                    active: false, unread: true)
+                                      active: false, unread: true)
     @item.deny_return
     @item.save
     redirect_to notifications_path

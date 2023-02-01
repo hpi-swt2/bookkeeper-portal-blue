@@ -2,7 +2,7 @@
 class ReturnDeclinedNotification < ApplicationRecord
   acts_as :notification
 
-  belongs_to :owner, class_name: "User"
+  #belongs_to :owner, class_name: "User"
   belongs_to :item
 
   validates :receiver, presence: true
@@ -13,6 +13,6 @@ class ReturnDeclinedNotification < ApplicationRecord
   end
 
   def description
-    I18n.t "views.notifications.return_declined.description", owner: owner.name, item: item.name
+    I18n.t "views.notifications.return_declined.description", owner: item.owning_user.name, item: item.name
   end
 end
