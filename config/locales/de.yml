@@ -75,7 +75,7 @@ de:
         title: "Ausleihanfrage: %{item}"
         description: "%{receiver} möchte %{item} von dir ausleihen."
         description_accepted: "%{receiver} hat %{item} von dir ausgeliehen."
-        description_declined: "Du hast abgelehnt %{item} an %{receiver} auszuleihen"
+        description_declined: "Du hast es abgelehnt, %{item} an %{receiver} auszuleihen."
         accepted: "Akzeptiert"
         declined: "Abgelehnt"
       return_request:
@@ -139,7 +139,7 @@ de:
       see_permission_notice: "Personen mit Ausleihberechtigung erhalten diese Berechtigung automatisch."
       lent_until: "Verliehen bis"
       lent_by: "Ausgeliehen von"
-      not_lent: "Aktuell nicht ausgeliehen."
+      not_lent: "Aktuell nicht ausgeliehen"
       less_than_one_day: "Weniger als ein Tag"
       one_day: "Ein Tag"
       less_than_days: "Weniger als %{days_amount} Tage"
@@ -151,10 +151,10 @@ de:
       leave_waitlist: "Warteliste verlassen"
       waitlist: "Warteliste"
       users_waiting: "%{amount} Nutzer warten auf dieses Objekt."
-      waitlist_position: "Sie stehen an Position %{position} der Warteliste."
+      waitlist_position: "Du stehst an Position %{position} der Warteliste."
       lend: "Ausleihen"
       return: "Zurückgeben"
-      qr_button: "QR-Code Anzeigen"
+      qr_button: "QR-Code anzeigen"
       pending_lend_request: "Warten auf Ausleihbestätigung"
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
@@ -171,8 +171,8 @@ de:
       desktop_edit_notice: "Halte STRG gedrückt, um mehrere Gruppen auszuwählen."
     edit_item:
       rental_duration_sec: "Ausleihdauer (Sekunden)"
-      price_ct: "Preis in ct"
-      return_checklist: "Rückgabe Checkliste"
+      price_ct: "Preis in Cent"
+      return_checklist: "Rückgabecheckliste"
     profile:
       title: "Profil"
       email: "Email"
@@ -204,7 +204,7 @@ de:
         game_item: "Spiel"
         book_item: "Buch"
         office_item: "Büroausstattung"
-      not_found: "Das gesuchte Item konnte nicht gefunden werden!"
+      not_found: "Der gesuchte Gegenstand konnte nicht gefunden werden!"
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
@@ -213,7 +213,7 @@ de:
       name: "Gruppenname"
   helpers:
     submit:
-      update: "Gegendstand ändern"
+      update: "Gegenstand ändern"
   notification_mailer:
     notification:
       subject: "%{notification_name}"

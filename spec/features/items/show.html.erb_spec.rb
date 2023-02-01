@@ -154,13 +154,13 @@ RSpec.describe "items/show", type: :feature do
   it "has enter waitlist button when user has lend permission and is not on list and item not available" do
     sign_in user
     visit item_path(item_lent)
-    expect(page).to have_button("Enter Waitlist")
+    expect(page).to have_button("Enter waitlist")
   end
 
   it "has disabled enter waitlist button when user has no lend permission and is not on list and item not available" do
     sign_in user_only_see_permissions
     visit item_path(item_lent)
-    expect(page).to have_button("Enter Waitlist", disabled: true, class: "btn-secondary")
+    expect(page).to have_button("Enter waitlist", disabled: true, class: "btn-secondary")
   end
 
   it "does not have an adaptive lend button when owner of item" do
@@ -178,20 +178,20 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit item_path(item_lent)
-    expect(page).to have_button("Leave Waitlist")
+    expect(page).to have_button("Leave waitlist")
   end
 
   it "adds user to waitlist when clicking add to waitlist button" do
     sign_in user
     visit item_path(item_lent)
-    find(:button, "Enter Waitlist").click
+    find(:button, "Enter waitlist").click
     expect(Item.find(item_lent.id).waitlist.users).to include(user)
   end
 
   it "creates audit event when entering for waitlist" do
     sign_in user
     visit item_path(item_lent)
-    find(:button, "Enter Waitlist").click
+    find(:button, "Enter waitlist").click
     expect(AuditEvent.where(item_id: item_lent.id, event_type: "add_to_waitlist", triggering_user: user).count).to be(1)
   end
 
@@ -199,7 +199,7 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit item_path(item_lent)
-    find(:button, "Leave Waitlist").click
+    find(:button, "Leave waitlist").click
     expect(Item.find(item_lent.id).waitlist.users).not_to include(user)
   end
 
@@ -207,14 +207,14 @@ RSpec.describe "items/show", type: :feature do
     sign_in user
     item_lent.waitlist.add_user(user)
     visit item_path(item_lent)
-    find(:button, "Leave Waitlist").click
+    find(:button, "Leave waitlist").click
     expect(AuditEvent.where(item_id: item_lent.id, event_type: "leave_waitlist", triggering_user: user).count).to be(1)
   end
 
   it "creates added to waitlist notification when adding user to waitlist" do
     sign_in user
     visit item_path(item_lent)
-    find(:button, "Enter Waitlist").click
+    find(:button, "Enter waitlist").click
     notification = AddedToWaitlistNotification.find_by(receiver: user, item: item_lent)
     expect(notification).not_to be_nil
   end
@@ -223,7 +223,7 @@ RSpec.describe "items/show", type: :feature do
     item_lent.users_with_direct_lend_permission << item_lent.waitlist.users[0]
     sign_in item_lent.waitlist.users[0]
     visit item_path(item_lent)
-    find(:button, "Leave Waitlist").click
+    find(:button, "Leave waitlist").click
     notification = MoveUpOnWaitlistNotification.find_by(receiver: Item.find(item_lent.id).waitlist.users[0],
                                                         item: item_lent)
     expect(notification).not_to be_nil
@@ -247,7 +247,7 @@ RSpec.describe "items/show", type: :feature do
     item_empty_return_checklist = create(:item_empty_return_checklist)
     sign_in item_empty_return_checklist.owning_user
     visit item_path(item_empty_return_checklist)
-    expect(page).not_to have_text("Return Checklist")
+    expect(page).not_to have_text("Return checklist")
 
     sign_in user
     visit item_path(item)
@@ -257,7 +257,7 @@ RSpec.describe "items/show", type: :feature do
   it "displays lent until if lent" do
     sign_in borrower
     visit item_path(item_lent)
-    expect(page).to have_text("Lent Until")
+    expect(page).to have_text("Lent until")
     lent_until = (item_lent.rental_start + item_lent.rental_duration_sec).strftime('%d.%m.%Y')
     expect(page).to have_text(lent_until)
   end
