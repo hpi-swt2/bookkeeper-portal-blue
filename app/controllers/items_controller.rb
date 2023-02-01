@@ -42,13 +42,11 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
-    set_groups_with_current_user
   end
 
   # GET /items/1/edit
   def edit
     @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
-    set_groups_with_current_user
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
     @lend_group_ids -= [@item.owning_group.id] unless @item.owning_group.nil?
     @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
@@ -76,7 +74,6 @@ class ItemsController < ApplicationController
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
         format.json { render :show, status: :ok, location: @item }
       else
-        set_groups_with_current_user
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
@@ -282,7 +279,6 @@ class ItemsController < ApplicationController
         format.html { redirect_to item_url(@item), notice: t("models.item.created") }
         format.json { render :show, status: :created, location: @item }
       else
-        set_groups_with_current_user
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @item.errors, status: :unprocessable_entity }
       end
