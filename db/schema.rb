@@ -14,8 +14,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -89,7 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
     t.datetime "updated_at", null: false
     t.integer "holder"
     t.integer "lend_status", default: 0
-    t.integer "job_id"
+    t.binary "image"
     t.string "type", default: "OtherItem"
     t.string "title"
     t.string "author"
@@ -97,7 +97,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
     t.integer "page_count"
     t.integer "movie_duration"
     t.integer "player_count"
-    t.binary "image"
     t.index ["holder"], name: "index_items_on_holder"
   end
 
