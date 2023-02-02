@@ -15,8 +15,7 @@ RSpec.describe ReturnDeclinedNotification, type: :model do
 
   it "belongs to a receiver, a date, an item name and a owner" do
     expect(notification.receiver).not_to be_blank
-    expect(notification.item_name).not_to be_blank
-    expect(notification.owner).not_to be_blank
+    expect(notification.item).not_to be_blank
     expect(notification.date).not_to be_blank
   end
 

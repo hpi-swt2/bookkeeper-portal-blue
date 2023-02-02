@@ -64,6 +64,7 @@ en:
         weeks:
           one: "%{count} week left"
           other: "%{count} weeks left"
+        unlimited: "Unlimited"
       offered_items:
         title: "OFFERED ITEMS"
         nothing_offered: "Currently, you have no offered items."
@@ -106,8 +107,10 @@ en:
         accepted: "Accepted"
         declined: "Declined"
       return_request:
-        title: "Return item: %{item}"
-        description: "%{receiver} wants to return your %{item}. Please note that the item will be removed from the system if you decline the return request."
+        title: "Return Item: %{item}"
+        description: "%{receiver} wants to return your %{item}."
+        description_accepted: "You have accepted %{receiver}'s return of %{item}"
+        description_declined: "You have denied %{receiver}'s return of %{item}"
       return_declined:
         title: "Return declined: %{item}"
         description: "%{owner} has declined the return of %{item}. The item might be damaged. Please contact the owner of the item for more information."
@@ -151,7 +154,15 @@ en:
       item_name: "Item name"
       location: "Location"
       required_fields: "required fields"
-      price_ct: "Price in Cents"
+      price_ct : "Price in Cent"
+      duration:
+        unlimited: "Unlimited"
+        months: "Months"
+        weeks: "Weeks"
+        days: "Days"
+        hours: "Hours"
+        minutes: "Minutes"
+        seconds: "Seconds"
       error: "%{count} error(s) prohibited this item from being saved:"
     show_item:
       author: "Author"
@@ -186,6 +197,7 @@ en:
       pending_return_request: "Waiting for return approval"
       confirm_pickup: "Confirm pickup"
       show_waitlist: "Show waitlist"
+      unlimited: "Unlimited"
       title: "Title"
       genre: "Genre"
       movie_duration: "Movie duration"
@@ -197,8 +209,16 @@ en:
       avg_lend_time: "Average lend time"
       desktop_edit_notice: "You can select multiple groups by holding down CTRL."
     edit_item:
-      rental_duration_sec: "Rental duration (seconds)"
-      price_ct: "Price in Cents"
+      rental_duration_sec: "Rental Duration"
+      price_ct : "Price in Cent"
+      duration:
+        unlimited: "Unlimited"
+        months: "Months"
+        weeks: "Weeks"
+        days: "Days"
+        hours: "Hours"
+        minutes: "Minutes"
+        seconds: "Seconds"
     profile:
       title: "Profile"
       email: "Email"
@@ -229,6 +249,7 @@ en:
         book_item: "Book"
         office_item: "Office Equipment"
       not_found: "The Item you looked for could not be found!"
+      rental_duration_error: "Please choose 'Unlimited', if your rental duration is greater than 60 years"
     waitlist:
       added_to_waitlist: "Added to waitlist at position %{position}."
       failed_adding_to_waitlist: "Not added to waitlist."
