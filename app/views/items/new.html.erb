@@ -84,15 +84,10 @@
         font-size: 10em;
         color: var(--grey09);
     }
-
-  .notBorderedInput {
-    width: 100%;
-    margin-bottom: 8px
+  #rentalDurationDiv {
+      width: 100%;
   }
-  .borderedInput {
-    border: 1px solid #AAB0B3;
-    border-radius: 5px;
-    padding-left: 5px;
+  .notBorderedInput {
     width: 100%;
     margin-bottom: 8px
   }
@@ -103,8 +98,16 @@
     padding-top: 3px;
     padding-bottom: 3px;
   }
+  .borderedInput {
+    border: 1px solid #AAB0B3;
+    border-radius: 5px;
+    padding-left: 5px;
+    width: 100%;
+    margin-bottom: 8px
+  }
   .locationInput {
     width: 90%;
+  }
   .field_with_errors {
     width: 100%;
   }
@@ -128,9 +131,7 @@
     width: 100%;
     text-align: center;
   }
-  #rentalDurationDiv {
-    width: 100%;
-  }
+
   .caption{
     text-align: left;
   }
@@ -323,7 +324,6 @@
 
             <p class="subtitle"><%= t('views.edit_item.price_ct') %></p>
             <%= form.number_field :price_ct, min: 0, class: "borderedInput body1", oninput: "validity.valid||(value='');" %>
-            <%= form.number_field :price_ct, class: "borderedInput body1" %>
             
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec') %>*</p>
             <div class="", id="rentalDurationDiv">
