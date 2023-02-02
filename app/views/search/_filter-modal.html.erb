@@ -14,7 +14,7 @@
                 <%= select_tag "group", options_for_select(@group_options, params[:group]), class: "form-select", include_blank: t('views.search.filter_modal.all') %>
             </div>
             <div class="modal-footer align-center">
-                <button class="btn btn-secondary" data-bs-dismiss="modal" type="submit"><%= t 'views.search.filter_modal.results' %></button>
+                <button class="btn btn-secondary btn-full-width" data-bs-dismiss="modal" type="submit"><%= t 'views.search.filter_modal.results' %></button>
             </div>
         </div>
     </div>
