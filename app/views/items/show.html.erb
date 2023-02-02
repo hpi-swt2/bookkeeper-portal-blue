@@ -64,7 +64,7 @@
     }
 
     .btn {
-      width: 100%;
+        width: 100%;
     }
 
     .btn-primary {
@@ -78,7 +78,7 @@
     }
 
     #qrcode {
-      display: block
+        display: block
     }
 
     .favoritesIcon {
@@ -138,8 +138,8 @@
 <div>
   <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
     <% if @item.holder.nil? %>
-      <%= link_to item_path(@item), data: {turbo_method: :delete, turbo_confirm: t("views.show_item.delete_item_confirm")} do %>
-          <span class="material-symbols-outlined ownerFunctionIcons">delete</span>
+      <%= link_to item_path(@item), data: { turbo_method: :delete, turbo_confirm: t("views.show_item.delete_item_confirm") } do %>
+        <span class="material-symbols-outlined ownerFunctionIcons">delete</span>
       <% end %>
     <% end %>
     <%= link_to edit_item_url(@item) do %>
@@ -158,7 +158,7 @@
           <% unless @item.image.nil? %>
             <%= image_tag(@item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block") %>
           <% else %>
-            <span class="material-symbols-outlined filter-gray img img-responsive img-fluid rounded mx-auto d-block placeholder-img">image</span>
+            <span class="material-symbols-outlined img img-responsive img-fluid rounded mx-auto" id="placeholder-img">image</span>
           <% end %>
         </div>
       </div>
@@ -169,18 +169,18 @@
             <p class="title"><%= @item.name %></p>
           </div>
           <p class="body-1" id="location">
-            <span class="material-symbols-outlined" id="locationIcon">
-              location_on</span>
-            <%= @item.location %></p>
-            <br>
-          </div>
-    
+            <span class="material-symbols-outlined" id="locationIcon">location_on</span>
+            <%= @item.location %>
+          </p>
+          <br>
+        </div>
 
-        <p class="subtitle"><%= t('views.show_item.category')%></p>
+
+        <p class="subtitle"><%= t('views.show_item.category') %></p>
         <p class="body-1"><%= t("models.item.types.#{@item.type.underscore}") %></p>
 
         <% @item.custom_subclass_attributes.each do |title, value| %>
-          <p class="subtitle"><%= t("views.show_item.#{title}")%></p>
+          <p class="subtitle"><%= t("views.show_item.#{title}") %></p>
           <p class="body-1"><%= @item[title] %></p>
         <% end %>
 
@@ -231,25 +231,25 @@
           <% end %>
         </p>
 
-        <% if @avg_lend_time != 0%>
+        <% if @avg_lend_time != 0 %>
           <p class="subtitle"><%= t('views.show_item.avg_lend_time') %></p>
           <p class="body-1">
-          <% if @avg_lend_time_day.round != 0%>
-            <%= @avg_lend_time_day.round %>
-            <%= t('amount.day', count: @avg_lend_time_day.round) %>
-          <% end %>
-          <% if @avg_lend_time_hour.round != 0%>
-            <%= @avg_lend_time_hour.round %>
-            <%= t('amount.hour', count: @avg_lend_time_hour.round) %>
-          <% end %>
-          <% if @avg_lend_time_min.round != 0%>
-            <%= @avg_lend_time_min.round %>
-            <%= t('amount.minute', count: @avg_lend_time_min.round) %>
-          <% end %>
-          <% if @avg_lend_time_sec.round != 0%>
-            <%= @avg_lend_time_sec.round %>
-            <%= t('amount.second', count: @avg_lend_time_sec.round) %>
-          <% end %>
+            <% if @avg_lend_time_day.round != 0 %>
+              <%= @avg_lend_time_day.round %>
+              <%= t('amount.day', count: @avg_lend_time_day.round) %>
+            <% end %>
+            <% if @avg_lend_time_hour.round != 0 %>
+              <%= @avg_lend_time_hour.round %>
+              <%= t('amount.hour', count: @avg_lend_time_hour.round) %>
+            <% end %>
+            <% if @avg_lend_time_min.round != 0 %>
+              <%= @avg_lend_time_min.round %>
+              <%= t('amount.minute', count: @avg_lend_time_min.round) %>
+            <% end %>
+            <% if @avg_lend_time_sec.round != 0 %>
+              <%= @avg_lend_time_sec.round %>
+              <%= t('amount.second', count: @avg_lend_time_sec.round) %>
+            <% end %>
           </p>
         <% end %>
 
@@ -272,5 +272,4 @@
       <br><br><br>
     </div>
   </div>
-</div>
 </div>

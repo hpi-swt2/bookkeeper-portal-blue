@@ -10,8 +10,10 @@
     max-width: 300px;
   }
 
-  .placeholder-img {
+  #placeholder-img {
+    color: #999999;
     font-size: 20em;
+    line-height: inherit;
   }
 
 //https://codepen.io/sosuke/pen/Pjoqqp transform hexColor into filter values

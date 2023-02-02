@@ -163,7 +163,7 @@
                 $('#img_prev').attr('src', e.target.result);
                 // remove the background color since hide() doesnt work
                 $('#imagePlaceholder').css("background-color", "transparent");
-                $('#imageIcon').hide();
+                $('#placeholder-img').hide();
             });
             reader.readAsDataURL(input.files[0]);
         }
@@ -218,7 +218,7 @@
           <div class="image container-fluid rounded">
             <img id="img_prev" class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" src="#" alt=""/>
             <div class="img img-responsive img-fluid rounded mx-auto d-flex align-items-center justify-content-center" id=imagePlaceholder>
-              <span class="material-symbols-outlined placeholder-img filter-gray" id="imageIcon">image</span>
+              <span class="material-symbols-outlined" id="placeholder-img">image</span>
             </div>
           </div>
 
