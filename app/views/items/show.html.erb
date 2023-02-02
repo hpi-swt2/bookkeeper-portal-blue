@@ -155,8 +155,11 @@
           <% if !current_user.nil? && !@item.users_with_ownership_permission.include?(current_user) %>
             <%= render "adaptive_favorites_button", current_user: current_user, item: @item %>
           <% end %>
-          <%= image_tag @item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block" unless @item.image.nil? %>
-
+          <% unless @item.image.nil? %>
+            <%= image_tag(@item.image_url, class: "img img-responsive img-fluid rounded mx-auto d-block") %>
+          <% else %>
+            <span class="material-symbols-outlined filter-gray img img-responsive img-fluid rounded mx-auto d-block placeholder-img">image</span>
+          <% end %>
         </div>
       </div>
 
