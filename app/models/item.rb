@@ -49,7 +49,7 @@ class Item < ApplicationRecord
 
     return unless rental_duration_sec > 60.years.to_i && rental_duration_unit != 'Unlimited'
 
-    errors.add(:rental_duration, "is greater than 60 years, please choose unlimited rental duration")
+    errors.add(:base, I18n.t("models.item.rental_duration_error"))
   end
   
   def self.valid_types

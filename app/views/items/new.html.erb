@@ -327,7 +327,8 @@
             
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec') %>*</p>
             <div class="", id="rentalDurationDiv">
-              <div class="rentalDurationInput"><%= form.number_field :rental_duration, class: "borderedInput body1" %></div>
+              <div class="rentalDurationInput"><%= form.number_field :rental_duration, min: 0, class: "borderedInput body1", oninput="validity.valid|| 
+              (value='');" %></div>
               <div class="rentalDurationInput">
                 <%= form.select :rental_duration_unit, [
                   [t('views.edit_item.duration.unlimited'), 'Unlimited'],

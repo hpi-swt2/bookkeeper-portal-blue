@@ -224,6 +224,7 @@ de:
         book_item: "Buch"
         office_item: "Büroausstattung"
       not_found: "Der gesuchte Gegenstand konnte nicht gefunden werden!"
+      rental_duration_error: "Bitte wählen Sie 'Unbegrenzt', wenn Ihre Ausleihedauer mehr als 60 Jahre beträgt"
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."

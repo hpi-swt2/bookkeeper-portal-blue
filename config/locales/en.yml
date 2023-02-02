@@ -247,6 +247,7 @@ en:
         book_item: "Book"
         office_item: "Office Equipment"
       not_found: "The Item you looked for could not be found!"
+      rental_duration_error: "Please choose 'Unlimited', if your rental duration is greater than 60 years"
     waitlist:
       added_to_waitlist: "Added to waitlist at position %{position}."
       failed_adding_to_waitlist: "Not added to waitlist."
