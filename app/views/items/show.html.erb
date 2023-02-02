@@ -63,24 +63,6 @@
         color: var(--grey04);
     }
 
-    .btn {
-      width: 100%;
-    }
-
-    .btn-primary {
-        text-decoration: none;
-        display: inline;
-        width: 100%;
-    }
-
-    .btn-secondary {
-        display: inline;
-    }
-
-    #qrcode {
-      display: block
-    }
-
     .favoritesIcon {
         font-size: 2em;
         position: absolute;
@@ -265,7 +247,7 @@
           <div class="button">
             <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
               <div class="">
-                <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary", id: "qrcode" %>
+                <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary btn-full-width", id: "qrcode" %>
               </div>
             <% end %>
           </div>
