@@ -37,6 +37,7 @@
             </div>
         </div>
         <%= render "filter-modal", :locals => { :availability_options => @availability_options, :category_options => @category_options, :group_options => @group_options } %>
+        <%= text_field_tag :locale, params[:locale], class: "invisible" %>
     <% end %>
 </div>
 

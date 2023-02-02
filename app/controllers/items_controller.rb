@@ -48,6 +48,7 @@ class ItemsController < ApplicationController
   def edit
     @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
+    @lend_group_ids -= [@item.owning_group.id] unless @item.owning_group.nil?
     @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
 
@@ -56,18 +57,30 @@ class ItemsController < ApplicationController
     params = item_params.merge!(permission_hash)
     params[:image] = params[:image].read unless params[:image].nil?
     @item = Item.new(params)
-    return render file: "public/422.html", status: :unprocessable_entity unless @item.valid?
-
-    @item.waitlist = Waitlist.new
-    @item.set_status_lent unless @item.holder.nil?
-
-    helpers.audit_create_item(@item)
-
-    create_create_response
+    @item.clear_subclass_fields
+    if @item.valid?
+      @item.waitlist = Waitlist.new
+      @item.set_status_lent unless @item.holder.nil?
+      if @item.save
+        helpers.audit_create_item(@item)
+        respond_to do |format|
+          format.html { redirect_to item_url(@item), notice: t("models.item.created") }
+          format.json { render :show, status: :created, location: @item }
+        end
+        return
+      end
+    end
+    respond_to do |format|
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @item.errors, status: :unprocessable_entity }
+    end
   end
 
   # PATCH/PUT /items/1 or /items/1.json
   def update
+    @item = @item.becomes!(Item.valid_types[params[:item][:type]])
+    @item.assign_attributes(item_params)
+    @item.clear_subclass_fields
     respond_to do |format|
       if update_with_permissions
         format.html { redirect_to item_url(@item), notice: t("models.item.updated") }
@@ -82,6 +95,18 @@ class ItemsController < ApplicationController
   # Due to the way we handle permissions, `@item.update` can't be used to update them
   # This method applies all "simple" updates with the usual `@item.update` and then handles the permissions separately
   def update_with_permissions
+    # If a new owning group should be set for the item, the group must be removed from the lend & see permissions before
+    # These permissions will be automatically granted to owners and the unique constraint would fail otherwise
+    if !item_params["owning_group"].nil? && item_params["owning_group"] != @item.owning_group
+      @item.groups_with_lend_permission.delete(
+        @item.groups_with_lend_permission.where(groups: { id: item_params["owning_group"].id })
+      )
+      @item.groups_with_see_permission.delete(
+        @item.groups_with_see_permission.where(groups: { id: item_params["owning_group"].id })
+      )
+    end
+
+    # Update all properties despite the permissions
     false if @item.update(item_params)
 
     lend_group_ids =
@@ -98,16 +123,26 @@ class ItemsController < ApplicationController
         params.require(:item)[:see_group_ids].compact_blank!
       end
 
-    see_group_ids -= lend_group_ids
-
+    # Reset all permissions to avoid unique constraint failures or permissions not being removed
     if @item.owning_group.nil?
       @item.groups_with_lend_permission.delete_all
       @item.groups_with_see_permission.delete_all
     else
-      @item.groups_with_lend_permission.delete_if { |group| group != @item.owning_group }
-      @item.groups_with_see_permission.delete_if { |group| group != @item.owning_group }
+      @item.groups_with_lend_permission.delete(
+        @item.groups_with_lend_permission.where.not(groups: { id: item_params["owning_group"].id })
+      )
+      @item.groups_with_see_permission.delete(
+        @item.groups_with_see_permission.where.not(groups: { id: item_params["owning_group"].id })
+      )
+
+      lend_group_ids -= [@item.owning_group.id.to_s]
+      see_group_ids -= [@item.owning_group.id.to_s]
     end
 
+    # "see" permission is automatically included in "lend" permission
+    see_group_ids -= lend_group_ids
+
+    # Assign new permissions
     lend_group_ids.each do |group_id|
       @item.groups_with_lend_permission << Group.find(group_id)
     end
@@ -249,18 +284,6 @@ class ItemsController < ApplicationController
 
   private
 
-  def create_create_response
-    respond_to do |format|
-      if @item.save
-        format.html { redirect_to item_url(@item), notice: t("models.item.created") }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   def create_add_to_waitlist_response
     respond_to do |format|
       if @item.add_to_waitlist(@user) && @item.save
@@ -302,7 +325,8 @@ class ItemsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def item_params
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
-                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status)
+                                 :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status, :type, :title,
+                                 :genre, :movie_duration, :author, :page_count, :player_count)
           .merge!(owner_hash)
   end
 

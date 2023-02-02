@@ -88,6 +88,8 @@
 
     .button {
         display: inline-block;
+        margin-bottom: 10px;
+        width: 100%;
     }
 
     @media screen and (min-width: 480px) and (max-width: 767px) {
@@ -149,12 +151,18 @@
             <span class="material-symbols-outlined" id="locationIcon">
               location_on</span>
             <%= @item.location %></p>
+            <br>
+          </div>
+    
 
-          <br>
-        </div>
+        <p class="subtitle"><%= t('views.show_item.category')%></p>
+        <p class="body-1"><%= t("models.item.types.#{@item.type.underscore}") %></p>
 
-        <p class="subtitle"><%= t('views.show_item.category') %></p>
-        <p class="body-1"><%= @item.category %></p>
+        <% @item.custom_subclass_attributes.each do |title, value| %>
+          <p class="subtitle"><%= t("views.show_item.#{title}")%></p>
+          <p class="body-1"><%= @item[title] %></p>
+        <% end %>
+
         <% if !@item.description.blank? %>
           <p class="subtitle"><%= t('views.show_item.description') %></p>
           <p class="body-1"><%= @item.description %></p>
@@ -224,7 +232,7 @@
           </p>
         <% end %>
 
-        <div id="buttons">
+        <div id="buttons" class="d-flex flex-column">
           <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
           <div class="button">
             <% if @item.waitlist.users.size != 0 %>
@@ -233,8 +241,11 @@
           </div>
           <div class="button">
             <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
-              <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary" %>
-            <% end %></div>
+              <div class="">
+                <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary", id: "qrcode" %>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
       <br><br><br>
