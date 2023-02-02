@@ -89,6 +89,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_113308) do
     t.datetime "updated_at", null: false
     t.integer "holder"
     t.integer "lend_status", default: 0
+    t.integer "rental_duration"
+    t.string "rental_duration_unit"
     t.binary "image"
     t.string "type", default: "OtherItem"
     t.string "title"

@@ -297,7 +297,7 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
                                  :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status, :type, :title,
                                  :genre, :movie_duration, :author, :page_count, :player_count)
-          .merge!(owner_hash)
+          .merge!(owner_hash).merge!(rental_duration_hash)
   end
 
   def owner_hash
@@ -312,6 +312,30 @@ class ItemsController < ApplicationController
       else # "user" as default
         { owning_user: User.find(id.to_i) }
       end
+    end
+  end
+
+  def rental_duration_hash
+    rental_duration = params.require(:item)[:rental_duration].to_i
+    rental_duration_unit = params.require(:item)[:rental_duration_unit]
+
+    hash = { rental_duration: rental_duration, rental_duration_unit: rental_duration_unit }
+
+    case rental_duration_unit
+    when 'Unlimited'
+      hash.merge!({ rental_duration_sec: 60.years.to_i })
+    when 'Months'
+      hash.merge!({ rental_duration_sec: rental_duration.months.to_i })
+    when 'Weeks'
+      hash.merge!({ rental_duration_sec: rental_duration.week.to_i })
+    when 'Days'
+      hash.merge!({ rental_duration_sec: rental_duration.day.to_i })
+    when 'Hours'
+      hash.merge!({ rental_duration_sec: rental_duration.hour.to_i })
+    when 'Minutes'
+      hash.merge!({ rental_duration_sec: rental_duration.minute.to_i })
+    when 'Seconds'
+      hash.merge!({ rental_duration_sec: rental_duration })
     end
   end
 

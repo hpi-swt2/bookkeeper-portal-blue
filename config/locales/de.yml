@@ -37,6 +37,7 @@ de:
         weeks:
           one: "noch %{count} Woche"
           other: "noch %{count} Wochen"
+        unlimited: "Unbegrenzt"
       offered_items:
         title: "ANGEBOTENE ARTIKEL"
         nothing_offered: "Aktuell hast du keine angebotenen Artikel."
@@ -128,6 +129,14 @@ de:
       required_fields: "erforderliche Felder"
       price_ct: "Preis in Cent"
       return_checklist: "Rückgabe Checkliste"
+      duration:
+        unlimited: "Unbegrenzt"
+        months: "Monate"
+        weeks: "Wochen"
+        days: "Tage"
+        hours: "Stunden"
+        minutes: "Minuten"
+        seconds: "Sekunden"
       error: "%{count} Fehler verhinderte(n) das Speichern des Gegenstandes:"
     show_item:
       author: "Autor"
@@ -162,6 +171,7 @@ de:
       pending_return_request: "Warten auf Rückgabebestätigung"
       confirm_pickup: "Abholung bestätigen"
       show_waitlist: "Warteliste zeigen"
+      unlimited: "Unbegrenzt"
       title: "Titel"
       genre: "Genre"
       movie_duration: "Filmlänge"
@@ -173,9 +183,17 @@ de:
       avg_lend_time: "Durchschnittliche Ausleihdauer"
       desktop_edit_notice: "Halte STRG gedrückt, um mehrere Gruppen auszuwählen."
     edit_item:
-      rental_duration_sec: "Ausleihdauer (Sekunden)"
-      price_ct: "Preis in Cent"
-      return_checklist: "Rückgabecheckliste"
+      rental_duration_sec: "Ausleihdauer"
+      price_ct : "Preis in ct"
+      return_checklist: "Rückgabe Checkliste"
+      duration:
+        unlimited: "Unbegrenzt"
+        months: "Monate"
+        weeks: "Wochen"
+        days: "Tage"
+        hours: "Stunden"
+        minutes: "Minuten"
+        seconds: "Sekunden"
     profile:
       title: "Profil"
       email: "Email"
@@ -208,6 +226,7 @@ de:
         book_item: "Buch"
         office_item: "Büroausstattung"
       not_found: "Der gesuchte Gegenstand konnte nicht gefunden werden!"
+      rental_duration_error: "Bitte wählen Sie 'Unbegrenzt', wenn Ihre Ausleihedauer mehr als 60 Jahre beträgt"
     waitlist:
       added_to_waitlist: "Zur Warteliste an Position %{position} hinzugefügt."
       failed_adding_to_waitlist: "Nicht zur Warteliste hinzugefügt."
