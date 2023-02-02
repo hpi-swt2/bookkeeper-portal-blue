@@ -1,7 +1,7 @@
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-notification" style= "background-color: <%= notification.unread == true ? "#cce4ec" : "#dddfe0c" %> !important" data-bs-toggle="modal" data-bs-target="#<%= "notificationModal#{notification.id}" %>">
   <div class="notification">
-    <h2 class="subtitle">
+    <h2 class="subtitle  text-truncate">
       <%= notification.title %>
     </h2>
     <p class="body-1">

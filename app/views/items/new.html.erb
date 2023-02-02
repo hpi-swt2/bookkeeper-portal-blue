@@ -105,6 +105,11 @@
   }
   .locationInput {
     width: 90%;
+  .field_with_errors {
+    width: 100%;
+  }
+  .field_with_errors input {
+    border: 2px solid red;
   }
   .rentalDurationInput{
     width: 49%;
@@ -184,14 +189,41 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    function changeInput() {
+      const type = $('#item_type').val()
+      $(".show_movie").addClass("d-none")
+      $(".show_game").addClass("d-none")
+      $(".show_book").addClass("d-none")
+      switch(type) {
+
+        case "MovieItem": {
+          $(".show_movie").removeClass("d-none")
+          break;
+        }
+          
+        case "BookItem": {
+          $(".show_book").removeClass("d-none")
+          break;
+        }
+          
+        case "GameItem": {
+          $(".show_game").removeClass("d-none")
+          break;
+        }
+        default: {
+          console.log("Ungültige Klasse")
+        }
+      }
+    }
+
 </script>
 <div>
-  <%= form_with(model: @item, :html => { :multipart => true }) do |form| %>
+  <%= form_with(model: @item.becomes(Item), :html => { :multipart => true }) do |form| %>
 
     <% if @item.errors.any? %>
       <div style="color: red">
-        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
-
+        <h2><%= t("views.new_item.error", count: @item.errors.count) %></h2>
         <ul>
           <% @item.errors.each do |error| %>
             <li><%= error.full_message %></li>
@@ -214,22 +246,51 @@
         <%= form.file_field :image, multiple: false, direct_upload: true, id: "uploadBtn", :onchange => "readURL(this)"%>
 
       </div>
-
-
         <div class="col">
           <div>
-            <p class="title">
+            <div class="title">
               <%= form.text_field :name, class: "borderedInput", placeholder: t('views.new_item.item_name') + "*" %>
-            </p>
-            <div class="row">
-              <p class="body1" id="location">
-                <span class="material-symbols-outlined" id="locationIcon">location_on</span>
-                <%= form.text_field :location, class: "locationInput borderedInput", placeholder: t('views.new_item.location') + "*" %>
-              </p>
+            </div>
+            <div class="d-flex gap-2">
+              <span class="material-symbols-outlined" id="locationIcon">location_on</span>
+              <%= form.text_field :location, class: "borderedInput", placeholder: t('views.new_item.location') + "*" %>
             </div>
 
+            <div class="notBorderedInput">
             <p class="subtitle"><%= t('views.show_item.category') %>*</p>
-            <%= form.text_field :category, class: "borderedInput body1" %>
+            <%= form.select :type, Item.valid_types.keys.map{|type| [t("models.item.types.#{type.underscore}"), type]}, {}, {:onchange => "changeInput()"} %>
+            </div>
+
+            <div class="show_movie show_game show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.title') %>*</p>
+              <%= form.text_field :title, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_movie show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.genre') %>*</p>
+              <%= form.text_field :genre, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_game show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.author') %>*</p>
+              <%= form.text_field :author, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_movie d-none">
+              <p class="subtitle"><%= t('views.show_item.movie_duration') %>*</p>
+              <%= form.number_field :movie_duration, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_book d-none">
+              <p class="subtitle"><%= t('views.show_item.page_count') %>*</p>
+              <%= form.number_field :page_count, class: "borderedInput body1" %>
+            </div>
+
+            <div class="show_game d-none">
+              <p class="subtitle"><%= t('views.show_item.player_count') %>*</p>
+              <%= form.number_field :player_count, class: "borderedInput body1" %>
+            </div>
+
 
             <p class="subtitle"><%= t('views.show_item.description') %></p>
             <%= form.text_area :description, class: "borderedInput body1" %>
@@ -261,6 +322,7 @@
             </div>
 
             <p class="subtitle"><%= t('views.edit_item.price_ct') %></p>
+            <%= form.number_field :price_ct, min: 0, class: "borderedInput body1", oninput: "validity.valid||(value='');" %>
             <%= form.number_field :price_ct, class: "borderedInput body1" %>
             
             <p class="subtitle"><%= t('views.edit_item.rental_duration_sec') %>*</p>
@@ -285,7 +347,7 @@
             <p class="caption">* <%= t('views.new_item.required_fields') %></p>
 
             <div class="" id="buttonDiv">
-              <%= form.submit t('defaults.submit'), class: "btn-primary" %>
+              <%= form.submit t('defaults.submit'), class: "btn-primary"%>
               <%= link_to @item_new do %>
                 <button class="btn-secondary"><%= t('defaults.delete') %></button>
               <% end %>

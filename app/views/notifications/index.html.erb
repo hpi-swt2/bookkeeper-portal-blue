@@ -5,7 +5,7 @@
     <p class="h1" style="text-align: center"><%= t 'views.notifications.no_notifications' %></p>
   </div>
   <%else %>
-  <h2><%= t 'views.notifications.title' %></h2>
+  <h3 class="subtitle mt-1"><%= t 'views.notifications.title' %></h3>
   <div id="notifications">
     <% @active_dates.each do |(date, notifications)| %>
       <% notifications.each do |notification| %>
@@ -16,9 +16,9 @@
           </div>
       <%end%>
     <%end%>
-    <h2>
+    <h3 class="subtitle mt-1">
       <%= t 'views.notifications.deletion_history' %>
-    </h2>
+    </h3>
     <% @inactive_dates.each do |(date, notifications)| %>
       <% notifications.each do |notification| %>
           <div class="row">

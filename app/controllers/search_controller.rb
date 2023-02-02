@@ -5,7 +5,8 @@ class SearchController < ApplicationController
     create_availability_filter
     create_category_filters
 
-    unsorted_results = helpers.search_for_items(params[:search], @filters, @numerical_filters, params[:group].to_i)
+    unsorted_results = helpers.search_for_items(current_user, params[:search], @filters, @numerical_filters,
+                                                params[:group].to_i)
     sort_results(params[:order], unsorted_results)
   end
 
@@ -15,7 +16,7 @@ class SearchController < ApplicationController
     @availability_options = [[t('views.search.filter_modal.available'), 0],
                              [t('views.search.filter_modal.unavailable'), 1]]
 
-    @category_options = Item.select(:category).distinct.pluck(:category)
+    @category_options = Item.valid_types.keys.map { |type| [t("models.item.types.#{type.underscore}"), type] }
 
     @order_options = [[t('views.search.order.popularity'), 0],
                       [t('views.search.order.name_a_z'), 1],
@@ -27,9 +28,9 @@ class SearchController < ApplicationController
   def create_category_filters
     @filters = {}
 
-    return if params[:category].blank?
+    return if params[:type].blank?
 
-    @filters["category"] = params[:category]
+    @filters["type"] = params[:type]
   end
 
   def create_availability_filter

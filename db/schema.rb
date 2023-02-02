@@ -92,6 +92,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
     t.integer "rental_duration"
     t.string "rental_duration_unit"
     t.binary "image"
+    t.string "type", default: "OtherItem"
+    t.string "title"
+    t.string "author"
+    t.string "genre"
+    t.integer "page_count"
+    t.integer "movie_duration"
+    t.integer "player_count"
     t.index ["holder"], name: "index_items_on_holder"
   end
 

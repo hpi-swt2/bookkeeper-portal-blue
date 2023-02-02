@@ -1,9 +1,13 @@
 # class of a basic item.
 # rubocop:disable Metrics/ClassLength
 class Item < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   has_one :waitlist, dependent: :destroy
   has_many :audit_events, dependent: :destroy
   has_many :lend_request_notifications, dependent: :destroy
+  has_many :lending_accepted_notifications, dependent: :destroy
+  has_many :lending_denied_notifications, dependent: :destroy
   has_many :return_request_notifications, dependent: :destroy
   has_many :return_accepted_notifications, dependent: :destroy
   has_many :move_up_on_waitlist_notification, dependent: :destroy
@@ -28,10 +32,8 @@ class Item < ApplicationRecord
   has_one :owning_user, through: :ownership_permission, source: :user_or_group, source_type: 'User'
   has_one :owning_group, through: :ownership_permission, source: :user_or_group, source_type: 'Group'
 
-  # belongs_to :holder, class_name: 'User', foreign_key: "holder", inverse_of: :lent_items, optional: true
-
+  validates :type, presence: true
   validates :name, presence: true
-  validates :category, presence: true
   validates :location, presence: true
   validates :ownership_permission, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
@@ -49,6 +51,11 @@ class Item < ApplicationRecord
 
     errors.add(:rental_duration, "is greater than 60 years, please choose unlimited rental duration")
   end
+  
+  def self.valid_types
+    { "BookItem" => BookItem, "GameItem" => GameItem, "MovieItem" => MovieItem, "OfficeItem" => OfficeItem,
+      "OtherItem" => OtherItem }
+  end
 
   def price_in_euro
     unless price_ct.nil?
@@ -60,7 +67,7 @@ class Item < ApplicationRecord
   end
 
   def image_url
-    "data:application/octet-stream;base64,#{Base64.strict_encode64(image)}"
+    item_image_path(id: id)
   end
 
   def set_status_available
@@ -113,6 +120,22 @@ class Item < ApplicationRecord
     self.rental_start = nil
     self.holder = nil
     set_status_available
+  end
+
+  def custom_subclass_attributes
+    []
+  end
+
+  def clear_subclass_fields
+    filtered = self.class.validators.filter do |v|
+      v.is_a?(ActiveRecord::Validations::AbsenceValidator)
+    end
+
+    filtered.each do |v|
+      v.attributes.each do |a|
+        self[a] = nil
+      end
+    end
   end
 
   def add_to_waitlist(user)
