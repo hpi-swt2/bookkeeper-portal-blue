@@ -51,7 +51,7 @@ class Item < ApplicationRecord
 
     errors.add(:base, I18n.t("models.item.rental_duration_error"))
   end
-  
+
   def self.valid_types
     { "BookItem" => BookItem, "GameItem" => GameItem, "MovieItem" => MovieItem, "OfficeItem" => OfficeItem,
       "OtherItem" => OtherItem }
