@@ -1,23 +1,10 @@
 <style>
-  :root {
-    --grey04: #394044;
-    --secondary08: #55A6BE;
-  }
-
-  #back-button {
-    font-size: 35px;
-  }
-
-  .material-symbols-outlined {
-    color: var(--grey04);
+  .actions {
+    padding-top: 10px;
   }
 </style>
 
 <div>
-<%= link_to :back do %>
-  <span class="material-symbols-outlined" id="back-button">chevron_left</span>
-<% end %>
-
 <h3 class="subtitle mt-1">Edit <%= resource_name.to_s.humanize %></h3>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>

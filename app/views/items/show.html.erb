@@ -242,7 +242,7 @@
           <div class="button">
             <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
               <div class="">
-                <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary", id: "qrcode" %>
+                <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary btn-full-width", id: "qrcode" %>
               </div>
             <% end %>
           </div>

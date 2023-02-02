@@ -3,6 +3,7 @@
 .btn {
   @include subtitle($color: false);
   /* min-width: 167px; */
+  width: 256px;
 }
 
 .btn-primary {
