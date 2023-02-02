@@ -13,10 +13,9 @@ RSpec.describe ReturnAcceptedNotification, type: :model do
     expect(invalid_notification).not_to be_valid
   end
 
-  it "belongs to a receiver, a date, an item and a owner" do
+  it "belongs to a receiver, a date, an item" do
     expect(notification.receiver).not_to be_blank
     expect(notification.item).not_to be_blank
-    expect(notification.owner).not_to be_blank
     expect(notification.date).not_to be_blank
   end
 
