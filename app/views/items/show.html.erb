@@ -77,9 +77,9 @@
     }
 
     .ownerFunctionIcons {
-        float: right;
         padding-right: 0.25em;
         vertical-align: middle;
+        text-decoration: none;
     }
 
     #buttons {
@@ -115,21 +115,28 @@
             padding-bottom: 26em;
         }
     }
+
+    .iconsContainer {
+        text-align: end;
+    }
 </style>
 
 <div>
-  <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
-    <% if @item.holder.nil? %>
-      <%= link_to item_path(@item), data: { turbo_method: :delete, turbo_confirm: t("views.show_item.delete_item_confirm") } do %>
-        <span class="material-symbols-outlined ownerFunctionIcons">delete</span>
-      <% end %>
-    <% end %>
-    <%= link_to edit_item_url(@item) do %>
-      <span class="material-symbols-outlined ownerFunctionIcons">edit</span>
-    <% end %>
-  <% end %>
+
 
   <div class="container">
+    <div class="iconsContainer">
+      <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
+        <% if @item.holder.nil? %>
+          <%= link_to item_path(@item), data: { turbo_method: :delete, turbo_confirm: t("views.show_item.delete_item_confirm") }, class: "ownerFunctionIcons" do %>
+            <span class="material-symbols-outlined">delete</span>
+          <% end %>
+        <% end %>
+        <%= link_to edit_item_url(@item), class: "ownerFunctionIcons" do %>
+          <span class="material-symbols-outlined">edit</span>
+        <% end %>
+      <% end %>
+    </div>
     <div class="row row-cols-1 row-cols-md-2">
       <div class="text-center col my-auto">
         <div class="image container-fluid rounded">
@@ -239,20 +246,18 @@
           </p>
         <% end %>
 
-        <div id="buttons" class="d-flex flex-column">
-          <div class="button"> <%= render "adaptive_lend_button", current_user: current_user, item: @item %> </div>
-          <div class="button">
-            <% if @item.waitlist.users.size != 0 %>
+        <div id="buttons" class="row">
+          <%= render "adaptive_lend_button", current_user: current_user, item: @item %>
+          <% if @item.waitlist.users.size != 0 %>
+          <div class="button col">
               <%= render "show_waitlist_button", item: @item %>
-            <% end %>
           </div>
-          <div class="button">
-            <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
-              <div class="">
+          <% end %>
+          <% if !current_user.nil? && @item.users_with_ownership_permission.include?(current_user) %>
+          <div class="button col">
                 <%= link_to t("views.show_item.qr_button"), { action: "generate_qrcode" }, class: "btn btn-primary btn-full-width", id: "qrcode" %>
-              </div>
-            <% end %>
           </div>
+          <% end %>
         </div>
       </div>
       <br><br><br>
