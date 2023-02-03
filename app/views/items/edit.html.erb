@@ -250,11 +250,6 @@ function readURL(input) {
             <%= form.select :type, Item.valid_types.keys.map{|type| [t("models.item.types.#{type.underscore}"), type]}, {}, {:onchange => "changeInput()"} %>
           </div>
 
-          <div class="show_movie show_game show_book d-none">
-            <p class="subtitle"><%= t('views.show_item.title') %>*</p>
-            <%= form.text_field :title, class: "borderedInput body1" %>
-          </div>
-
           <div class="show_movie show_book d-none">
             <p class="subtitle"><%= t('views.show_item.genre') %>*</p>
             <%= form.text_field :genre, class: "borderedInput body1" %>

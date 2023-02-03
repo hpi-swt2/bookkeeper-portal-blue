@@ -11,7 +11,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { build(:user) }
     type { "MovieItem" }
-    title { "Iron Man" }
     genre { "Action" }
     movie_duration { 120 }
   end
