@@ -84,6 +84,7 @@
 
     #buttons {
         width: 100%;
+        margin: 0;
     }
 
     .button {
@@ -246,7 +247,7 @@
           </p>
         <% end %>
 
-        <div id="buttons" class="row">
+        <div id="buttons" class="row g-2">
           <%= render "adaptive_lend_button", current_user: current_user, item: @item %>
           <% if @item.waitlist.users.size != 0 %>
           <div class="button col">
