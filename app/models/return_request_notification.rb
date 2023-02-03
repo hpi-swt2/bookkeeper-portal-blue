@@ -9,11 +9,27 @@ class ReturnRequestNotification < ApplicationRecord
   validates :date, presence: true
   after_create :send_mail
 
+  def set_accepted
+    update(accepted: true)
+  end
+
+  def set_denied
+    update(accepted: false)
+  end
+
   def title
     I18n.t "views.notifications.return_request.title", item: item.name
   end
 
   def description
-    I18n.t "views.notifications.return_request.description", receiver: borrower.name, item: item.name
+    user_name = borrower.name
+    item_name = item.name
+    if active
+      I18n.t "views.notifications.return_request.description", receiver: borrower.name, item: item.name
+    elsif accepted
+      I18n.t "views.notifications.return_request.description_accepted", receiver: user_name, item: item_name
+    else
+      I18n.t "views.notifications.return_request.description_declined", receiver: user_name, item: item_name
+    end
   end
 end

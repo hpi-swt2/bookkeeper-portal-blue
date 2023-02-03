@@ -85,10 +85,20 @@
       'GRAD' 0,
       'opsz' 48
   }
+  #rentalDurationDiv {
+    width: 100%;
+  }
 
   .notBorderedInput {
     width: 100%;
     margin-bottom: 8px
+  }
+  select {
+    border: 1px solid #AAB0B3;
+    border-radius: 5px; 
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
   }
   .borderedInput {
     border: 1px solid #AAB0B3;
@@ -102,6 +112,10 @@
   }
   .field_with_errors input {
     border: 2px solid red;
+  }
+  .rentalDurationInput{
+    width: 49%;
+    display: inline-block;
   }
   .btn-primary {
     width: 100%;
@@ -255,7 +269,6 @@ function readURL(input) {
             <p class="subtitle"><%= t('views.show_item.movie_duration') %>*</p>
             <%= form.number_field :movie_duration, class: "borderedInput body1" %>
           </div>
-
           <div class="show_book d-none">
             <p class="subtitle"><%= t('views.show_item.page_count') %>*</p>
             <%= form.number_field :page_count, class: "borderedInput body1" %>
@@ -298,8 +311,22 @@ function readURL(input) {
           <p class="subtitle"><%= t('views.edit_item.price_ct')%></p>
           <%= form.number_field :price_ct, min: 0, class: "borderedInput body1", oninput: "validity.valid||(value='');" %>
 
-          <p class="subtitle"><%= t('views.edit_item.rental_duration_sec')%>*</p>
-          <%= form.number_field :rental_duration_sec, min: 0, class: "borderedInput body1", oninput: "validity.valid||(value='');" %>
+          <p class="subtitle"><%= t('views.edit_item.rental_duration_sec') %>*</p>
+          <div class="", id="rentalDurationDiv">
+            <div class="rentalDurationInput"><%= form.number_field :rental_duration, min: 0, class: "borderedInput body1", oninput:"validity.valid|| 
+            (value='');" %></div>
+            <div class="rentalDurationInput">
+              <%= form.select :rental_duration_unit, [
+                [t('views.edit_item.duration.unlimited'), 'Unlimited'],
+                [t('views.edit_item.duration.months'), 'Months'],
+                [t('views.edit_item.duration.weeks'), 'Weeks'],
+                [t('views.edit_item.duration.days'), 'Days'],
+                [t('views.edit_item.duration.hours'), 'Hours'],
+                [t('views.edit_item.duration.minutes'), 'Minutes'],
+                [t('views.edit_item.duration.seconds'), 'Seconds'],
+              ] %>
+            </div>
+          </div>
 
           <p class="subtitle"><%= t('views.edit_item.return_checklist')%></p>
           <%= form.text_area :return_checklist, class: "borderedInput body1" %>
