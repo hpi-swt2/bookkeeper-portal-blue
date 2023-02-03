@@ -1,7 +1,6 @@
 <p style="color: green"><%= notice %></p>
 <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-
 <style>
     :root {
         --grey04: #394044;
@@ -80,92 +79,101 @@
         max-height: 25em !important;
     }
 
-  #rentalDurationDiv {
+    #rentalDurationDiv {
+        width: 100%;
+    }
+
+    .notBorderedInput {
       width: 100%;
-  }
+      margin-bottom: 8px
+    }
 
-  .notBorderedInput {
-    width: 100%;
-    margin-bottom: 8px
-  }
+    select {
+      border: 1px solid #AAB0B3;
+      border-radius: 5px;
+      padding-left: 5px;
+      padding-top: 3px;
+      padding-bottom: 3px;
+    }
 
-  select {
-    border: 1px solid #AAB0B3;
-    border-radius: 5px;
-    padding-left: 5px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-  }
-  .borderedInput {
-    border: 1px solid #AAB0B3;
-    border-radius: 5px;
-    padding-left: 5px;
-    width: 100%;
-    margin-bottom: 8px
-  }
-  .locationInput {
-    width: 90%;
-  }
-  .field_with_errors {
-    width: 100%;
-  }
-  .field_with_errors input {
-    border: 2px solid red;
-  }
-  .rentalDurationInput{
-    width: 49%;
-    display: inline-block;
-  }
-  .btn-primary {
-    margin-bottom: 8px;
-    width: 48%;
-    display: inline-block;
-  }
-  .btn-secondary {
-    width: 48%;
-    display: inline-block;
-  }
-  #buttonDiv {
-    width: 100%;
-    text-align: center;
-  }
+    .borderedInput {
+      border: 1px solid #AAB0B3;
+      border-radius: 5px;
+      padding-left: 5px;
+      width: 100%;
+      margin-bottom: 8px
+    }
 
-  .caption{
-    text-align: left;
-  }
-  select {
-    width: 100%;
-  }
+    .locationInput {
+      width: 90%;
+    }
 
-  #uploadBtn {
-    margin-top: 8px;
-  }
+    .field_with_errors {
+      width: 100%;
+    }
+
+    .field_with_errors input {
+      border: 2px solid red;
+    }
+
+    .rentalDurationInput{
+      width: 49%;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      margin-bottom: 8px;
+      width: 48%;
+      display: inline-block;
+    }
+
+    .btn-secondary {
+      width: 48%;
+      display: inline-block;
+    }
+
+    #buttonDiv {
+      width: 100%;
+      text-align: center;
+    }
+
+    .caption{
+      text-align: left;
+    }
+
+    select {
+      width: 100%;
+    }
+
+    #uploadBtn {
+      margin-top: 8px;
+    }
 
     @media screen and (min-width: 480px) and (max-width: 767px) {
-      .image {
-        padding-bottom: 26em;
-      }
-  }
+        .image {
+          padding-bottom: 26em;
+        }
+    }
 
-  @media screen and (min-width: 768px) and (max-width: 1199px) {
-      .image {
-        padding-bottom: 25em;
-      }
-  }
+    @media screen and (min-width: 768px) and (max-width: 1199px) {
+        .image {
+          padding-bottom: 25em;
+        }
+    }
 
-  @media screen and (min-width: 1200px)  and (max-width: 1399px){
-      .image {
-        padding-bottom: 25em;
-      }
-  }
+    @media screen and (min-width: 1200px)  and (max-width: 1399px){
+        .image {
+          padding-bottom: 25em;
+        }
+    }
 
-  @media screen and (min-width: 1400px) {
-      .image {
-        padding-bottom: 26em;
-      }
-  }
-
+    @media screen and (min-width: 1400px) {
+        .image {
+          padding-bottom: 26em;
+        }
+    }
 </style>
+
 <script>
     (function () {
         // Load the script
