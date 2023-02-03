@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_01_113308) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -89,7 +89,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
     t.datetime "updated_at", null: false
     t.integer "holder"
     t.integer "lend_status", default: 0
-    t.integer "job_id"
+    t.integer "rental_duration"
+    t.string "rental_duration_unit"
+    t.binary "image"
     t.string "type", default: "OtherItem"
     t.string "title"
     t.string "author"
@@ -97,7 +99,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
     t.integer "page_count"
     t.integer "movie_duration"
     t.integer "player_count"
-    t.binary "image"
     t.index ["holder"], name: "index_items_on_holder"
   end
 
@@ -182,20 +183,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
   end
 
   create_table "return_accepted_notifications", force: :cascade do |t|
-    t.integer "owner_id", null: false
     t.integer "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_return_accepted_notifications_on_item_id"
-    t.index ["owner_id"], name: "index_return_accepted_notifications_on_owner_id"
   end
 
   create_table "return_declined_notifications", force: :cascade do |t|
-    t.integer "owner_id", null: false
-    t.string "item_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["owner_id"], name: "index_return_declined_notifications_on_owner_id"
+    t.integer "item_id", null: false
+    t.index ["item_id"], name: "index_return_declined_notifications_on_item_id"
   end
 
   create_table "return_request_notifications", force: :cascade do |t|
@@ -203,6 +201,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
     t.integer "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "accepted"
     t.index ["borrower_id"], name: "index_return_request_notifications_on_borrower_id"
     t.index ["item_id"], name: "index_return_request_notifications_on_item_id"
   end
@@ -249,8 +248,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_30_115654) do
   add_foreign_key "notifications", "users", column: "receiver_id"
   add_foreign_key "permissions", "items"
   add_foreign_key "return_accepted_notifications", "items"
-  add_foreign_key "return_accepted_notifications", "users", column: "owner_id"
-  add_foreign_key "return_declined_notifications", "users", column: "owner_id"
+  add_foreign_key "return_declined_notifications", "items"
   add_foreign_key "return_request_notifications", "items"
   add_foreign_key "return_request_notifications", "users", column: "borrower_id"
   add_foreign_key "waitlists", "items"

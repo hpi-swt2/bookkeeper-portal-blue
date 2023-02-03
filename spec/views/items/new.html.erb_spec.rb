@@ -24,7 +24,9 @@ RSpec.describe "items/new", type: :view do
 
       assert_select "input[name=?]", "item[price_ct]"
 
-      assert_select "input[name=?]", "item[rental_duration_sec]"
+      assert_select "input[name=?]", "item[rental_duration]"
+
+      assert_select "select[name=?]", "item[rental_duration_unit]"
 
       assert_select "textarea[name=?]", "item[return_checklist]"
 

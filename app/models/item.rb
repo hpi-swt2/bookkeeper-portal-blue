@@ -10,6 +10,7 @@ class Item < ApplicationRecord
   has_many :lending_denied_notifications, dependent: :destroy
   has_many :return_request_notifications, dependent: :destroy
   has_many :return_accepted_notifications, dependent: :destroy
+  has_many :return_declined_notifications, dependent: :destroy
   has_many :move_up_on_waitlist_notification, dependent: :destroy
   has_many :added_to_waitlist_notification, dependent: :destroy
   has_and_belongs_to_many :users, join_table: "favorites"
@@ -37,10 +38,20 @@ class Item < ApplicationRecord
   validates :location, presence: true
   validates :ownership_permission, presence: true
   validates :price_ct, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+  validates :rental_duration, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
   validates :rental_duration_sec, numericality: { allow_nil: true, greater_than_or_equal_to: 0 }
+  validate :rental_duration_cannot_be_greater_than_60_years
   enum :lend_status,
        { available: 0, lent: 1, pending_return: 2, pending_lend_request: 3, pending_pickup: 4, unavailable: 5 }
   validates :lend_status, presence: true, inclusion: { in: lend_statuses.keys }
+
+  def rental_duration_cannot_be_greater_than_60_years
+    return if rental_duration_sec.nil?
+
+    return unless rental_duration_sec > 60.years.to_i && rental_duration_unit != 'Unlimited'
+
+    errors.add(:base, I18n.t("models.item.rental_duration_error"))
+  end
 
   def self.valid_types
     { "BookItem" => BookItem, "GameItem" => GameItem, "MovieItem" => MovieItem, "OfficeItem" => OfficeItem,
@@ -184,6 +195,8 @@ class Item < ApplicationRecord
   end
 
   def print_remaining_rental_duration
+    return I18n.t("views.dashboard.lent_items.unlimited") if rental_duration_unit == 'Unlimited'
+
     print_time_from_seconds(remaining_rental_duration)
   end
 
@@ -200,6 +213,8 @@ class Item < ApplicationRecord
   end
 
   def print_rental_duration
+    return I18n.t("views.show_item.unlimited") if rental_duration_unit == 'Unlimited'
+
     seconds = rental_duration_sec || 0
     if seconds < 7 * 86_400
       print_rental_duration_days(seconds)

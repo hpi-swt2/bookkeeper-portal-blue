@@ -48,6 +48,7 @@ class ItemsController < ApplicationController
   def edit
     @owner_id = @item.owning_user.nil? ? "group:#{@item.owning_group.id}" : "user:#{@item.owning_user.id}"
     @lend_group_ids = @item.groups_with_lend_permission.map(&:id)
+    @lend_group_ids -= [@item.owning_group.id] unless @item.owning_group.nil?
     @see_group_ids = (@item.groups_with_see_permission - @item.groups_with_lend_permission).map(&:id)
   end
 
@@ -57,12 +58,22 @@ class ItemsController < ApplicationController
     params[:image] = params[:image].read unless params[:image].nil?
     @item = Item.new(params)
     @item.clear_subclass_fields
-    return render file: "public/422.html", status: :unprocessable_entity unless @item.valid?
-
-    @item.waitlist = Waitlist.new
-    @item.set_status_lent unless @item.holder.nil?
-
-    create_create_response
+    if @item.valid?
+      @item.waitlist = Waitlist.new
+      @item.set_status_lent unless @item.holder.nil?
+      if @item.save
+        helpers.audit_create_item(@item)
+        respond_to do |format|
+          format.html { redirect_to item_url(@item), notice: t("models.item.created") }
+          format.json { render :show, status: :created, location: @item }
+        end
+        return
+      end
+    end
+    respond_to do |format|
+      format.html { render :new, status: :unprocessable_entity }
+      format.json { render json: @item.errors, status: :unprocessable_entity }
+    end
   end
 
   # PATCH/PUT /items/1 or /items/1.json
@@ -84,7 +95,19 @@ class ItemsController < ApplicationController
   # Due to the way we handle permissions, `@item.update` can't be used to update them
   # This method applies all "simple" updates with the usual `@item.update` and then handles the permissions separately
   def update_with_permissions
-    false if @item.save
+    # If a new owning group should be set for the item, the group must be removed from the lend & see permissions before
+    # These permissions will be automatically granted to owners and the unique constraint would fail otherwise
+    if !item_params["owning_group"].nil? && item_params["owning_group"] != @item.owning_group
+      @item.groups_with_lend_permission.delete(
+        @item.groups_with_lend_permission.where(groups: { id: item_params["owning_group"].id })
+      )
+      @item.groups_with_see_permission.delete(
+        @item.groups_with_see_permission.where(groups: { id: item_params["owning_group"].id })
+      )
+    end
+
+    # Update all properties despite the permissions
+    false if @item.update(item_params)
 
     lend_group_ids =
       if params.require(:item)[:lend_group_ids].nil?
@@ -100,16 +123,26 @@ class ItemsController < ApplicationController
         params.require(:item)[:see_group_ids].compact_blank!
       end
 
-    see_group_ids -= lend_group_ids
-
+    # Reset all permissions to avoid unique constraint failures or permissions not being removed
     if @item.owning_group.nil?
       @item.groups_with_lend_permission.delete_all
       @item.groups_with_see_permission.delete_all
     else
-      @item.groups_with_lend_permission.delete_if { |group| group != @item.owning_group }
-      @item.groups_with_see_permission.delete_if { |group| group != @item.owning_group }
+      @item.groups_with_lend_permission.delete(
+        @item.groups_with_lend_permission.where.not(groups: { id: item_params["owning_group"].id })
+      )
+      @item.groups_with_see_permission.delete(
+        @item.groups_with_see_permission.where.not(groups: { id: item_params["owning_group"].id })
+      )
+
+      lend_group_ids -= [@item.owning_group.id.to_s]
+      see_group_ids -= [@item.owning_group.id.to_s]
     end
 
+    # "see" permission is automatically included in "lend" permission
+    see_group_ids -= lend_group_ids
+
+    # Assign new permissions
     lend_group_ids.each do |group_id|
       @item.groups_with_lend_permission << Group.find(group_id)
     end
@@ -200,40 +233,10 @@ class ItemsController < ApplicationController
     @item.save
     helpers.audit_request_return(@item)
     notified_user = @item.owning_user.nil? ? @item.owning_group.members[0] : @item.owning_user
-    unless ReturnRequestNotification.find_by(item: @item)
-      @notification = ReturnRequestNotification.new(receiver: notified_user, date: Time.zone.now,
-                                                    item: @item, borrower: current_user, active: true, unread: true)
-      @notification.save
-    end
+    @notification = ReturnRequestNotification.new(receiver: notified_user, date: Time.zone.now,
+                                                  item: @item, borrower: current_user, active: true, unread: true)
+    @notification.save
     redirect_to item_url(@item)
-  end
-
-  def accept_return
-    @user = current_user
-    @request_notification = ReturnRequestNotification.find_by(item: @item)
-    @request_notification.destroy
-    @accepted_notif = ReturnAcceptedNotification.new(active: false, unread: true, date: Time.zone.now,
-                                                     item: @item, receiver: User.find(@item.holder), owner: @user)
-    @accepted_notif.save
-    @item.accept_return
-    @item.save
-
-    helpers.audit_accept_return(@item)
-
-    redirect_to item_url(@item)
-  end
-
-  def deny_return
-    @user = current_user
-    @request_notification = ReturnRequestNotification.find_by(item: @item)
-    @request_notification.destroy
-    @declined_notification = ReturnDeclinedNotification.new(item_name: @item.name, owner: @user,
-                                                            receiver: User.find(@item.holder),
-                                                            date: Time.zone.now, active: false, unread: true)
-    @declined_notification.save
-    @item.destroy
-
-    redirect_to notifications_path
   end
 
   def generate_qrcode
@@ -250,19 +253,6 @@ class ItemsController < ApplicationController
   end
 
   private
-
-  def create_create_response
-    respond_to do |format|
-      if @item.save
-        helpers.audit_create_item(@item)
-        format.html { redirect_to item_url(@item), notice: t("models.item.created") }
-        format.json { render :show, status: :created, location: @item }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   def create_add_to_waitlist_response
     respond_to do |format|
@@ -307,7 +297,7 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:name, :category, :location, :description, :image, :price_ct, :rental_duration_sec,
                                  :rental_start, :return_checklist, :holder, :waitlist_id, :lend_status, :type, :title,
                                  :genre, :movie_duration, :author, :page_count, :player_count)
-          .merge!(owner_hash)
+          .merge!(owner_hash).merge!(rental_duration_hash)
   end
 
   def owner_hash
@@ -322,6 +312,30 @@ class ItemsController < ApplicationController
       else # "user" as default
         { owning_user: User.find(id.to_i) }
       end
+    end
+  end
+
+  def rental_duration_hash
+    rental_duration = params.require(:item)[:rental_duration].to_i
+    rental_duration_unit = params.require(:item)[:rental_duration_unit]
+
+    hash = { rental_duration: rental_duration, rental_duration_unit: rental_duration_unit }
+
+    case rental_duration_unit
+    when 'Unlimited'
+      hash.merge!({ rental_duration_sec: 60.years.to_i })
+    when 'Months'
+      hash.merge!({ rental_duration_sec: rental_duration.months.to_i })
+    when 'Weeks'
+      hash.merge!({ rental_duration_sec: rental_duration.week.to_i })
+    when 'Days'
+      hash.merge!({ rental_duration_sec: rental_duration.day.to_i })
+    when 'Hours'
+      hash.merge!({ rental_duration_sec: rental_duration.hour.to_i })
+    when 'Minutes'
+      hash.merge!({ rental_duration_sec: rental_duration.minute.to_i })
+    when 'Seconds'
+      hash.merge!({ rental_duration_sec: rental_duration })
     end
   end
 
