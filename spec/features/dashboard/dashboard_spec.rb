@@ -22,7 +22,7 @@ RSpec.describe "Dashboard", type: :feature do
   it "links to notifications" do
     sign_in user
     visit dashboard_path
-    expect(page).to have_link(href: '/notifications')
+    expect(page).to have_link(href: notifications_path(locale: I18n.locale))
   end
 
   it "shows unread messages when there are none" do
