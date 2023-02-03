@@ -11,8 +11,7 @@ RSpec.describe GameItem, type: :model do
     expect(game_item.type).to eq "GameItem"
   end
 
-  it 'is not valid when the title, author or player count is missing or invalid' do
-    expect(build(:game_item, title: nil)).not_to be_valid
+  it 'is not valid when the author or player count is missing or invalid' do
     expect(build(:game_item, author: nil)).not_to be_valid
     expect(build(:game_item, player_count: nil)).not_to be_valid
     expect(build(:game_item, player_count: -5)).not_to be_valid

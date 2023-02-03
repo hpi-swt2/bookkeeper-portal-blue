@@ -11,8 +11,7 @@ RSpec.describe MovieItem, type: :model do
     expect(movie_item.type).to eq "MovieItem"
   end
 
-  it 'is not valid when the title, genre or movie duration is missing or invalid' do
-    expect(build(:movie_item, title: nil)).not_to be_valid
+  it 'is not valid when the genre or movie duration is missing or invalid' do
     expect(build(:movie_item, genre: nil)).not_to be_valid
     expect(build(:movie_item, movie_duration: nil)).not_to be_valid
     expect(build(:movie_item, movie_duration: -5)).not_to be_valid

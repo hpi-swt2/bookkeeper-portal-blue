@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :book_item do
-    name { "BookItem" }
+    name { "Einfacher geht's nicht!" }
     location { "MyLocation" }
     description { "MyDescription" }
     image { Rack::Test::UploadedFile.new('spec/testimages/test_image.png', 'image/png') }
@@ -11,7 +11,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { build(:user) }
     type { "BookItem" }
-    title { "Einfacher geht's nicht!" }
     author { "Marcell D'Avis" }
     genre { "Handbuch" }
     page_count { 5840 }

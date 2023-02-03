@@ -11,8 +11,7 @@ RSpec.describe BookItem, type: :model do
     expect(book_item.type).to eq "BookItem"
   end
 
-  it 'is not valid when the title, genre or author is missing' do
-    expect(build(:book_item, title: nil)).not_to be_valid
+  it 'is not valid when the genre or author is missing' do
     expect(build(:book_item, genre: nil)).not_to be_valid
     expect(build(:book_item, author: nil)).not_to be_valid
   end

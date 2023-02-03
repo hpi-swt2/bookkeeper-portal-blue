@@ -11,7 +11,6 @@ FactoryBot.define do
     lend_status { :available }
     owning_user { build(:user) }
     type { "GameItem" }
-    title { "Metal Gear Solid: The Twin Snakes" }
     author { "Hideo Kojima" }
     player_count { 2004 }
   end
